@@ -11,7 +11,7 @@ namespace PegasusV1.DbDataContext
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Materia> Materias { get; set; }
         public DbSet<Evento> Eventos { get; set; }
-        public DbSet<Asistencia> Asistencias { get; set; }
+        public DbSet<Asistencia> Asistencia { get; set; }
         public DbSet<Contactos> Contactos { get; set; }
         public DbSet<CuadernoComunicados> CuadernoComunicados { get; set; }
         public DbSet<Desempenio> Desempenios { get; set; }
