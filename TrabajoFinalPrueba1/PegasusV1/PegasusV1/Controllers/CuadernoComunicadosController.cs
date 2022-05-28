@@ -1,0 +1,104 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using PegasusV1.Entities;
+using PegasusV1.Interfaces;
+using Newtonsoft.Json;
+using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
+
+namespace PegasusV1.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class CuadernoComunicadosController : ControllerBase
+    {
+        private readonly ILogger<CuadernoComunicadosController> _logger;
+        private readonly IService<CuadernoComunicados> CuadernoComunicadosService;
+        private readonly IService<Usuario> UsuarioService;
+
+        public CuadernoComunicadosController(ILogger<CuadernoComunicadosController> logger,
+            IService<CuadernoComunicados> cuadernoComunicadosService,
+            IService<Usuario> usuarioService)
+        {
+            _logger = logger;
+            CuadernoComunicadosService = cuadernoComunicadosService;
+            UsuarioService = usuarioService;
+        }
+
+        [HttpGet]
+        [Route("GetCuadernoComunicadossForCombo")]
+        public async Task<List<CuadernoComunicados>> GetCuadernoComunicadossForCombo(string? query = null)
+        {
+            Expression<Func<CuadernoComunicados, bool>> ex = null;
+            Expression<Func<CuadernoComunicados, bool>> i = null;
+            if (!string.IsNullOrEmpty(query))
+            {
+                var p = Expression.Parameter(typeof(CuadernoComunicados), query);
+                var e = (Expression)DynamicExpressionParser.ParseLambda(new[] { p }, null, query);
+                ex = (Expression<Func<CuadernoComunicados, bool>>)e;
+            }
+
+            List<CuadernoComunicados> CuadernoComunicadoss = await CuadernoComunicadosService.GetForCombo(ex);
+
+            foreach (CuadernoComunicados CuadernoComunicados in CuadernoComunicadoss)
+            {
+                if (CuadernoComunicados.Id_Profesor.HasValue)
+                {
+                    CuadernoComunicados.Profesor = await UsuarioService.GetById(CuadernoComunicados.Id_Profesor.Value);
+                }
+
+                if (CuadernoComunicados.Id_Alumno.HasValue)
+                {
+                    CuadernoComunicados.Alumno = await UsuarioService.GetById(CuadernoComunicados.Id_Alumno.Value);
+                }
+            }
+
+            return CuadernoComunicadoss;
+        }
+
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<CuadernoComunicados> GetById(int id)
+        {
+            CuadernoComunicados cuaderno = await CuadernoComunicadosService.GetById(id);
+
+            if(cuaderno != null)
+            {
+                if (cuaderno.Id_Profesor.HasValue)
+                {
+                    cuaderno.Profesor = await UsuarioService.GetById(cuaderno.Id_Profesor.Value);
+                }
+
+                if (cuaderno.Id_Alumno.HasValue)
+                {
+                    cuaderno.Alumno = await UsuarioService.GetById(cuaderno.Id_Alumno.Value);
+                }
+            }
+
+            return cuaderno;
+        }
+
+        [HttpPost]
+        [Route("CreateCuadernoComunicados")]
+        public async Task<CuadernoComunicados> CreateCuadernoComunicados(string cuadernoComunicados)
+        {
+            CuadernoComunicados CuadernoComunicados = JsonConvert.DeserializeObject<CuadernoComunicados>(cuadernoComunicados);
+            return await CuadernoComunicadosService.Create(CuadernoComunicados);
+        }
+
+        [HttpPost]
+        [Route("UpdateCuadernoComunicados")]
+        public async Task<CuadernoComunicados> UpdateCuadernoComunicados(string cuadernoComunicados)
+        {
+            CuadernoComunicados CuadernoComunicados = JsonConvert.DeserializeObject<CuadernoComunicados>(cuadernoComunicados);
+            return await CuadernoComunicadosService.Update(CuadernoComunicados);
+        }
+
+        [HttpPost]
+        [Route("DeleteCuadernoComunicados")]
+        public async void DeleteCuadernoComunicados(string cuadernoComunicados)
+        {
+            CuadernoComunicados CuadernoComunicados = JsonConvert.DeserializeObject<CuadernoComunicados>(cuadernoComunicados);
+            CuadernoComunicadosService.Delete(CuadernoComunicados);
+        }
+    }
+}
