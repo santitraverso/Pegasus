@@ -55,10 +55,10 @@ namespace PegasusV1.Controllers
                  }
             }
            
-           /*     new Expression<Func<Asistencia, object>>[]
-                                                        {
-                                                        x => (x as Asistencia).Alumno, x => (x as Asistencia).Materia
-                                                        }*/
+           /*new Expression<Func<Asistencia, object>>[]
+                {
+                x => (x as Asistencia).Alumno, x => (x as Asistencia).Materia
+                }*/
              
             return asistencias;
         }
