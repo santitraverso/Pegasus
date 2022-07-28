@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "d9QhZaujZldaDqjDjIq2IJqhUSjzBYAIDsANZIUITv+9mfqI/vtQ/OHTCrbymi6H3T55wpjHflM23T64/4ve5Q==",
+  "dgSpecHash": "ADFnpGA590tx9iGhuBRyRmkds41HuTS79edqNroHJ0Q1QQ2yjr7OttuYYiqaG0s/QvVVi1TZXy7L9SfpAY3uKA==",
   "success": true,
   "projectFilePath": "S:\\Santerk\\Projects\\Pegasus\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\PegasusV1.csproj",
   "expectedPackageFiles": [
@@ -34,6 +34,8 @@
     "C:\\Users\\Santerk\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Santerk\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\Santerk\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Santerk\\.nuget\\packages\\npgsql\\6.0.4\\npgsql.6.0.4.nupkg.sha512",
+    "C:\\Users\\Santerk\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\6.0.4\\npgsql.entityframeworkcore.postgresql.6.0.4.nupkg.sha512",
     "C:\\Users\\Santerk\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\Santerk\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Santerk\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",

@@ -28,7 +28,13 @@ namespace PegasusV1.DbDataContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
+            var stringBuilder = new PostgreSqlConnectionStringBuilder("postgres://ueawfruuvgyqgh:6376c3620d377d618bc3d46c93ebfff116fb19c8df3138199a8dfa94a395a1ee@ec2-52-72-56-59.compute-1.amazonaws.com:5432/dds00uirj4bh9h")
+            {
+                Pooling = true,
+                TrustServerCertificate = true,
+                SslMode = SslMode.Require
+            };
+            options.UseNpgsql(stringBuilder.ConnectionString);
         }
 
         //No me dio bola a esto

@@ -1,4 +1,6 @@
-﻿namespace PegasusV1.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PegasusV1.Entities
 {
     public class Usuario
     {
