@@ -1,0 +1,241 @@
+La URL para la api es: https://pegasus.azure-api.net/v1/
+Despues de eso ponen el nombre del controller que quieren llamar, son:
+Asistencia
+Contactos
+CuadernoComunicados
+Desempenio
+Evento
+Hijo
+IntegrantesEventos
+IntegrantesMaterias
+Pago
+Tarea
+Usuario
+
+Despues de eso el nombre del metodo, son iguales entre controllers:
+
+Get<NombreControllerEnPlural>ForCombo 
+Para este pueden no mandar nada y les va a traer todo o pueden filtar con un string:
+x => x.Id_Alumno == 1
+Pueden agregar &&, lo que sea, es codigo de C#
+Para agregar esto tienen que poner ?query= <query> al final, no importan los espacios
+O sea que la url seria por ejemplo:
+https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo?query=x => x.id == 1
+Esto les trae la materia con id 1
+
+GetById 
+Trae por id un elemento, siempre que devuelve algo es en formato JSON por cierto.
+https://pegasus.azure-api.net/v1/Materia/GetById?id=2
+Devuelve: {"id":2,"nombre":"Matemática","curso":"1°B"}
+
+Create<NombreControllerEnSingular>
+Esto crea en la base, se hace con POST y mandando un JSON que represente el objeto, no necesita las entidades relacionadas ni el id (ya que es nuevo) pero si todo el resto, por ejemplo para una Asistencia:  
+POST Create exitoso:
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "https://pegasus.azure-api.net/v1/Asistencia/CreateAsistencia", true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.send(JSON.stringify({"Id_Alumno":1,"Alumno":null,"Materia":null,"fecha": "2022-09-12T17:44:50.005Z","Id_Materia":1,"Presente":false}));
+Fijense que Alumno y Materia puede estar en null, eso es algo que tiene la entidad en mi codigo, no esta en la base en realidad.
+
+Delete<NombreControllerEnSingular>
+Borra, hay que mandar un DELETE con tan solo el id al final de la url agregando ?id=<id>
+DELETE borrado exitoso:
+var xhr = new XMLHttpRequest();
+xhr.open("DELETE", "https://pegasus.azure-api.net/v1/Asistencia/DeleteAsistencia?id=20", true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.send();
+
+Update<NombreControllerEnSingular>
+Idem Create, pero tienen que ponerle el id del item que quieren updatear.
+PUT update exitoso:
+var xhr = new XMLHttpRequest();
+xhr.open("PUT", "https://pegasus.azure-api.net/v1/Asistencia/UpdateAsistencia", true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.send(JSON.stringify({"id":1,"Id_Alumno":1,"Alumno":null,"Materia":null,"fecha": "2022-09-12T17:44:50.005Z","Id_Materia":2,"Presente":false}));
+
+
+Les anoto que tiene cada entidad para que no tengan que fijarse en el codigo:
+ Usuario
+    {
+        public int? Id { get; set; }
+
+        public string? Nombre { get; set; }
+
+        public string? Apellido { get; set; }
+
+        public string? Perfil { get; set; }  
+
+        public string? Mail { get; set; }
+
+        public bool? Activo { get; set; }
+    }
+	
+	 Tarea
+    {
+        public int Id { get; set; }
+
+        public string Titulo { get; set; }
+
+        public string Descripcion { get; set; }
+
+        public DateTime? Fecha_Entrega { get; set; }
+
+        public bool? Entregado { get; set; }
+
+        public double? Calificacion { get; set;}
+
+        [NotMapped]
+        [ForeignKey("Id_Materia")]
+        public Materia? Materia { get; set; }
+        public int? Id_Materia { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Alumno")]
+        public Usuario? Alumno { get; set; }
+        public int? Id_Alumno { get; set; }
+    }
+	
+	Pago
+    {
+        public int Id { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Alumno")]
+        public Usuario? Alumno { get; set; }
+        public int? Id_Alumno { get; set; }
+
+        public string Concepto { get; set; }
+
+        public double? Monto  { get; set; }   
+
+        public bool? Pagado { get; set; }
+
+        public DateTime? Vencimiento { get; set; }
+    }
+	
+	 Materia
+    {
+        public int? Id { get; set; }       
+        public string? Nombre { get; set; }
+        public string? Curso { get; set; }
+    }
+	
+	IntegrantesMaterias
+    {
+        public int Id { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Materia")]
+        public Materia? Materia { get; set; }
+        public int? Id_Materia { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Usuario")]
+        public Usuario? Usuario { get; set; }
+        public int? Id_Usuario { get; set; }
+
+
+    }
+	
+	IntegrantesEventos
+    {
+        public int Id { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Evento")]
+        public Evento? Evento { get; set; }
+        public int? Id_Evento { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Usuario")]
+        public Usuario? Usuario { get; set; }
+        public int? Id_Usuario { get; set; }
+
+
+    }
+	
+	Hijo
+    {
+        public int Id { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Padre")]
+        public Usuario? Padre { get; set; }
+        public int? Id_Padre { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Hijo")]
+        public Usuario? HijoUsuario { get; set; }
+        public int? Id_Hijo { get; set; }
+
+
+    }
+	
+	Evento
+    {
+        public int? Id { get; set; }
+        public string? Nombre { get; set; }
+        public string? Descripcion { get; set; }
+        public DateTime? Fecha { get; set; }
+    }
+	
+	 Desempenio
+    {
+        public int Id { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Alumno")]
+        public Usuario? Alumno  { get; set; }
+        public int? Id_Alumno { get; set; }
+
+        public string Descripcion { get; set; }
+
+        public DateTime? Fecha { get; set; }    
+    }
+	
+	 CuadernoComunicados
+    {
+        public int Id { get; set; }        
+
+        [NotMapped]
+        [ForeignKey("Id_Alumno")]
+        public Usuario? Alumno { get; set; }
+        public int? Id_Alumno { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Profesor")]
+        public Usuario? Profesor { get; set; }
+        public int? Id_Profesor { get; set; }
+
+        public string Descripcion  { get; set; }
+
+        public DateTime? Fecha  { get; set; }
+    }
+	
+	 Contactos
+    {
+        public int? Id { get; set; }
+        public string? Nombre { get; set; }
+        public string? Mail { get; set; }
+        public string? Telefono { get; set; }
+    }
+	
+	Asistencia
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Alumno")]
+        public virtual Usuario? Alumno { get; set; }
+        public int? Id_Alumno { get; set; }
+
+        [NotMapped]
+        [ForeignKey("Id_Materia")]
+        public virtual Materia? Materia { get; set; }
+        public int? Id_Materia { get; set; }
+
+        public DateTime? Fecha { get; set; }    
+
+        public bool? Presente { get; set; }
+    }

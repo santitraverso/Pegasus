@@ -27,7 +27,7 @@ namespace PegasusV1.DbDataContext
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
+        { 
             options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
         }
 

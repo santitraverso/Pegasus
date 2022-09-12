@@ -38,9 +38,9 @@ namespace PegasusV1.Services
             return await Repository.Update(entity);
         }
 
-        public void Delete(T entity)
+        public async Task Delete(T entity)
         {
-            Repository.Delete(entity);
+            await Repository.Delete(entity);
         }
     }
 }

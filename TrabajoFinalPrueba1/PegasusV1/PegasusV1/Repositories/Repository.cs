@@ -42,14 +42,13 @@ namespace PegasusV1.Repositories
             }
         }
 
-        public async void Delete(T entity)
+        public async Task Delete(T entity)
         {
             using (var dbContext = _dbContext)
             {
                 DbSet<T> set = _dbContext.Set<T>();
 
                 set.Remove(entity);
-                //Arreglar esto
                 await _dbContext.SaveChangesAsync();
             }
         }

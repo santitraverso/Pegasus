@@ -9,12 +9,12 @@ namespace PegasusV1.Entities
 
         [NotMapped]
         [ForeignKey("Id_Evento")]
-        public Evento Evento { get; set; }
+        public Evento? Evento { get; set; }
         public int? Id_Evento { get; set; }
 
         [NotMapped]
         [ForeignKey("Id_Usuario")]
-        public Usuario Usuario { get; set; }
+        public Usuario? Usuario { get; set; }
         public int? Id_Usuario { get; set; }
 
 

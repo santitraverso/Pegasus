@@ -60,7 +60,7 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<IntegrantesMaterias> GetById(int id)
+        public async Task<IntegrantesMaterias?> GetById(int id)
         {
             IntegrantesMaterias IntegrantesMaterias = await IntegrantesMateriasService.GetById(id);
 
@@ -82,26 +82,25 @@ namespace PegasusV1.Controllers
 
         [HttpPost]
         [Route("CreateIntegrantesMaterias")]
-        public async Task<IntegrantesMaterias> CreateIntegrantesMaterias(string integrantesMateriass)
+        public async Task<IntegrantesMaterias> CreateIntegrantesMaterias(IntegrantesMaterias integrantesMaterias)
         {
-            IntegrantesMaterias IntegrantesMaterias = JsonConvert.DeserializeObject<IntegrantesMaterias>(integrantesMateriass);
-            return await IntegrantesMateriasService.Create(IntegrantesMaterias);
+            return await IntegrantesMateriasService.Create(integrantesMaterias);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateIntegrantesMaterias")]
-        public async Task<IntegrantesMaterias> UpdateIntegrantesMaterias(string integrantesMateriass)
+        public async Task<IntegrantesMaterias> UpdateIntegrantesMaterias(IntegrantesMaterias integrantesMaterias)
         {
-            IntegrantesMaterias IntegrantesMaterias = JsonConvert.DeserializeObject<IntegrantesMaterias>(integrantesMateriass);
-            return await IntegrantesMateriasService.Update(IntegrantesMaterias);
+            return await IntegrantesMateriasService.Update(integrantesMaterias);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteIntegrantesMaterias")]
-        public async void DeleteIntegrantesMaterias(string integrantesMateriass)
+        public async Task DeleteIntegrantesMaterias(int id)
         {
-            IntegrantesMaterias IntegrantesMaterias = JsonConvert.DeserializeObject<IntegrantesMaterias>(integrantesMateriass);
-            IntegrantesMateriasService.Delete(IntegrantesMaterias);
+            IntegrantesMaterias? integrantesMaterias = await GetById(id);
+            if(integrantesMaterias != null)
+                await IntegrantesMateriasService.Delete(integrantesMaterias);
         }
     }
 }

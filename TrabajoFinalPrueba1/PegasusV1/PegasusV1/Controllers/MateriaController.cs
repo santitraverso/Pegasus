@@ -39,33 +39,32 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Materia> GetById(int id)
+        public async Task<Materia?> GetById(int id)
         {
             return await MateriaService.GetById(id);
         }
 
         [HttpPost]
         [Route("CreateMateria")]
-        public async Task<Materia> CreateMateria(string subject)
+        public async Task<Materia> CreateMateria(Materia materia)
         {
-            Materia materia = JsonConvert.DeserializeObject<Materia>(subject);
             return await MateriaService.Create(materia);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateMateria")]
-        public async Task<Materia> UpdateMateria(string subject)
+        public async Task<Materia> UpdateMateria(Materia materia)
         {
-            Materia materia = JsonConvert.DeserializeObject<Materia>(subject);
             return await MateriaService.Update(materia);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteMateria")]
-        public async void DeleteMateria(string subject)
+        public async Task DeleteMateria(int id)
         {
-            Materia materia = JsonConvert.DeserializeObject<Materia>(subject);
-            MateriaService.Delete(materia);
+            Materia? materia = await GetById(id);
+            if(materia != null)
+                await MateriaService.Delete(materia);
         }
     }
 }

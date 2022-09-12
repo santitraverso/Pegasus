@@ -29,7 +29,6 @@ namespace PegasusV1.Controllers
         public async Task<List<CuadernoComunicados>> GetCuadernoComunicadossForCombo(string? query = null)
         {
             Expression<Func<CuadernoComunicados, bool>> ex = null;
-            Expression<Func<CuadernoComunicados, bool>> i = null;
             if (!string.IsNullOrEmpty(query))
             {
                 var p = Expression.Parameter(typeof(CuadernoComunicados), query);
@@ -57,7 +56,7 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<CuadernoComunicados> GetById(int id)
+        public async Task<CuadernoComunicados?> GetById(int id)
         {
             CuadernoComunicados cuaderno = await CuadernoComunicadosService.GetById(id);
 
@@ -79,26 +78,25 @@ namespace PegasusV1.Controllers
 
         [HttpPost]
         [Route("CreateCuadernoComunicados")]
-        public async Task<CuadernoComunicados> CreateCuadernoComunicados(string cuadernoComunicados)
+        public async Task<CuadernoComunicados> CreateCuadernoComunicados(CuadernoComunicados cuadernoComunicados)
         {
-            CuadernoComunicados CuadernoComunicados = JsonConvert.DeserializeObject<CuadernoComunicados>(cuadernoComunicados);
-            return await CuadernoComunicadosService.Create(CuadernoComunicados);
+            return await CuadernoComunicadosService.Create(cuadernoComunicados);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateCuadernoComunicados")]
-        public async Task<CuadernoComunicados> UpdateCuadernoComunicados(string cuadernoComunicados)
+        public async Task<CuadernoComunicados> UpdateCuadernoComunicados(CuadernoComunicados cuadernoComunicados)
         {
-            CuadernoComunicados CuadernoComunicados = JsonConvert.DeserializeObject<CuadernoComunicados>(cuadernoComunicados);
-            return await CuadernoComunicadosService.Update(CuadernoComunicados);
+            return await CuadernoComunicadosService.Update(cuadernoComunicados);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteCuadernoComunicados")]
-        public async void DeleteCuadernoComunicados(string cuadernoComunicados)
+        public async Task DeleteCuadernoComunicados(int id)
         {
-            CuadernoComunicados CuadernoComunicados = JsonConvert.DeserializeObject<CuadernoComunicados>(cuadernoComunicados);
-            CuadernoComunicadosService.Delete(CuadernoComunicados);
+            CuadernoComunicados? cuadernoComunicados = await GetById(id);
+            if (cuadernoComunicados != null)
+                await CuadernoComunicadosService.Delete(cuadernoComunicados);
         }
     }
 }

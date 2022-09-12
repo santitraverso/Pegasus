@@ -10,7 +10,7 @@ namespace PegasusV1.Interfaces
 
         Task<T> Update(T entity);
 
-        void Delete(T entity);
+        Task Delete(T entity);
 
         Task<T> GetById(int id, Expression<Func<T, object>>[]? includes = null);
     }

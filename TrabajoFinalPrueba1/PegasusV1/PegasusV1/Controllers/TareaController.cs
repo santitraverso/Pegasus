@@ -32,7 +32,6 @@ namespace PegasusV1.Controllers
         public async Task<List<Tarea>> GetTareasForCombo(string? query = null)
         {
             Expression<Func<Tarea, bool>> ex = null;
-            Expression<Func<Tarea, bool>> i = null;
             if (!string.IsNullOrEmpty(query))
             {
                 var p = Expression.Parameter(typeof(Tarea), query);
@@ -60,7 +59,7 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Tarea> GetById(int id)
+        public async Task<Tarea?> GetById(int id)
         {
             Tarea Tarea = await TareaService.GetById(id);
 
@@ -82,26 +81,25 @@ namespace PegasusV1.Controllers
 
         [HttpPost]
         [Route("CreateTarea")]
-        public async Task<Tarea> CreateTarea(string tarea)
+        public async Task<Tarea> CreateTarea(Tarea tarea)
         {
-            Tarea Tarea = JsonConvert.DeserializeObject<Tarea>(tarea);
-            return await TareaService.Create(Tarea);
+            return await TareaService.Create(tarea);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateTarea")]
-        public async Task<Tarea> UpdateTarea(string tarea)
+        public async Task<Tarea> UpdateTarea(Tarea tarea)
         {
-            Tarea Tarea = JsonConvert.DeserializeObject<Tarea>(tarea);
-            return await TareaService.Update(Tarea);
+            return await TareaService.Update(tarea);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteTarea")]
-        public async void DeleteTarea(string tarea)
+        public async Task DeleteTarea(int id)
         {
-            Tarea Tarea = JsonConvert.DeserializeObject<Tarea>(tarea);
-            TareaService.Delete(Tarea);
+            Tarea? tarea = await GetById(id);
+            if(tarea != null)
+                await TareaService.Delete(tarea);
         }
     }
 }

@@ -39,33 +39,32 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Usuario> GetById(int id)
+        public async Task<Usuario?> GetById(int id)
         {
             return await UsuarioService.GetById(id);
         }
 
         [HttpPost]
         [Route("CreateUsuario")]
-        public async Task<Usuario> CreateUsuario(string user)
+        public async Task<Usuario> CreateUsuario(Usuario usuario)
         {
-            Usuario usuario = JsonConvert.DeserializeObject<Usuario>(user);
             return await UsuarioService.Create(usuario);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateUsuario")]
-        public async Task<Usuario> UpdateUsuario(string user)
+        public async Task<Usuario> UpdateUsuario(Usuario usuario)
         {
-            Usuario usuario = JsonConvert.DeserializeObject<Usuario>(user);
             return await UsuarioService.Update(usuario);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteUsuario")]
-        public async void DeleteUsuario(string user)
+        public async Task DeleteUsuario(int id)
         {
-            Usuario usuario = JsonConvert.DeserializeObject<Usuario>(user);
-            UsuarioService.Delete(usuario);
+            Usuario? usuario = await GetById(id);
+            if(usuario != null)
+                await UsuarioService.Delete(usuario);
         }
     }
 }

@@ -32,7 +32,6 @@ namespace PegasusV1.Controllers
         public async Task<List<IntegrantesEventos>> GetIntegrantesEventossForCombo(string? query = null)
         {
             Expression<Func<IntegrantesEventos, bool>> ex = null;
-            Expression<Func<IntegrantesEventos, bool>> i = null;
             if (!string.IsNullOrEmpty(query))
             {
                 var p = Expression.Parameter(typeof(IntegrantesEventos), query);
@@ -60,7 +59,7 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<IntegrantesEventos> GetById(int id)
+        public async Task<IntegrantesEventos?> GetById(int id)
         {
             IntegrantesEventos IntegrantesEventos = await IntegrantesEventosService.GetById(id);
 
@@ -82,26 +81,25 @@ namespace PegasusV1.Controllers
 
         [HttpPost]
         [Route("CreateIntegrantesEventos")]
-        public async Task<IntegrantesEventos> CreateIntegrantesEventos(string integrantesEventoss)
+        public async Task<IntegrantesEventos> CreateIntegrantesEventos(IntegrantesEventos integrantesEventos)
         {
-            IntegrantesEventos IntegrantesEventos = JsonConvert.DeserializeObject<IntegrantesEventos>(integrantesEventoss);
-            return await IntegrantesEventosService.Create(IntegrantesEventos);
+            return await IntegrantesEventosService.Create(integrantesEventos);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateIntegrantesEventos")]
-        public async Task<IntegrantesEventos> UpdateIntegrantesEventos(string integrantesEventoss)
+        public async Task<IntegrantesEventos> UpdateIntegrantesEventos(IntegrantesEventos integrantesEventos)
         {
-            IntegrantesEventos IntegrantesEventos = JsonConvert.DeserializeObject<IntegrantesEventos>(integrantesEventoss);
-            return await IntegrantesEventosService.Update(IntegrantesEventos);
+            return await IntegrantesEventosService.Update(integrantesEventos);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteIntegrantesEventos")]
-        public async void DeleteIntegrantesEventos(string integrantesEventoss)
+        public async Task DeleteIntegrantesEventos(int id)
         {
-            IntegrantesEventos IntegrantesEventos = JsonConvert.DeserializeObject<IntegrantesEventos>(integrantesEventoss);
-            IntegrantesEventosService.Delete(IntegrantesEventos);
+            IntegrantesEventos? integrantesEventos = await GetById(id);
+            if(integrantesEventos != null)
+                await IntegrantesEventosService.Delete(integrantesEventos);
         }
     }
 }

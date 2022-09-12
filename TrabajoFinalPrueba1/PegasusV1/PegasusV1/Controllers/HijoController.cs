@@ -29,7 +29,6 @@ namespace PegasusV1.Controllers
         public async Task<List<Hijo>> GetHijosForCombo(string? query = null)
         {
             Expression<Func<Hijo, bool>> ex = null;
-            Expression<Func<Hijo, bool>> i = null;
             if (!string.IsNullOrEmpty(query))
             {
                 var p = Expression.Parameter(typeof(Hijo), query);
@@ -57,7 +56,7 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Hijo> GetById(int id)
+        public async Task<Hijo?> GetById(int id)
         {
             Hijo Hijo = await HijoService.GetById(id);
 
@@ -79,26 +78,25 @@ namespace PegasusV1.Controllers
 
         [HttpPost]
         [Route("CreateHijo")]
-        public async Task<Hijo> CreateHijo(string Hijos)
+        public async Task<Hijo> CreateHijo(Hijo hijo)
         {
-            Hijo Hijo = JsonConvert.DeserializeObject<Hijo>(Hijos);
-            return await HijoService.Create(Hijo);
+            return await HijoService.Create(hijo);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateHijo")]
-        public async Task<Hijo> UpdateHijo(string Hijos)
+        public async Task<Hijo> UpdateHijo(Hijo hijo)
         {
-            Hijo Hijo = JsonConvert.DeserializeObject<Hijo>(Hijos);
-            return await HijoService.Update(Hijo);
+            return await HijoService.Update(hijo);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteHijo")]
-        public async void DeleteHijo(string Hijos)
+        public async Task DeleteHijo(int id)
         {
-            Hijo Hijo = JsonConvert.DeserializeObject<Hijo>(Hijos);
-            HijoService.Delete(Hijo);
+            Hijo? hijo = await GetById(id);
+            if(hijo != null)
+                await HijoService.Delete(hijo);
         }
     }
 }

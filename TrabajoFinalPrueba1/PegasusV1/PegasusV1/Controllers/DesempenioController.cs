@@ -29,7 +29,6 @@ namespace PegasusV1.Controllers
         public async Task<List<Desempenio>> GetDesempeniosForCombo(string? query = null)
         {
             Expression<Func<Desempenio, bool>> ex = null;
-            Expression<Func<Desempenio, bool>> i = null;
             if (!string.IsNullOrEmpty(query))
             {
                 var p = Expression.Parameter(typeof(Desempenio), query);
@@ -37,9 +36,9 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<Desempenio, bool>>)e;
             }
 
-            List<Desempenio> Desempenios = await DesempenioService.GetForCombo(ex);
+            List<Desempenio> desempenios = await DesempenioService.GetForCombo(ex);
 
-            foreach (Desempenio Desempenio in Desempenios)
+            foreach (Desempenio Desempenio in desempenios)
             {
                 if (Desempenio.Id_Alumno.HasValue)
                 {
@@ -47,48 +46,47 @@ namespace PegasusV1.Controllers
                 }
             }
 
-            return Desempenios;
+            return desempenios;
         }
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Desempenio> GetById(int id)
+        public async Task<Desempenio?> GetById(int id)
         {
-            Desempenio Desempenio = await DesempenioService.GetById(id);
+            Desempenio desempenio = await DesempenioService.GetById(id);
 
-            if (Desempenio != null)
+            if (desempenio != null)
             {
-                if (Desempenio.Id_Alumno.HasValue)
+                if (desempenio.Id_Alumno.HasValue)
                 {
-                    Desempenio.Alumno = await UsuarioService.GetById(Desempenio.Id_Alumno.Value);
+                    desempenio.Alumno = await UsuarioService.GetById(desempenio.Id_Alumno.Value);
                 }
             }
 
-            return Desempenio;
+            return desempenio;
         }
 
         [HttpPost]
         [Route("CreateDesempenio")]
-        public async Task<Desempenio> CreateDesempenio(string desempenio)
+        public async Task<Desempenio> CreateDesempenio(Desempenio desempenio)
         {
-            Desempenio Desempenio = JsonConvert.DeserializeObject<Desempenio>(desempenio);
-            return await DesempenioService.Create(Desempenio);
+            return await DesempenioService.Create(desempenio);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateDesempenio")]
-        public async Task<Desempenio> UpdateDesempenio(string desempenio)
+        public async Task<Desempenio> UpdateDesempenio(Desempenio desempenio)
         {
-            Desempenio Desempenio = JsonConvert.DeserializeObject<Desempenio>(desempenio);
-            return await DesempenioService.Update(Desempenio);
+            return await DesempenioService.Update(desempenio);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteDesempenio")]
-        public async void DeleteDesempenio(string desempenio)
+        public async Task DeleteDesempenio(int id)
         {
-            Desempenio Desempenio = JsonConvert.DeserializeObject<Desempenio>(desempenio);
-            DesempenioService.Delete(Desempenio);
+            Desempenio? desempenio = await GetById(id);
+            if(desempenio != null)
+                await DesempenioService.Delete(desempenio);
         }
     }
 }
