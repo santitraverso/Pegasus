@@ -93,7 +93,7 @@ namespace PegasusV1.Controllers
             return await TareaService.Update(tarea);
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeleteTarea")]
         public async Task DeleteTarea(int id)
         {

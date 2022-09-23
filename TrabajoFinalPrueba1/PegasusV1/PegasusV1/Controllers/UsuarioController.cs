@@ -58,7 +58,7 @@ namespace PegasusV1.Controllers
             return await UsuarioService.Update(usuario);
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeleteUsuario")]
         public async Task DeleteUsuario(int id)
         {

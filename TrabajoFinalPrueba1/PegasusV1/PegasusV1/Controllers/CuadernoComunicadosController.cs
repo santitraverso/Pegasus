@@ -25,8 +25,8 @@ namespace PegasusV1.Controllers
         }
 
         [HttpGet]
-        [Route("GetCuadernoComunicadossForCombo")]
-        public async Task<List<CuadernoComunicados>> GetCuadernoComunicadossForCombo(string? query = null)
+        [Route("GetCuadernoComunicadosForCombo")]
+        public async Task<List<CuadernoComunicados>> GetCuadernoComunicadosForCombo(string? query = null)
         {
             Expression<Func<CuadernoComunicados, bool>> ex = null;
             if (!string.IsNullOrEmpty(query))
@@ -90,7 +90,7 @@ namespace PegasusV1.Controllers
             return await CuadernoComunicadosService.Update(cuadernoComunicados);
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeleteCuadernoComunicados")]
         public async Task DeleteCuadernoComunicados(int id)
         {

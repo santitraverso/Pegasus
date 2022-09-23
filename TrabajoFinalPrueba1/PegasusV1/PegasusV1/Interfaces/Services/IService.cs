@@ -12,6 +12,6 @@ namespace PegasusV1.Interfaces
 
         Task Delete(T entity);
 
-        Task<T> GetById(int id, Expression<Func<T, object>>[]? includes = null);
+        Task<T?> GetById(int id, Expression<Func<T, object>>[]? includes = null);
     }
 }

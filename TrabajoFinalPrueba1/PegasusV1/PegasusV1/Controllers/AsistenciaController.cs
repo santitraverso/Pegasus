@@ -94,7 +94,7 @@ namespace PegasusV1.Controllers
             return await AsistenciaService.Update(asistencia);
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeleteAsistencia")]
         public async Task DeleteAsistencia(int id)
         {

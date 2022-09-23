@@ -93,7 +93,7 @@ namespace PegasusV1.Controllers
             return await IntegrantesEventosService.Update(integrantesEventos);
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeleteIntegrantesEventos")]
         public async Task DeleteIntegrantesEventos(int id)
         {

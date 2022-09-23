@@ -13,7 +13,7 @@ namespace PegasusV1.Services
             Repository = repository;
         }
 
-        public async Task<T> GetById(int id, Expression<Func<T, object>>[]? includes = null)
+        public async Task<T?> GetById(int id, Expression<Func<T, object>>[]? includes = null)
         {
             string query = $"Id == {id}";
             var p = Expression.Parameter(typeof(T), query);

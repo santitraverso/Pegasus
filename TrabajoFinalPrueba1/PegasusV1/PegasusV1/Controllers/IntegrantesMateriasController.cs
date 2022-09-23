@@ -28,8 +28,8 @@ namespace PegasusV1.Controllers
         }
 
         [HttpGet]
-        [Route("GetIntegrantesMateriassForCombo")]
-        public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriassForCombo(string? query = null)
+        [Route("GetIntegrantesMateriasForCombo")]
+        public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(string? query = null)
         {
             Expression<Func<IntegrantesMaterias, bool>> ex = null;
             Expression<Func<IntegrantesMaterias, bool>> i = null;
@@ -94,7 +94,7 @@ namespace PegasusV1.Controllers
             return await IntegrantesMateriasService.Update(integrantesMaterias);
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeleteIntegrantesMaterias")]
         public async Task DeleteIntegrantesMaterias(int id)
         {

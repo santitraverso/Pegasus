@@ -80,7 +80,7 @@ namespace PegasusV1.Controllers
             return await PagoService.Update(pago);
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeletePago")]
         public async Task DeletePago(int id)
         {

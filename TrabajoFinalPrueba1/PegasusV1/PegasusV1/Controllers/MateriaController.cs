@@ -58,7 +58,7 @@ namespace PegasusV1.Controllers
             return await MateriaService.Update(materia);
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeleteMateria")]
         public async Task DeleteMateria(int id)
         {

@@ -26,16 +26,10 @@ namespace PegasusV1.DbDataContext
             Configuration = configuration;
         }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         { 
             options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
         }
-
-        //No me dio bola a esto
-      /*  protected internal virtual void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<CuadernoComunicados>()
-                .ToTable("CUADERNO_COMUNICADOS");
-        }*/
     }
 }

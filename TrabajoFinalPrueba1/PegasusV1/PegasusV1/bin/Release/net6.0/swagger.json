@@ -132,7 +132,7 @@
       }
     },
     "/Asistencia/DeleteAsistencia": {
-      "delete": {
+      "get": {
         "tags": [
           "Asistencia"
         ],
@@ -278,7 +278,7 @@
       }
     },
     "/Contactos/DeleteContacto": {
-      "delete": {
+      "get": {
         "tags": [
           "Contactos"
         ],
@@ -297,7 +297,7 @@
         }
       }
     },
-    "/CuadernoComunicados/GetCuadernoComunicadossForCombo": {
+    "/CuadernoComunicados/GetCuadernoComunicadosForCombo": {
       "get": {
         "tags": [
           "CuadernoComunicados"
@@ -424,7 +424,7 @@
       }
     },
     "/CuadernoComunicados/DeleteCuadernoComunicados": {
-      "delete": {
+      "get": {
         "tags": [
           "CuadernoComunicados"
         ],
@@ -570,7 +570,7 @@
       }
     },
     "/Desempenio/DeleteDesempenio": {
-      "delete": {
+      "get": {
         "tags": [
           "Desempenio"
         ],
@@ -716,7 +716,7 @@
       }
     },
     "/Evento/DeleteEvento": {
-      "delete": {
+      "get": {
         "tags": [
           "Evento"
         ],
@@ -862,7 +862,7 @@
       }
     },
     "/Hijo/DeleteHijo": {
-      "delete": {
+      "get": {
         "tags": [
           "Hijo"
         ],
@@ -1008,7 +1008,7 @@
       }
     },
     "/IntegrantesEventos/DeleteIntegrantesEventos": {
-      "delete": {
+      "get": {
         "tags": [
           "IntegrantesEventos"
         ],
@@ -1027,7 +1027,7 @@
         }
       }
     },
-    "/IntegrantesMaterias/GetIntegrantesMateriassForCombo": {
+    "/IntegrantesMaterias/GetIntegrantesMateriasForCombo": {
       "get": {
         "tags": [
           "IntegrantesMaterias"
@@ -1154,7 +1154,7 @@
       }
     },
     "/IntegrantesMaterias/DeleteIntegrantesMaterias": {
-      "delete": {
+      "get": {
         "tags": [
           "IntegrantesMaterias"
         ],
@@ -1300,7 +1300,7 @@
       }
     },
     "/Materia/DeleteMateria": {
-      "delete": {
+      "get": {
         "tags": [
           "Materia"
         ],
@@ -1446,7 +1446,7 @@
       }
     },
     "/Pago/DeletePago": {
-      "delete": {
+      "get": {
         "tags": [
           "Pago"
         ],
@@ -1592,7 +1592,7 @@
       }
     },
     "/Tarea/DeleteTarea": {
-      "delete": {
+      "get": {
         "tags": [
           "Tarea"
         ],
@@ -1738,7 +1738,7 @@
       }
     },
     "/Usuario/DeleteUsuario": {
-      "delete": {
+      "get": {
         "tags": [
           "Usuario"
         ],

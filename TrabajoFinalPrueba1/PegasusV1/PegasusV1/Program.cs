@@ -28,13 +28,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-/*app.Use(async (context, next) =>
-{
-    context.Response.Headers.Add("Ocp-Apim-Subscription-Key", "713d7a873dfc4b8ea601c345fa6c8ff1");
-    context.Request.Headers.Add("Ocp-Apim-Subscription-Key", "713d7a873dfc4b8ea601c345fa6c8ff1");
-    await next();
-});*/
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -7,22 +7,22 @@ namespace PegasusV1.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly DataContext _dbContext;
+        protected readonly IConfiguration _configuration;
 
-        public Repository(DataContext dbContext)
+        public Repository(IConfiguration configuration)
         {
-            _dbContext = dbContext;
+            _configuration = configuration;
         }
 
         public async Task<T> Create(T entity)
         {
-            using (var dbContext = _dbContext)
+            using (DataContext dbContext = new DataContext(_configuration))
             {
-                DbSet<T> set = _dbContext.Set<T>();
+                DbSet<T> set = dbContext.Set<T>();
 
                 set.Add(entity);
 
-                await _dbContext.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
 
                 return entity;
             }
@@ -30,13 +30,13 @@ namespace PegasusV1.Repositories
 
         public async Task<T> Update(T entity)
         {
-            using (var dbContext = _dbContext)
+            using (DataContext dbContext = new DataContext(_configuration))
             {
-                DbSet<T> set = _dbContext.Set<T>();
+                DbSet<T> set = dbContext.Set<T>();
 
                 set.Update(entity);
 
-                await _dbContext.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
 
                 return entity;
             }
@@ -44,51 +44,57 @@ namespace PegasusV1.Repositories
 
         public async Task Delete(T entity)
         {
-            using (var dbContext = _dbContext)
+            using (DataContext dbContext = new DataContext(_configuration))
             {
-                DbSet<T> set = _dbContext.Set<T>();
+                DbSet<T> set = dbContext.Set<T>();
 
                 set.Remove(entity);
-                await _dbContext.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
             }
         }
 
 
         public async Task<List<T>> GetForCombo(Expression<Func<T, bool>>? predicate = null, Expression<Func<T, object>>[]? includes = null)
         {
-            IQueryable<T>? query = _dbContext.Set<T>().AsQueryable();
-            
-            if (predicate != null)
+            using (DataContext dbContext = new DataContext(_configuration))
             {
-                query = query.Where(predicate); 
-            }
+                IQueryable<T>? query = dbContext.Set<T>().AsQueryable();
 
-            if(includes != null)
-            {
-                foreach(var include in includes)
+                if (predicate != null)
                 {
-                    query = query.Include(include);
+                    query = query.Where(predicate);
                 }
-            }
 
-            return await query.ToListAsync();
+                if (includes != null)
+                {
+                    foreach (var include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
+
+                return await query.ToListAsync();
+            }
         }
 
-        public async Task<T> GetById(Expression<Func<T, bool>>? predicate = null, Expression<Func<T, object>>[]? includes = null)
+        public async Task<T?> GetById(Expression<Func<T, bool>>? predicate = null, Expression<Func<T, object>>[]? includes = null)
         {
-            IQueryable<T>? query = _dbContext.Set<T>().AsQueryable();
-
-            query = query.Where(predicate);
-
-            if (includes != null)
+            using (DataContext dbContext = new DataContext(_configuration))
             {
-                foreach (var include in includes)
-                {
-                    query = query.Include(include);
-                }
-            }
+                IQueryable<T>? query = dbContext.Set<T>().AsQueryable();
 
-            return await query.SingleOrDefaultAsync();
+                query = query.Where(predicate);
+
+                if (includes != null)
+                {
+                    foreach (var include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
+
+                return await query.SingleOrDefaultAsync();
+            }
         }
     }
 }

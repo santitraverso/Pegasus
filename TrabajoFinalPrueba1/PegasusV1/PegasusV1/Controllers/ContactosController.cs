@@ -58,7 +58,7 @@ namespace PegasusV1.Controllers
             return await ContactoService.Update(contacto);
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeleteContacto")]
         public async void DeleteContacto(int id)
         {

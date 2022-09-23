@@ -90,7 +90,7 @@ namespace PegasusV1.Controllers
             return await HijoService.Update(hijo);
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeleteHijo")]
         public async Task DeleteHijo(int id)
         {

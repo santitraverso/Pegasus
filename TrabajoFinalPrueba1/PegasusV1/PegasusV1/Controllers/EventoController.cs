@@ -58,7 +58,7 @@ namespace PegasusV1.Controllers
             return await EventoService.Update(evento);
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeleteEvento")]
         public async Task DeleteEvento(int id)
         {
