@@ -97,7 +97,7 @@ namespace PegasusV1.Controllers
         [Route("DeleteTarea")]
         public async Task DeleteTarea(int id)
         {
-            Tarea? tarea = await GetById(id);
+            Tarea? tarea = await TareaService.GetById(id);
             if(tarea != null)
                 await TareaService.Delete(tarea);
         }

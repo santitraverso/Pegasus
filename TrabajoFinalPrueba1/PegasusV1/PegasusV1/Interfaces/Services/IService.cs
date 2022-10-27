@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using PegasusV1.Entities;
+using System.Linq.Expressions;
 
 namespace PegasusV1.Interfaces
 {
@@ -13,5 +14,9 @@ namespace PegasusV1.Interfaces
         Task Delete(T entity);
 
         Task<T?> GetById(int id, Expression<Func<T, object>>[]? includes = null);
+
+        Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(Expression<Func<IntegrantesMaterias, bool>>? predicate = null);
+
+        Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null);
     }
 }

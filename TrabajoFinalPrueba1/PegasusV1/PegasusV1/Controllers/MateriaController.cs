@@ -62,7 +62,7 @@ namespace PegasusV1.Controllers
         [Route("DeleteMateria")]
         public async Task DeleteMateria(int id)
         {
-            Materia? materia = await GetById(id);
+            Materia? materia = await MateriaService.GetById(id);
             if(materia != null)
                 await MateriaService.Delete(materia);
         }

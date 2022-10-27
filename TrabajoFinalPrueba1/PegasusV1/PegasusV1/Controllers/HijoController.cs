@@ -94,7 +94,7 @@ namespace PegasusV1.Controllers
         [Route("DeleteHijo")]
         public async Task DeleteHijo(int id)
         {
-            Hijo? hijo = await GetById(id);
+            Hijo? hijo = await HijoService.GetById(id);
             if(hijo != null)
                 await HijoService.Delete(hijo);
         }

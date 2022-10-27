@@ -1,4 +1,5 @@
-﻿using PegasusV1.Interfaces;
+﻿using PegasusV1.Entities;
+using PegasusV1.Interfaces;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 
@@ -26,6 +27,16 @@ namespace PegasusV1.Services
         public async Task<List<T>> GetForCombo(Expression<Func<T, bool>>? predicate = null, Expression<Func<T, object>>[]? includes = null)
         {
             return await Repository.GetForCombo(predicate, includes);
+        }
+
+        public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(Expression<Func<IntegrantesMaterias, bool>>? predicate = null)
+        {
+            return await Repository.GetIntegrantesMateriasForCombo(predicate);
+        }
+
+        public async Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null)
+        {
+            return await Repository.GetIntegrantesEventosForCombo(predicate);
         }
 
         public async Task<T> Create(T entity)

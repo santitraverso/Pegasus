@@ -39,20 +39,7 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<IntegrantesEventos, bool>>)e;
             }
 
-            List<IntegrantesEventos> IntegrantesEventoss = await IntegrantesEventosService.GetForCombo(ex);
-
-            foreach (IntegrantesEventos IntegrantesEventos in IntegrantesEventoss)
-            {
-                if (IntegrantesEventos.Id_Evento.HasValue)
-                {
-                    IntegrantesEventos.Evento = await EventoService.GetById(IntegrantesEventos.Id_Evento.Value);
-                }
-
-                if (IntegrantesEventos.Id_Usuario.HasValue)
-                {
-                    IntegrantesEventos.Usuario = await UsuarioService.GetById(IntegrantesEventos.Id_Usuario.Value);
-                }
-            }
+            List<IntegrantesEventos> IntegrantesEventoss = await IntegrantesEventosService.GetIntegrantesEventosForCombo(ex);
 
             return IntegrantesEventoss;
         }
@@ -97,7 +84,7 @@ namespace PegasusV1.Controllers
         [Route("DeleteIntegrantesEventos")]
         public async Task DeleteIntegrantesEventos(int id)
         {
-            IntegrantesEventos? integrantesEventos = await GetById(id);
+            IntegrantesEventos? integrantesEventos = await IntegrantesEventosService.GetById(id);
             if(integrantesEventos != null)
                 await IntegrantesEventosService.Delete(integrantesEventos);
         }

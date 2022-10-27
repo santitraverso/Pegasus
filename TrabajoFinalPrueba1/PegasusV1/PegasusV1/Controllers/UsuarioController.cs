@@ -62,7 +62,7 @@ namespace PegasusV1.Controllers
         [Route("DeleteUsuario")]
         public async Task DeleteUsuario(int id)
         {
-            Usuario? usuario = await GetById(id);
+            Usuario? usuario = await UsuarioService.GetById(id);
             if(usuario != null)
                 await UsuarioService.Delete(usuario);
         }

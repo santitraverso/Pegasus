@@ -62,7 +62,7 @@ namespace PegasusV1.Controllers
         [Route("DeleteEvento")]
         public async Task DeleteEvento(int id)
         {
-            Evento? evento = await GetById(id);
+            Evento? evento = await EventoService.GetById(id);
             if (evento != null) 
                 await EventoService.Delete(evento);
         }

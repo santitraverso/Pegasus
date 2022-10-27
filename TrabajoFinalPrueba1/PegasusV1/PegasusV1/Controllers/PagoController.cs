@@ -84,7 +84,7 @@ namespace PegasusV1.Controllers
         [Route("DeletePago")]
         public async Task DeletePago(int id)
         {
-            Pago? pago = await GetById(id);
+            Pago? pago = await PagoService.GetById(id);
             if(pago != null)
                 await PagoService.Delete(pago);
         }

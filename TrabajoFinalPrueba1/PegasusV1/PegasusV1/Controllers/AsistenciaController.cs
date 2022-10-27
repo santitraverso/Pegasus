@@ -98,7 +98,7 @@ namespace PegasusV1.Controllers
         [Route("DeleteAsistencia")]
         public async Task DeleteAsistencia(int id)
         {
-            Asistencia? asistencia = await GetById(id);
+            Asistencia? asistencia = await AsistenciaService.GetById(id);
             if(asistencia != null)
                 await AsistenciaService.Delete(asistencia);
         }

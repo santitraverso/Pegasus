@@ -94,7 +94,7 @@ namespace PegasusV1.Controllers
         [Route("DeleteCuadernoComunicados")]
         public async Task DeleteCuadernoComunicados(int id)
         {
-            CuadernoComunicados? cuadernoComunicados = await GetById(id);
+            CuadernoComunicados? cuadernoComunicados = await CuadernoComunicadosService.GetById(id);
             if (cuadernoComunicados != null)
                 await CuadernoComunicadosService.Delete(cuadernoComunicados);
         }

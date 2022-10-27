@@ -36,24 +36,12 @@ namespace PegasusV1.Controllers
             if (!string.IsNullOrEmpty(query))
             {
                 var p = Expression.Parameter(typeof(IntegrantesMaterias), query);
+                var p2 = Expression.Parameter(typeof(Materia), query);
                 var e = (Expression)DynamicExpressionParser.ParseLambda(new[] { p }, null, query);
                 ex = (Expression<Func<IntegrantesMaterias, bool>>)e;
             }
 
-            List<IntegrantesMaterias> IntegrantesMateriass = await IntegrantesMateriasService.GetForCombo(ex);
-
-            foreach (IntegrantesMaterias IntegrantesMaterias in IntegrantesMateriass)
-            {
-                if (IntegrantesMaterias.Id_Materia.HasValue)
-                {
-                    IntegrantesMaterias.Materia = await MateriaService.GetById(IntegrantesMaterias.Id_Materia.Value);
-                }
-
-                if (IntegrantesMaterias.Id_Usuario.HasValue)
-                {
-                    IntegrantesMaterias.Usuario = await UsuarioService.GetById(IntegrantesMaterias.Id_Usuario.Value);
-                }
-            }
+            List<IntegrantesMaterias> IntegrantesMateriass = await IntegrantesMateriasService.GetIntegrantesMateriasForCombo(ex);
 
             return IntegrantesMateriass;
         }
@@ -98,7 +86,7 @@ namespace PegasusV1.Controllers
         [Route("DeleteIntegrantesMaterias")]
         public async Task DeleteIntegrantesMaterias(int id)
         {
-            IntegrantesMaterias? integrantesMaterias = await GetById(id);
+            IntegrantesMaterias? integrantesMaterias = await IntegrantesMateriasService.GetById(id);
             if(integrantesMaterias != null)
                 await IntegrantesMateriasService.Delete(integrantesMaterias);
         }

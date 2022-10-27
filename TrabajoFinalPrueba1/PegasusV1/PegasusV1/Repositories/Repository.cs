@@ -2,6 +2,7 @@
 using PegasusV1.Interfaces;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using PegasusV1.Entities;
 
 namespace PegasusV1.Repositories
 {
@@ -71,6 +72,43 @@ namespace PegasusV1.Repositories
                     {
                         query = query.Include(include);
                     }
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+
+        public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(Expression<Func<IntegrantesMaterias, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<IntegrantesMaterias>? query = dbContext.Set<IntegrantesMaterias>().AsQueryable();
+
+                query = query.Include(x => x.Materia);
+                query = query.Include(x => x.Usuario);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<IntegrantesEventos>? query = dbContext.Set<IntegrantesEventos>().AsQueryable();
+
+                query = query.Include(x => x.Evento);
+                query = query.Include(x => x.Usuario);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
                 }
 
                 return await query.ToListAsync();

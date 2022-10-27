@@ -84,7 +84,7 @@ namespace PegasusV1.Controllers
         [Route("DeleteDesempenio")]
         public async Task DeleteDesempenio(int id)
         {
-            Desempenio? desempenio = await GetById(id);
+            Desempenio? desempenio = await DesempenioService.GetById(id);
             if(desempenio != null)
                 await DesempenioService.Delete(desempenio);
         }
