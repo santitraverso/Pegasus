@@ -36,20 +36,7 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<CuadernoComunicados, bool>>)e;
             }
 
-            List<CuadernoComunicados> CuadernoComunicadoss = await CuadernoComunicadosService.GetForCombo(ex);
-
-            foreach (CuadernoComunicados CuadernoComunicados in CuadernoComunicadoss)
-            {
-                if (CuadernoComunicados.Id_Profesor.HasValue)
-                {
-                    CuadernoComunicados.Profesor = await UsuarioService.GetById(CuadernoComunicados.Id_Profesor.Value);
-                }
-
-                if (CuadernoComunicados.Id_Alumno.HasValue)
-                {
-                    CuadernoComunicados.Alumno = await UsuarioService.GetById(CuadernoComunicados.Id_Alumno.Value);
-                }
-            }
+            List<CuadernoComunicados> CuadernoComunicadoss = await CuadernoComunicadosService.GetCuadernoComunicadosForCombo(ex);
 
             return CuadernoComunicadoss;
         }

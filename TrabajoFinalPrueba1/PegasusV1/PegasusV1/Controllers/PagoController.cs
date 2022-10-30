@@ -36,15 +36,7 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<Pago, bool>>)e;
             }
 
-            List<Pago> Pagos = await PagoService.GetForCombo(ex);
-
-            foreach (Pago Pago in Pagos)
-            {
-                if (Pago.Id_Alumno.HasValue)
-                {
-                    Pago.Alumno = await UsuarioService.GetById(Pago.Id_Alumno.Value);
-                }
-            }
+            List<Pago> Pagos = await PagoService.GetPagoForCombo(ex);
 
             return Pagos;
         }

@@ -39,20 +39,7 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<Tarea, bool>>)e;
             }
 
-            List<Tarea> Tareas = await TareaService.GetForCombo(ex);
-
-            foreach (Tarea Tarea in Tareas)
-            {
-                if (Tarea.Id_Materia.HasValue)
-                {
-                    Tarea.Materia = await MateriaService.GetById(Tarea.Id_Materia.Value);
-                }
-
-                if (Tarea.Id_Alumno.HasValue)
-                {
-                    Tarea.Alumno = await UsuarioService.GetById(Tarea.Id_Alumno.Value);
-                }
-            }
+            List<Tarea> Tareas = await TareaService.GetTareaForCombo(ex);
 
             return Tareas;
         }

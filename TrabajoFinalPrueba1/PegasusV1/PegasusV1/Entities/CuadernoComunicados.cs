@@ -7,12 +7,10 @@ namespace PegasusV1.Entities
     {
         public int Id { get; set; }        
 
-        [NotMapped]
         [ForeignKey("Id_Alumno")]
         public Usuario? Alumno { get; set; }
         public int? Id_Alumno { get; set; }
 
-        [NotMapped]
         [ForeignKey("Id_Profesor")]
         public Usuario? Profesor { get; set; }
         public int? Id_Profesor { get; set; }

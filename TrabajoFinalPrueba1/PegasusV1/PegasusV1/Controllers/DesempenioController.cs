@@ -36,15 +36,7 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<Desempenio, bool>>)e;
             }
 
-            List<Desempenio> desempenios = await DesempenioService.GetForCombo(ex);
-
-            foreach (Desempenio Desempenio in desempenios)
-            {
-                if (Desempenio.Id_Alumno.HasValue)
-                {
-                    Desempenio.Alumno = await UsuarioService.GetById(Desempenio.Id_Alumno.Value);
-                }
-            }
+            List<Desempenio> desempenios = await DesempenioService.GetDesempenioForCombo(ex);
 
             return desempenios;
         }

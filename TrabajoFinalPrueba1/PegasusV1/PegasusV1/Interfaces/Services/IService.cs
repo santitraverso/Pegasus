@@ -18,5 +18,17 @@ namespace PegasusV1.Interfaces
         Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(Expression<Func<IntegrantesMaterias, bool>>? predicate = null);
 
         Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null);
+
+        Task<List<Asistencia>> GetAsistenciasForCombo(Expression<Func<Asistencia, bool>>? predicate = null);
+
+        Task<List<CuadernoComunicados>> GetCuadernoComunicadosForCombo(Expression<Func<CuadernoComunicados, bool>>? predicate = null);
+
+        Task<List<Desempenio>> GetDesempenioForCombo(Expression<Func<Desempenio, bool>>? predicate = null);
+
+        Task<List<Hijo>> GetHijoForCombo(Expression<Func<Hijo, bool>>? predicate = null);
+
+        Task<List<Pago>> GetPagoForCombo(Expression<Func<Pago, bool>>? predicate = null);
+
+        Task<List<Tarea>> GetTareaForCombo(Expression<Func<Tarea, bool>>? predicate = null);
     }
 }

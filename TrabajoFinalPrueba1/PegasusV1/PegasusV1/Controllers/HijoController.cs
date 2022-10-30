@@ -36,20 +36,7 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<Hijo, bool>>)e;
             }
 
-            List<Hijo> Hijos = await HijoService.GetForCombo(ex);
-
-            foreach (Hijo Hijo in Hijos)
-            {
-                if (Hijo.Id_Hijo.HasValue)
-                {
-                    Hijo.HijoUsuario = await UsuarioService.GetById(Hijo.Id_Hijo.Value);
-                }
-
-                if (Hijo.Id_Padre.HasValue)
-                {
-                    Hijo.Padre = await UsuarioService.GetById(Hijo.Id_Padre.Value);
-                }
-            }
+            List<Hijo> Hijos = await HijoService.GetHijoForCombo(ex);
 
             return Hijos;
         }

@@ -39,6 +39,36 @@ namespace PegasusV1.Services
             return await Repository.GetIntegrantesEventosForCombo(predicate);
         }
 
+        public async Task<List<Asistencia>> GetAsistenciasForCombo(Expression<Func<Asistencia, bool>>? predicate = null)
+        {
+            return await Repository.GetAsistenciasForCombo(predicate);
+        }
+
+        public async Task<List<CuadernoComunicados>> GetCuadernoComunicadosForCombo(Expression<Func<CuadernoComunicados, bool>>? predicate = null)
+        {
+            return await Repository.GetCuadernoComunicadosForCombo(predicate);
+        }
+
+        public async Task<List<Desempenio>> GetDesempenioForCombo(Expression<Func<Desempenio, bool>>? predicate = null)
+        {
+            return await Repository.GetDesempenioForCombo(predicate);
+        }
+
+        public async Task<List<Hijo>> GetHijoForCombo(Expression<Func<Hijo, bool>>? predicate = null)
+        {
+            return await Repository.GetHijoForCombo(predicate);
+        }
+
+        public async Task<List<Pago>> GetPagoForCombo(Expression<Func<Pago, bool>>? predicate = null)
+        {
+            return await Repository.GetPagoForCombo(predicate);
+        }
+
+        public async Task<List<Tarea>> GetTareaForCombo(Expression<Func<Tarea, bool>>? predicate = null)
+        {
+            return await Repository.GetTareaForCombo(predicate);
+        }
+
         public async Task<T> Create(T entity)
         {
             return await Repository.Create(entity);

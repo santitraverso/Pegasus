@@ -115,6 +115,112 @@ namespace PegasusV1.Repositories
             }
         }
 
+        public async Task<List<Asistencia>> GetAsistenciasForCombo(Expression<Func<Asistencia, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Asistencia>? query = dbContext.Set<Asistencia>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+                query = query.Include(x => x.Materia);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<CuadernoComunicados>> GetCuadernoComunicadosForCombo(Expression<Func<CuadernoComunicados, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<CuadernoComunicados>? query = dbContext.Set<CuadernoComunicados>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+                query = query.Include(x => x.Profesor);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<Desempenio>> GetDesempenioForCombo(Expression<Func<Desempenio, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Desempenio>? query = dbContext.Set<Desempenio>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<Hijo>> GetHijoForCombo(Expression<Func<Hijo, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Hijo>? query = dbContext.Set<Hijo>().AsQueryable();
+
+                query = query.Include(x => x.Padre);
+                query = query.Include(x => x.HijoUsuario);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<Pago>> GetPagoForCombo(Expression<Func<Pago, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Pago>? query = dbContext.Set<Pago>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<Tarea>> GetTareaForCombo(Expression<Func<Tarea, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Tarea>? query = dbContext.Set<Tarea>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+                query = query.Include(x => x.Materia);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
         public async Task<T?> GetById(Expression<Func<T, bool>>? predicate = null, Expression<Func<T, object>>[]? includes = null)
         {
             using (DataContext dbContext = new DataContext(_configuration))

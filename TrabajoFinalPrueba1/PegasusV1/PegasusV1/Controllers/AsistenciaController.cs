@@ -40,21 +40,8 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<Asistencia, bool>>)e;
             }
 
-            List<Asistencia> asistencias = await AsistenciaService.GetForCombo(ex);
-
-            foreach(Asistencia asistencia in asistencias)
-            {
-                 if (asistencia.Id_Materia.HasValue)
-                 {
-                     asistencia.Materia = await MateriaService.GetById(asistencia.Id_Materia.Value);
-                 }
-
-                 if (asistencia.Id_Alumno.HasValue)
-                 {
-                     asistencia.Alumno = await UsuarioService.GetById(asistencia.Id_Alumno.Value);
-                 }
-            }
-           
+            List<Asistencia> asistencias = await AsistenciaService.GetAsistenciasForCombo(ex);
+                       
             return asistencias;
         }
 
