@@ -66,5 +66,26 @@ namespace PegasusV1.Controllers
             if (evento != null) 
                 await EventoService.Delete(evento);
         }
+
+        [HttpPut]
+        [Route("CreateAllEvento")]
+        public async Task<List<Evento>> CreateAllEvento(List<Evento> eventos)
+        {
+            return await EventoService.CreateAll(eventos);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllEvento")]
+        public async Task<List<Evento>> UpdateAllEvento(List<Evento> eventos)
+        {
+            return await EventoService.UpdateAll(eventos);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllEvento")]
+        public async Task DeleteAllEvento(List<Evento> eventos)
+        {
+            await EventoService.DeleteAll(eventos);
+        }
     }
 }

@@ -13,6 +13,28 @@ namespace PegasusV1.Repositories
         public Repository(IConfiguration configuration)
         {
             _configuration = configuration;
+        }        
+        public async Task<List<T>> GetForCombo(Expression<Func<T, bool>>? predicate = null, Expression<Func<T, object>>[]? includes = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<T>? query = dbContext.Set<T>().AsQueryable();
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                if (includes != null)
+                {
+                    foreach (var include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
+
+                return await query.ToListAsync();
+            }
         }
 
         public async Task<T> Create(T entity)
@@ -54,30 +76,54 @@ namespace PegasusV1.Repositories
             }
         }
 
-
-        public async Task<List<T>> GetForCombo(Expression<Func<T, bool>>? predicate = null, Expression<Func<T, object>>[]? includes = null)
+        public async Task<List<T>> CreateAll(List<T> entities)
         {
             using (DataContext dbContext = new DataContext(_configuration))
             {
-                IQueryable<T>? query = dbContext.Set<T>().AsQueryable();
+                DbSet<T> set = dbContext.Set<T>();
 
-                if (predicate != null)
+                foreach (T entity in entities)
                 {
-                    query = query.Where(predicate);
+                    set.Add(entity);
+
+                    await dbContext.SaveChangesAsync();
                 }
 
-                if (includes != null)
-                {
-                    foreach (var include in includes)
-                    {
-                        query = query.Include(include);
-                    }
-                }
-
-                return await query.ToListAsync();
+                return entities;
             }
         }
 
+        public async Task<List<T>> UpdateAll(List<T> entities)
+        {       
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                DbSet<T> set = dbContext.Set<T>();
+
+                foreach (T entity in entities)
+                {
+                    set.Update(entity);
+
+                    await dbContext.SaveChangesAsync();
+                }
+
+                return entities;
+            }
+        }
+
+        public async Task DeleteAll(List<T> entities)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                DbSet<T> set = dbContext.Set<T>();
+
+                foreach (T entity in entities)
+                {
+                    set.Remove(entity);
+
+                    await dbContext.SaveChangesAsync();
+                }
+            }
+        }
 
         public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(Expression<Func<IntegrantesMaterias, bool>>? predicate = null)
         {
@@ -210,6 +256,24 @@ namespace PegasusV1.Repositories
                 IQueryable<Tarea>? query = dbContext.Set<Tarea>().AsQueryable();
 
                 query = query.Include(x => x.Alumno);
+                query = query.Include(x => x.Materia);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+
+        public async Task<List<Contenido>> GetContenidoForCombo(Expression<Func<Contenido, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Contenido>? query = dbContext.Set<Contenido>().AsQueryable();
+
                 query = query.Include(x => x.Materia);
 
                 if (predicate != null)

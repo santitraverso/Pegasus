@@ -89,5 +89,27 @@ namespace PegasusV1.Controllers
             if(asistencia != null)
                 await AsistenciaService.Delete(asistencia);
         }
+
+        [HttpPut]
+        [Route("CreateAllAsistencia")]
+        public async Task<List<Asistencia>> CreateAllAsistencia(List<Asistencia> asistencias)
+        {
+            return await AsistenciaService.CreateAll(asistencias);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllAsistencia")]
+        public async Task<List<Asistencia>> UpdateAllAsistencia(List<Asistencia> asistencias)
+        {
+            return await AsistenciaService.UpdateAll(asistencias);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllAsistencia")]
+        public async Task DeleteAllAsistencia(List<Asistencia> asistencias)
+        {
+            await AsistenciaService.DeleteAll(asistencias);
+        }
+
     }
 }

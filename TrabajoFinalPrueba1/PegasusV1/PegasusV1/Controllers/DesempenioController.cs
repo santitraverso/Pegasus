@@ -80,5 +80,26 @@ namespace PegasusV1.Controllers
             if(desempenio != null)
                 await DesempenioService.Delete(desempenio);
         }
+
+        [HttpPut]
+        [Route("CreateAllDesempenio")]
+        public async Task<List<Desempenio>> CreateAllDesempenio(List<Desempenio> desempenios)
+        {
+            return await DesempenioService.CreateAll(desempenios);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllDesempenio")]
+        public async Task<List<Desempenio>> UpdateAllDesempenio(List<Desempenio> desempenios)
+        {
+            return await DesempenioService.UpdateAll(desempenios);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllDesempenio")]
+        public async Task DeleteAllDesempenio(List<Desempenio> desempenios)
+        {
+            await DesempenioService.DeleteAll(desempenios);
+        }
     }
 }

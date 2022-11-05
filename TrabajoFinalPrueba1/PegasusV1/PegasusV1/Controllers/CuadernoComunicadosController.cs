@@ -85,5 +85,26 @@ namespace PegasusV1.Controllers
             if (cuadernoComunicados != null)
                 await CuadernoComunicadosService.Delete(cuadernoComunicados);
         }
+
+        [HttpPut]
+        [Route("CreateAllCuadernoComunicados")]
+        public async Task<List<CuadernoComunicados>> CreateAllCuadernoComunicados(List<CuadernoComunicados> cuadernoComunicados)
+        {
+            return await CuadernoComunicadosService.CreateAll(cuadernoComunicados);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllCuadernoComunicados")]
+        public async Task<List<CuadernoComunicados>> UpdateAllCuadernoComunicados(List<CuadernoComunicados> cuadernoComunicados)
+        {
+            return await CuadernoComunicadosService.UpdateAll(cuadernoComunicados);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllCuadernoComunicados")]
+        public async Task DeleteAllCuadernoComunicados(List<CuadernoComunicados> cuadernoComunicados)
+        {
+            await CuadernoComunicadosService.DeleteAll(cuadernoComunicados);
+        }
     }
 }

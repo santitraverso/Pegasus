@@ -20,6 +20,8 @@ namespace PegasusV1.DbDataContext
         public DbSet<IntegrantesMaterias> IntegrantesMaterias { get; set; }
         public DbSet<Pago> Pago { get; set; }
         public DbSet<Tarea> Tarea { get; set; }
+        public DbSet<CalificacionMateria> CalificacionMateria { get; set; }
+        public DbSet<Contenido> Contenido { get; set; }
 
         public DataContext(IConfiguration configuration)
         {

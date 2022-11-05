@@ -88,5 +88,26 @@ namespace PegasusV1.Controllers
             if(integrantesEventos != null)
                 await IntegrantesEventosService.Delete(integrantesEventos);
         }
+
+        [HttpPut]
+        [Route("CreateAllIntegrantesEventos")]
+        public async Task<List<IntegrantesEventos>> CreateAllIntegrantesEventos(List<IntegrantesEventos> integrantesEventos)
+        {
+            return await IntegrantesEventosService.CreateAll(integrantesEventos);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllIntegrantesEventos")]
+        public async Task<List<IntegrantesEventos>> UpdateAllIntegrantesEventos(List<IntegrantesEventos> integrantesEventos)
+        {
+            return await IntegrantesEventosService.UpdateAll(integrantesEventos);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllIntegrantesEventos")]
+        public async Task DeleteAllIntegrantesEventos(List<IntegrantesEventos> integrantesEventos)
+        {
+            await IntegrantesEventosService.DeleteAll(integrantesEventos);
+        }
     }
 }

@@ -66,5 +66,26 @@ namespace PegasusV1.Controllers
             if (contacto != null)
                 await ContactoService.Delete(contacto);
         }
+
+        [HttpPut]
+        [Route("CreateAllContacto")]
+        public async Task<List<Contactos>> CreateAllContacto(List<Contactos> contactos)
+        {
+            return await ContactoService.CreateAll(contactos);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllContacto")]
+        public async Task<List<Contactos>> UpdateAllContacto(List<Contactos> contactos)
+        {
+            return await ContactoService.UpdateAll(contactos);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllContacto")]
+        public async Task DeleteAllContacto(List<Contactos> contactos)
+        {
+            await ContactoService.DeleteAll(contactos);
+        } 
     }
 }

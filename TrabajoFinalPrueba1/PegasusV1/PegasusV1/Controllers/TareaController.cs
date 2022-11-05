@@ -88,5 +88,26 @@ namespace PegasusV1.Controllers
             if(tarea != null)
                 await TareaService.Delete(tarea);
         }
+
+        [HttpPut]
+        [Route("CreateAllTarea")]
+        public async Task<List<Tarea>> CreateAllTarea(List<Tarea> tareas)
+        {
+            return await TareaService.CreateAll(tareas);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllTarea")]
+        public async Task<List<Tarea>> UpdateAllTarea(List<Tarea> tareas)
+        {
+            return await TareaService.UpdateAll(tareas);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllTarea")]
+        public async Task DeleteAllTarea(List<Tarea> tareas)
+        {
+            await TareaService.DeleteAll(tareas);
+        }
     }
 }

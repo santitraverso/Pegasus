@@ -56,7 +56,7 @@ namespace PegasusV1.Controllers
         public async Task<Usuario> UpdateUsuario(Usuario usuario)
         {
             return await UsuarioService.Update(usuario);
-        }
+        }      
 
         [HttpGet]
         [Route("DeleteUsuario")]
@@ -65,6 +65,27 @@ namespace PegasusV1.Controllers
             Usuario? usuario = await UsuarioService.GetById(id);
             if(usuario != null)
                 await UsuarioService.Delete(usuario);
+        }
+
+        [HttpPut]
+        [Route("CreateAllUsuario")]
+        public async Task<List<Usuario>> CreateAllUsuario(List<Usuario> usuarios)
+        {
+            return await UsuarioService.CreateAll(usuarios);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllUsuario")]
+        public async Task<List<Usuario>> UpdateAllUsuario(List<Usuario> usuarios)
+        {
+            return await UsuarioService.UpdateAll(usuarios);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllUsuario")]
+        public async Task TaskDeleteAllUsuario(List<Usuario> usuarios)
+        {
+            await UsuarioService.DeleteAll(usuarios);
         }
     }
 }

@@ -80,5 +80,26 @@ namespace PegasusV1.Controllers
             if(pago != null)
                 await PagoService.Delete(pago);
         }
+
+        [HttpPut]
+        [Route("CreateAllPago")]
+        public async Task<List<Pago>> CreateAllPago(List<Pago> pagos)
+        {
+            return await PagoService.CreateAll(pagos);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllPago")]
+        public async Task<List<Pago>> UpdateAllPago(List<Pago> pagos)
+        {
+            return await PagoService.UpdateAll(pagos);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllPago")]
+        public async Task DeleteAllPago(List<Pago> pagos)
+        {
+            await PagoService.DeleteAll(pagos);
+        }
     }
 }

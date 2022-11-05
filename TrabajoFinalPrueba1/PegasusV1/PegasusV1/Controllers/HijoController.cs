@@ -76,7 +76,7 @@ namespace PegasusV1.Controllers
         {
             return await HijoService.Update(hijo);
         }
-
+        
         [HttpGet]
         [Route("DeleteHijo")]
         public async Task DeleteHijo(int id)
@@ -84,6 +84,27 @@ namespace PegasusV1.Controllers
             Hijo? hijo = await HijoService.GetById(id);
             if(hijo != null)
                 await HijoService.Delete(hijo);
+        }
+
+        [HttpPut]
+        [Route("CreateAllHijo")]
+        public async Task<List<Hijo>> CreateAllHijo(List<Hijo> hijos)
+        {
+            return await HijoService.CreateAll(hijos);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllHijo")]
+        public async Task<List<Hijo>> UpdateAllHijo(List<Hijo> hijos)
+        {
+            return await HijoService.UpdateAll(hijos);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllHijo")]
+        public async Task DeleteAllHijo(List<Hijo> hijos)
+        {
+            await HijoService.DeleteAll(hijos);
         }
     }
 }

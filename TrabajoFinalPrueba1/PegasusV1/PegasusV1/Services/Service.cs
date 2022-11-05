@@ -29,6 +29,36 @@ namespace PegasusV1.Services
             return await Repository.GetForCombo(predicate, includes);
         }
 
+        public async Task<T> Create(T entity)
+        {
+            return await Repository.Create(entity);
+        }
+
+        public async Task<T> Update(T entity)
+        {
+            return await Repository.Update(entity);
+        }
+
+        public async Task Delete(T entity)
+        {
+            await Repository.Delete(entity);
+        }
+        
+        public async Task<List<T>> CreateAll(List<T> entities)
+        {
+            return await Repository.CreateAll(entities);
+        }
+
+        public async Task<List<T>> UpdateAll(List<T> entities)
+        {
+            return await Repository.UpdateAll(entities);
+        }
+
+        public async Task DeleteAll(List<T> entities)
+        {
+            await Repository.DeleteAll(entities);
+        }
+
         public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(Expression<Func<IntegrantesMaterias, bool>>? predicate = null)
         {
             return await Repository.GetIntegrantesMateriasForCombo(predicate);
@@ -68,20 +98,11 @@ namespace PegasusV1.Services
         {
             return await Repository.GetTareaForCombo(predicate);
         }
-
-        public async Task<T> Create(T entity)
+        
+        public async Task<List<Contenido>> GetContenidoForCombo(Expression<Func<Contenido, bool>>? predicate = null)
         {
-            return await Repository.Create(entity);
+            return await Repository.GetContenidoForCombo(predicate);
         }
 
-        public async Task<T> Update(T entity)
-        {
-            return await Repository.Update(entity);
-        }
-
-        public async Task Delete(T entity)
-        {
-            await Repository.Delete(entity);
-        }
     }
 }

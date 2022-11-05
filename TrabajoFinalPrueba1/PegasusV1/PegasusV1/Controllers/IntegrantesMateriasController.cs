@@ -80,7 +80,7 @@ namespace PegasusV1.Controllers
         public async Task<IntegrantesMaterias> UpdateIntegrantesMaterias(IntegrantesMaterias integrantesMaterias)
         {
             return await IntegrantesMateriasService.Update(integrantesMaterias);
-        }
+        }      
 
         [HttpGet]
         [Route("DeleteIntegrantesMaterias")]
@@ -89,6 +89,27 @@ namespace PegasusV1.Controllers
             IntegrantesMaterias? integrantesMaterias = await IntegrantesMateriasService.GetById(id);
             if(integrantesMaterias != null)
                 await IntegrantesMateriasService.Delete(integrantesMaterias);
+        }
+
+        [HttpPut]
+        [Route("CreateAllIntegrantesMaterias")]
+        public async Task<List<IntegrantesMaterias>> CreateAllIntegrantesMaterias(List<IntegrantesMaterias> integrantesMaterias)
+        {
+            return await IntegrantesMateriasService.CreateAll(integrantesMaterias);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllIntegrantesMaterias")]
+        public async Task<List<IntegrantesMaterias>> UpdateAllIntegrantesMaterias(List<IntegrantesMaterias> integrantesMaterias)
+        {
+            return await IntegrantesMateriasService.UpdateAll(integrantesMaterias);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllIntegrantesMaterias")]
+        public async Task DeleteAllIntegrantesMaterias(List<IntegrantesMaterias> integrantesMaterias)
+        {
+            await IntegrantesMateriasService.DeleteAll(integrantesMaterias);
         }
     }
 }

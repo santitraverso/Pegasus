@@ -66,5 +66,26 @@ namespace PegasusV1.Controllers
             if(materia != null)
                 await MateriaService.Delete(materia);
         }
+
+        [HttpPut]
+        [Route("CreateAllMateria")]
+        public async Task<List<Materia>> CreateAllMateria(List<Materia> materias)
+        {
+            return await MateriaService.CreateAll(materias);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllMateria")]
+        public async Task<List<Materia>> UpdateAllMateria(List<Materia> materias)
+        {
+            return await MateriaService.UpdateAll(materias);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllMateria")]
+        public async Task DeleteAllMateria(List<Materia> materias)
+        {
+            await MateriaService.DeleteAll(materias);
+        }
     }
 }
