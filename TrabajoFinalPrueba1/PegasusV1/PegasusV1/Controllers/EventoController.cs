@@ -39,33 +39,53 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Evento> GetById(int id)
+        public async Task<Evento?> GetById(int id)
         {
             return await EventoService.GetById(id);
         }
 
         [HttpPost]
         [Route("CreateEvento")]
-        public async Task<Evento> CreateEvento(string eventos)
+        public async Task<Evento> CreateEvento(Evento evento)
         {
-            Evento evento = JsonConvert.DeserializeObject<Evento>(eventos);
             return await EventoService.Create(evento);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateEvento")]
-        public async Task<Evento> UpdateEvento(string eventos)
+        public async Task<Evento> UpdateEvento(Evento evento)
         {
-            Evento evento = JsonConvert.DeserializeObject<Evento>(eventos);
             return await EventoService.Update(evento);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("DeleteEvento")]
-        public async void DeleteEvento(string eventos)
+        public async Task DeleteEvento(int id)
         {
-            Evento evento = JsonConvert.DeserializeObject<Evento>(eventos);
-            EventoService.Delete(evento);
+            Evento? evento = await EventoService.GetById(id);
+            if (evento != null) 
+                await EventoService.Delete(evento);
+        }
+
+        [HttpPut]
+        [Route("CreateAllEvento")]
+        public async Task<List<Evento>> CreateAllEvento(List<Evento> eventos)
+        {
+            return await EventoService.CreateAll(eventos);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllEvento")]
+        public async Task<List<Evento>> UpdateAllEvento(List<Evento> eventos)
+        {
+            return await EventoService.UpdateAll(eventos);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllEvento")]
+        public async Task DeleteAllEvento(List<Evento> eventos)
+        {
+            await EventoService.DeleteAll(eventos);
         }
     }
 }

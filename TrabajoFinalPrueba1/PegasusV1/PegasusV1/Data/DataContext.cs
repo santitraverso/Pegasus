@@ -20,22 +20,18 @@ namespace PegasusV1.DbDataContext
         public DbSet<IntegrantesMaterias> IntegrantesMaterias { get; set; }
         public DbSet<Pago> Pago { get; set; }
         public DbSet<Tarea> Tarea { get; set; }
+        public DbSet<CalificacionMateria> CalificacionMateria { get; set; }
+        public DbSet<Contenido> Contenido { get; set; }
 
         public DataContext(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
+        { 
             options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
         }
-
-        //No me dio bola a esto
-      /*  protected internal virtual void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<CuadernoComunicados>()
-                .ToTable("CUADERNO_COMUNICADOS");
-        }*/
     }
 }

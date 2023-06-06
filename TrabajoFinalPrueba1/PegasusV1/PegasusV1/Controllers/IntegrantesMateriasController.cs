@@ -28,39 +28,27 @@ namespace PegasusV1.Controllers
         }
 
         [HttpGet]
-        [Route("GetIntegrantesMateriassForCombo")]
-        public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriassForCombo(string? query = null)
+        [Route("GetIntegrantesMateriasForCombo")]
+        public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(string? query = null)
         {
             Expression<Func<IntegrantesMaterias, bool>> ex = null;
             Expression<Func<IntegrantesMaterias, bool>> i = null;
             if (!string.IsNullOrEmpty(query))
             {
                 var p = Expression.Parameter(typeof(IntegrantesMaterias), query);
+                var p2 = Expression.Parameter(typeof(Materia), query);
                 var e = (Expression)DynamicExpressionParser.ParseLambda(new[] { p }, null, query);
                 ex = (Expression<Func<IntegrantesMaterias, bool>>)e;
             }
 
-            List<IntegrantesMaterias> IntegrantesMateriass = await IntegrantesMateriasService.GetForCombo(ex);
-
-            foreach (IntegrantesMaterias IntegrantesMaterias in IntegrantesMateriass)
-            {
-                if (IntegrantesMaterias.Id_Materia.HasValue)
-                {
-                    IntegrantesMaterias.Materia = await MateriaService.GetById(IntegrantesMaterias.Id_Materia.Value);
-                }
-
-                if (IntegrantesMaterias.Id_Usuario.HasValue)
-                {
-                    IntegrantesMaterias.Usuario = await UsuarioService.GetById(IntegrantesMaterias.Id_Usuario.Value);
-                }
-            }
+            List<IntegrantesMaterias> IntegrantesMateriass = await IntegrantesMateriasService.GetIntegrantesMateriasForCombo(ex);
 
             return IntegrantesMateriass;
         }
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<IntegrantesMaterias> GetById(int id)
+        public async Task<IntegrantesMaterias?> GetById(int id)
         {
             IntegrantesMaterias IntegrantesMaterias = await IntegrantesMateriasService.GetById(id);
 
@@ -82,26 +70,46 @@ namespace PegasusV1.Controllers
 
         [HttpPost]
         [Route("CreateIntegrantesMaterias")]
-        public async Task<IntegrantesMaterias> CreateIntegrantesMaterias(string integrantesMateriass)
+        public async Task<IntegrantesMaterias> CreateIntegrantesMaterias(IntegrantesMaterias integrantesMaterias)
         {
-            IntegrantesMaterias IntegrantesMaterias = JsonConvert.DeserializeObject<IntegrantesMaterias>(integrantesMateriass);
-            return await IntegrantesMateriasService.Create(IntegrantesMaterias);
+            return await IntegrantesMateriasService.Create(integrantesMaterias);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateIntegrantesMaterias")]
-        public async Task<IntegrantesMaterias> UpdateIntegrantesMaterias(string integrantesMateriass)
+        public async Task<IntegrantesMaterias> UpdateIntegrantesMaterias(IntegrantesMaterias integrantesMaterias)
         {
-            IntegrantesMaterias IntegrantesMaterias = JsonConvert.DeserializeObject<IntegrantesMaterias>(integrantesMateriass);
-            return await IntegrantesMateriasService.Update(IntegrantesMaterias);
+            return await IntegrantesMateriasService.Update(integrantesMaterias);
+        }      
+
+        [HttpGet]
+        [Route("DeleteIntegrantesMaterias")]
+        public async Task DeleteIntegrantesMaterias(int id)
+        {
+            IntegrantesMaterias? integrantesMaterias = await IntegrantesMateriasService.GetById(id);
+            if(integrantesMaterias != null)
+                await IntegrantesMateriasService.Delete(integrantesMaterias);
         }
 
-        [HttpPost]
-        [Route("DeleteIntegrantesMaterias")]
-        public async void DeleteIntegrantesMaterias(string integrantesMateriass)
+        [HttpPut]
+        [Route("CreateAllIntegrantesMaterias")]
+        public async Task<List<IntegrantesMaterias>> CreateAllIntegrantesMaterias(List<IntegrantesMaterias> integrantesMaterias)
         {
-            IntegrantesMaterias IntegrantesMaterias = JsonConvert.DeserializeObject<IntegrantesMaterias>(integrantesMateriass);
-            IntegrantesMateriasService.Delete(IntegrantesMaterias);
+            return await IntegrantesMateriasService.CreateAll(integrantesMaterias);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllIntegrantesMaterias")]
+        public async Task<List<IntegrantesMaterias>> UpdateAllIntegrantesMaterias(List<IntegrantesMaterias> integrantesMaterias)
+        {
+            return await IntegrantesMateriasService.UpdateAll(integrantesMaterias);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllIntegrantesMaterias")]
+        public async Task DeleteAllIntegrantesMaterias(List<IntegrantesMaterias> integrantesMaterias)
+        {
+            await IntegrantesMateriasService.DeleteAll(integrantesMaterias);
         }
     }
 }

@@ -39,33 +39,53 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Usuario> GetById(int id)
+        public async Task<Usuario?> GetById(int id)
         {
             return await UsuarioService.GetById(id);
         }
 
         [HttpPost]
         [Route("CreateUsuario")]
-        public async Task<Usuario> CreateUsuario(string user)
+        public async Task<Usuario> CreateUsuario(Usuario usuario)
         {
-            Usuario usuario = JsonConvert.DeserializeObject<Usuario>(user);
             return await UsuarioService.Create(usuario);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateUsuario")]
-        public async Task<Usuario> UpdateUsuario(string user)
+        public async Task<Usuario> UpdateUsuario(Usuario usuario)
         {
-            Usuario usuario = JsonConvert.DeserializeObject<Usuario>(user);
             return await UsuarioService.Update(usuario);
+        }      
+
+        [HttpGet]
+        [Route("DeleteUsuario")]
+        public async Task DeleteUsuario(int id)
+        {
+            Usuario? usuario = await UsuarioService.GetById(id);
+            if(usuario != null)
+                await UsuarioService.Delete(usuario);
         }
 
-        [HttpPost]
-        [Route("DeleteUsuario")]
-        public async void DeleteUsuario(string user)
+        [HttpPut]
+        [Route("CreateAllUsuario")]
+        public async Task<List<Usuario>> CreateAllUsuario(List<Usuario> usuarios)
         {
-            Usuario usuario = JsonConvert.DeserializeObject<Usuario>(user);
-            UsuarioService.Delete(usuario);
+            return await UsuarioService.CreateAll(usuarios);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllUsuario")]
+        public async Task<List<Usuario>> UpdateAllUsuario(List<Usuario> usuarios)
+        {
+            return await UsuarioService.UpdateAll(usuarios);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllUsuario")]
+        public async Task TaskDeleteAllUsuario(List<Usuario> usuarios)
+        {
+            await UsuarioService.DeleteAll(usuarios);
         }
     }
 }

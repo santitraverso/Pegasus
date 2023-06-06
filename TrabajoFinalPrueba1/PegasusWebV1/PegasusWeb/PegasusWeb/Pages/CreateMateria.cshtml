@@ -1,0 +1,15 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.RazorPages;
+@using Newtonsoft.Json;
+@using PegasusWeb.Entities;
+@using System.Text;
+@model PegasusWeb.Pages.CreateMateriaModel
+@{
+}
+<form>
+    @Html.TextBoxFor(m => m.materia.Curso, new  { @class = "form-control" })
+    <input asp-for="Nombre" />
+</form>
+
+<form method="post"><button class="btn btn-default">Guardar</button></form>

@@ -29,7 +29,6 @@ namespace PegasusV1.Controllers
         public async Task<List<Hijo>> GetHijosForCombo(string? query = null)
         {
             Expression<Func<Hijo, bool>> ex = null;
-            Expression<Func<Hijo, bool>> i = null;
             if (!string.IsNullOrEmpty(query))
             {
                 var p = Expression.Parameter(typeof(Hijo), query);
@@ -37,27 +36,14 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<Hijo, bool>>)e;
             }
 
-            List<Hijo> Hijos = await HijoService.GetForCombo(ex);
-
-            foreach (Hijo Hijo in Hijos)
-            {
-                if (Hijo.Id_Hijo.HasValue)
-                {
-                    Hijo.HijoUsuario = await UsuarioService.GetById(Hijo.Id_Hijo.Value);
-                }
-
-                if (Hijo.Id_Padre.HasValue)
-                {
-                    Hijo.Padre = await UsuarioService.GetById(Hijo.Id_Padre.Value);
-                }
-            }
+            List<Hijo> Hijos = await HijoService.GetHijoForCombo(ex);
 
             return Hijos;
         }
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Hijo> GetById(int id)
+        public async Task<Hijo?> GetById(int id)
         {
             Hijo Hijo = await HijoService.GetById(id);
 
@@ -79,26 +65,46 @@ namespace PegasusV1.Controllers
 
         [HttpPost]
         [Route("CreateHijo")]
-        public async Task<Hijo> CreateHijo(string Hijos)
+        public async Task<Hijo> CreateHijo(Hijo hijo)
         {
-            Hijo Hijo = JsonConvert.DeserializeObject<Hijo>(Hijos);
-            return await HijoService.Create(Hijo);
+            return await HijoService.Create(hijo);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateHijo")]
-        public async Task<Hijo> UpdateHijo(string Hijos)
+        public async Task<Hijo> UpdateHijo(Hijo hijo)
         {
-            Hijo Hijo = JsonConvert.DeserializeObject<Hijo>(Hijos);
-            return await HijoService.Update(Hijo);
+            return await HijoService.Update(hijo);
+        }
+        
+        [HttpGet]
+        [Route("DeleteHijo")]
+        public async Task DeleteHijo(int id)
+        {
+            Hijo? hijo = await HijoService.GetById(id);
+            if(hijo != null)
+                await HijoService.Delete(hijo);
         }
 
-        [HttpPost]
-        [Route("DeleteHijo")]
-        public async void DeleteHijo(string Hijos)
+        [HttpPut]
+        [Route("CreateAllHijo")]
+        public async Task<List<Hijo>> CreateAllHijo(List<Hijo> hijos)
         {
-            Hijo Hijo = JsonConvert.DeserializeObject<Hijo>(Hijos);
-            HijoService.Delete(Hijo);
+            return await HijoService.CreateAll(hijos);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllHijo")]
+        public async Task<List<Hijo>> UpdateAllHijo(List<Hijo> hijos)
+        {
+            return await HijoService.UpdateAll(hijos);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllHijo")]
+        public async Task DeleteAllHijo(List<Hijo> hijos)
+        {
+            await HijoService.DeleteAll(hijos);
         }
     }
 }

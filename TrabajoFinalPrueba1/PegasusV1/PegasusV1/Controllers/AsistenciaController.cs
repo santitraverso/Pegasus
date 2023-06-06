@@ -4,6 +4,7 @@ using PegasusV1.Interfaces;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Web;
 
 namespace PegasusV1.Controllers
 {
@@ -29,10 +30,9 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetAsistenciasForCombo")]
-        public async Task<List<Asistencia>> GetAsistenciasForCombo(string? query = null)
-        {
-            Expression<Func<Asistencia, bool>> ex = null;
-            Expression<Func<Asistencia, bool>> i = null;
+        public async Task<List<Asistencia>> GetAsistenciasForCombo(string? query = null) 
+        { 
+            Expression<Func<Asistencia, bool>>? ex = null;
             if (!string.IsNullOrEmpty(query))
             {
                 var p = Expression.Parameter(typeof(Asistencia), query);
@@ -40,32 +40,14 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<Asistencia, bool>>)e;
             }
 
-            List<Asistencia> asistencias = await AsistenciaService.GetForCombo(ex);
-
-            foreach(Asistencia asistencia in asistencias)
-            {
-                 if (asistencia.Id_Materia.HasValue)
-                 {
-                     asistencia.Materia = await MateriaService.GetById(asistencia.Id_Materia.Value);
-                 }
-
-                 if (asistencia.Id_Alumno.HasValue)
-                 {
-                     asistencia.Alumno = await UsuarioService.GetById(asistencia.Id_Alumno.Value);
-                 }
-            }
-           
-           /*new Expression<Func<Asistencia, object>>[]
-                {
-                x => (x as Asistencia).Alumno, x => (x as Asistencia).Materia
-                }*/
-             
+            List<Asistencia> asistencias = await AsistenciaService.GetAsistenciasForCombo(ex);
+                       
             return asistencias;
         }
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Asistencia> GetById(int id)
+        public async Task<Asistencia?> GetById(int id)
         {
             Asistencia asistencia = await AsistenciaService.GetById(id);
 
@@ -87,26 +69,47 @@ namespace PegasusV1.Controllers
 
         [HttpPost]
         [Route("CreateAsistencia")]
-        public async Task<Asistencia> CreateAsistencia(string asistencias)
+        public async Task<Asistencia> CreateAsistencia(Asistencia asistencia)
         {
-            Asistencia Asistencia = JsonConvert.DeserializeObject<Asistencia>(asistencias);
-            return await AsistenciaService.Create(Asistencia);
+            return await AsistenciaService.Create(asistencia);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateAsistencia")]
-        public async Task<Asistencia> UpdateAsistencia(string asistencias)
+        public async Task<Asistencia> UpdateAsistencia(Asistencia asistencia)
         {
-            Asistencia Asistencia = JsonConvert.DeserializeObject<Asistencia>(asistencias);
-            return await AsistenciaService.Update(Asistencia);
+            return await AsistenciaService.Update(asistencia);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("DeleteAsistencia")]
-        public async void DeleteAsistencia(string asistencias)
+        public async Task DeleteAsistencia(int id)
         {
-            Asistencia Asistencia = JsonConvert.DeserializeObject<Asistencia>(asistencias);
-            AsistenciaService.Delete(Asistencia);
+            Asistencia? asistencia = await AsistenciaService.GetById(id);
+            if(asistencia != null)
+                await AsistenciaService.Delete(asistencia);
         }
+
+        [HttpPut]
+        [Route("CreateAllAsistencia")]
+        public async Task<List<Asistencia>> CreateAllAsistencia(List<Asistencia> asistencias)
+        {
+            return await AsistenciaService.CreateAll(asistencias);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllAsistencia")]
+        public async Task<List<Asistencia>> UpdateAllAsistencia(List<Asistencia> asistencias)
+        {
+            return await AsistenciaService.UpdateAll(asistencias);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllAsistencia")]
+        public async Task DeleteAllAsistencia(List<Asistencia> asistencias)
+        {
+            await AsistenciaService.DeleteAll(asistencias);
+        }
+
     }
 }

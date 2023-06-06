@@ -39,33 +39,53 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Materia> GetById(int id)
+        public async Task<Materia?> GetById(int id)
         {
             return await MateriaService.GetById(id);
         }
 
         [HttpPost]
         [Route("CreateMateria")]
-        public async Task<Materia> CreateMateria(string subject)
+        public async Task<Materia> CreateMateria(Materia materia)
         {
-            Materia materia = JsonConvert.DeserializeObject<Materia>(subject);
             return await MateriaService.Create(materia);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateMateria")]
-        public async Task<Materia> UpdateMateria(string subject)
+        public async Task<Materia> UpdateMateria(Materia materia)
         {
-            Materia materia = JsonConvert.DeserializeObject<Materia>(subject);
             return await MateriaService.Update(materia);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("DeleteMateria")]
-        public async void DeleteMateria(string subject)
+        public async Task DeleteMateria(int id)
         {
-            Materia materia = JsonConvert.DeserializeObject<Materia>(subject);
-            MateriaService.Delete(materia);
+            Materia? materia = await MateriaService.GetById(id);
+            if(materia != null)
+                await MateriaService.Delete(materia);
+        }
+
+        [HttpPut]
+        [Route("CreateAllMateria")]
+        public async Task<List<Materia>> CreateAllMateria(List<Materia> materias)
+        {
+            return await MateriaService.CreateAll(materias);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllMateria")]
+        public async Task<List<Materia>> UpdateAllMateria(List<Materia> materias)
+        {
+            return await MateriaService.UpdateAll(materias);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllMateria")]
+        public async Task DeleteAllMateria(List<Materia> materias)
+        {
+            await MateriaService.DeleteAll(materias);
         }
     }
 }

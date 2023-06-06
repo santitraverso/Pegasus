@@ -1,4 +1,5 @@
-﻿using PegasusV1.Interfaces;
+﻿using PegasusV1.Entities;
+using PegasusV1.Interfaces;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 
@@ -13,7 +14,7 @@ namespace PegasusV1.Services
             Repository = repository;
         }
 
-        public async Task<T> GetById(int id, Expression<Func<T, object>>[]? includes = null)
+        public async Task<T?> GetById(int id, Expression<Func<T, object>>[]? includes = null)
         {
             string query = $"Id == {id}";
             var p = Expression.Parameter(typeof(T), query);
@@ -38,9 +39,70 @@ namespace PegasusV1.Services
             return await Repository.Update(entity);
         }
 
-        public void Delete(T entity)
+        public async Task Delete(T entity)
         {
-            Repository.Delete(entity);
+            await Repository.Delete(entity);
         }
+        
+        public async Task<List<T>> CreateAll(List<T> entities)
+        {
+            return await Repository.CreateAll(entities);
+        }
+
+        public async Task<List<T>> UpdateAll(List<T> entities)
+        {
+            return await Repository.UpdateAll(entities);
+        }
+
+        public async Task DeleteAll(List<T> entities)
+        {
+            await Repository.DeleteAll(entities);
+        }
+
+        public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(Expression<Func<IntegrantesMaterias, bool>>? predicate = null)
+        {
+            return await Repository.GetIntegrantesMateriasForCombo(predicate);
+        }
+
+        public async Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null)
+        {
+            return await Repository.GetIntegrantesEventosForCombo(predicate);
+        }
+
+        public async Task<List<Asistencia>> GetAsistenciasForCombo(Expression<Func<Asistencia, bool>>? predicate = null)
+        {
+            return await Repository.GetAsistenciasForCombo(predicate);
+        }
+
+        public async Task<List<CuadernoComunicados>> GetCuadernoComunicadosForCombo(Expression<Func<CuadernoComunicados, bool>>? predicate = null)
+        {
+            return await Repository.GetCuadernoComunicadosForCombo(predicate);
+        }
+
+        public async Task<List<Desempenio>> GetDesempenioForCombo(Expression<Func<Desempenio, bool>>? predicate = null)
+        {
+            return await Repository.GetDesempenioForCombo(predicate);
+        }
+
+        public async Task<List<Hijo>> GetHijoForCombo(Expression<Func<Hijo, bool>>? predicate = null)
+        {
+            return await Repository.GetHijoForCombo(predicate);
+        }
+
+        public async Task<List<Pago>> GetPagoForCombo(Expression<Func<Pago, bool>>? predicate = null)
+        {
+            return await Repository.GetPagoForCombo(predicate);
+        }
+
+        public async Task<List<Tarea>> GetTareaForCombo(Expression<Func<Tarea, bool>>? predicate = null)
+        {
+            return await Repository.GetTareaForCombo(predicate);
+        }
+        
+        public async Task<List<Contenido>> GetContenidoForCombo(Expression<Func<Contenido, bool>>? predicate = null)
+        {
+            return await Repository.GetContenidoForCombo(predicate);
+        }
+
     }
 }

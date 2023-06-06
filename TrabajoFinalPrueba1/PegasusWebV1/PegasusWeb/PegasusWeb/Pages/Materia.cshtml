@@ -1,0 +1,36 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.MateriaModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4>Materias</h4>
+    <hr />
+    <a class="nav-link text-dark" asp-area="" asp-page="/CreateMateria">Crear Materia</a>
+    <div class="row">
+        <div class="col-12">
+            <div class="grid-container">
+                
+                    <div class="grid-column">Materia</div>
+                    <div class="grid-column">Nombre</div>
+                    <div class="grid-column">Curso</div>
+                    @foreach (Materia materia in Model.Materias)
+                    {
+                        <div class="grid-item">@materia.Id</div>
+                        <div class="grid-item">@materia.Nombre</div>
+                        <div class="grid-item">@materia.Curso</div>
+                    
+                    }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -39,33 +39,53 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Contactos> GetById(int id)
+        public async Task<Contactos?> GetById(int id)
         {
             return await ContactoService.GetById(id);
         }
 
         [HttpPost]
         [Route("CreateContacto")]
-        public async Task<Contactos> CreateContacto(string contactos)
+        public async Task<Contactos> CreateContacto(Contactos contacto)
         {
-            Contactos Contacto = JsonConvert.DeserializeObject<Contactos>(contactos);
-            return await ContactoService.Create(Contacto);
+            return await ContactoService.Create(contacto);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateContacto")]
-        public async Task<Contactos> UpdateContacto(string contactos)
+        public async Task<Contactos> UpdateContacto(Contactos contacto)
         {
-            Contactos Contacto = JsonConvert.DeserializeObject<Contactos>(contactos);
-            return await ContactoService.Update(Contacto);
+            return await ContactoService.Update(contacto);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("DeleteContacto")]
-        public async void DeleteContacto(string contactos)
+        public async void DeleteContacto(int id)
         {
-            Contactos Contacto = JsonConvert.DeserializeObject<Contactos>(contactos);
-            ContactoService.Delete(Contacto);
+            Contactos? contacto = await ContactoService.GetById(id);
+            if (contacto != null)
+                await ContactoService.Delete(contacto);
         }
+
+        [HttpPut]
+        [Route("CreateAllContacto")]
+        public async Task<List<Contactos>> CreateAllContacto(List<Contactos> contactos)
+        {
+            return await ContactoService.CreateAll(contactos);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllContacto")]
+        public async Task<List<Contactos>> UpdateAllContacto(List<Contactos> contactos)
+        {
+            return await ContactoService.UpdateAll(contactos);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllContacto")]
+        public async Task DeleteAllContacto(List<Contactos> contactos)
+        {
+            await ContactoService.DeleteAll(contactos);
+        } 
     }
 }

@@ -2,27 +2,50 @@
 using PegasusV1.Interfaces;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using PegasusV1.Entities;
 
 namespace PegasusV1.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly DataContext _dbContext;
+        protected readonly IConfiguration _configuration;
 
-        public Repository(DataContext dbContext)
+        public Repository(IConfiguration configuration)
         {
-            _dbContext = dbContext;
+            _configuration = configuration;
+        }        
+        public async Task<List<T>> GetForCombo(Expression<Func<T, bool>>? predicate = null, Expression<Func<T, object>>[]? includes = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<T>? query = dbContext.Set<T>().AsQueryable();
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                if (includes != null)
+                {
+                    foreach (var include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
+
+                return await query.ToListAsync();
+            }
         }
 
         public async Task<T> Create(T entity)
         {
-            using (var dbContext = _dbContext)
+            using (DataContext dbContext = new DataContext(_configuration))
             {
-                DbSet<T> set = _dbContext.Set<T>();
+                DbSet<T> set = dbContext.Set<T>();
 
                 set.Add(entity);
 
-                await _dbContext.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
 
                 return entity;
             }
@@ -30,66 +53,256 @@ namespace PegasusV1.Repositories
 
         public async Task<T> Update(T entity)
         {
-            using (var dbContext = _dbContext)
+            using (DataContext dbContext = new DataContext(_configuration))
             {
-                DbSet<T> set = _dbContext.Set<T>();
+                DbSet<T> set = dbContext.Set<T>();
 
                 set.Update(entity);
 
-                await _dbContext.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
 
                 return entity;
             }
         }
 
-        public async void Delete(T entity)
+        public async Task Delete(T entity)
         {
-            using (var dbContext = _dbContext)
+            using (DataContext dbContext = new DataContext(_configuration))
             {
-                DbSet<T> set = _dbContext.Set<T>();
+                DbSet<T> set = dbContext.Set<T>();
 
                 set.Remove(entity);
-                //Arreglar esto
-                await _dbContext.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<T>> CreateAll(List<T> entities)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                DbSet<T> set = dbContext.Set<T>();
+
+                foreach (T entity in entities)
+                {
+                    set.Add(entity);
+
+                    await dbContext.SaveChangesAsync();
+                }
+
+                return entities;
+            }
+        }
+
+        public async Task<List<T>> UpdateAll(List<T> entities)
+        {       
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                DbSet<T> set = dbContext.Set<T>();
+
+                foreach (T entity in entities)
+                {
+                    set.Update(entity);
+
+                    await dbContext.SaveChangesAsync();
+                }
+
+                return entities;
+            }
+        }
+
+        public async Task DeleteAll(List<T> entities)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                DbSet<T> set = dbContext.Set<T>();
+
+                foreach (T entity in entities)
+                {
+                    set.Remove(entity);
+
+                    await dbContext.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(Expression<Func<IntegrantesMaterias, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<IntegrantesMaterias>? query = dbContext.Set<IntegrantesMaterias>().AsQueryable();
+
+                query = query.Include(x => x.Materia);
+                query = query.Include(x => x.Usuario);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<IntegrantesEventos>? query = dbContext.Set<IntegrantesEventos>().AsQueryable();
+
+                query = query.Include(x => x.Evento);
+                query = query.Include(x => x.Usuario);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<Asistencia>> GetAsistenciasForCombo(Expression<Func<Asistencia, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Asistencia>? query = dbContext.Set<Asistencia>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+                query = query.Include(x => x.Materia);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<CuadernoComunicados>> GetCuadernoComunicadosForCombo(Expression<Func<CuadernoComunicados, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<CuadernoComunicados>? query = dbContext.Set<CuadernoComunicados>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+                query = query.Include(x => x.Profesor);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<Desempenio>> GetDesempenioForCombo(Expression<Func<Desempenio, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Desempenio>? query = dbContext.Set<Desempenio>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<Hijo>> GetHijoForCombo(Expression<Func<Hijo, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Hijo>? query = dbContext.Set<Hijo>().AsQueryable();
+
+                query = query.Include(x => x.Padre);
+                query = query.Include(x => x.HijoUsuario);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<Pago>> GetPagoForCombo(Expression<Func<Pago, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Pago>? query = dbContext.Set<Pago>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<Tarea>> GetTareaForCombo(Expression<Func<Tarea, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Tarea>? query = dbContext.Set<Tarea>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+                query = query.Include(x => x.Materia);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
             }
         }
 
 
-        public async Task<List<T>> GetForCombo(Expression<Func<T, bool>>? predicate = null, Expression<Func<T, object>>[]? includes = null)
+        public async Task<List<Contenido>> GetContenidoForCombo(Expression<Func<Contenido, bool>>? predicate = null)
         {
-            IQueryable<T>? query = _dbContext.Set<T>().AsQueryable();
-            
-            if (predicate != null)
+            using (DataContext dbContext = new DataContext(_configuration))
             {
-                query = query.Where(predicate); 
-            }
+                IQueryable<Contenido>? query = dbContext.Set<Contenido>().AsQueryable();
 
-            if(includes != null)
-            {
-                foreach(var include in includes)
+                query = query.Include(x => x.Materia);
+
+                if (predicate != null)
                 {
-                    query = query.Include(include);
+                    query = query.Where(predicate);
                 }
-            }
 
-            return await query.ToListAsync();
+                return await query.ToListAsync();
+            }
         }
 
-        public async Task<T> GetById(Expression<Func<T, bool>>? predicate = null, Expression<Func<T, object>>[]? includes = null)
+        public async Task<T?> GetById(Expression<Func<T, bool>>? predicate = null, Expression<Func<T, object>>[]? includes = null)
         {
-            IQueryable<T>? query = _dbContext.Set<T>().AsQueryable();
-
-            query = query.Where(predicate);
-
-            if (includes != null)
+            using (DataContext dbContext = new DataContext(_configuration))
             {
-                foreach (var include in includes)
-                {
-                    query = query.Include(include);
-                }
-            }
+                IQueryable<T>? query = dbContext.Set<T>().AsQueryable();
 
-            return await query.SingleOrDefaultAsync();
+                query = query.Where(predicate);
+
+                if (includes != null)
+                {
+                    foreach (var include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
+
+                return await query.SingleOrDefaultAsync();
+            }
         }
     }
 }

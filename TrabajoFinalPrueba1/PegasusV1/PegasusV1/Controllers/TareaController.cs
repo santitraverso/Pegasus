@@ -32,7 +32,6 @@ namespace PegasusV1.Controllers
         public async Task<List<Tarea>> GetTareasForCombo(string? query = null)
         {
             Expression<Func<Tarea, bool>> ex = null;
-            Expression<Func<Tarea, bool>> i = null;
             if (!string.IsNullOrEmpty(query))
             {
                 var p = Expression.Parameter(typeof(Tarea), query);
@@ -40,27 +39,14 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<Tarea, bool>>)e;
             }
 
-            List<Tarea> Tareas = await TareaService.GetForCombo(ex);
-
-            foreach (Tarea Tarea in Tareas)
-            {
-                if (Tarea.Id_Materia.HasValue)
-                {
-                    Tarea.Materia = await MateriaService.GetById(Tarea.Id_Materia.Value);
-                }
-
-                if (Tarea.Id_Alumno.HasValue)
-                {
-                    Tarea.Alumno = await UsuarioService.GetById(Tarea.Id_Alumno.Value);
-                }
-            }
+            List<Tarea> Tareas = await TareaService.GetTareaForCombo(ex);
 
             return Tareas;
         }
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Tarea> GetById(int id)
+        public async Task<Tarea?> GetById(int id)
         {
             Tarea Tarea = await TareaService.GetById(id);
 
@@ -82,26 +68,46 @@ namespace PegasusV1.Controllers
 
         [HttpPost]
         [Route("CreateTarea")]
-        public async Task<Tarea> CreateTarea(string tarea)
+        public async Task<Tarea> CreateTarea(Tarea tarea)
         {
-            Tarea Tarea = JsonConvert.DeserializeObject<Tarea>(tarea);
-            return await TareaService.Create(Tarea);
+            return await TareaService.Create(tarea);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateTarea")]
-        public async Task<Tarea> UpdateTarea(string tarea)
+        public async Task<Tarea> UpdateTarea(Tarea tarea)
         {
-            Tarea Tarea = JsonConvert.DeserializeObject<Tarea>(tarea);
-            return await TareaService.Update(Tarea);
+            return await TareaService.Update(tarea);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("DeleteTarea")]
-        public async void DeleteTarea(string tarea)
+        public async Task DeleteTarea(int id)
         {
-            Tarea Tarea = JsonConvert.DeserializeObject<Tarea>(tarea);
-            TareaService.Delete(Tarea);
+            Tarea? tarea = await TareaService.GetById(id);
+            if(tarea != null)
+                await TareaService.Delete(tarea);
+        }
+
+        [HttpPut]
+        [Route("CreateAllTarea")]
+        public async Task<List<Tarea>> CreateAllTarea(List<Tarea> tareas)
+        {
+            return await TareaService.CreateAll(tareas);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllTarea")]
+        public async Task<List<Tarea>> UpdateAllTarea(List<Tarea> tareas)
+        {
+            return await TareaService.UpdateAll(tareas);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllTarea")]
+        public async Task DeleteAllTarea(List<Tarea> tareas)
+        {
+            await TareaService.DeleteAll(tareas);
         }
     }
 }

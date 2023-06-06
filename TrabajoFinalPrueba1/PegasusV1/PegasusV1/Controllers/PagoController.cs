@@ -29,7 +29,6 @@ namespace PegasusV1.Controllers
         public async Task<List<Pago>> GetPagosForCombo(string? query = null)
         {
             Expression<Func<Pago, bool>> ex = null;
-            Expression<Func<Pago, bool>> i = null;
             if (!string.IsNullOrEmpty(query))
             {
                 var p = Expression.Parameter(typeof(Pago), query);
@@ -37,22 +36,14 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<Pago, bool>>)e;
             }
 
-            List<Pago> Pagos = await PagoService.GetForCombo(ex);
-
-            foreach (Pago Pago in Pagos)
-            {
-                if (Pago.Id_Alumno.HasValue)
-                {
-                    Pago.Alumno = await UsuarioService.GetById(Pago.Id_Alumno.Value);
-                }
-            }
+            List<Pago> Pagos = await PagoService.GetPagoForCombo(ex);
 
             return Pagos;
         }
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Pago> GetById(int id)
+        public async Task<Pago?> GetById(int id)
         {
             Pago Pago = await PagoService.GetById(id);
 
@@ -69,26 +60,46 @@ namespace PegasusV1.Controllers
 
         [HttpPost]
         [Route("CreatePago")]
-        public async Task<Pago> CreatePago(string pago)
+        public async Task<Pago> CreatePago(Pago pago)
         {
-            Pago Pago = JsonConvert.DeserializeObject<Pago>(pago);
-            return await PagoService.Create(Pago);
+            return await PagoService.Create(pago);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdatePago")]
-        public async Task<Pago> UpdatePago(string pago)
+        public async Task<Pago> UpdatePago(Pago pago)
         {
-            Pago Pago = JsonConvert.DeserializeObject<Pago>(pago);
-            return await PagoService.Update(Pago);
+            return await PagoService.Update(pago);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("DeletePago")]
-        public async void DeletePago(string pago)
+        public async Task DeletePago(int id)
         {
-            Pago Pago = JsonConvert.DeserializeObject<Pago>(pago);
-            PagoService.Delete(Pago);
+            Pago? pago = await PagoService.GetById(id);
+            if(pago != null)
+                await PagoService.Delete(pago);
+        }
+
+        [HttpPut]
+        [Route("CreateAllPago")]
+        public async Task<List<Pago>> CreateAllPago(List<Pago> pagos)
+        {
+            return await PagoService.CreateAll(pagos);
+        }
+
+        [HttpPut]
+        [Route("UpdateAllPago")]
+        public async Task<List<Pago>> UpdateAllPago(List<Pago> pagos)
+        {
+            return await PagoService.UpdateAll(pagos);
+        }
+
+        [HttpGet]
+        [Route("DeleteAllPago")]
+        public async Task DeleteAllPago(List<Pago> pagos)
+        {
+            await PagoService.DeleteAll(pagos);
         }
     }
 }
