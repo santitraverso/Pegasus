@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\PegasusWeb\PegasusWeb
 build_property._RazorSourceGeneratorDebug = 
 
+[S:/Santerk/Projects/Pegasus/TrabajoFinalPrueba1/PegasusWebV1/PegasusWeb/PegasusWeb/Pages/CreateMateria.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlTWF0ZXJpYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [S:/Santerk/Projects/Pegasus/TrabajoFinalPrueba1/PegasusWebV1/PegasusWeb/PegasusWeb/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

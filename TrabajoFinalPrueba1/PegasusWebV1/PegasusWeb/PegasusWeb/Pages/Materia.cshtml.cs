@@ -10,6 +10,11 @@ namespace PegasusWeb.Pages
     {
         static HttpClient client = new HttpClient();
         public List<Materia> Materias { get; set; }
+        
+        public async Task OnGetAsync()
+        {
+            Materias = await GetMateriasAsync();
+        }
 
         static async Task<List<Materia>> GetMateriasAsync()
         {
@@ -26,11 +31,6 @@ namespace PegasusWeb.Pages
             }
 
             return getmaterias;
-        }
-
-        public async Task OnGetAsync()
-        {
-            Materias = await GetMateriasAsync();   
         }
     }
 }
