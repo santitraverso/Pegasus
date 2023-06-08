@@ -7,9 +7,20 @@
 @model PegasusWeb.Pages.CreateMateriaModel
 @{
 }
-<form>
-    @Html.TextBoxFor(m => m.materia.Curso, new  { @class = "form-control" })
-    <input asp-for="Nombre" />
+<form method="post">
+    @Html.ValidationMessageFor(a =>a.materia, "Hubo un error inesperado creando la Materia")
+    <table>
+        <tr>
+            <td>Nombre de la materia</td>
+            <td><input type="text" id="nombreMateria" name="nombreMateria" /></td>
+            @Html.ValidationMessageFor(a =>a.nombreMateria, "El campo es requerido")
+        </tr>
+        <tr>
+            <td>Curso</td>
+            <td><input type="text" id="curso" name="curso" /></td>
+            <!--No deberia mostrarlos todo el tiempo-->
+            @Html.ValidationMessageFor(a =>a.curso, "El campo es requerido")
+        </tr>
+    </table>
+    <button class="btn btn-default">Guardar</button>
 </form>
-
-<form method="post"><button class="btn btn-default">Guardar</button></form>

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using PegasusWeb.Entities;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace PegasusWeb.Pages
@@ -10,23 +12,39 @@ namespace PegasusWeb.Pages
     {
         static HttpClient client = new HttpClient();
 
-        public Materia materia = new Materia();
+        public string curso;
+        public string nombreMateria;
+        public string materia;
 
-        public string Nombre = "";
-
-        public void OnGet()
+        public void OnGet(int id)
         {
         }
 
-        public async void OnPost()
+        public async Task<IActionResult> OnPost(string curso, string nombreMateria)
         {
-            var content = new StringContent("{\"Id_Alumno\":1,\"Alumno\":null,\"Materia\":null,\"fecha\": \"2022-09-12T17:44:50.005Z\",\"Id_Materia\":1,\"Presente\":false}", Encoding.UTF8, "application/json");
-
-            HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Materia/CreateMateria", content);
-            if (response.IsSuccessStatusCode)
+            if(string.IsNullOrEmpty(curso))
             {
-
+                this.ModelState.AddModelError("curso", "El campo debe tener valor");
+                return null;
             }
+
+            if(string.IsNullOrEmpty(nombreMateria))
+            {
+                this.ModelState.AddModelError("nombreMateria", "El campo debe tener valor");
+                return null;
+            }
+
+            var content = new StringContent($"{{\"Nombre\":\"{nombreMateria}\", \"Curso\":\"{curso}\"}}", Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Materia/CreateMateria2", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                //Mostrar error de alguna forma
+                this.ModelState.AddModelError("materia", "Hubo un error creando la Materia");
+                return null;
+            }
+
+            return RedirectToPage("Materia");
         }
     }
 }
