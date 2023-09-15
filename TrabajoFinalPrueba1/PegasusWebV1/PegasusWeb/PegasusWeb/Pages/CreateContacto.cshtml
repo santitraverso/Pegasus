@@ -1,0 +1,32 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.RazorPages;
+@using Newtonsoft.Json;
+@using PegasusWeb.Entities;
+@using System.Text;
+@model PegasusWeb.Pages.CreateContactosModel
+@{
+}
+<form method="post">
+    @Html.ValidationMessageFor(a =>a.contacto, "Hubo un error inesperado creando el Contacto")
+    <table>
+        <tr>
+            <td>Nombre del Contacto</td>
+            <td><input type="text" id="nombreMateria" name="nombreMateria" /></td>
+            @Html.ValidationMessageFor(a =>a.nombreContacto, "El campo es requerido")
+        </tr>
+        <tr>
+            <td>Mail</td>
+            <td><input type="text" id="curso" name="curso" /></td>
+            <!--No deberia mostrarlos todo el tiempo-->
+            @Html.ValidationMessageFor(a =>a.mail, "El campo es requerido")
+        </tr>
+        <tr>
+            <td>Telefono</td>
+            <td><input type="text" id="curso" name="curso" /></td>
+            <!--No deberia mostrarlos todo el tiempo-->
+            @Html.ValidationMessageFor(a =>a.telefono, "El campo es requerido")
+        </tr>
+    </table>
+    <button class="btn btn-default">Guardar</button>
+</form>
