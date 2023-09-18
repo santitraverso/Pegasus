@@ -15,7 +15,7 @@
     <h4>Contactos</h4>
     <hr />
     <a class="nav-link text-dark" asp-area="" asp-page="/CreateContacto">Crear Contacto</a>
-    <div class="row">
+    @*<div class="row">
         <div class="col-12">
             <div class="grid-container">
                 
@@ -30,6 +30,20 @@
                     }
             </div>
         </div>
-    </div>
+    </div>*@
+    @foreach (Contactos contacto in Model.Contactos)
+    {
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="card col-4" style="width: 17rem; margin-top:1rem; margin-right:3rem; margin-bottom:1rem; margin-left:2rem; position:center">
+                <div class="card-body">
+                    <h3 class="card-title">@contacto.Nombre</h3>
+                    <p class="card-text">@contacto.Mail</p>
+                    <p class="card-text">@contacto.Telefono</p>
+                </div>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    }
 </body>
 </html>

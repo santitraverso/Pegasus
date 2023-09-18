@@ -43,7 +43,8 @@ namespace PegasusWeb.Pages
 
             var content = new StringContent($"{{\"Nombre\":\"{nombreContacto}\", \"Mail\":\"{mail}\", \"Telefono\":\"{telefono}\"}}", Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Contactos/CreateContacto", content);
+            //HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Contactos/CreateContacto", content);
+            HttpResponseMessage response = await client.PostAsync("https://localhost:7130/Contactos/CreateContacto", content);
             if (!response.IsSuccessStatusCode)
             {
                 //Mostrar error de alguna forma
@@ -51,7 +52,7 @@ namespace PegasusWeb.Pages
                 return null;
             }
 
-            return RedirectToPage("Contactos");
+            return RedirectToPage("Contacto");
         }
     }
 }

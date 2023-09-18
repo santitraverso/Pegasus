@@ -12,18 +12,18 @@
     <table>
         <tr>
             <td>Nombre del Contacto</td>
-            <td><input type="text" id="nombreMateria" name="nombreMateria" /></td>
+            <td><input type="text" id="nombreContacto" name="nombreContacto" /></td>
             @Html.ValidationMessageFor(a =>a.nombreContacto, "El campo es requerido")
         </tr>
         <tr>
             <td>Mail</td>
-            <td><input type="text" id="curso" name="curso" /></td>
+            <td><input type="text" id="mail" name="mail" /></td>
             <!--No deberia mostrarlos todo el tiempo-->
             @Html.ValidationMessageFor(a =>a.mail, "El campo es requerido")
         </tr>
         <tr>
             <td>Telefono</td>
-            <td><input type="text" id="curso" name="curso" /></td>
+            <td><input type="text" id="telefono" name="telefono" /></td>
             <!--No deberia mostrarlos todo el tiempo-->
             @Html.ValidationMessageFor(a =>a.telefono, "El campo es requerido")
         </tr>
