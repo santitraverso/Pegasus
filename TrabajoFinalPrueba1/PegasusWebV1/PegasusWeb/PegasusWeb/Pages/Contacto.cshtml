@@ -15,22 +15,6 @@
     <h4>Contactos</h4>
     <hr />
     <a class="nav-link text-dark" asp-area="" asp-page="/CreateContacto">Crear Contacto</a>
-    @*<div class="row">
-        <div class="col-12">
-            <div class="grid-container">
-                
-                    <div class="grid-column">Nombre</div>
-                    <div class="grid-column">Mail</div>
-                    <div class="grid-column">Telefono</div>
-                    @foreach (Contactos contacto in Model.Contactos)
-                    {
-                        <div class="grid-item">@contacto.Nombre</div>
-                        <div class="grid-item">@contacto.Mail</div>
-                        <div class="grid-item">@contacto.Telefono</div>
-                    }
-            </div>
-        </div>
-    </div>*@
     @foreach (Contactos contacto in Model.Contactos)
     {
         <div class="row">
