@@ -1,0 +1,32 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.ContenidoModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4>Contenido</h4>
+    <hr />
+    <a class="nav-link text-dark" asp-area="" asp-page="/CreateContenido">Crear Contenido</a>
+    @foreach (Contenido contenido in Model.Contenidos)
+    {
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="card col-4" style="width: 25rem; margin-top:1rem; margin-right:3rem; margin-bottom:1rem; margin-left:2rem; position:center">
+                <div class="card-body">
+                    <h3 class="card-title">@contenido.Nombre</h3>
+                    <p class="card-text">@contenido.Descripcion</p>
+                </div>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    }
+</body>
+</html>
