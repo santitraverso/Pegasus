@@ -20,7 +20,8 @@ namespace PegasusWeb.Pages
         {
             List<Evento> geteventos = new List<Evento>();
 
-            HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Evento/GetEventosForCombo");
+            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Evento/GetEventosForCombo");
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Evento/GetEventosForCombo");
             if (response.IsSuccessStatusCode)
             {
                 string eventosJson = await response.Content.ReadAsStringAsync();

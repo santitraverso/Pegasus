@@ -1,6 +1,6 @@
 ﻿@page
 @using PegasusWeb.Entities
-@model PegasusWeb.Pages.ContenidoModel
+@model PegasusWeb.Pages.EventoModel
 @{
 }
 
@@ -15,14 +15,15 @@
     <h4>Contenido</h4>
     <hr />
     <a class="nav-link text-dark" asp-area="" asp-page="/CreateContenido">Crear Contenido</a>
-    @foreach (Contenido contenido in Model.Contenidos)
+    @foreach (Evento evento in Model.Eventos)
     {
         <div class="row">
             <div class="col-4"></div>
             <div class="card col-4" style="width: 25rem; margin-top:1rem; margin-right:3rem; margin-bottom:1rem; margin-left:2rem; position:center">
                 <div class="card-body">
-                    <h3 class="card-title">@contenido.Nombre</h3>
-                    <p class="card-text">@contenido.Descripcion</p>
+                    <h3 class="card-title">@evento.Nombre</h3>
+                    <p class="card-text">@evento.Descripcion</p>
+                    <p class="card-text">@evento.Fecha</p>
                 </div>
             </div>
             <div class="col-4"></div>

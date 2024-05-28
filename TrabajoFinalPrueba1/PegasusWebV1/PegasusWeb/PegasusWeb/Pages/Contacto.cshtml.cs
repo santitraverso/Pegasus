@@ -20,7 +20,8 @@ namespace PegasusWeb.Pages
         {
             List<Contactos> getcontactos = new List<Contactos>();
 
-            HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
+            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Contactos/GetContactosForCombo");
             if (response.IsSuccessStatusCode)
             {
                 string contactosJson = await response.Content.ReadAsStringAsync();

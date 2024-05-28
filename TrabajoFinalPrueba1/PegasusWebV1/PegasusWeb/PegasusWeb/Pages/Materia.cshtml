@@ -14,22 +14,17 @@
 <body>
     <h4>Materias</h4>
     <hr />
-    <a class="nav-link text-dark" asp-area="" asp-page="/CreateMateria">Crear Materia</a>
+    <button class="btn btn-primary btn-custom" asp-area="" asp-page="/CreateMateria" style="margin:10px; ">Crear Materia</button>
     <div class="row">
-        <div class="col-12">
-            <div class="grid-container">
-                
-                    <div class="grid-column">Materia</div>
-                    <div class="grid-column">Nombre</div>
-                    <div class="grid-column">Curso</div>
-                    @foreach (Materia materia in Model.Materias)
-                    {
-                        <div class="grid-item">@materia.Id</div>
-                        <div class="grid-item">@materia.Nombre</div>
-                        <div class="grid-item">@materia.Curso</div>
-                    }
+        @foreach (Materia materia in Model.Materias)
+        {
+            <div class="col-md-3 justify-content-center">
+                <a asp-page="/IntegrantesMaterias" asp-route-materia="@materia.Id" class="card card-custom card-title-center justify-content-center">
+                    <img src="~/img/libros.png" class="card-img-top" alt="">
+                    <h5 class="card-title card-title-center">@materia.Nombre</h5>
+                </a>
             </div>
-        </div>
+        }
     </div>
 </body>
 </html>

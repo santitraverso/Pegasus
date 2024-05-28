@@ -13,6 +13,14 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\img\\lapiz.png",
+      "PackagePath": "staticwebassets\\img\\lapiz.png"
+    },
+    {
+      "Id": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\img\\libros.png",
+      "PackagePath": "staticwebassets\\img\\libros.png"
+    },
+    {
       "Id": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

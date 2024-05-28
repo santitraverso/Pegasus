@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "LWc7jNpfKMuVwyunMPfd3ZHKS/QAdG+dHHHx66h3x3w=",
+  "Hash": "g3goqB6hW2P231mPxYjMdJg+jd9vNnFxOPPGYVlAdvI=",
   "Source": "PegasusWeb",
   "BasePath": "_content/PegasusWeb",
   "Mode": "Default",
@@ -83,6 +83,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\img\\lapiz.png",
+      "SourceId": "PegasusWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\",
+      "BasePath": "_content/PegasusWeb",
+      "RelativePath": "img/lapiz.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\lapiz.png"
+    },
+    {
+      "Identity": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\img\\libros.png",
+      "SourceId": "PegasusWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\",
+      "BasePath": "_content/PegasusWeb",
+      "RelativePath": "img/libros.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\libros.png"
     },
     {
       "Identity": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\js\\site.js",

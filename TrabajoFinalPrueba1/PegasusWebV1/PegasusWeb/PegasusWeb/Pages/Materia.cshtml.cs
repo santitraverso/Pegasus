@@ -20,7 +20,9 @@ namespace PegasusWeb.Pages
         {
             List<Materia> getmaterias = new List<Materia>();
 
-            HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
+            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Materia/GetMateriasForCombo");
+
             if (response.IsSuccessStatusCode)
             {
                 string materiasJson = await response.Content.ReadAsStringAsync();
