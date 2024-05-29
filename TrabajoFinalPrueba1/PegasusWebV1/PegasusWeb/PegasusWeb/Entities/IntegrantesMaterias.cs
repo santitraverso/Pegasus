@@ -11,7 +11,5 @@ namespace PegasusWeb.Entities
 
         public Usuario? Usuario { get; set; }
         public int? Id_Usuario { get; set; }
-
-
     }
 }

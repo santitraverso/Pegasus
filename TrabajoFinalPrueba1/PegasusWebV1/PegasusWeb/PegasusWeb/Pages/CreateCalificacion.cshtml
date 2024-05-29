@@ -15,28 +15,48 @@
     <h4 class="centrado">Alumnos</h4>
     <br />
     <div class="container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Apellido</th>
-                    <th>Nombre</th>
-                    <th>Nota</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (IntegrantesMaterias alumno in Model.Alumnos)
-                {
+        <form method="post">
+            <table id="tablaAlumnos" class="table">
+                <thead>
                     <tr>
-                        <td>@alumno.Usuario.Apellido</td>
-                        <td>@alumno.Usuario.Nombre</td>
-                        <td>7</td>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Nota</th>
+                        <th></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                   @* <tr>
+                        <td>
+                            Linares
+                        </td>
+                        <td>
+                            Santiago
+                        </td>
+                        <td>
+                            <input type="text" name="Nota" value="@Model.Usuario" />
+                        </td>
+                    </tr>*@
+                    @foreach (IntegrantesMaterias alumno in Model.Alumnos)
+                    {
+                        <tr>
+                            <td>
+                                @alumno.Usuario.Apellido
+                            </td>
+                            <td>
+                                @alumno.Usuario.Nombre
+                            </td>
+                            <td>
+                                <input type="text" name="Nota" value="7" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+
         <div class="center-screen">
-            <button class="btn btn-primary btn-custom" asp-area="" asp-page="/CreateMateria" style="margin:10px;">Guardar</button>
+            <button class="btn btn-primary btn-custom" asp-area="" asp-page="/CreateMateria" style="margin:10px; ">Reporte</button>
         </div>
     </div>
 </body>

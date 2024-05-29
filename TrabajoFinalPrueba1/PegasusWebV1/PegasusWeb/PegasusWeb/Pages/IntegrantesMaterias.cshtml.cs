@@ -11,9 +11,20 @@ namespace PegasusWeb.Pages
         static HttpClient client = new HttpClient();
         public List<IntegrantesMaterias> Alumnos { get; set; }
         
+        [TempData]
+        public int Materia { get; set; }
+        [TempData]
+        public int Usuario { get; set; }
         public async Task OnGetAsync(int materia)
         {
             Alumnos = await GetIntegrantesMateriasAsync(materia);
+        }
+
+        public async Task<IActionResult> OnPostAsync(int usuario, int materia)
+        {
+            Usuario = usuario;
+            Materia = materia;
+            return RedirectToPage("CreateCalificacion");
         }
 
         static async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasAsync(int materia)

@@ -17,7 +17,7 @@
     <div class="center-screen">
         <input type="text" id="busqueda" placeholder="Buscar alumnos..." onkeyup="buscarAlumnos()">
     </div>
-    <div class="container">
+    @*<div class="container">
         <table id="tablaAlumnos" class="table">
             <thead>
                 <tr>
@@ -39,6 +39,41 @@
                 }
             </tbody>
         </table>
+        <div class="center-screen">
+            <button class="btn btn-primary btn-custom" asp-area="" asp-page="/CreateMateria" style="margin:10px; ">Reporte</button>
+        </div>
+    </div>*@
+    <div class="container">
+        
+            <table id="tablaAlumnos" class="table">
+                <thead>
+                    <tr>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Nota</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var alumno in Model.Alumnos)
+                    {
+                        <tr>
+                            <form method="post"> 
+                                @*<input type="hidden" asp-for="@Model.Materia" value="@alumno.Id_Materia" />*@
+                                <input type="hidden" name="usuario" value="@alumno.Id_Usuario" />
+                                <input type="hidden" name="materia" value="@alumno.Id_Materia" />
+                                @*<input type="hidden" asp-for="@Model.Usuario" value="@alumno.Id_Usuario" />*@
+                                <td>@alumno.Usuario.Apellido</td>
+                                <td>@alumno.Usuario.Nombre</td>
+                                <td>7</td>
+                                <td><button class="btn btn-default" type="submit"><img src="~/img/lapiz.png" class="icon" alt=""></button></td>
+                            </form> 
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        
+
         <div class="center-screen">
             <button class="btn btn-primary btn-custom" asp-area="" asp-page="/CreateMateria" style="margin:10px; ">Reporte</button>
         </div>

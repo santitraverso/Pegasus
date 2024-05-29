@@ -10,10 +10,34 @@ namespace PegasusWeb.Pages
     {
         static HttpClient client = new HttpClient();
         public List<IntegrantesMaterias> Alumnos { get; set; }
-        
-        public async Task OnGetAsync(int materia, int usuario)
+        //public IntegrantesMaterias Alumno { get; set; }
+
+        [TempData]
+        public int Materia { get; set; }
+
+        [TempData]
+        public int Usuario { get; set; }
+
+        //[BindProperty]
+        //public decimal Nota { get; set; }
+
+        //[BindProperty]
+        //public int Id { get; set; }
+
+
+        public void OnPost(int usuario)
         {
-            Alumnos = await GetIntegrantesMateriasAsync(materia, usuario);
+            //Alumno = new IntegrantesMaterias { Usuario = new Usuario { Id = id, Apellido = apellido, Nombre = nombre} };
+
+            //Usuario = usuario;
+            //Apellido = apellido;
+            //Nota = nota;
+            //Alumnos = await GetIntegrantesMateriasAsync(materia, usuario);
+        }
+
+        public async Task OnGetAsync()
+        {
+            Alumnos = await GetIntegrantesMateriasAsync(Materia, Usuario);
         }
 
         static async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasAsync(int materia, int usuario)
