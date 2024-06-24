@@ -18,6 +18,9 @@ namespace PegasusWeb.Pages
         [TempData]
         public int Usuario { get; set; }
 
+        [BindProperty]
+        public double Nota { get; set; }
+
         //[BindProperty]
         //public decimal Nota { get; set; }
 
@@ -38,6 +41,12 @@ namespace PegasusWeb.Pages
         public async Task OnGetAsync()
         {
             Alumnos = await GetIntegrantesMateriasAsync(Materia, Usuario);
+
+            if (TempData["Nota"] != null)
+            {
+                // Recuperar y convertir la string de vuelta a double
+                Nota = double.Parse(TempData["Nota"].ToString());
+            }
         }
 
         static async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasAsync(int materia, int usuario)

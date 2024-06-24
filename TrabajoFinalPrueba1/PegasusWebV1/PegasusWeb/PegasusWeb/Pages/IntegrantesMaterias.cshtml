@@ -52,6 +52,7 @@
                         <th>Nombre</th>
                         <th>Nota</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,11 +63,24 @@
                                 @*<input type="hidden" asp-for="@Model.Materia" value="@alumno.Id_Materia" />*@
                                 <input type="hidden" name="usuario" value="@alumno.Id_Usuario" />
                                 <input type="hidden" name="materia" value="@alumno.Id_Materia" />
+                                <input type="hidden" name="nota" value="7" />
                                 @*<input type="hidden" asp-for="@Model.Usuario" value="@alumno.Id_Usuario" />*@
                                 <td>@alumno.Usuario.Apellido</td>
                                 <td>@alumno.Usuario.Nombre</td>
-                                <td>7</td>
+                                <td>
+                                    <table class="nested-table">
+                                        <tr>
+                                            <td>Parcial 1</td>
+                                            <td>7</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Parcial 2</td>
+                                            <td>8</td>
+                                        </tr>
+                                    </table>
+                                </td>
                                 <td><button class="btn btn-default" type="submit"><img src="~/img/lapiz.png" class="icon" alt=""></button></td>
+                                <td><button class="btn btn-default" asp-page="/CreateMateria"><img src="~/img/nuevo.png" class="icon" alt=""></button></td>
                             </form> 
                         </tr>
                     }

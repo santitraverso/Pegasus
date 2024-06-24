@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\img\\libros.png"
     },
     {
+      "Id": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\img\\nuevo.png",
+      "PackagePath": "staticwebassets\\img\\nuevo.png"
+    },
+    {
       "Id": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

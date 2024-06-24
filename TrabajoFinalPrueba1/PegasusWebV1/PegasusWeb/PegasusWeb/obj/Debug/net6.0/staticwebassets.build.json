@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "g3goqB6hW2P231mPxYjMdJg+jd9vNnFxOPPGYVlAdvI=",
+  "Hash": "ece9pgpZ2/Hq2SSIhdj8g1GJaZzzr7U21BxDofWl8p8=",
   "Source": "PegasusWeb",
   "BasePath": "_content/PegasusWeb",
   "Mode": "Default",
@@ -117,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\libros.png"
+    },
+    {
+      "Identity": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\img\\nuevo.png",
+      "SourceId": "PegasusWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\",
+      "BasePath": "_content/PegasusWeb",
+      "RelativePath": "img/nuevo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\nuevo.png"
     },
     {
       "Identity": "C:\\Users\\santi\\Documents\\GitHub\\Pegasus\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\wwwroot\\js\\site.js",

@@ -15,6 +15,10 @@ namespace PegasusWeb.Pages
         public int Materia { get; set; }
         [TempData]
         public int Usuario { get; set; }
+
+        [BindProperty]
+        public double Nota { get; set; }
+
         public async Task OnGetAsync(int materia)
         {
             Alumnos = await GetIntegrantesMateriasAsync(materia);
@@ -24,6 +28,7 @@ namespace PegasusWeb.Pages
         {
             Usuario = usuario;
             Materia = materia;
+            TempData["Nota"] = Nota.ToString();
             return RedirectToPage("CreateCalificacion");
         }
 

@@ -109,3 +109,14 @@ body {
 .center-screen {
     text-align: center;
 }
+
+.nested-table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.nested-table td, .nested-table th {
+    border: 1px solid black;
+    padding: 5px;
+}
