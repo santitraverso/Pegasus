@@ -26,3 +26,8 @@ S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\PegasusWeb\PegasusW
 S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\PegasusWeb\PegasusWeb\obj\Debug\net6.0\ref\PegasusWeb.dll
 S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\PegasusWeb\PegasusWeb\bin\Debug\net6.0\Newtonsoft.Json.dll
 S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\PegasusWeb\PegasusWeb\obj\Debug\net6.0\PegasusWeb.csproj.CopyComplete
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\PegasusWeb\PegasusWeb\obj\Debug\net6.0\staticwebassets\msbuild.PegasusWeb.Microsoft.AspNetCore.StaticWebAssets.props
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\PegasusWeb\PegasusWeb\obj\Debug\net6.0\staticwebassets\msbuild.build.PegasusWeb.props
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\PegasusWeb\PegasusWeb\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.PegasusWeb.props
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\PegasusWeb\PegasusWeb\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.PegasusWeb.props
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\PegasusWeb\PegasusWeb\obj\Debug\net6.0\staticwebassets.pack.json

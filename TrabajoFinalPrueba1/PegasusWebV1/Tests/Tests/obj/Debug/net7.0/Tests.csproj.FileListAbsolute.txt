@@ -1,0 +1,15 @@
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\bin\Debug\net7.0\Tests.exe
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\bin\Debug\net7.0\Tests.deps.json
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\bin\Debug\net7.0\Tests.runtimeconfig.json
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\bin\Debug\net7.0\Tests.dll
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\bin\Debug\net7.0\Tests.pdb
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\obj\Debug\net7.0\Tests.GeneratedMSBuildEditorConfig.editorconfig
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\obj\Debug\net7.0\Tests.AssemblyInfoInputs.cache
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\obj\Debug\net7.0\Tests.AssemblyInfo.cs
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\obj\Debug\net7.0\Tests.csproj.CoreCompileInputs.cache
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\obj\Debug\net7.0\Tests.sourcelink.json
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\obj\Debug\net7.0\Tests.dll
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\obj\Debug\net7.0\refint\Tests.dll
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\obj\Debug\net7.0\Tests.pdb
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\obj\Debug\net7.0\Tests.genruntimeconfig.cache
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusWebV1\Tests\Tests\obj\Debug\net7.0\ref\Tests.dll

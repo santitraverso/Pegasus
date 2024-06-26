@@ -138,3 +138,9 @@ S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Debug\ne
 S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Debug\net6.0\PegasusV1.pdb
 S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Debug\net6.0\PegasusV1.genruntimeconfig.cache
 S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Debug\net6.0\ref\PegasusV1.dll
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Debug\net6.0\PegasusV1.sourcelink.json
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Debug\net6.0\staticwebassets\msbuild.PegasusV1.Microsoft.AspNetCore.StaticWebAssets.props
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Debug\net6.0\staticwebassets\msbuild.build.PegasusV1.props
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.PegasusV1.props
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.PegasusV1.props
+S:\Santerk\Projects\Pegasus\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Debug\net6.0\staticwebassets.pack.json

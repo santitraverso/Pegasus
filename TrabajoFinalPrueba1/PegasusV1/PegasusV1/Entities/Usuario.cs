@@ -1,4 +1,6 @@
-﻿namespace PegasusV1.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PegasusV1.Entities
 {
     public class Usuario
     {
@@ -8,7 +10,9 @@
 
         public string? Apellido { get; set; }
 
-        public string? Perfil { get; set; }  
+        public int? Perfil { get; set; }
+        [ForeignKey("Perfil")]
+        public Roles Rol { get; set; }
 
         public string? Mail { get; set; }
 

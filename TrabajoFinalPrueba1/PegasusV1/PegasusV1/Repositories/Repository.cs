@@ -304,5 +304,87 @@ namespace PegasusV1.Repositories
                 return await query.SingleOrDefaultAsync();
             }
         }
+
+        public async Task<List<Curso>> GetCursoForCombo(Expression<Func<Curso, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Curso>? query = dbContext.Set<Curso>().AsQueryable();
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<IntegrantesCursos>> GetIntegrantesCursosForCombo(Expression<Func<IntegrantesCursos, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<IntegrantesCursos>? query = dbContext.Set<IntegrantesCursos>().AsQueryable();
+
+                query = query.Include(x => x.Curso);
+                query = query.Include(x => x.Usuario);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+
+        public async Task<List<Calificaciones>> GetCalificacionesForCombo(Expression<Func<Calificaciones, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Calificaciones>? query = dbContext.Set<Calificaciones>().AsQueryable();
+
+                query = query.Include(x => x.Materia);
+                query = query.Include(x => x.Usuario);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<Modulos>> GetModulosForCombo(Expression<Func<Modulos, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Modulos>? query = dbContext.Set<Modulos>().AsQueryable();
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<Roles>> GetRolesForCombo(Expression<Func<Roles, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Roles>? query = dbContext.Set<Roles>().AsQueryable();
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
     }
 }

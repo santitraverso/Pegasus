@@ -22,6 +22,11 @@ namespace PegasusV1.DbDataContext
         public DbSet<Tarea> Tarea { get; set; }
         public DbSet<CalificacionMateria> CalificacionMateria { get; set; }
         public DbSet<Contenido> Contenido { get; set; }
+        public DbSet<Curso> Curso { get; set; }
+        public DbSet<IntegrantesCursos> IntegrantesCursos { get; set; } 
+        public DbSet<Calificaciones> Calificaciones { get; set; }
+        public DbSet<Modulos> Modulos { get; set; }
+        public DbSet<Roles> Roles { get; set; }
 
         public DataContext(IConfiguration configuration)
         {
@@ -32,6 +37,16 @@ namespace PegasusV1.DbDataContext
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         { 
             options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
+        }
+
+        //Testear esto para no tener que cargar por separado todo
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Asistencia>()
+                .HasOne(x => x.Alumno);
+            modelBuilder.Entity<Asistencia>()
+                .HasOne(x => x.Materia);
         }
     }
 }
