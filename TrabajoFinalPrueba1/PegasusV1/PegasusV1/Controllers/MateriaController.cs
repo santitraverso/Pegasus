@@ -13,11 +13,13 @@ namespace PegasusV1.Controllers
     {
         private readonly ILogger<MateriaController> _logger;
         private readonly IService<Materia> MateriaService;
+        private readonly IService<Curso> CursoService;
 
-        public MateriaController(ILogger<MateriaController> logger, IService<Materia> materiaService)
+        public MateriaController(ILogger<MateriaController> logger, IService<Materia> materiaService, IService<Curso> cursoService)
         {
             _logger = logger;
             MateriaService = materiaService;
+            CursoService = cursoService;
         }
 
         [HttpGet]
@@ -41,7 +43,17 @@ namespace PegasusV1.Controllers
         [Route("GetById")]
         public async Task<Materia?> GetById(int id)
         {
-            return await MateriaService.GetById(id);
+            Materia materia = await MateriaService.GetById(id);
+
+            if (materia != null)
+            {
+                if (materia.Id_Curso.HasValue)
+                {
+                    materia.Curso = await CursoService.GetById(materia.Id_Curso.Value);
+                }
+            }
+
+            return materia;
         }
 
         [HttpPost]
@@ -58,7 +70,7 @@ namespace PegasusV1.Controllers
             return await MateriaService.Update(materia);
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("DeleteMateria")]
         public async Task DeleteMateria(int id)
         {

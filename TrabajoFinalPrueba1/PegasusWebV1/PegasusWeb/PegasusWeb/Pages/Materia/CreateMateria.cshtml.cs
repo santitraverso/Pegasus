@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using PegasusWeb.Entities;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -12,11 +14,16 @@ namespace PegasusWeb.Pages
     {
         static HttpClient client = new HttpClient();
 
-        public string curso;
-        public string nombreMateria;
-        public string materia;
+        [DisplayName("Curso"), Required(ErrorMessage = "El campo Curso es requerido")]
+        public string curso { get; set; }
 
-        public void OnGet(int id)
+        [DisplayName("Nombre de la materia"), Required(ErrorMessage = "El campo Nombre de la materia es requerido")]
+        public string nombreMateria { get; set; }
+
+        [DisplayName("Materia"), Required(ErrorMessage = "Hubo un error inesperado creando la Materia")]
+        public string materia { get; set; }
+
+        public async Task OnGetAsync()
         {
         }
 
@@ -24,13 +31,13 @@ namespace PegasusWeb.Pages
         {
             if(string.IsNullOrEmpty(curso))
             {
-                this.ModelState.AddModelError("curso", "El campo debe tener valor");
+                this.ModelState.AddModelError("curso", "El campo Curso es requerido");
                 return null;
             }
 
             if(string.IsNullOrEmpty(nombreMateria))
             {
-                this.ModelState.AddModelError("nombreMateria", "El campo debe tener valor");
+                this.ModelState.AddModelError("nombreMateria", "El campo Nombre de la materia es requerido");
                 return null;
             }
 
@@ -39,8 +46,7 @@ namespace PegasusWeb.Pages
             HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Materia/CreateMateria", content);
             if (!response.IsSuccessStatusCode)
             {
-                //Mostrar error de alguna forma
-                this.ModelState.AddModelError("materia", "Hubo un error creando la Materia");
+                this.ModelState.AddModelError("materia", "Hubo un error inesperado al crear la Materia");
                 return null;
             }
 

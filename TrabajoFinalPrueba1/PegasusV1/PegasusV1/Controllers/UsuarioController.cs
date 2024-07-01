@@ -4,6 +4,7 @@ using PegasusV1.Interfaces;
 using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace PegasusV1.Controllers
 {
@@ -13,11 +14,14 @@ namespace PegasusV1.Controllers
     {
         private readonly ILogger<UsuarioController> _logger;
         private readonly IService<Usuario> UsuarioService;
+        private readonly IService<Roles> RolesService;
 
-        public UsuarioController(ILogger<UsuarioController> logger, IService<Usuario> usuarioService)
+        public UsuarioController(ILogger<UsuarioController> logger, IService<Usuario> usuarioService,
+            IService<Roles> rolesService)
         {
             _logger = logger;
             UsuarioService = usuarioService;
+            RolesService = rolesService;
         }
 
         [HttpGet]
@@ -41,7 +45,18 @@ namespace PegasusV1.Controllers
         [Route("GetById")]
         public async Task<Usuario?> GetById(int id)
         {
-            return await UsuarioService.GetById(id);
+            Usuario user = await UsuarioService.GetById(id);
+
+            if (user != null)
+            {
+                if (user.Perfil.HasValue)
+                {
+                    user.Rol = await RolesService.GetById(user.Perfil.Value);
+                }
+
+            }
+
+            return user;
         }
 
         [HttpPost]

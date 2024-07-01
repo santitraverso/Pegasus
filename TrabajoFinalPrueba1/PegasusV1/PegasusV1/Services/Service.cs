@@ -103,6 +103,29 @@ namespace PegasusV1.Services
         {
             return await Repository.GetContenidoForCombo(predicate);
         }
+        public async Task<List<Curso>> GetCursoForCombo(Expression<Func<Curso, bool>>? predicate = null)
+        {
+            return await Repository.GetCursoForCombo(predicate);
+        }
 
+        public async Task<List<IntegrantesCursos>> GetIntegrantesCursosForCombo(Expression<Func<IntegrantesCursos, bool>>? predicate = null)
+        {
+            return await Repository.GetIntegrantesCursosForCombo(predicate);
+        }
+
+        public async Task<List<Calificaciones>> GetCalificacionesForCombo(Expression<Func<Calificaciones, bool>>? predicate = null)
+        {
+            return await Repository.GetCalificacionesForCombo(predicate);
+        }
+
+        public async Task<List<Modulos>> GetModulosForCombo(Expression<Func<Modulos, bool>>? predicate = null)
+        {
+            return await Repository.GetModulosForCombo(predicate);
+        }
+
+        public async Task<List<Roles>> GetRolesForCombo(Expression<Func<Roles, bool>>? predicate = null)
+        {
+            return await Repository.GetRolesForCombo(predicate);
+        }
     }
 }
