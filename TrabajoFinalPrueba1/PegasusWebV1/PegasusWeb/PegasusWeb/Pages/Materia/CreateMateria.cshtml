@@ -1,0 +1,39 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.RazorPages;
+@using Newtonsoft.Json;
+@using PegasusWeb.Entities;
+@using System.Text;
+@model PegasusWeb.Pages.CreateMateriaModel
+@{
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Materias</title>
+</head>
+<body>
+    <h4>Nueva Materia</h4>
+    <hr />
+    <form method="post">
+        <span class="text-danger" asp-validation-for="materia"></span>
+        <span class="text-danger" asp-validation-for="nombreMateria"></span>
+        <span class="text-danger" asp-validation-for="curso"></span>
+        <table>
+            <tr>
+                <td>Nombre de la materia</td>
+                <td><input type="text" id="nombreMateria" name="nombreMateria" /></td>
+            </tr>
+            <tr>
+                <td>Curso</td>
+                <td><input type="text" id="curso" name="curso" /></td>
+            </tr>
+        </table>
+        <button class="btn btn-default">Guardar</button>
+    </form>
+</body>
+</html>
