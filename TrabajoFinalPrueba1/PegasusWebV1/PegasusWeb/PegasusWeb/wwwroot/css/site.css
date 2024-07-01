@@ -17,6 +17,14 @@ body {
   margin-bottom: 60px;
 }
 
+.grid {
+    display: grid;
+    background-color: #2196F3;
+}
+
+#Idle {
+    pointer-events: none;
+}
 
 .grid-container {
     display: grid;
@@ -38,4 +46,77 @@ body {
     font-size: 20px;
     text-align: center;
     color:black;
+}
+
+.card-img-top {
+    border-radius: 30px; /* Redondear los bordes de la imagen */
+    /*object-fit: cover; /* Asegurar que la imagen cubra el contenedor */
+    text-align: center;
+    width: 200px;
+    align-content: center;
+    height: 150px;
+    padding-left: 50px;
+    text-decoration: none;
+}
+
+.card-custom {
+    border-radius: 50px; /* Redondear los bordes de la tarjeta */
+    margin-top: 30px;
+    text-align: center;
+    object-fit: cover;
+    align-content: center;
+    width: 250px; /* Ancho fijo */
+    height: 250px; /* Alto fijo */
+    color: inherit;
+    text-decoration: none;
+    transition: box-shadow 0.3s, background-color 0.3s; /* Transición suave */
+}
+
+.card-custom:hover {
+        box-shadow: 0 0 15px rgba(0, 0, 255, 0.5); /* Sombra al pasar el mouse */
+        background-color: #cce5ff; /* Cambiar el color de fondo al pasar el mouse */
+}
+
+.card-title-centar {
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn-custom {
+    border-radius: 15px; /* Redondear los bordes del botón */
+    transition: box-shadow 0.3s, background-color 0.3s; /* Transición suave */
+}
+
+.btn-custom:hover {
+        box-shadow: 0 0 7px rgba(0, 0, 255, 0.5); /* Sombra al pasar el mouse */
+        background-color: #2196F3; /* Cambiar el color de fondo al pasar el mouse */
+}
+
+.icon {
+    width: 25px;
+}
+
+.icon:hover {
+        opacity: 0.5;
+}
+
+.centrado {
+    text-align: center; /* Centrar el texto dentro del contenedor */
+}
+
+.center-screen {
+    text-align: center;
+}
+
+.nested-table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.nested-table td, .nested-table th {
+    border: 1px solid black;
+    padding: 5px;
 }

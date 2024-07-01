@@ -1,0 +1,44 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.TareaModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4>Tareas</h4>
+    <hr />
+    <a class="nav-link text-dark" asp-area="" asp-page="/CreateTarea">Crear Tarea</a>
+    <table class="table table-bordered table-striped" style="text-align:center;">
+        <thead>
+            <tr>
+                <th>Materia</th>
+                <th>Titulo</th>
+                <th>Descripcion</th>
+                <th>Fecha de Entrega</th>
+                <th>Entregado</th>
+                <th>Calificacion</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Tarea tarea in Model.Tareas)
+            {
+                <tr>
+                    <td>@tarea.Materia.Nombre</td>
+                    <td>@tarea.Titulo</td>
+                    <td>@tarea.Descripcion</td>
+                    <td>@Html.ValueFor(modelItem => tarea.Fecha_Entrega, "{0:dd/MM/yyyy}")</td>
+                    <td>@Html.CheckBox("Idle", Convert.ToBoolean(tarea.Entregado))</td>
+                    <td>@tarea.Calificacion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

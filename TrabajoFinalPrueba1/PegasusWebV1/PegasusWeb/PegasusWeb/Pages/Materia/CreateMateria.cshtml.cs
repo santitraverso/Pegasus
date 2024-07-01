@@ -43,7 +43,7 @@ namespace PegasusWeb.Pages
 
             var content = new StringContent($"{{\"Nombre\":\"{nombreMateria}\", \"Curso\":\"{curso}\"}}", Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Materia/CreateMateria2", content);
+            HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Materia/CreateMateria", content);
             if (!response.IsSuccessStatusCode)
             {
                 this.ModelState.AddModelError("materia", "Hubo un error inesperado al crear la Materia");

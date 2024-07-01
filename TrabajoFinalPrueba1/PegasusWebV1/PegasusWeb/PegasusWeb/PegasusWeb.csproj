@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\jquery-ui.min.css" />
+    <Content Remove="wwwroot\lib\jquery\dist\jquery-ui.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\libros.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
