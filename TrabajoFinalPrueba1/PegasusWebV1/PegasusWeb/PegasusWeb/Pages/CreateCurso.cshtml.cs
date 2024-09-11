@@ -14,14 +14,17 @@ namespace PegasusWeb.Pages
     {
         static HttpClient client = new HttpClient();
 
-        [DisplayName("Nombre del curso"), Required(ErrorMessage = "El campo Nombre del Curso es requerido")]
+        [DisplayName("Nombre del Curso"), Required(ErrorMessage = "El campo Nombre del Curso es requerido")]
         public string nombreCurso { get; set; }
 
-        [DisplayName("Nombre de la materia"), Required(ErrorMessage = "El campo Nombre de la materia es requerido")]
-        public string nombreMateria { get; set; }
+        [DisplayName("Grado"), Required(ErrorMessage = "El campo Grado es requerido")]
+        public string grado { get; set; }
 
-        [DisplayName("Materia"), Required(ErrorMessage = "Hubo un error inesperado creando la Materia")]
-        public string materia { get; set; }
+        [DisplayName("Division"), Required(ErrorMessage = "El campo Division es requerido")]
+        public string division { get; set; }
+
+        [DisplayName("Turno"), Required(ErrorMessage = "El campo Turno es requerido")]
+        public string turno { get; set; }
 
         [BindProperty]
         public Curso Curso { get; set; }
@@ -61,6 +64,12 @@ namespace PegasusWeb.Pages
 
         public async Task<IActionResult> OnPost(int grado, string nombreCurso, string division, string turno, int id)
         {
+            if (string.IsNullOrEmpty(nombreCurso))
+            {
+                this.ModelState.AddModelError("nombreCurso", "El campo Curso es requerido");
+                return null;
+            }
+
             if (id > 0)
             {
                 // Actualizar curso existente
