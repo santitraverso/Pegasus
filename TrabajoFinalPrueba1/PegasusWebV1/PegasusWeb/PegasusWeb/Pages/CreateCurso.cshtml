@@ -1,0 +1,36 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.CreateCursoModel
+@{
+    var esEdicion = Model.Curso.Id > 0;
+    var titulo = esEdicion ? "Editar Curso" : "Cargar Nuevo Curso";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cursos</title>
+</head>
+<body>
+    <h4>@titulo</h4>
+    <hr />
+    <form method="post">
+        <span class="text-danger" asp-validation-for="materia"></span>
+        <span class="text-danger" asp-validation-for="nombreMateria"></span>
+        <span class="text-danger" asp-validation-for="nombreCurso"></span>
+        <table>
+            <tr>
+                <td>Nombre del curso</td>
+                <td><input type="text" asp-for="Curso.Nombre_Curso" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Grado</td>
+                <td><input type="text" asp-for="Curso.Grado" class="form-control" /></td>
+            </tr>
+        </table>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</body>
+</html>
