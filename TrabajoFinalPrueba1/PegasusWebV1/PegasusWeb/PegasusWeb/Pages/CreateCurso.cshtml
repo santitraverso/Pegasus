@@ -20,14 +20,23 @@
         <span class="text-danger" asp-validation-for="materia"></span>
         <span class="text-danger" asp-validation-for="nombreMateria"></span>
         <span class="text-danger" asp-validation-for="nombreCurso"></span>
+        <input type="hidden" name="id" asp-for="Curso.Id" />
         <table>
             <tr>
                 <td>Nombre del curso</td>
-                <td><input type="text" asp-for="Curso.Nombre_Curso" class="form-control" /></td>
+                <td><input type="text" asp-for="Curso.Nombre_Curso" class="form-control" name="nombreCurso"/></td>
             </tr>
             <tr>
                 <td>Grado</td>
-                <td><input type="text" asp-for="Curso.Grado" class="form-control" /></td>
+                <td><input type="number" asp-for="Curso.Grado" class="form-control" name="grado"/></td>
+            </tr>
+            <tr>
+                <td>Division</td>
+                <td><input type="text" asp-for="Curso.Division" class="form-control" name="division" /></td>
+            </tr>
+            <tr>
+                <td>Turno</td>
+                <td><input type="text" asp-for="Curso.Turno" class="form-control" name="turno" /></td>
             </tr>
         </table>
         <button type="submit" class="btn btn-primary">Guardar</button>

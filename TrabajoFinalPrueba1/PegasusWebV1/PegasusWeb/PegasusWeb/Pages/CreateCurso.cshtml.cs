@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Net.Http;
 
 namespace PegasusWeb.Pages
 {
@@ -58,27 +59,32 @@ namespace PegasusWeb.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(string curso, string nombreMateria)
+        public async Task<IActionResult> OnPost(int grado, string nombreCurso, string division, string turno, int id)
         {
-            if (string.IsNullOrEmpty(curso))
+            if (id > 0)
             {
-                this.ModelState.AddModelError("curso", "El campo Curso es requerido");
-                return null;
+                // Actualizar curso existente
+                var content = new StringContent($"{{\"Nombre_Curso\":\"{nombreCurso}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\", \"Id\":\"{id}\"}}", Encoding.UTF8, "application/json");
+                //HttpResponseMessage response = await client.PutAsync("https://pegasus.azure-api.net/v1/Curso/UpdateCurso", content);
+                HttpResponseMessage response = await client.PutAsync("https://localhost:7130/Curso/UpdateCurso", content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.ModelState.AddModelError("curso", "Hubo un error inesperado al actualizar el Curso");
+                    return null;
+                }               
+                
             }
-
-            if (string.IsNullOrEmpty(nombreMateria))
+            else
             {
-                this.ModelState.AddModelError("nombreMateria", "El campo Nombre de la materia es requerido");
-                return null;
-            }
-
-            var content = new StringContent($"{{\"Nombre\":\"{nombreMateria}\", \"Curso\":\"{curso}\"}}", Encoding.UTF8, "application/json");
-
-            HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Materia/CreateMateria", content);
-            if (!response.IsSuccessStatusCode)
-            {
-                this.ModelState.AddModelError("materia", "Hubo un error inesperado al crear la Materia");
-                return null;
+                // Crear nuevo curso
+                var content = new StringContent($"{{\"Nombre_Curso\":\"{nombreCurso}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\"}}", Encoding.UTF8, "application/json");
+                //HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Materia/CreateMateria", content);
+                HttpResponseMessage response = await client.PostAsync("https://localhost:7130/Curso/CreateCurso", content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.ModelState.AddModelError("curso", "Hubo un error inesperado al crear el Curso");
+                    return null;
+                }
             }
 
             return RedirectToPage("Curso");
