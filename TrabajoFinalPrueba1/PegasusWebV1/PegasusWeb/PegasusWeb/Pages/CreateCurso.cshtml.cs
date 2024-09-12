@@ -14,8 +14,8 @@ namespace PegasusWeb.Pages
     {
         static HttpClient client = new HttpClient();
 
-        [DisplayName("Nombre del Curso"), Required(ErrorMessage = "El campo Nombre del Curso es requerido")]
-        public string nombreCurso { get; set; }
+        [DisplayName("Nombre"), Required(ErrorMessage = "El campo Nombre es requerido")]
+        public string nombre { get; set; }
 
         [DisplayName("Grado"), Required(ErrorMessage = "El campo Grado es requerido")]
         public string grado { get; set; }
@@ -62,18 +62,33 @@ namespace PegasusWeb.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(int grado, string nombreCurso, string division, string turno, int id)
+        public async Task<IActionResult> OnPost(int grado, string nombre, string division, string turno, int id)
         {
-            if (string.IsNullOrEmpty(nombreCurso))
+            if (grado < 1)
             {
-                this.ModelState.AddModelError("nombreCurso", "El campo Curso es requerido");
+                this.ModelState.AddModelError("grado", "El campo Grado es requerido");
+                return null;
+            }
+            if (string.IsNullOrEmpty(nombre))
+            {
+                this.ModelState.AddModelError("nombre", "El campo Curso es requerido");
+                return null;
+            }
+            if (string.IsNullOrEmpty(division))
+            {
+                this.ModelState.AddModelError("division", "El campo Division es requerido");
+                return null;
+            }
+            if (string.IsNullOrEmpty(turno))
+            {
+                this.ModelState.AddModelError("turno", "El campo Turno es requerido");
                 return null;
             }
 
             if (id > 0)
             {
                 // Actualizar curso existente
-                var content = new StringContent($"{{\"Nombre_Curso\":\"{nombreCurso}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\", \"Id\":\"{id}\"}}", Encoding.UTF8, "application/json");
+                var content = new StringContent($"{{\"Nombre_Curso\":\"{nombre}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\", \"Id\":\"{id}\"}}", Encoding.UTF8, "application/json");
                 //HttpResponseMessage response = await client.PutAsync("https://pegasus.azure-api.net/v1/Curso/UpdateCurso", content);
                 HttpResponseMessage response = await client.PutAsync("https://localhost:7130/Curso/UpdateCurso", content);
                 if (!response.IsSuccessStatusCode)
@@ -86,7 +101,7 @@ namespace PegasusWeb.Pages
             else
             {
                 // Crear nuevo curso
-                var content = new StringContent($"{{\"Nombre_Curso\":\"{nombreCurso}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\"}}", Encoding.UTF8, "application/json");
+                var content = new StringContent($"{{\"Nombre_Curso\":\"{nombre}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\"}}", Encoding.UTF8, "application/json");
                 //HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Materia/CreateMateria", content);
                 HttpResponseMessage response = await client.PostAsync("https://localhost:7130/Curso/CreateCurso", content);
                 if (!response.IsSuccessStatusCode)
