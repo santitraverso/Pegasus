@@ -2,7 +2,10 @@
 @using PegasusWeb.Entities
 @model PegasusWeb.Pages.IntegrantesCursosModel
 @{
+    var isSaved = TempData["IsSaved"] != null && (bool)TempData["IsSaved"];
+    var errorMessage = TempData["ErrorMessage"] != null ? TempData["ErrorMessage"].ToString() : "";
 }
+
 
 <!DOCTYPE html>
 
@@ -18,10 +21,22 @@
         <input type="text" id="busqueda" placeholder="Buscar alumnos..." onkeyup="buscarAlumnos()">
     </div>
 
+    <div id="customAlertSuccess" class="custom-alert" style="display: none;">
+        <div class="custom-alert-content">
+            <p>Guardado correctamente</p>
+            <button onclick="closeAlert()">Aceptar</button>
+        </div>
+    </div>
 
+    <div id="customAlertError" class="custom-alert" style="display: none;">
+        <div class="custom-alert-content error-content">
+            <p>@errorMessage</p>
+            <button onclick="closeErrorAlert()">Aceptar</button>
+        </div>
+    </div>
     <form method="post">
         <div class="container">
-            <input type="hidden" name="curso" asp-for="Alumnos[0].Id_Curso" />
+            <input type="hidden" name="curso" asp-for="IdCurso" />
             <table id="tablaAlumnos" class="table">
                 <thead>
                     <tr>
@@ -35,7 +50,7 @@
                     {
                         var isChecked = Model.SelectedAlumnosIds.Contains((int)alumno.Id_Usuario);
                         <tr>
-                            <td><input type="checkbox" name="SelectedAlumnosIds" value="@alumno.Id" @(isChecked ? "checked" : "") /></td>
+                            <td><input type="checkbox" name="SelectedAlumnosIds" value="@alumno.Id_Usuario" @(isChecked ? "checked" : "") /></td>
                             <td>@alumno.Usuario.Apellido</td>
                             <td>@alumno.Usuario.Nombre</td>
                         </tr>
@@ -48,6 +63,7 @@
 
 </body>
 </html>
+
 
 @section scripts{
     <script>
@@ -75,5 +91,30 @@
                 tr[i].style.display = match ? "" : "none";
             }
         }
+
+        window.onload = function () {
+            var isSaved  = '@isSaved'.toLowerCase();
+            
+            var errorMessage = '@errorMessage';
+
+            if (isSaved === 'true') {
+                document.getElementById('customAlertSuccess').style.display = 'block';
+            }
+
+            if (errorMessage.length > 0) {
+                document.getElementById('customAlertError').style.display = 'block';
+            }
+        };
+
+        function closeAlert() {
+            document.getElementById('customAlertSuccess').style.display = 'none';
+            window.location.href = '/Curso';
+        }
+
+        function closeErrorAlert() {
+            document.getElementById('customAlertError').style.display = 'none';
+            window.location.href = '/Curso';
+        }
+
     </script>
 }
