@@ -1,0 +1,79 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.IntegrantesCursosModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4 class="centrado">Alumnos</h4>
+    <br />
+    <div class="center-screen">
+        <input type="text" id="busqueda" placeholder="Buscar alumnos..." onkeyup="buscarAlumnos()">
+    </div>
+
+
+    <form method="post">
+        <div class="container">
+            <input type="hidden" name="curso" asp-for="Alumnos[0].Id_Curso" />
+            <table id="tablaAlumnos" class="table">
+                <thead>
+                    <tr>
+                        <th>Seleccion</th>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var alumno in Model.Alumnos)
+                    {
+                        var isChecked = Model.SelectedAlumnosIds.Contains((int)alumno.Id_Usuario);
+                        <tr>
+                            <td><input type="checkbox" name="SelectedAlumnosIds" value="@alumno.Id" @(isChecked ? "checked" : "") /></td>
+                            <td>@alumno.Usuario.Apellido</td>
+                            <td>@alumno.Usuario.Nombre</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary Model.Curso.Id">Guardar</button>
+        </div>
+    </form>
+
+</body>
+</html>
+
+@section scripts{
+    <script>
+        function buscarAlumnos() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("busqueda");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tablaAlumnos");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) { // Comenzar en 1 para omitir la primera fila de títulos
+                // Comprobar si algún valor de las columnas nombre o apellido coincide con el filtro
+                var match = false;
+                for (j = 0; j < 2; j++) { // Iterar sobre las columnas 0 (nombre) y 1 (apellido)
+                    td = tr[i].getElementsByTagName("td")[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            match = true;
+                            break; // Salir del bucle si se encuentra una coincidencia en alguna columna
+                        }
+                    }
+                }
+                // Mostrar u ocultar la fila en función de si se encontró una coincidencia
+                tr[i].style.display = match ? "" : "none";
+            }
+        }
+    </script>
+}

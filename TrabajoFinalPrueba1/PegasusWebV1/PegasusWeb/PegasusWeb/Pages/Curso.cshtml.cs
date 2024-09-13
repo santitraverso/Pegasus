@@ -30,7 +30,7 @@ namespace PegasusWeb.Pages
             List<Curso> getcursos = new List<Curso>();
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Curso/GetCursosForCombo");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Curso/GetCursosForCombo");
             if (response.IsSuccessStatusCode)
             {
                 string cursosJson = await response.Content.ReadAsStringAsync();

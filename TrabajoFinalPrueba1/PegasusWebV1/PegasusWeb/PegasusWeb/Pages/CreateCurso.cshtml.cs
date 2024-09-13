@@ -32,12 +32,14 @@ namespace PegasusWeb.Pages
         [TempData]
         public int IdCurso { get; set; }
 
+        public List<IntegrantesCursos> Alumnos { get; set; } = new List<IntegrantesCursos>();
+
         public async Task<IActionResult> OnGetAsync()
         {
             if (IdCurso > 0)
             {
                 // Es una edición, se carga el curso existente
-                HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Curso/GetById?id={IdCurso}");
+                HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Curso/GetById?id={IdCurso}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -45,6 +47,8 @@ namespace PegasusWeb.Pages
                     if (!string.IsNullOrEmpty(cursoJson))
                     {
                         Curso = JsonConvert.DeserializeObject<Curso>(cursoJson);
+
+                        Alumnos = await GetIntegrantesCursosAsync(IdCurso);
                     }
                 }
 
@@ -56,13 +60,39 @@ namespace PegasusWeb.Pages
             else
             {
                 // Es una carga nueva
-                Curso = new Curso();
+                Curso = new Curso { Id = 0 };
             }
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(int grado, string nombre, string division, string turno, int id)
+        public IActionResult OnPostAgregarAlumno(int curso)
+        {
+            IdCurso = curso;
+            return RedirectToPage("IntegrantesCursos");
+        }
+
+        static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso)
+        {
+            List<IntegrantesCursos> getalumnos = new List<IntegrantesCursos>();
+
+            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
+            string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string alumnosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(alumnosJson))
+                {
+                    getalumnos = JsonConvert.DeserializeObject<List<IntegrantesCursos>>(alumnosJson);
+                }
+            }
+
+            return getalumnos;
+        }
+
+        public async Task<IActionResult> OnPostAsync(int grado, string nombre, string division, string turno, int id)
         {
             if (grado < 1)
             {
@@ -90,7 +120,7 @@ namespace PegasusWeb.Pages
                 // Actualizar curso existente
                 var content = new StringContent($"{{\"Nombre_Curso\":\"{nombre}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\", \"Id\":\"{id}\"}}", Encoding.UTF8, "application/json");
                 //HttpResponseMessage response = await client.PutAsync("https://pegasus.azure-api.net/v1/Curso/UpdateCurso", content);
-                HttpResponseMessage response = await client.PutAsync("https://localhost:7130/Curso/UpdateCurso", content);
+                HttpResponseMessage response = await client.PutAsync("http://localhost:7130/Curso/UpdateCurso", content);
                 if (!response.IsSuccessStatusCode)
                 {
                     this.ModelState.AddModelError("curso", "Hubo un error inesperado al actualizar el Curso");
@@ -103,7 +133,7 @@ namespace PegasusWeb.Pages
                 // Crear nuevo curso
                 var content = new StringContent($"{{\"Nombre_Curso\":\"{nombre}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\"}}", Encoding.UTF8, "application/json");
                 //HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Materia/CreateMateria", content);
-                HttpResponseMessage response = await client.PostAsync("https://localhost:7130/Curso/CreateCurso", content);
+                HttpResponseMessage response = await client.PostAsync("http://localhost:7130/Curso/CreateCurso", content);
                 if (!response.IsSuccessStatusCode)
                 {
                     this.ModelState.AddModelError("curso", "Hubo un error inesperado al crear el Curso");

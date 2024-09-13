@@ -42,5 +42,33 @@
         </table>
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
+    <br />
+    <br />
+    
+        <form method="post" asp-page-handler="AgregarAlumno" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">
+            <h3>Alumnos</h3>
+            <div class="container">
+                <input type="hidden" name="curso" asp-for="Curso.Id" />
+                <table id="tablaAlumnos" class="table">
+                    <thead>
+                        <tr>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var alumno in Model.Alumnos)
+                        {
+                            <tr>
+                                <td>@alumno.Usuario.Apellido</td>
+                                <td>@alumno.Usuario.Nombre</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary Model.Curso.Id"> Agregar Alumnos</button>
+            </div>
+        </form>
+    
 </body>
 </html>

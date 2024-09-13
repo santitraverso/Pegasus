@@ -21,7 +21,7 @@ namespace PegasusWeb.Pages.Materia
             List<PegasusWeb.Entities.Materia> getmaterias = new List<PegasusWeb.Entities.Materia>();
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
-            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Materia/GetMateriasForCombo");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Materia/GetMateriasForCombo");
 
             if (response.IsSuccessStatusCode)
             {
