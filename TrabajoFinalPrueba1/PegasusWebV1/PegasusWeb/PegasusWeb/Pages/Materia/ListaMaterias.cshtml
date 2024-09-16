@@ -1,6 +1,6 @@
 ﻿@page
 @using PegasusWeb.Entities
-@model MateriaModel
+@model ListaMateriasModel
 @{
 }
 
@@ -14,7 +14,6 @@
 <body>
     <h4>Materias</h4>
     <hr />
-    <a class="btn btn-primary btn-custom" asp-page="/CreateMateria" style="margin:10px;">Crear Materia</a>
     <div class="row">
         @foreach (PegasusWeb.Entities.Materia materia in Model.Materias)
         {

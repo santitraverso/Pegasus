@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PegasusWeb.Entities
 {
@@ -12,6 +13,6 @@ namespace PegasusWeb.Entities
         public Curso? Curso { get; set; }
 
         [Display(Name = "ID_Curso")]
-        public int? ID_Curso { get; set; }
+        public int? Id_Curso { get; set; }
     }
 }

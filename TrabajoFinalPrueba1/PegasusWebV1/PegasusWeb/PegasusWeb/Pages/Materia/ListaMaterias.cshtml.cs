@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace PegasusWeb.Pages.Materia
 {
-    public class MateriaModel : PageModel
+    public class ListaMateriasModel : PageModel
     {
         static HttpClient client = new HttpClient();
         public List<PegasusWeb.Entities.Materia> Materias { get; set; }
