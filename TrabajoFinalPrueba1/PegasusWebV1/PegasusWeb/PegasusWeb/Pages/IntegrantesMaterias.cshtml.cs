@@ -24,7 +24,7 @@ namespace PegasusWeb.Pages
             Alumnos = await GetIntegrantesMateriasAsync(materia);
         }
 
-        public async Task<IActionResult> OnPostAsync(int usuario, int materia)
+        public IActionResult OnPost(int usuario, int materia)
         {
             Usuario = usuario;
             Materia = materia;
@@ -38,7 +38,7 @@ namespace PegasusWeb.Pages
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
             string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia}");
-            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
