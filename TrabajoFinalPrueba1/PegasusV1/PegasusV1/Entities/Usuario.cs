@@ -17,5 +17,8 @@ namespace PegasusV1.Entities
         public string? Mail { get; set; }
 
         public bool? Activo { get; set; }
+
+        [NotMapped]
+        public List<Calificaciones> Calificaciones { get; set; }
     }
 }

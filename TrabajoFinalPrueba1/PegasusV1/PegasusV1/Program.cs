@@ -14,9 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer("Server=tcp:pegasusdavinci.database.windows.net,1433;Initial Catalog=Pegasus;Persist Security Info=False;User ID=pegasus;Password=davinci123.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
-//builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer("Server=.;Initial Catalog=PEGASUS;TrustServerCertificate=true;Integrated Security=True;"));
+builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer("Server=.;Initial Catalog=PEGASUSNEW;TrustServerCertificate=true;Integrated Security=True;"));
 
-builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer("Data Source=(localdb)\\Pegasus;Initial Catalog=PEGASUS;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"));
+//builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer("Data Source=(localdb)\\Pegasus;Initial Catalog=PEGASUS;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"));
 //builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer("Server=tcp:pegasusdavinci.database.windows.net,1433;Initial Catalog=Pegasus;Persist Security Info=False;User ID=pegasus;Password=davinci123.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();

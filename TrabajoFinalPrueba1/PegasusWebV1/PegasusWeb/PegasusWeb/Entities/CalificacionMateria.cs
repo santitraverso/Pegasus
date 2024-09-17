@@ -8,12 +8,13 @@ namespace PegasusWeb.Entities
         [Key]
         public int Id { get; set; }
 
-        public string Nombre { get; set; }
+        public int Id_Alumno { get; set; }
 
-        public string Apellido { get; set; }
+        public int Id_Materia { get; set; }
 
-        public string Titulo { get; set; }
+        public int Id_Curso { get; set; }
 
         public double? Calificacion { get; set; }
     }
 }
+

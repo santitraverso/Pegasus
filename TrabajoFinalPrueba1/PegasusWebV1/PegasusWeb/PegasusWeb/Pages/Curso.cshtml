@@ -1,6 +1,6 @@
 ﻿@page
 @using PegasusWeb.Entities
-@model PegasusWeb.Pages.MateriaModel
+@model PegasusWeb.Pages.CursoModel
 @{
 }
 
@@ -12,18 +12,19 @@
     <title>Index</title>
 </head>
 <body>
-    <h4>Materias</h4>
+    <h4>Cursos</h4>
     <hr />
-    <a class="btn btn-primary btn-custom" asp-page="/Materia/CreateMateria" style="margin:10px;">Crear Materia</a>
+    <a class="btn btn-primary btn-custom" asp-page="/CreateCurso" style="margin:10px;">Crear Curso</a>
     <div class="row">
-        @foreach (Entities.Materia materia in Model.Materias)
+        @foreach (Curso curso in Model.Cursos)
         {
             <div class="col-md-3 justify-content-center">
                 <div class="card card-custom card-title-center justify-content-center">
-                    <h5 class="card-title card-title-center">@materia.Nombre</h5>
+                    <h5 class="card-title card-title-center">@curso.Nombre_Curso</h5>
+                    <p class="card-title card-title-center">@curso.Grado @curso.Division</p>
+                    <p class="card-title card-title-center">@curso.Turno</p>
                     <form method="post">
-                        <input type="hidden" name="materia" value="@materia.Id" />
-                        <img src="~/img/libros.png" class="card-img-top2" alt="">
+                        <input type="hidden" name="curso" value="@curso.Id" />
                         <button class="btn btn-default" type="submit"><img src="~/img/lapiz.png" class="icon" alt=""></button>
                     </form>
                 </div>

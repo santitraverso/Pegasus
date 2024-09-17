@@ -9,6 +9,6 @@ namespace PegasusV1.Entities
         public int? Id_Curso { get; set; }
 
         [ForeignKey("Id_Curso")]
-        public Curso Curso { get; set; }
+        public Curso? Curso { get; set; }
     }
 }

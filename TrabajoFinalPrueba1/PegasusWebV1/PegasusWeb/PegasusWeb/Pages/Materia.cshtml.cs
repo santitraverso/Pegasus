@@ -9,30 +9,38 @@ namespace PegasusWeb.Pages
     public class MateriaModel : PageModel
     {
         static HttpClient client = new HttpClient();
-        public List<Materia> Materias { get; set; }
-        
+        public List<Entities.Materia> Materias { get; set; }
+
+        [TempData]
+        public int IdMateria { get; set; }
+
         public async Task OnGetAsync()
         {
             Materias = await GetMateriasAsync();
         }
 
-        static async Task<List<Materia>> GetMateriasAsync()
+        public async Task<IActionResult> OnPostAsync(int materia)
         {
-            List<Materia> getmaterias = new List<Materia>();
+            IdMateria = materia;
+            return RedirectToPage("Materia/CreateMateria");
+        }
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
-            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Materia/GetMateriasForCombo");
+        static async Task<List<Entities.Materia>> GetMateriasAsync()
+        {
+            List <Entities.Materia> getMaterias = new List<Entities.Materia>();
 
+            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Materia/GetMateriasForCombo");
             if (response.IsSuccessStatusCode)
             {
                 string materiasJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(materiasJson))
                 {
-                    getmaterias = JsonConvert.DeserializeObject<List<Materia>>(materiasJson);
+                    getMaterias = JsonConvert.DeserializeObject<List<Entities.Materia>>(materiasJson);
                 }
             }
 
-            return getmaterias;
+            return getMaterias;
         }
     }
 }

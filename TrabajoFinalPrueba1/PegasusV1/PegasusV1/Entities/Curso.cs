@@ -7,7 +7,7 @@ namespace PegasusV1.Entities
     {
         public int Id { get; set; }
         public string Nombre_Curso { get; set; } 
-        public int Grado { get; set; }
+        public byte Grado { get; set; }
         public string Division { get; set; }
         public string Turno { get; set; }
     }

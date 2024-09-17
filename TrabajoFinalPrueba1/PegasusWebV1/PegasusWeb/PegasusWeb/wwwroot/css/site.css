@@ -59,6 +59,15 @@ body {
     text-decoration: none;
 }
 
+.card-img-top2 {
+    border-radius: 30px; /* Redondear los bordes de la imagen */
+    text-align: center;
+    width: 200px;
+    align-content: center;
+    height: 150px;
+    text-decoration: none;
+}
+
 .card-custom {
     border-radius: 50px; /* Redondear los bordes de la tarjeta */
     margin-top: 30px;
@@ -119,4 +128,56 @@ body {
 .nested-table td, .nested-table th {
     border: 1px solid black;
     padding: 5px;
+}
+
+/* Estilos para el cuadro de diálogo personalizado */
+.custom-alert {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+.custom-alert-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.custom-alert-content p {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.custom-alert-content button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.custom-alert-content button:hover {
+    opacity: 0.8;
+}
+
+/* Estilo para el botón de éxito */
+.custom-alert-content:not(.error-content) button {
+    background-color: #28a745; /* Verde para éxito */
+}
+
+/* Estilo para el botón de error */
+.error-content button {
+    background-color: #dc3545; /* Rojo para error */
+}
+
+.error-content button:hover {
+    background-color: #c82333; /* Rojo más oscuro para hover */
 }
