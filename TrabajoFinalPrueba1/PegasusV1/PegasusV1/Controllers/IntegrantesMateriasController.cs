@@ -15,16 +15,19 @@ namespace PegasusV1.Controllers
         private readonly IService<IntegrantesMaterias> IntegrantesMateriasService;
         private readonly IService<Materia> MateriaService;
         private readonly IService<Usuario> UsuarioService;
+        private readonly IService<Calificaciones> CalificacionesService;
 
         public IntegrantesMateriasController(ILogger<IntegrantesMateriasController> logger,
             IService<IntegrantesMaterias> integrantesMateriasService,
             IService<Materia> materiaService,
-            IService<Usuario> usuarioService)
+            IService<Usuario> usuarioService,
+            IService<Calificaciones> calificacionesService)
         {
             _logger = logger;
             IntegrantesMateriasService = integrantesMateriasService;
             MateriaService = materiaService;
             UsuarioService = usuarioService;
+            CalificacionesService = calificacionesService;
         }
 
         [HttpGet]
@@ -42,6 +45,16 @@ namespace PegasusV1.Controllers
             }
 
             List<IntegrantesMaterias> IntegrantesMateriass = await IntegrantesMateriasService.GetIntegrantesMateriasForCombo(ex);
+
+            foreach (IntegrantesMaterias intMat in IntegrantesMateriass)
+            {
+                if (intMat.Id_Usuario.HasValue && intMat.Id_Materia.HasValue)
+                {
+                    List<Calificaciones> calificaciones = await CalificacionesService.GetCalificacionesByUserAndMateria(intMat.Id_Usuario.Value, intMat.Id_Materia.Value);
+                    intMat.Usuario = await UsuarioService.GetById(intMat.Id_Usuario.Value);
+                    intMat.Usuario!.Calificaciones = calificaciones;
+                }
+            }
 
             return IntegrantesMateriass;
         }
@@ -62,6 +75,8 @@ namespace PegasusV1.Controllers
                 if (IntegrantesMaterias.Id_Usuario.HasValue)
                 {
                     IntegrantesMaterias.Usuario = await UsuarioService.GetById(IntegrantesMaterias.Id_Usuario.Value);
+                    List<Calificaciones> calificaciones = await CalificacionesService.GetCalificacionesByUserAndMateria(IntegrantesMaterias.Id_Usuario.Value, IntegrantesMaterias.Id);
+                    IntegrantesMaterias.Usuario!.Calificaciones = calificaciones;
                 }
             }
 

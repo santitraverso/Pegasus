@@ -386,5 +386,40 @@ namespace PegasusV1.Repositories
                 return await query.ToListAsync();
             }
         }
+
+        public async Task<List<Calificaciones>> GetCalificacionesByUser(int userId)
+        { 
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Calificaciones> calificaciones = dbContext.Set<Calificaciones>().AsQueryable()
+                    .Where(x => x.Id_Alumno == userId);
+
+                return await calificaciones.ToListAsync();
+            }
+        }
+
+
+        public async Task<List<Calificaciones>> GetCalificacionesByMateria(int materiaId)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Calificaciones> calificaciones = dbContext.Set<Calificaciones>().AsQueryable()
+                    .Where(x => x.Id_Materia == materiaId);
+
+                return await calificaciones.ToListAsync();
+            }
+        }
+
+        public async Task<List<Calificaciones>> GetCalificacionesByUserAndMateria(int userId, int materiaId)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Calificaciones> calificaciones = dbContext.Set<Calificaciones>().AsQueryable();
+
+                calificaciones = calificaciones.Where(x => x.Id_Materia == materiaId && x.Id_Alumno == userId);
+
+                return await calificaciones.ToListAsync();
+            }
+        }
     }
 }

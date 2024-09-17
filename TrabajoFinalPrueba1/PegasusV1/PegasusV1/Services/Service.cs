@@ -127,5 +127,20 @@ namespace PegasusV1.Services
         {
             return await Repository.GetRolesForCombo(predicate);
         }
+
+        public async Task<List<Calificaciones>> GetCalificacionesByUser(int userId)
+        {
+            return await Repository.GetCalificacionesByUser(userId);
+        }
+
+        public async Task<List<Calificaciones>> GetCalificacionesByMateria(int materiaId)
+        {
+            return await Repository.GetCalificacionesByMateria(materiaId);
+        }
+
+        public async Task<List<Calificaciones>> GetCalificacionesByUserAndMateria(int userId, int materiaId)
+        {
+            return await Repository.GetCalificacionesByUserAndMateria(userId, materiaId);
+        }
     }
 }
