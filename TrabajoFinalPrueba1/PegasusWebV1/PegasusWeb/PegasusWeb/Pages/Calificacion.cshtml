@@ -1,6 +1,6 @@
 ﻿@page
 @using PegasusWeb.Entities
-@model PegasusWeb.Pages.IntegrantesMateriasModel
+@model PegasusWeb.Pages.CalificacionModel
 @{
 }
 
@@ -17,40 +17,13 @@
     <div class="center-screen">
         <input type="text" id="busqueda" placeholder="Buscar alumnos..." onkeyup="buscarAlumnos()">
     </div>
-    @*<div class="container">
-        <table id="tablaAlumnos" class="table">
-            <thead>
-                <tr>
-                    <th>Apellido</th>
-                    <th>Nombre</th>
-                    <th>Nota</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (IntegrantesMaterias alumno in Model.Alumnos)
-                {
-                    <tr>
-                        <td>@alumno.Usuario.Apellido</td>
-                        <td>@alumno.Usuario.Nombre</td>
-                        <td>7</td>
-                        <td><a asp-page="/CreateCalificacion" asp-route-materia="@alumno.Id_Materia" asp-route-usuario="@alumno.Id_Usuario"><img src="~/img/lapiz.png" class="icon" alt=""></a></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <div class="center-screen">
-            <button class="btn btn-primary btn-custom" asp-area="" asp-page="/CreateMateria" style="margin:10px; ">Reporte</button>
-        </div>
-    </div>*@
     <div class="container">
-        
             <table id="tablaAlumnos" class="table">
                 <thead>
                     <tr>
                         <th>Apellido</th>
                         <th>Nombre</th>
-                        <th>Nota</th>
+                        <th>Calificaciones</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -60,26 +33,28 @@
                     {
                         <tr>
                             <form method="post"> 
-                                @*<input type="hidden" asp-for="@Model.Materia" value="@alumno.Id_Materia" />*@
-                                <input type="hidden" name="usuario" value="@alumno.Id_Usuario" />
-                                <input type="hidden" name="materia" value="@alumno.Id_Materia" />
-                                <input type="hidden" name="nota" value="7" />
-                                @*<input type="hidden" asp-for="@Model.Usuario" value="@alumno.Id_Usuario" />*@
-                                <td>@alumno.Usuario.Apellido</td>
-                                <td>@alumno.Usuario.Nombre</td>
+                                <input type="hidden" name="usuario" value="@alumno.AlumnoId" />
+                                <td>@alumno.Apellido</td>
+                                <td>@alumno.Nombre</td>
                                 <td>
                                     <table class="nested-table">
-                                        <tr>
-                                            <td>Parcial 1</td>
-                                            <td>7</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Parcial 2</td>
-                                            <td>8</td>
-                                        </tr>
+                                        @foreach (var calificacion in alumno.Calificaciones)
+                                        {
+                                            <tr>
+                                                <td>Nota</td>
+                                                <td>@calificacion.Calificacion</td>
+                                            </tr>
+                                        }
                                     </table>
                                 </td>
-                                <td><button class="btn btn-default" type="submit"><img src="~/img/lapiz.png" class="icon" alt=""></button></td>
+                        
+                                @if (alumno.Calificaciones.Any())
+                                {
+                                    <td>
+                                        <button class="btn btn-default" type="submit"><img src="~/img/lapiz.png" class="icon" alt=""></button>
+                                    </td>
+                                }
+                        
                                 <td><button class="btn btn-default" asp-page="/CreateMateria"><img src="~/img/nuevo.png" class="icon" alt=""></button></td>
                             </form> 
                         </tr>

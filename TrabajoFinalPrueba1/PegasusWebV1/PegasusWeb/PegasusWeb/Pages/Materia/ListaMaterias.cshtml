@@ -18,10 +18,15 @@
         @foreach (PegasusWeb.Entities.Materia materia in Model.Materias)
         {
             <div class="col-md-3 justify-content-center">
-                <a asp-page="/IntegrantesMaterias" asp-route-materia="@materia.Id" class="card card-custom card-title-center justify-content-center">
-                    <img src="~/img/libros.png" class="card-img-top" alt="">
-                    <h5 class="card-title card-title-center">@materia.Nombre</h5>
-                </a>
+                <form method="post">
+                    <div class="card card-custom card-title-center justify-content-center">
+                        <input type="hidden" name="materia" value="@materia.Id" />
+                        <button class="btn btn-default" type="submit">
+                            <h5 class="card-title card-title-center">@materia.Nombre</h5>
+                            <img src="~/img/libros.png" class="card-img-top2" alt="">
+                        </button>
+                    </div>
+                </form>
             </div>
         }
     </div>
