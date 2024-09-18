@@ -291,7 +291,10 @@ namespace PegasusV1.Repositories
             {
                 IQueryable<T>? query = dbContext.Set<T>().AsQueryable();
 
-                query = query.Where(predicate);
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
 
                 if (includes != null)
                 {
@@ -419,6 +422,23 @@ namespace PegasusV1.Repositories
                 calificaciones = calificaciones.Where(x => x.Id_Materia == materiaId && x.Id_Alumno == userId);
 
                 return await calificaciones.ToListAsync();
+            }
+        }
+
+        public async Task<List<ContenidoMaterias>> GetContenidoMateriasForCombo(Expression<Func<ContenidoMaterias, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<ContenidoMaterias>? query = dbContext.Set<ContenidoMaterias>().AsQueryable();
+
+                query = query.Include(x => x.Materia);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
             }
         }
     }
