@@ -142,5 +142,10 @@ namespace PegasusV1.Services
         {
             return await Repository.GetCalificacionesByUserAndMateria(userId, materiaId);
         }
+        
+        public async Task<List<ContenidoMaterias>> GetContenidoMateriasForCombo(Expression<Func<ContenidoMaterias, bool>>? predicate = null)
+        {
+            return await Repository.GetContenidoMateriasForCombo(predicate);
+        }
     }
 }
