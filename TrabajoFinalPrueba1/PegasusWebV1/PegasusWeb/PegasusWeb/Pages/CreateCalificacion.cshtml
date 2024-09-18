@@ -2,6 +2,8 @@
 @using PegasusWeb.Entities
 @model PegasusWeb.Pages.CreateCalificacionModel
 @{
+    var esEdicion = Model.Alumno.Usuario is not null ? Model.Alumno.Usuario.Calificaciones.Count > 0: false;
+    var titulo = esEdicion ? "Editar Calificacion" : "Cargar Nueva Calificacion";
 }
 
 <!DOCTYPE html>
@@ -12,52 +14,80 @@
     <title>Index</title>
 </head>
 <body>
-    <h4 class="centrado">Alumnos</h4>
+    <h4 class="centrado">@titulo</h4>
     <br />
+    <form method="post">
+        <input type="hidden" name="alumno" value="@Model.Alumno.Id_Usuario" />
+        <input type="hidden" name="materia" value="@Model.Alumno.Id_Materia" />
     <div class="container">
-        <form method="post">
-            <table id="tablaAlumnos" class="table">
-                <thead>
+        <table id="tablaAlumnos" class="table">
+            <thead>
+                <tr>
+                    <th>Apellido</th>
+                    <th>Nombre</th>
+                    <th>Calificaciones</th>
+                </tr>
+            </thead>
+            <tbody>
                     <tr>
-                        <th>Apellido</th>
-                        <th>Nombre</th>
-                        <th>Nota</th>
-                        <th></th>
+                        <td>@Model.Alumno.Usuario.Apellido</td>
+                        <td>@Model.Alumno.Usuario.Nombre</td>
+                        <td>
+                            
+                                <table class="nested-table">
+                                @if (Model.Alumno.Usuario.Calificaciones.Count > 0)
+                                {
+                                    var index = 0;
+                                    @foreach (var calificacion in Model.Alumno.Usuario.Calificaciones)
+                                    {
+                                        <tr id="calificacion-@index">
+                                            <td>Nota @(index+1)</td>
+                                            <td>
+                                                <input type="number" asp-for="@calificacion.Calificacion" class="form-control" name="Calificaciones[@index].Calificacion" required min="1" max="10" />
+                                                <button type="button" class="btn btn-danger" onclick="eliminarCalificacion(@index, @calificacion.Id)">Eliminar</button>
+                                            </td>
+                                            <input type="hidden" name="Calificaciones[@index].Id" value="@calificacion.Id" />
+                                        </tr>
+                                        
+                                        index++;
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>Nota</td>
+                                        <td><input type="number" value="" class="form-control" name="Calificaciones[0].Calificacion" required min="1" max="10" /></td>
+                                        <input type="hidden" name="Calificaciones[0].Id" value="0" />
+                                    </tr>
+                                }
+                                </table>
+                        </td>
+                        
                     </tr>
-                </thead>
-                <tbody>
-                   @* <tr>
-                        <td>
-                            Linares
-                        </td>
-                        <td>
-                            Santiago
-                        </td>
-                        <td>
-                            <input type="text" name="Nota" value="@Model.Usuario" />
-                        </td>
-                    </tr>*@
-                    @foreach (IntegrantesMaterias alumno in Model.Alumnos)
-                    {
-                        <tr>
-                            <td>
-                                @alumno.Usuario.Apellido
-                            </td>
-                            <td>
-                                @alumno.Usuario.Nombre
-                            </td>
-                            <td>
-                                <input type="text" name="Nota" value="@Model.Nota" />
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </form>
-
-        <div class="center-screen">
-            <button class="btn btn-primary btn-custom" asp-area="" asp-page="/CreateMateria" style="margin:10px; ">Reporte</button>
-        </div>
+                
+            </tbody>
+        </table>
     </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <input type="hidden" id="calificacionesEliminadas" name="CalificacionesEliminadas" value="" />
+    </form>
 </body>
 </html>
+@section scripts{
+    <script>
+        function eliminarCalificacion(index, id) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta calificación?')) {
+                const fila = document.getElementById(`calificacion-${index}`);
+                if (fila) {
+                    fila.remove();
+
+                    // Guardar el ID de la calificación eliminada
+                    let eliminadas = document.getElementById('calificacionesEliminadas').value;
+                    eliminadas = eliminadas ? eliminadas.split(',') : [];
+                    eliminadas.push(id);
+                    document.getElementById('calificacionesEliminadas').value = eliminadas.join(',');
+                }
+            }
+        }
+    </script>
+}

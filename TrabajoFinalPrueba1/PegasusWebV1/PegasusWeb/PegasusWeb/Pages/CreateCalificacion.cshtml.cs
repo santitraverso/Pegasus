@@ -2,71 +2,108 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using PegasusWeb.Entities;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
+using System.Text;
+using System.Reflection;
 
 namespace PegasusWeb.Pages
 {
     public class CreateCalificacionModel : PageModel
     {
         static HttpClient client = new HttpClient();
-        public List<IntegrantesMaterias> Alumnos { get; set; }
-        //public IntegrantesMaterias Alumno { get; set; }
+
+        [DisplayName("Nota"), Required(ErrorMessage = "El campo Nota es requerido")]
+
+        public IntegrantesMaterias Alumno { get; set; } =new IntegrantesMaterias();
+        public List<Calificaciones> Calificaciones { get; set; } = new List<Calificaciones>();
+
+        [TempData]
+        public int IdIntegrante { get; set; }
+
+        [TempData]
+        public bool Nuevo { get; set; }
 
         [TempData]
         public int Materia { get; set; }
 
-        [TempData]
-        public int Usuario { get; set; }
-
-        [BindProperty]
-        public double Nota { get; set; }
-
-        //[BindProperty]
-        //public decimal Nota { get; set; }
-
-        //[BindProperty]
-        //public int Id { get; set; }
-
-
-        public void OnPost(int usuario)
-        {
-            //Alumno = new IntegrantesMaterias { Usuario = new Usuario { Id = id, Apellido = apellido, Nombre = nombre} };
-
-            //Usuario = usuario;
-            //Apellido = apellido;
-            //Nota = nota;
-            //Alumnos = await GetIntegrantesMateriasAsync(materia, usuario);
-        }
 
         public async Task OnGetAsync()
         {
-            Alumnos = await GetIntegrantesMateriasAsync(Materia, Usuario);
+            Alumno = await GetIntegranteMateriaAsync(IdIntegrante);
 
-            if (TempData["Nota"] != null)
-            {
-                // Recuperar y convertir la string de vuelta a double
-                Nota = double.Parse(TempData["Nota"].ToString());
-            }
+            if(Nuevo)
+                Alumno.Usuario.Calificaciones = new List<Calificaciones> { };
         }
 
-        static async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasAsync(int materia, int usuario)
+        static async Task<IntegrantesMaterias> GetIntegranteMateriaAsync(int id)
         {
-            List<IntegrantesMaterias> getalumnos = new List<IntegrantesMaterias>();
+            IntegrantesMaterias getalumno = new IntegrantesMaterias();
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
-            string queryParam = Uri.EscapeDataString($"x=>x.id_materia = {materia} && x.id_usuario=={usuario}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetById?id={id}");
 
             if (response.IsSuccessStatusCode)
             {
-                string alumnosJson = await response.Content.ReadAsStringAsync();
-                if (!string.IsNullOrEmpty(alumnosJson))
+                string alumnoJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(alumnoJson))
                 {
-                    getalumnos = JsonConvert.DeserializeObject<List<IntegrantesMaterias>>(alumnosJson);
+                    getalumno = JsonConvert.DeserializeObject<IntegrantesMaterias>(alumnoJson);
                 }
             }
 
-            return getalumnos;
+            return getalumno;
+        }
+
+        public async Task<IActionResult> OnPostAsync(List<Calificaciones> calificaciones, int alumno, int materia, string calificacionesEliminadas)
+        {
+            if (!string.IsNullOrEmpty(calificacionesEliminadas))
+            {
+                var idsEliminados = calificacionesEliminadas.Split(',').Select(int.Parse).ToList();
+
+                foreach (var id in idsEliminados)
+                {
+                    
+                }
+            }
+
+            foreach (var calificacion in calificaciones)
+            {
+                if (calificacion.Calificacion < 1 || calificacion.Calificacion > 10)
+                {
+                    this.ModelState.AddModelError("nota", "El campo Nota es requerido");
+                    return null;
+                }
+
+                if (calificacion.Id > 0)
+                {
+                    // Actualizar calificacion existente
+                    var content = new StringContent($"{{\"calificacion\":\"{calificacion.Calificacion}\", \"Id_Materia\":\"{materia}\", \"Id_Alumno\":\"{alumno}\", \"Id\":\"{calificacion.Id}\"}}", Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PutAsync("http://localhost:7130/Calificaciones/UpdateCalificaciones", content);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        this.ModelState.AddModelError("calificacion", "Hubo un error inesperado al actualizar la Calificacion");
+                        return null;
+                    }
+
+                }
+                else
+                {
+                    // Crear nueva calificacion
+                    var content = new StringContent($"{{\"calificacion\":\"{calificacion.Calificacion}\", \"Id_Materia\":\"{materia}\", \"Id_Alumno\":\"{alumno}\"}}", Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync("http://localhost:7130/Calificaciones/CreateCalificaciones", content);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        this.ModelState.AddModelError("calificacion", "Hubo un error inesperado al crear la Calificacion");
+                        return null;
+                    }
+                }
+            }
+
+            Materia = materia;
+            return RedirectToPage("Calificacion");
         }
     }
 }

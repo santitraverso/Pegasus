@@ -1,4 +1,6 @@
-﻿namespace PegasusWeb.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PegasusWeb.Entities
 {
     public class Usuario
     {
@@ -13,5 +15,8 @@
         public string? Mail { get; set; }
 
         public bool? Activo { get; set; }
+
+        [NotMapped]
+        public List<Calificaciones> Calificaciones { get; set; }
     }
 }

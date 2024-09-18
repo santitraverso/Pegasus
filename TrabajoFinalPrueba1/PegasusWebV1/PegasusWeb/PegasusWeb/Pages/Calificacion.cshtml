@@ -31,7 +31,7 @@
                 <tbody>
                     @foreach (var alumno in Model.Alumnos)
                     {
-                        <tr>
+                        @*<tr>
                             <form method="post"> 
                                 <input type="hidden" name="usuario" value="@alumno.AlumnoId" />
                                 <td>@alumno.Apellido</td>
@@ -55,9 +55,40 @@
                                     </td>
                                 }
                         
-                                <td><button class="btn btn-default" asp-page="/CreateMateria"><img src="~/img/nuevo.png" class="icon" alt=""></button></td>
+                                <td><button class="btn btn-default" asp-page="/CreateCalificacion"><img src="~/img/nuevo.png" class="icon" alt=""></button></td>
                             </form> 
-                        </tr>
+                        </tr>*@
+
+                    <tr>
+                        <form method="post">
+                            <input type="hidden" name="usuario" value="@alumno.Id" />
+                            <input type="hidden" id="booleano" name="nuevo" value="false">
+                            <td>@alumno.Usuario.Apellido</td>
+                            <td>@alumno.Usuario.Nombre</td>
+                            <td>
+                                <table class="nested-table">
+                                        @foreach (var calificacion in alumno.Usuario.Calificaciones)
+                                        {
+                                        <tr>
+                                            <td>Nota</td>
+                                            <td>@calificacion.Calificacion</td>
+                                        </tr>
+                                        }
+                                </table>
+                            </td>
+
+                            @if (alumno.Usuario.Calificaciones.Any())
+                            {
+                            <td>
+                                <button class="btn btn-default" type="submit"><img src="~/img/lapiz.png" class="icon" alt=""></button>
+                            </td>
+                            }
+
+                            <td>
+                                <button class="btn btn-default" type="submit" onclick="asignarValor(true)"><img src="~/img/nuevo.png" class="icon" alt=""></button>
+                            </td>
+                        </form>
+                    </tr>
                     }
                 </tbody>
             </table>
@@ -95,6 +126,10 @@
                 // Mostrar u ocultar la fila en función de si se encontró una coincidencia
                 tr[i].style.display = match ? "" : "none";
             }
+        }
+
+        function asignarValor(valor) {
+            document.getElementById('booleano').value = valor;
         }
     </script>
 }
