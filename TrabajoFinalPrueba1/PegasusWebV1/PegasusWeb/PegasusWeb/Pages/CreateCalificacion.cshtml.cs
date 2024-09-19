@@ -55,16 +55,13 @@ namespace PegasusWeb.Pages
             return getalumno;
         }
 
-        public async Task<IActionResult> OnPostAsync(List<Calificaciones> calificaciones, int alumno, int materia, string calificacionesEliminadas)
+        public async Task<IActionResult> OnPostAsync(List<Calificaciones> calificaciones, int alumno, int materia, string calificacionesEliminadas, int curso)
         {
             if (!string.IsNullOrEmpty(calificacionesEliminadas))
             {
                 var idsEliminados = calificacionesEliminadas.Split(',').Select(int.Parse).ToList();
 
-                foreach (var id in idsEliminados)
-                {
-                    
-                }
+                await BorrarCalificacionesAsync(idsEliminados);
             }
 
             foreach (var calificacion in calificaciones)
@@ -78,7 +75,7 @@ namespace PegasusWeb.Pages
                 if (calificacion.Id > 0)
                 {
                     // Actualizar calificacion existente
-                    var content = new StringContent($"{{\"calificacion\":\"{calificacion.Calificacion}\", \"Id_Materia\":\"{materia}\", \"Id_Alumno\":\"{alumno}\", \"Id\":\"{calificacion.Id}\"}}", Encoding.UTF8, "application/json");
+                    var content = new StringContent($"{{\"calificacion\":\"{calificacion.Calificacion}\", \"Id_Materia\":\"{materia}\", \"Id_Curso\":\"{curso}\", \"Id_Alumno\":\"{alumno}\", \"Id\":\"{calificacion.Id}\"}}", Encoding.UTF8, "application/json");
 
                     HttpResponseMessage response = await client.PutAsync("http://localhost:7130/Calificaciones/UpdateCalificaciones", content);
                     if (!response.IsSuccessStatusCode)
@@ -91,7 +88,7 @@ namespace PegasusWeb.Pages
                 else
                 {
                     // Crear nueva calificacion
-                    var content = new StringContent($"{{\"calificacion\":\"{calificacion.Calificacion}\", \"Id_Materia\":\"{materia}\", \"Id_Alumno\":\"{alumno}\"}}", Encoding.UTF8, "application/json");
+                    var content = new StringContent($"{{\"calificacion\":\"{calificacion.Calificacion}\", \"Id_Materia\":\"{materia}\", \"Id_Curso\":\"{curso}\", \"Id_Alumno\":\"{alumno}\"}}", Encoding.UTF8, "application/json");
 
                     HttpResponseMessage response = await client.PostAsync("http://localhost:7130/Calificaciones/CreateCalificaciones", content);
                     if (!response.IsSuccessStatusCode)
@@ -104,6 +101,19 @@ namespace PegasusWeb.Pages
 
             Materia = materia;
             return RedirectToPage("Calificacion");
+        }
+
+        public async Task BorrarCalificacionesAsync(List<int> eliminadas)
+        {
+            foreach (var calificacion in eliminadas)
+            {
+                HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Calificaciones/DeleteCalificaciones?id={calificacion}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.ModelState.AddModelError("calificacion", "Hubo un error inesperado al borrar la Calificacion");
+                }
+            }
         }
     }
 }

@@ -31,33 +31,6 @@
                 <tbody>
                     @foreach (var alumno in Model.Alumnos)
                     {
-                        @*<tr>
-                            <form method="post"> 
-                                <input type="hidden" name="usuario" value="@alumno.AlumnoId" />
-                                <td>@alumno.Apellido</td>
-                                <td>@alumno.Nombre</td>
-                                <td>
-                                    <table class="nested-table">
-                                        @foreach (var calificacion in alumno.Calificaciones)
-                                        {
-                                            <tr>
-                                                <td>Nota</td>
-                                                <td>@calificacion.Calificacion</td>
-                                            </tr>
-                                        }
-                                    </table>
-                                </td>
-                        
-                                @if (alumno.Calificaciones.Any())
-                                {
-                                    <td>
-                                        <button class="btn btn-default" type="submit"><img src="~/img/lapiz.png" class="icon" alt=""></button>
-                                    </td>
-                                }
-                        
-                                <td><button class="btn btn-default" asp-page="/CreateCalificacion"><img src="~/img/nuevo.png" class="icon" alt=""></button></td>
-                            </form> 
-                        </tr>*@
 
                     <tr>
                         <form method="post">
@@ -67,13 +40,15 @@
                             <td>@alumno.Usuario.Nombre</td>
                             <td>
                                 <table class="nested-table">
+                                @{var index = 0;}
                                         @foreach (var calificacion in alumno.Usuario.Calificaciones)
                                         {
                                         <tr>
-                                            <td>Nota</td>
+                                        <td>Nota @(index + 1)</td>
                                             <td>@calificacion.Calificacion</td>
                                         </tr>
-                                        }
+                                        index++;
+                                    }
                                 </table>
                             </td>
 

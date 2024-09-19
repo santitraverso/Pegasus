@@ -130,6 +130,16 @@ body {
     padding: 5px;
 }
 
+.nested-table2 {
+    border-collapse: collapse;
+    width: 50%;
+}
+
+    .nested-table2 td, .nested-table2 th, .nested-table2 tr{
+        padding: 2px;
+        border: none;
+    }
+
 /* Estilos para el cuadro de diálogo personalizado */
 .custom-alert {
     position: fixed;
@@ -180,4 +190,68 @@ body {
 
 .error-content button:hover {
     background-color: #c82333; /* Rojo más oscuro para hover */
+}
+
+
+/* Contenedor que coloca los botones en columna */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espacio entre los botones */
+}
+
+/* Estilo de los botones principales */
+.toggle-button {
+    background-color: #007bff11;
+    color: gray;
+    border-color: #2196f3bf;
+    margin: 5px 0;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between; /* Coloca el texto a la izquierda y el símbolo a la derecha */
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+    width: 300px; /* Ancho fijo para los botones */
+    max-width: 100%; /* Asegura que no sobrepase el tamaño del contenedor */
+}
+
+/* Simbolo "+" o "-" al final del botón con estilo de botón independiente */
+.symbol-button {
+    background-color: #007aff79;
+    color: rgba(255, 255, 255, 0.8);
+    /* border: 2px solid #007bff;*/
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    margin-left: 15px;
+    margin-bottom: 1px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Cambiar el estilo del símbolo al pasar el ratón por encima */
+.toggle-button:hover .symbol-button {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Contenido desplegable oculto */
+.content {
+    display: none;
+    padding: 10px;
+    background-color: #8888880c;
+    margin-top: 5px;
+    color: gray;
+    /* width: 300px;*/ /* Mismo ancho que el botón */
+}
+
+/* Mostrar contenido cuando el botón está activo */
+.active + .content {
+    display: block;
 }

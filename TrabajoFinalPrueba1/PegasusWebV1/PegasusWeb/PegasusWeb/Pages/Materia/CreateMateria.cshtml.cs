@@ -30,7 +30,7 @@ namespace PegasusWeb.Pages
         [TempData]
         public int IdMateria { get; set; }
 
-        public List<IntegrantesCursos> Contenidos { get; set; } = new List<IntegrantesCursos>();
+        public List<ContenidoMaterias> Contenidos { get; set; } = new List<ContenidoMaterias>();
 
         [BindProperty]
         public int CursoSeleccionadoId { get; set; }
@@ -56,7 +56,7 @@ namespace PegasusWeb.Pages
 
                         CursoSeleccionadoId = (int)Materia.Id_Curso;
 
-                        //Alumnos = await GetIntegrantesCursosAsync(IdCurso);
+                        Contenidos = await GetContenidosMateriaAsync(IdMateria);
                     }
                 }
 
@@ -96,23 +96,23 @@ namespace PegasusWeb.Pages
         public IActionResult OnPostModificarContenido(int materia)
         {
             IdMateria = materia;
-            return RedirectToPage("ListaContenido");
+            //return RedirectToPage("ListaContenido");
+            return Page();
         }
 
-        static async Task<List<IntegrantesCursos>> GetContenidosMateriaAsync(int materia)
+        static async Task<List<ContenidoMaterias>> GetContenidosMateriaAsync(int materia)
         {
-            List<IntegrantesCursos> getContenidos = new List<IntegrantesCursos>();
+            List<ContenidoMaterias> getContenidos = new List<ContenidoMaterias>();
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
             string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/ContenidoMaterias/GetContenidoMateriasForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
                 string contenidosJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(contenidosJson))
                 {
-                    getContenidos = JsonConvert.DeserializeObject<List<IntegrantesCursos>>(contenidosJson);
+                    getContenidos = JsonConvert.DeserializeObject<List<ContenidoMaterias>>(contenidosJson);
                 }
             }
 

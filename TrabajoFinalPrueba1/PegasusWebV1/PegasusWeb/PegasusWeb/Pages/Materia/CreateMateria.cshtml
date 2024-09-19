@@ -45,29 +45,50 @@
     <br />
 
     <form method="post" asp-page-handler="ModificarContenido" style="@(Model.Materia.Id <= 0 ? "display:none;" : "")">
-        <h3>Contenidos</h3>
+        <h3>Contenido</h3>
         <div class="container">
             <input type="hidden" name="materia" asp-for="Materia.Id" />
-            <table id="tablaAlumnos" class="table">
-                <thead>
-                    <tr>
-                        <th>Apellido</th>
-                        <th>Nombre</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var alumno in Model.Contenidos)
-                    {
-                        <tr>
-                            <td>@alumno.Usuario.Apellido</td>
-                            <td>@alumno.Usuario.Nombre</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            @{
+                var index = 1;
+            }
+            @foreach (var contenido in Model.Contenidos)
+            {
+                <div class="button-container">
+                    <button type="button" class="toggle-button">
+                         Unidad @(index): @contenido.Titulo
+                        <span class="symbol-button">+</span>
+                    </button>
+                    <div class="content">
+                        <p>@contenido.Descripcion</p>
+                    </div>
+                </div>
+
+                index++;
+            }
+            <br />
             <button type="submit" class="btn btn-primary Model.Materia.Id"> Modificar Contenidos</button>
         </div>
     </form>
 
 </body>
 </html>
+@section scripts{
+    <script>
+        var buttons = document.querySelectorAll('.toggle-button');
+
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                this.classList.toggle('active');
+
+                var symbol = this.querySelector('.symbol-button');
+                if (this.classList.contains('active')) {
+                    symbol.textContent = '-';
+                } else {
+                    symbol.textContent = '+';
+                }
+            });
+        });
+    </script>
+}
