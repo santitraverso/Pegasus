@@ -211,8 +211,9 @@ body {
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
-    justify-content: space-between; /* Coloca el texto a la izquierda y el símbolo a la derecha */
     align-items: center;
+    position: relative; /* Para poder posicionar el símbolo */
+    flex-grow: 1; /* Hace que este botón crezca para ocupar el espacio */
     transition: box-shadow 0.3s ease;
     width: 300px; /* Ancho fijo para los botones */
     max-width: 100%; /* Asegura que no sobrepase el tamaño del contenedor */
@@ -233,6 +234,8 @@ body {
     margin-left: 15px;
     margin-bottom: 1px;
     transition: background-color 0.3s ease, color 0.3s ease;
+    position: absolute; /* Lo posicionamos independientemente del contenido */
+    right: 10px; /* Alineado a la derecha del botón */
 }
 
 /* Cambiar el estilo del símbolo al pasar el ratón por encima */
@@ -254,4 +257,18 @@ body {
 /* Mostrar contenido cuando el botón está activo */
 .active + .content {
     display: block;
+}
+
+/* Contenedor para el botón desplegable y el botón editar */
+.button-row {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre el botón principal y el botón editar */
+    width: 300px; /* Ancho fijo para que ambos botones tengan el mismo tamaño */
+}
+
+.edit-image, .delete-image {
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
 }

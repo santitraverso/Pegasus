@@ -1,0 +1,80 @@
+﻿@page
+@using PegasusWeb.Entities
+@model ListaContenidosModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4>Contenido</h4>
+    <hr />
+    <div class="row">
+        @{
+            var index = 1;
+        }
+        @foreach (var contenido in Model.Contenidos)
+        {
+            <form method="post">
+                <div class="button-container">
+                    <div class="button-row" style="width:350px;">
+                        <button type="button" class="toggle-button" data-target="content-@contenido.Id" onclick="toggleContent(@contenido.Id)">
+                            <span> Unidad @(index): @contenido.Titulo </span>
+                            <span class="symbol-button" id="symbol-@contenido.Id">+</span>
+                        </button>
+                        <img src="~/img/lapiz.png" class="icon edit-image" alt="Editar" onclick="submitForm(@contenido.Id)" style="padding-bottom: 5px;" />
+                        <img src="~/img/eliminar.png" class="icon delete-image" alt="Eliminar" onclick="submitDeleteForm(@contenido.Id)" style="padding-bottom: 5px;" />
+                        <input type="submit" id="submit-@contenido.Id" style="display:none" />
+                        <input type="submit" id="submit-delete-@contenido.Id" style="display:none" />
+                        <input type="hidden" name="contenido" value="@contenido.Id" />
+                        <input type="hidden" id="booleano" name="editar" value="true">
+                    </div>
+                    <div id="content-@contenido.Id" class="content">
+                        <p>@contenido.Descripcion</p>
+                    </div>
+                </div>
+            </form>
+            index++;
+        }
+    </div>
+    <br />
+    <form method="post" asp-page-handler="AgregarContenido">
+        <input type="hidden" name="materia" value="@Model.IdMateria" />
+        <button type="submit" class="btn btn-primary"> Crear Contenido</button>
+    </form>
+</body>
+</html>
+@section scripts{
+    <script>
+        function toggleContent(id) {
+            var content = document.getElementById('content-' + id);
+            var symbol = document.getElementById('symbol-' + id);
+
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                symbol.textContent = '+';
+            } else {
+                content.style.display = 'block';
+                symbol.textContent = '-';
+            }
+        }
+
+        function submitDeleteForm(id) {
+            asignarValor(false);
+            document.getElementById('submit-delete-' + id).click();
+        }
+
+        function submitForm(id) {
+            document.getElementById('submit-' + id).click();
+        }
+
+        function asignarValor(valor) {
+            document.getElementById('booleano').value = valor;
+        }
+    </script>
+}

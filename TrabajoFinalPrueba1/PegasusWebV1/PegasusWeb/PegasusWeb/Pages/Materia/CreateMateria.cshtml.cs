@@ -96,8 +96,7 @@ namespace PegasusWeb.Pages
         public IActionResult OnPostModificarContenido(int materia)
         {
             IdMateria = materia;
-            //return RedirectToPage("ListaContenido");
-            return Page();
+            return RedirectToPage("../ListaContenidos");
         }
 
         static async Task<List<ContenidoMaterias>> GetContenidosMateriaAsync(int materia)
