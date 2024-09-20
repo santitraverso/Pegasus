@@ -19,12 +19,6 @@ namespace PegasusWeb.Pages
         [BindProperty]
         public List<int> SelectedAlumnosIds { get; set; } = new List<int>(); // IDs de los alumnos seleccionados en el formulario
 
-        [TempData]
-        public bool IsSaved { get; set; }
-
-        [TempData]
-        public string ErrorMessage { get; set; }
-
 
         public async Task OnGetAsync()
         {
@@ -103,17 +97,9 @@ namespace PegasusWeb.Pages
                 {
                     await GuardarIntegrantesAsync(curso, alumno);
                 }
+            }
 
-                IsSaved = true;
-                ErrorMessage = string.Empty;
-                return RedirectToPage();
-            }
-            else
-            {
-                IsSaved = false;
-                ErrorMessage = "Error al guardar los datos";
-                return RedirectToPage();
-            }
+            return RedirectToPage("Curso");
         }
 
         public async Task<bool> BorrarIntegrantesAsync()

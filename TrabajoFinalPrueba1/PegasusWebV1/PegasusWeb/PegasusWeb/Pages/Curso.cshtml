@@ -25,7 +25,11 @@
                     <p class="card-title card-title-center">@curso.Turno</p>
                     <form method="post">
                         <input type="hidden" name="curso" value="@curso.Id" />
-                        <button class="btn btn-default" type="submit"><img src="~/img/lapiz.png" class="icon" alt=""></button>
+                        <img src="~/img/lapiz.png" class="icon edit-image" alt="Editar" onclick="submitForm(@curso.Id)" style="padding-bottom: 5px;" />
+                        <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@curso.Id)" style="padding-bottom: 5px;" />
+                        <input type="submit" id="submit-@curso.Id" style="display:none" />
+                        <input type="submit" id="submit-delete-@curso.Id" style="display:none" />
+                        <input type="hidden" id="booleano-@curso.Id" name="editar" value="true">
                     </form>
                 </div>
             </div>
@@ -33,3 +37,35 @@
     </div>
 </body>
 </html>
+
+@section scripts{
+    <script>
+        function submitForm(id) {
+            document.getElementById('submit-' + id).click();
+        }
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Deseas eliminar este contenido?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: "Cancelar",
+                width: '350px',
+                padding: '15px',
+                customClass: {
+                    icon: 'swal2-icon'
+                }
+            }).then((result) => {
+                if
+                    (result.isConfirmed) {
+                    document.getElementById('booleano-' + id).value = false;
+                    document.getElementById('submit-delete-' + id).click();
+                }
+            })
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}

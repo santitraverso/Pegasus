@@ -105,6 +105,7 @@ body {
 
 .icon {
     width: 25px;
+    cursor: pointer;
 }
 
 .icon:hover {
@@ -271,4 +272,23 @@ body {
     cursor: pointer;
     width: 26px;
     height: 26px;
+}
+.swal2-icon {
+    font-size: 8px;
+}
+.swal2-title{
+    padding-top:0;
+}
+.swal2-html-container{
+    padding-top: 0px;
+}
+.swal2-icon {
+    margin-top: 0px;
+    padding-top: 0;
+}
+.swal2-modal, .swal2-icon-warning, .swal2-show{
+    padding-top:0px;
+}
+.my-custom-title{
+    font-size: 22px;
 }

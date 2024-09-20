@@ -16,29 +16,29 @@
 <body>
     <h4>@titulo</h4>
     <hr />
-    <form method="post">    
+    <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Curso.Id" />
         <table>
             <tr>
                 <td>Nombre del curso</td>
-                <td><input type="text" asp-for="Curso.Nombre_Curso" class="form-control" name="nombre"/></td>
+                <td><input type="text" asp-for="Curso.Nombre_Curso" class="form-control" name="nombre" id="nombre" required/></td>
             </tr>
-            <span class="text-danger" asp-validation-for="nombre"></span>
+            
             <tr>
                 <td>Grado</td>
-                <td><input type="number" asp-for="Curso.Grado" class="form-control" name="grado"/></td>
+                <td><input type="number" asp-for="Curso.Grado" class="form-control" name="grado" id="grado" required /></td>
             </tr>
-            <span class="text-danger" asp-validation-for="grado"></span>
+            
             <tr>
                 <td>Division</td>
-                <td><input type="text" asp-for="Curso.Division" class="form-control" name="division" /></td>
+                <td><input type="text" asp-for="Curso.Division" class="form-control" name="division" id="division" required maxlength="1" /></td>
             </tr>
-            <span class="text-danger" asp-validation-for="division"></span>
+            
             <tr>
                 <td>Turno</td>
-                <td><input type="text" asp-for="Curso.Turno" class="form-control" name="turno" /></td>
+                <td><input type="text" asp-for="Curso.Turno" class="form-control" name="turno" id="turno" required /></td>
             </tr>
-            <span class="text-danger" asp-validation-for="turno"></span>
+            
         </table>
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
@@ -66,9 +66,57 @@
                         }
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary Model.Curso.Id"> Agregar Alumnos</button>
+                <button type="submit" class="btn btn-primary"> Agregar Alumnos</button>
             </div>
         </form>
     
 </body>
 </html>
+
+@section scripts{
+    <script>
+        function validateForm() {
+            const nombre = document.querySelector('#nombre').value.trim();
+            const grado = document.querySelector('#grado').value.trim();
+            const division = document.querySelector('#division').value.trim();
+            const turno = document.querySelector('#turno').value.trim();
+
+            if (nombre === '' || grado === '' || division === '' || turno === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Por favor, completa todos los campos.',
+                    width: '350px',
+                    padding: '20px',
+                    customClass: {
+                        title: 'my-custom-title',
+                        confirmButton: "btn btn-danger",
+                    }
+                });
+                return false;
+            }
+            return true;
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault(); 
+            if (validateForm()) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Guardado",
+                    showConfirmButton: false,
+                    width: '300px',
+                    padding: '20px',
+                    timer: 1500,
+                    customClass: {
+                        title: 'my-custom-title',
+                    }
+                }).then(() => {
+                    document.getElementById('form').submit(); 
+                });
+            }
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}

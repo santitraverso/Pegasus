@@ -21,20 +21,7 @@
         <input type="text" id="busqueda" placeholder="Buscar alumnos..." onkeyup="buscarAlumnos()">
     </div>
 
-    <div id="customAlertSuccess" class="custom-alert" style="display: none;">
-        <div class="custom-alert-content">
-            <p>Guardado correctamente</p>
-            <button onclick="closeAlert()">Aceptar</button>
-        </div>
-    </div>
-
-    <div id="customAlertError" class="custom-alert" style="display: none;">
-        <div class="custom-alert-content error-content">
-            <p>@errorMessage</p>
-            <button onclick="closeErrorAlert()">Aceptar</button>
-        </div>
-    </div>
-    <form method="post">
+    <form method="post" id="form">
         <div class="container">
             <input type="hidden" name="curso" asp-for="IdCurso" />
             <table id="tablaAlumnos" class="table">
@@ -57,7 +44,7 @@
                     }
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-primary Model.Curso.Id">Guardar</button>
+            <button type="button" onclick="confirmSave()" class="btn btn-primary">Guardar</button>
         </div>
     </form>
 
@@ -92,29 +79,22 @@
             }
         }
 
-        window.onload = function () {
-            var isSaved  = '@isSaved'.toLowerCase();
-            
-            var errorMessage = '@errorMessage';
-
-            if (isSaved === 'true') {
-                document.getElementById('customAlertSuccess').style.display = 'block';
-            }
-
-            if (errorMessage.length > 0) {
-                document.getElementById('customAlertError').style.display = 'block';
-            }
-        };
-
-        function closeAlert() {
-            document.getElementById('customAlertSuccess').style.display = 'none';
-            window.location.href = '/Curso';
+        function confirmSave() {
+            Swal.fire({
+                icon: "success",
+                title: "Guardado",
+                showConfirmButton: false,
+                width: '300px',
+                padding: '20px',
+                timer: 1500,
+                customClass: {
+                    title: 'my-custom-title',
+                }
+            }).then(() => {
+                document.getElementById('form').submit();
+            });
         }
-
-        function closeErrorAlert() {
-            document.getElementById('customAlertError').style.display = 'none';
-            window.location.href = '/Curso';
-        }
-
+        
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }

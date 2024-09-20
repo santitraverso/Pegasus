@@ -39,16 +39,20 @@ namespace PegasusWeb.Pages
             return getcontenidos;
         }
 
-        public async Task<IActionResult> OnPostAsync(int contenido, bool editar)
+        public async Task<IActionResult> OnPostAsync(int contenido, bool editar, int materia)
         {
+            IdContenido = contenido;
+            IdMateria = materia;
+            
             if (editar)
             {
-                IdContenido = contenido;
-                return RedirectToPage("../CreateContenidoMateria");
+                return RedirectToPage("CreateContenidoMaterias");
             }
             else
             {
-                return Page();
+                await EliminarContenidoMateriasAsync(contenido);
+                Contenidos = await GetContenidosAsync(IdMateria);
+                return RedirectToPage("ListaContenidos");
             }
             
         }
@@ -56,7 +60,17 @@ namespace PegasusWeb.Pages
         public IActionResult OnPostAgregarContenido(int materia)
         {
             IdMateria = materia;
-            return RedirectToPage("../CreateContenidoMateria");
+            return RedirectToPage("CreateContenidoMaterias");
+        }
+
+        public async Task EliminarContenidoMateriasAsync(int contenido)
+        {
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/ContenidoMaterias/DeleteContenidoMaterias?id={contenido}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                this.ModelState.AddModelError("calificacion", "Hubo un error inesperado al borrar el Contenido");
+            }
         }
     }
 }

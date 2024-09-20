@@ -28,11 +28,12 @@
                             <span class="symbol-button" id="symbol-@contenido.Id">+</span>
                         </button>
                         <img src="~/img/lapiz.png" class="icon edit-image" alt="Editar" onclick="submitForm(@contenido.Id)" style="padding-bottom: 5px;" />
-                        <img src="~/img/eliminar.png" class="icon delete-image" alt="Eliminar" onclick="submitDeleteForm(@contenido.Id)" style="padding-bottom: 5px;" />
+                        <img src="~/img/eliminar.png" class="icon delete-image" alt="Eliminar" onclick="confirmDelete(@contenido.Id)" style="padding-bottom: 5px;" />
                         <input type="submit" id="submit-@contenido.Id" style="display:none" />
                         <input type="submit" id="submit-delete-@contenido.Id" style="display:none" />
                         <input type="hidden" name="contenido" value="@contenido.Id" />
-                        <input type="hidden" id="booleano" name="editar" value="true">
+                        <input type="hidden" id="booleano-@contenido.Id" name="editar" value="true">
+                        <input type="hidden" name="materia" value="@Model.IdMateria" />
                     </div>
                     <div id="content-@contenido.Id" class="content">
                         <p>@contenido.Descripcion</p>
@@ -64,17 +65,32 @@
             }
         }
 
-        function submitDeleteForm(id) {
-            asignarValor(false);
-            document.getElementById('submit-delete-' + id).click();
-        }
-
         function submitForm(id) {
             document.getElementById('submit-' + id).click();
         }
 
-        function asignarValor(valor) {
-            document.getElementById('booleano').value = valor;
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Deseas eliminar este contenido?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: "Cancelar",
+                width: '350px',
+                padding: '15px',
+                customClass: {
+                    icon: 'swal2-icon'
+                }
+            }).then((result) => {
+                if
+                    (result.isConfirmed) {
+                    document.getElementById('booleano-' + id).value = false;
+                    document.getElementById('submit-delete-' + id).click();
+                }
+            })
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }

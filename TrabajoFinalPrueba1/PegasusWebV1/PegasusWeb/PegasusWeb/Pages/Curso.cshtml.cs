@@ -19,11 +19,22 @@ namespace PegasusWeb.Pages
             Cursos = await GetCursosAsync();
         }
 
-        public async Task<IActionResult> OnPostAsync(int curso)
+        public async Task<IActionResult> OnPostAsync(int curso, bool editar)
         {
             IdCurso = curso;
-            return RedirectToPage("CreateCurso");
+
+            if (editar)
+            {
+                return RedirectToPage("CreateCurso");
+            }
+            else
+            {
+                await EliminarCursoAsync(curso);
+                Cursos = await GetCursosAsync();
+                return RedirectToPage("Curso");
+            }
         }
+
 
         static async Task<List<Curso>> GetCursosAsync()
         {
@@ -42,5 +53,16 @@ namespace PegasusWeb.Pages
 
             return getcursos;
         }
+
+        public async Task EliminarCursoAsync(int curso)
+        {
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Curso/DeleteCurso?id={curso}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                this.ModelState.AddModelError("calificacion", "Hubo un error inesperado al borrar la Calificacion");
+            }
+        }
     }
+
 }
