@@ -19,19 +19,17 @@
 
     <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Contenido.Id" />
-        <input type="hidden" name="materia" asp-for="@Model.IdMateria" />
-        <table>
-            <tr>
-                <td>Titulo</td>
-                <td><input type="text" asp-for="Contenido.Titulo" class="form-control" name="titulo" id="titulo" /></td>
-            </tr>
-            <tr>
-                <td>Descripcion</td>
-                <td>
-                    <textarea asp-for="Contenido.Descripcion" id="descripcion" class="form-control" name="descripcion" rows="4" cols="50" maxlength="200" placeholder="Máximo 200 caracteres" required></textarea>
-                </td>
-            </tr>
-        </table>
+        <input type="hidden" name="materia" asp-for="@Model.Materia" />
+
+        <div class="form-group">
+            <label for="titulo" class="text-center" required>Título</label>
+            <input type="text" asp-for="Contenido.Titulo" class="inputMio" name="titulo" id="titulo" />
+        </div>
+        <div class="form-group">
+            <label for="descripcion" class="text-center">Descripción</label>
+            <textarea asp-for="Contenido.Descripcion" id="descripcion" name="descripcion" rows="3" cols="40" maxlength="300" placeholder="Máximo 300 caracteres" required></textarea>
+        </div>   
+        
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
     

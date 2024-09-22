@@ -22,6 +22,9 @@ namespace PegasusWeb.Pages
         [TempData]
         public int IdMateria { get; set; }
 
+        [BindProperty]
+        public int Materia { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
             if (IdContenido > 0)
@@ -39,6 +42,7 @@ namespace PegasusWeb.Pages
                 Contenido = new ContenidoMaterias { Id = 0 };
             }
 
+            Materia = IdMateria;
             return Page();
         }
 

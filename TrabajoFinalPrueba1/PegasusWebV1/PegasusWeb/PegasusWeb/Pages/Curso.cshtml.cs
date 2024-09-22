@@ -60,7 +60,7 @@ namespace PegasusWeb.Pages
 
             if (!response.IsSuccessStatusCode)
             {
-                this.ModelState.AddModelError("calificacion", "Hubo un error inesperado al borrar la Calificacion");
+                this.ModelState.AddModelError("curso", "Hubo un error inesperado al borrar el Curso");
             }
         }
     }

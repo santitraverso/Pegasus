@@ -21,18 +21,17 @@
 <body>
     <h4>@titulo</h4>
     <hr />
-    <form method="post">
+    <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Materia.Id" />
         <table>
             <tr>
                 <td>Nombre de la materia</td>
-                <td><input type="text" asp-for="Materia.Nombre" class="form-control" name="nombre" /></td>
+                <td><input type="text" asp-for="Materia.Nombre" class="form-control" name="nombre" id="nombre"/></td>
             </tr>
-            <span class="text-danger" asp-validation-for="nombre"></span>
             <tr>
                 <td>Seleccionar Curso</td>
                 <td>
-                    <select asp-for="CursoSeleccionadoId" asp-items="Model.CursosRelacionados" class="form-control">
+                    <select asp-for="CursoSeleccionadoId" asp-items="Model.CursosRelacionados" class="form-control" id="cursoSeleccionadoId">
                         <option value="">-- Seleccionar un curso --</option>
                     </select>
                 </td>
@@ -90,5 +89,50 @@
                 }
             });
         });
+
+        function validateForm() {
+            const nombre = document.querySelector('#nombre').value.trim();
+            const cursoSeleccionadoId = document.querySelector('#cursoSeleccionadoId').value.trim();
+
+
+            if (nombre === '' || cursoSeleccionadoId === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Por favor, completa todos los campos.',
+                    width: '350px',
+                    padding: '20px',
+                    customClass: {
+                        title: 'my-custom-title',
+                        confirmButton: "btn btn-danger",
+                    }
+                });
+                return false;
+            }
+            return true;
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            if (validateForm()) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Guardado",
+                    showConfirmButton: false,
+                    width: '300px',
+                    padding: '20px',
+                    timer: 1500,
+                    customClass: {
+                        title: 'my-custom-title',
+                    }
+                }).then(() => {
+                    document.getElementById('form').submit();
+                });
+            }
+        }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }
+
+
+    

@@ -19,10 +19,20 @@ namespace PegasusWeb.Pages
             Materias = await GetMateriasAsync();
         }
 
-        public async Task<IActionResult> OnPostAsync(int materia)
+        public async Task<IActionResult> OnPostAsync(int materia, bool editar)
         {
             IdMateria = materia;
-            return RedirectToPage("Materia/CreateMateria");
+   
+            if (editar)
+            {
+                return RedirectToPage("Materia/CreateMateria");
+            }
+            else
+            {
+                await EliminarMateriaAsync(materia);
+                Materias = await GetMateriasAsync();
+                return RedirectToPage("Materia");
+            }
         }
 
         static async Task<List<Entities.Materia>> GetMateriasAsync()
@@ -41,6 +51,16 @@ namespace PegasusWeb.Pages
             }
 
             return getMaterias;
+        }
+
+        public async Task EliminarMateriaAsync(int materia)
+        {
+            HttpResponseMessage response = await client.DeleteAsync($"http://localhost:7130/Materia/DeleteMateria?id={materia}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                this.ModelState.AddModelError("materia", "Hubo un error inesperado al borrar la Materia");
+            }
         }
     }
 }
