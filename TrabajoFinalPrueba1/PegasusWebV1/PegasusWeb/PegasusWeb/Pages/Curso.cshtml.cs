@@ -60,6 +60,7 @@ namespace PegasusWeb.Pages
 
             if (!response.IsSuccessStatusCode)
             {
+                var errorResponse = await response.Content.ReadAsStringAsync();
                 this.ModelState.AddModelError("curso", "Hubo un error inesperado al borrar el Curso");
             }
         }

@@ -25,7 +25,7 @@
                         <th>Apellido</th>
                         <th>Nombre</th>
                         <th>Perfil</th>
-                        <th></th>
+                        <th>Activo</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -36,16 +36,16 @@
                     <tr>
                         <form method="post">
                             <input type="hidden" name="usuario" value="@usuario.Id" />
-                            <input type="hidden" id="booleano" name="editar" value="true">
+                            <input type="hidden" id="booleano-@usuario.Id" name="editar" value="true">
                             <td>@usuario.Apellido</td>
                             <td>@usuario.Nombre</td>
                             <td>@usuario.Perfil</td>
+                            <td>@(usuario.Activo ? "Sí" : "No")</td>
                             <td>
                                 <img src="~/img/lapiz.png" class="icon edit-image" alt="Editar" onclick="submitForm(@usuario.Id)" style="padding-bottom: 5px;" />
                                 <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@usuario.Id)" style="padding-bottom: 5px;" />
                             </td>
-                            <input type="submit" id="submit-@usuario.Id" style="display:none" />
-                            <input type="submit" id="submit-delete-@usuario.Id" style="display:none" />                      
+                            <input type="submit" id="submit-@usuario.Id" style="display:none" />                  
                         </form>
                     </tr>
                     }
@@ -104,7 +104,7 @@
                 if
                     (result.isConfirmed) {
                     document.getElementById('booleano-' + id).value = false;
-                    document.getElementById('submit-delete-' + id).click();
+                    submitForm(id);
                 }
             })
         }

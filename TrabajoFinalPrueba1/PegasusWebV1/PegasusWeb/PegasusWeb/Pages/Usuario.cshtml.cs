@@ -41,8 +41,7 @@ namespace PegasusWeb.Pages
         {
             List<Usuario> getusuarios = new List<Usuario>();
 
-            string queryParam = Uri.EscapeDataString($"x=>x.activo=={true}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Usuario/GetUsuariosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Usuario/GetUsuariosForCombo");
 
             if (response.IsSuccessStatusCode)
             {

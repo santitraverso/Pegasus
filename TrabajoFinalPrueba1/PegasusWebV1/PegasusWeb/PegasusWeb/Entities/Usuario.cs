@@ -17,9 +17,9 @@ namespace PegasusWeb.Entities
         public bool Activo { get; set; }
 
         [NotMapped]
-        public List<Calificaciones> Calificaciones { get; set; }
+        public List<Calificaciones>? Calificaciones { get; set; }
 
         [NotMapped]
-        public List<Roles> Roles { get; set; }
+        public List<Roles>? Roles { get; set; }
     }
 }

@@ -24,6 +24,7 @@ namespace PegasusWeb.Pages
         [BindProperty]
         public int PerfilSeleccionadoId { get; set; }
 
+
         public List<SelectListItem> PerfilesRelacionados { get; set; } = new List<SelectListItem> { };
 
         public async Task<IActionResult> OnGetAsync()
@@ -102,6 +103,7 @@ namespace PegasusWeb.Pages
         {
             int idPerfilSeleccionado = PerfilSeleccionadoId;
 
+            // Validaciones
             if (idPerfilSeleccionado < 1)
             {
                 this.ModelState.AddModelError("perfil", "El campo Perfil es requerido");
@@ -119,32 +121,45 @@ namespace PegasusWeb.Pages
                 this.ModelState.AddModelError("mail", "El campo Mail es requerido");
             }
 
+            // Retornar si el modelo no es válido
             if (!ModelState.IsValid)
             {
-                await CargarPerfilesAsync();
+                await OnGetAsync();
                 return Page();
             }
 
+            // Crear objeto usuario
+            var usuario = new
+            {
+                Perfil = idPerfilSeleccionado,
+                Activo = activo,
+                Apellido = apellido,
+                Nombre = nombre,
+                Mail = mail,
+                Id = id > 0 ? id : (int?)null // Solo envía el id si es una actualización
+            };
+
+            // Convertir el objeto a JSON
+            var jsonContent = JsonConvert.SerializeObject(usuario);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            // Hacer el POST o PUT según el caso
+            HttpResponseMessage response;
             if (id > 0)
             {
-                var content = new StringContent($"{{\"perfil\":\"{idPerfilSeleccionado}\", \"activo\":\"{activo}\", \"Apellido\":\"{apellido}\", \"Nombre\":\"{nombre}\", \"mail\":\"{mail}\", \"Id\":\"{id}\"}}", Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PutAsync("http://localhost:7130/Usuario/UpdateUsuario", content);
-                if (!response.IsSuccessStatusCode)
-                {
-                    this.ModelState.AddModelError("usuario", "Hubo un error inesperado al actualizar el Usuario");
-                    return null;
-                }               
-                
+                response = await client.PutAsync("http://localhost:7130/Usuario/UpdateUsuario", content);
             }
             else
             {
-                var content = new StringContent($"{{\"perfil\":\"{idPerfilSeleccionado}\", \"activo\":\"{activo}\", \"Apellido\":\"{apellido}\", \"Nombre\":\"{nombre}\", \"mail\":\"{mail}\"}}", Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync("http://localhost:7130/ContenidoMaterias/CreateUsuario", content);
-                if (!response.IsSuccessStatusCode)
-                {
-                    this.ModelState.AddModelError("usuario", "Hubo un error inesperado al crear el Usuario");
-                    return null;
-                }
+                response = await client.PostAsync("http://localhost:7130/Usuario/CreateUsuario", content);
+            }
+
+            // Manejar errores si la solicitud falla
+            if (!response.IsSuccessStatusCode)
+            {
+                this.ModelState.AddModelError("usuario", "Hubo un error inesperado al guardar el Usuario");
+                await OnGetAsync();
+                return Page();
             }
 
             return RedirectToPage("Usuario");

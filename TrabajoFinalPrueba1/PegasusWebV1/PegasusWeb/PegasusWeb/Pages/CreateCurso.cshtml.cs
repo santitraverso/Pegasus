@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Net.Http;
+using System.Dynamic;
 
 namespace PegasusWeb.Pages
 {
@@ -92,53 +93,63 @@ namespace PegasusWeb.Pages
             return getalumnos;
         }
 
-        public async Task<IActionResult> OnPostAsync(int grado, string nombre, string division, string turno, int id)
+        public async Task<IActionResult> OnPostAsync(byte grado, string nombre, char division, string turno, int id)
         {
+            // Validaciones de entrada
             if (grado < 1)
-            {
-                this.ModelState.AddModelError("grado", "El campo Grado es requerido");
-                return null;
-            }
+                ModelState.AddModelError("grado", "El campo Grado es requerido");
+
             if (string.IsNullOrEmpty(nombre))
-            {
-                this.ModelState.AddModelError("nombre", "El campo Curso es requerido");
-                return null;
-            }
-            if (string.IsNullOrEmpty(division))
-            {
-                this.ModelState.AddModelError("division", "El campo Division es requerido");
-                return null;
-            }
+                ModelState.AddModelError("nombre", "El campo Curso es requerido");
+
+            if (division == '\0')
+                ModelState.AddModelError("division", "El campo Division es requerido");
+
             if (string.IsNullOrEmpty(turno))
+                ModelState.AddModelError("turno", "El campo Turno es requerido");
+
+            if (!ModelState.IsValid)
             {
-                this.ModelState.AddModelError("turno", "El campo Turno es requerido");
-                return null;
+                await OnGetAsync();
+                return Page();
             }
+
+            dynamic cursoData = new ExpandoObject();
+            cursoData.Nombre_Curso = nombre;
+            cursoData.Grado = grado;
+            cursoData.Division = division;
+            cursoData.Turno = turno;
 
             if (id > 0)
             {
-                // Actualizar curso existente
-                var content = new StringContent($"{{\"Nombre_Curso\":\"{nombre}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\", \"Id\":\"{id}\"}}", Encoding.UTF8, "application/json");
-                //HttpResponseMessage response = await client.PutAsync("https://pegasus.azure-api.net/v1/Curso/UpdateCurso", content);
-                HttpResponseMessage response = await client.PutAsync("http://localhost:7130/Curso/UpdateCurso", content);
-                if (!response.IsSuccessStatusCode)
-                {
-                    this.ModelState.AddModelError("curso", "Hubo un error inesperado al actualizar el Curso");
-                    return null;
-                }               
-                
+                cursoData.Id = id;
+            }
+
+            // Convertir el objeto dinámico a JSON
+            var jsonContent = JsonConvert.SerializeObject(cursoData);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            // Hacer la llamada HTTP (PUT si actualiza, POST si crea)
+            HttpResponseMessage response;
+            if (id > 0)
+            {
+                response = await client.PutAsync("http://localhost:7130/Curso/UpdateCurso", content);
             }
             else
             {
-                // Crear nuevo curso
-                var content = new StringContent($"{{\"Nombre_Curso\":\"{nombre}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\"}}", Encoding.UTF8, "application/json");
-                //HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Materia/CreateMateria", content);
-                HttpResponseMessage response = await client.PostAsync("http://localhost:7130/Curso/CreateCurso", content);
-                if (!response.IsSuccessStatusCode)
-                {
-                    this.ModelState.AddModelError("curso", "Hubo un error inesperado al crear el Curso");
-                    return null;
-                }
+                response = await client.PostAsync("http://localhost:7130/Curso/CreateCurso", content);
+            }
+
+            // Manejar errores de la respuesta HTTP
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorResponse = await response.Content.ReadAsStringAsync();
+                ModelState.AddModelError("curso", id > 0
+                    ? "Hubo un error inesperado al actualizar el Curso: " + errorResponse
+                    : "Hubo un error inesperado al crear el Curso: " + errorResponse);
+
+                await OnGetAsync();
+                return Page();
             }
 
             return RedirectToPage("Curso");
