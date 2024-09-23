@@ -1,0 +1,113 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.UsuarioModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Usuarios</title>
+</head>
+<body>
+    <h4 class="centrado">Usuarios</h4>
+    <br />
+    <div class="center-screen">
+        <input type="text" id="busqueda" placeholder="Buscar usuarios..." onkeyup="buscarUsuarios()">
+    </div>
+    <div class="container">
+        <a class="btn btn-primary btn-custom" asp-page="/CreateUsuario" style="margin:10px;">Crear Usuario</a>
+            <table id="tablaUsuarios" class="table">
+                <thead>
+                    <tr>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Perfil</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var usuario in Model.Usuarios)
+                    {
+
+                    <tr>
+                        <form method="post">
+                            <input type="hidden" name="usuario" value="@usuario.Id" />
+                            <input type="hidden" id="booleano" name="editar" value="true">
+                            <td>@usuario.Apellido</td>
+                            <td>@usuario.Nombre</td>
+                            <td>@usuario.Perfil</td>
+                            <td>
+                                <img src="~/img/lapiz.png" class="icon edit-image" alt="Editar" onclick="submitForm(@usuario.Id)" style="padding-bottom: 5px;" />
+                                <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@usuario.Id)" style="padding-bottom: 5px;" />
+                            </td>
+                            <input type="submit" id="submit-@usuario.Id" style="display:none" />
+                            <input type="submit" id="submit-delete-@usuario.Id" style="display:none" />                      
+                        </form>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        function buscarUsuarios() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("busqueda");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tablaUsuarios");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) { // Comenzar en 1 para omitir la primera fila de títulos
+                // Comprobar si algún valor de las columnas nombre o apellido coincide con el filtro
+                var match = false;
+                for (j = 0; j < 2; j++) { // Iterar sobre las columnas 0 (nombre) y 1 (apellido)
+                    td = tr[i].getElementsByTagName("td")[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            match = true;
+                            break; // Salir del bucle si se encuentra una coincidencia en alguna columna
+                        }
+                    }
+                }
+                // Mostrar u ocultar la fila en función de si se encontró una coincidencia
+                tr[i].style.display = match ? "" : "none";
+            }
+        }
+
+        function submitForm(id) {
+            document.getElementById('submit-' + id).click();
+        }
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Deseas eliminar este usuario?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: "Cancelar",
+                width: '350px',
+                padding: '15px',
+                customClass: {
+                    icon: 'swal2-icon'
+                }
+            }).then((result) => {
+                if
+                    (result.isConfirmed) {
+                    document.getElementById('booleano-' + id).value = false;
+                    document.getElementById('submit-delete-' + id).click();
+                }
+            })
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}

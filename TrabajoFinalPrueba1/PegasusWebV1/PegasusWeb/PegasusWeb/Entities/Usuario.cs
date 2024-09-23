@@ -10,13 +10,16 @@ namespace PegasusWeb.Entities
 
         public string? Apellido { get; set; }
 
-        public string? Perfil { get; set; }  
+        public int? Perfil { get; set; }  
 
         public string? Mail { get; set; }
 
-        public bool? Activo { get; set; }
+        public bool Activo { get; set; }
 
         [NotMapped]
         public List<Calificaciones> Calificaciones { get; set; }
+
+        [NotMapped]
+        public List<Roles> Roles { get; set; }
     }
 }

@@ -346,3 +346,97 @@ label {
 .inputMio::placeholder {
     color: #c0c0c0;
 }
+
+.calificaciones-lista li {
+    margin-bottom: 5px; /* Espacio entre las notas */
+    border: 1px solid black;
+    padding: 5px;
+    width: 100%;
+}
+
+.flex-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between; /* Asegura que haya espacio entre los elementos */
+}
+
+.calificaciones-lista {
+    width: 75%; /* La lista ocupará el 75% del ancho del td */
+    margin: 0;
+    padding-right: 10px; /* Espacio entre la lista y los botones */
+    list-style-type: none; /* Quitar los puntos de la lista */
+    padding-left: 0;
+}
+
+.btn-group {
+    display: flex;
+    gap: 5px; /* Espacio entre los botones */
+    width: 25%; /* Los botones ocuparán el 25% del ancho */
+}
+
+.form-container {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 1200px; /* Puedes ajustar esto según tus necesidades */
+    margin: 0; /* Sin margen para asegurar que esté alineado a la izquierda */
+    padding: 20px; /* Puedes ajustar el padding como desees */
+}
+
+.flex-item {
+    flex: 1; /* Cada item ocupará el mismo espacio */
+    margin-right: 10px; /* Espacio entre los elementos */
+    display: flex; /* Alinear elementos de forma flexible */
+    flex-direction: column; /* Alinear elementos en una columna */
+    align-items: center; /* Alinear a la izquierda */
+    padding: 10px;
+}
+
+.flex-item:last-child {
+    margin-right: 0; /* Quitar margen derecho del último elemento */
+}
+
+/* Hacer que los inputs ocupen el 100% del espacio de su contenedor */
+.flex-item input,
+.flex-item select {
+    width: 100%; /* Ocupa el 100% del contenedor */
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+}
+
+.inputMio2 {
+    width: 30%;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 16px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.inputMio2:focus {
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+    outline: none;
+}
+
+.inputMio2::placeholder {
+    color: #c0c0c0;
+}
+
+.selectMio {
+    width: 30%;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 16px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.selectMio:focus {
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+    outline: none;
+}
+
+.selectMio::placeholder {
+    color: #c0c0c0;
+}
