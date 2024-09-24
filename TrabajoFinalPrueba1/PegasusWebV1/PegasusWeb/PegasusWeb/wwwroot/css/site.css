@@ -440,3 +440,35 @@ label {
 .selectMio::placeholder {
     color: #c0c0c0;
 }
+
+/* Estilo personalizado para el switch */
+.toggle-switch {
+    width: 50px;
+    height: 20px;
+    appearance: none;
+    background-color: #dc3545; /* Rojo cuando no está marcado */
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 150px; /* Cambiado para hacer el switch más redondeado */
+}
+
+.toggle-switch:checked {
+    background-color: #28a745; /* Verde cuando está marcado */
+}
+
+.toggle-switch:before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    top: 1.5px;
+    left: 2px;
+    transition: transform 0.3s;
+}
+
+.toggle-switch:checked:before {
+    transform: translateX(30px);
+}

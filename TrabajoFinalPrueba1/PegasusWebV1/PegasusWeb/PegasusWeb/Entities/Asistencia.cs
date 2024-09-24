@@ -15,6 +15,6 @@ namespace PegasusWeb.Entities
 
         public DateTime? Fecha { get; set; }    
 
-        public bool? Presente { get; set; }
+        public bool Presente { get; set; }
     }
 }

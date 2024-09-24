@@ -15,6 +15,15 @@
     <h4>Cursos</h4>
     <hr />
     <a class="btn btn-primary btn-custom" asp-page="/CreateCurso" style="margin:10px;">Crear Curso</a>
+    @if (ModelState.ContainsKey("curso"))
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ModelState["curso"].Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
     <div class="row">
         @foreach (Curso curso in Model.Cursos)
         {

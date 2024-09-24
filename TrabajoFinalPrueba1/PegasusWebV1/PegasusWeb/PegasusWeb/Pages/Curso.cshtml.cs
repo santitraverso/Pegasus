@@ -29,10 +29,40 @@ namespace PegasusWeb.Pages
             }
             else
             {
-                await EliminarCursoAsync(curso);
+                var tieneIntegrantes = await TieneIntegrantesCurso(curso);
+
+                if (tieneIntegrantes)
+                {
+                    ModelState.AddModelError("curso", "No se puede eliminar el curso. Primero elimine los integrantes asociados.");
+                    Cursos = await GetCursosAsync();
+                    return Page();
+                }
+                else
+                {
+                    await EliminarCursoAsync(curso);
+                }
+                     
                 Cursos = await GetCursosAsync();
                 return RedirectToPage("Curso");
             }
+        }
+
+        private async Task<bool> TieneIntegrantesCurso(int curso)
+        {
+            List<IntegrantesCursos> getintegrantes = new List<IntegrantesCursos>();
+
+            string queryParam = Uri.EscapeDataString($"x=>x.id_curso == {curso}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            if (response.IsSuccessStatusCode)
+            {
+                string integrantesJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(integrantesJson))
+                {
+                    getintegrantes = JsonConvert.DeserializeObject<List<IntegrantesCursos>>(integrantesJson);
+                }
+            }
+
+            return getintegrantes.Count > 0;
         }
 
 

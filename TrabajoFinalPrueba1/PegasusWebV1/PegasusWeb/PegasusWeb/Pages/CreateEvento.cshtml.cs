@@ -43,7 +43,7 @@ namespace PegasusWeb.Pages
 
             var content = new StringContent($"{{\"Nombre\":\"{nombreEvento}\", \"Descripcion\":\"{descripcion}\", \"Fecha\":\"{fecha}\"}}", Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Evento/CreateEvento", content);
+            HttpResponseMessage response = await client.PostAsync("http://localhost:7130/Evento/CreateEvento", content);
             if (!response.IsSuccessStatusCode)
             {
                 //Mostrar error de alguna forma

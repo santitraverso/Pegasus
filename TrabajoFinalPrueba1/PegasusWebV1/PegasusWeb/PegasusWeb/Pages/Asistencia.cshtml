@@ -1,0 +1,114 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.AsistenciaModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4>Asistencia</h4>
+    <hr />
+
+    <form method="post">
+        <div class="form-group" style="width:25%;">
+            <label for="fechaAsistencia">Seleccionar fecha</label>
+            <input type="date" class="form-control" asp-for="FechaAsistencia" name="fecha" id="fechaAsistencia" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-custom">Cargar Asistencia</button>
+    </form>
+    <br />
+    <br />
+    @if (ModelState.ContainsKey("asistencia"))
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ModelState["asistencia"].Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+    @if (Model.Alumnos != null && Model.Alumnos.Count > 0)
+    {
+        <h5>Asistencia para @Model.FechaAsistencia.ToShortDateString()</h5>
+        <form method="post" asp-page-handler="GuardarAsistencia" id="formAsistencia">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Presente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Alumnos.Count; i++)
+                    {
+                        <tr>
+                            <input type="hidden" name="Alumnos[@i].Id" value="@Model.Alumnos[i].Id" />
+                            <input type="hidden" name="Alumnos[@i].Id_Alumno" value="@Model.Alumnos[i].Id_Alumno" />
+                            <input type="hidden" name="Alumnos[@i].Id_Materia" value="@Model.Alumnos[i].Id_Materia" />
+                            <input type="hidden" name="Alumnos[@i].Fecha" value="@Model.FechaAsistencia" />
+                            <input type="hidden" name="fecha" value="@Model.FechaAsistencia" />
+                            <input type="hidden" name="materia" value="@Model.Alumnos[i].Id_Materia" />
+                            <input type="hidden" id="booleano" name="reporte" value="false">
+                            <td>@Model.Alumnos[i].Alumno.Apellido</td>
+                            <td>@Model.Alumnos[i].Alumno.Nombre</td>
+                            <td>
+                                <input type="checkbox" class="form-check-input toggle-switch"
+                                       name="Alumnos[@i].Presente"
+                                       value="true"
+                                       id="checkbox-@i"
+                                @(Model.Alumnos[i].Presente ? "checked" : "")
+                                       onchange="updateHiddenInput(@i, this.checked)" />
+                                <input type="hidden" name="Alumnos[@i].Presente" value="false" id="hidden-@i" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary btn-custom">Guardar Asistencia</button>
+            <button type="button" class="btn btn-primary btn-custom" onclick="reportAsis()">Reporte Asistencias</button>
+        </form>
+    }
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        function updateHiddenInput(index, isChecked) {
+            var hiddenInput = document.getElementById('hidden-' + index);
+
+            if (isChecked) {
+                // Si el checkbox está marcado, eliminamos el input hidden
+                if (hiddenInput) {
+                    hiddenInput.remove();
+                }
+            } else {
+                // Si el checkbox está desmarcado, volvemos a crear el input hidden
+                if (!hiddenInput) {
+                    var input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = "Alumnos[" + index + "].Presente";
+                    input.value = "false";
+                    input.id = "hidden-" + index;
+                    document.body.appendChild(input);
+                }
+            }
+        }
+
+        function reportAsis() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('formAsistencia').submit();
+        }
+    </script>
+}
