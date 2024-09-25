@@ -33,7 +33,18 @@ namespace PegasusV1.Controllers
                 var p = Expression.Parameter(typeof(Usuario), query);
                 var e = (Expression)DynamicExpressionParser.ParseLambda(new[] { p }, null, query);
                 var ex = (Expression<Func<Usuario, bool>>)e;
-                return await UsuarioService.GetForCombo(ex);
+
+                List<Usuario> users = await UsuarioService.GetForCombo(ex);
+
+                foreach(var user in users)
+                {
+                    if (user.Id_Perfil.HasValue)
+                    {
+                        user.Rol = await RolesService.GetById(user.Id_Perfil.Value);
+                    }
+                }
+
+                return users;
             }
             else
             {
