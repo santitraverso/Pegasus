@@ -21,26 +21,27 @@
         <table>
             <tr>
                 <td>Nombre del curso</td>
-                <td><input type="text" asp-for="Curso.Nombre_Curso" class="form-control" name="nombre" id="nombre" required/></td>
+                <td><input type="text" asp-for="Curso.Nombre_Curso" placeholder="nombre..." class="inputMio3" name="nombre" id="nombre" required /></td>
             </tr>
             
             <tr>
                 <td>Grado</td>
-                <td><input type="number" asp-for="Curso.Grado" class="form-control" name="grado" id="grado" required /></td>
+                <td><input type="number" asp-for="Curso.Grado" placeholder="1.." class="inputMio3" name="grado" id="grado" required /></td>
             </tr>
             
             <tr>
                 <td>Division</td>
-                <td><input type="text" asp-for="Curso.Division" class="form-control" name="division" id="division" required maxlength="1" /></td>
+                <td><input type="text" asp-for="Curso.Division" class="inputMio3" placeholder="A..." name="division" id="division" required maxlength="1" /></td>
             </tr>
             
             <tr>
                 <td>Turno</td>
-                <td><input type="text" asp-for="Curso.Turno" class="form-control" name="turno" id="turno" required /></td>
+                <td><input type="text" asp-for="Curso.Turno" class="inputMio3" name="turno" placeholder="tarde.." id="turno" required /></td>
             </tr>
             
         </table>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <br />
+        <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
     </form>
     <br />
     <br />
@@ -69,7 +70,7 @@
                 <button type="submit" class="btn btn-primary"> Modificar Alumnos</button>
             </div>
         </form>
-    
+   
 </body>
 </html>
 
@@ -101,19 +102,7 @@
         function handleSubmit(event) {
             event.preventDefault(); 
             if (validateForm()) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Guardado",
-                    showConfirmButton: false,
-                    width: '300px',
-                    padding: '20px',
-                    timer: 1500,
-                    customClass: {
-                        title: 'my-custom-title',
-                    }
-                }).then(() => {
-                    document.getElementById('form').submit(); 
-                });
+                document.getElementById('form').submit();
             }
         }
 

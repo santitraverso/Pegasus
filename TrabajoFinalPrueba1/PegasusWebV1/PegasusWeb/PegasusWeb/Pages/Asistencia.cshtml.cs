@@ -35,11 +35,12 @@ namespace PegasusWeb.Pages
             }
         }
 
-        public async Task<IActionResult> OnPost(DateTime fecha)
+        public async Task<IActionResult> OnPost(DateTime fecha, int materia)
         {
             FechaAsistencia = fecha;
+            IdMateria = materia;
 
-            if (fecha.ToShortDateString() == DateTime.Now.ToShortDateString())
+            if (!await ExisteAsistenciaParaFecha(1, FechaAsistencia))
             {
                 await GetAlumnosAsync(1);
             }
@@ -200,6 +201,7 @@ namespace PegasusWeb.Pages
                     }
                 }
 
+                TempData["SuccessMessage"] = "La asistencia se guardó correctamente.";
                 return RedirectToPage("Asistencia");
             }
         }

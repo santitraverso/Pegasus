@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Text.Json.Serialization;
 using System.Text;
 using System.Reflection;
+using System.Dynamic;
 
 namespace PegasusWeb.Pages
 {
@@ -69,37 +70,49 @@ namespace PegasusWeb.Pages
                 if (calificacion.Calificacion < 1 || calificacion.Calificacion > 10)
                 {
                     this.ModelState.AddModelError("nota", "El campo Nota es requerido");
-                    return null;
                 }
+
+                dynamic calificacionData = new ExpandoObject();
+                calificacionData.Calificacion = calificacion.Calificacion;
+                calificacionData.Id_Materia = materia;
+                calificacionData.Id_Curso = curso;
+                calificacionData.Id_Alumno = alumno;
 
                 if (calificacion.Id > 0)
                 {
-                    // Actualizar calificacion existente
-                    var content = new StringContent($"{{\"calificacion\":\"{calificacion.Calificacion}\", \"Id_Materia\":\"{materia}\", \"Id_Curso\":\"{curso}\", \"Id_Alumno\":\"{alumno}\", \"Id\":\"{calificacion.Id}\"}}", Encoding.UTF8, "application/json");
+                    calificacionData.Id = calificacion.Id;
+                }
 
-                    HttpResponseMessage response = await client.PutAsync("http://localhost:7130/Calificaciones/UpdateCalificaciones", content);
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        this.ModelState.AddModelError("calificacion", "Hubo un error inesperado al actualizar la Calificacion");
-                        return null;
-                    }
+                // Convertir el objeto dinámico a JSON
+                var jsonContent = JsonConvert.SerializeObject(calificacionData);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
+                // Hacer la llamada HTTP (PUT si actualiza, POST si crea)
+                HttpResponseMessage response;
+                if (calificacion.Id > 0)
+                {
+                    response = await client.PutAsync("http://localhost:7130/Calificaciones/UpdateCalificaciones", content);
                 }
                 else
                 {
-                    // Crear nueva calificacion
-                    var content = new StringContent($"{{\"calificacion\":\"{calificacion.Calificacion}\", \"Id_Materia\":\"{materia}\", \"Id_Curso\":\"{curso}\", \"Id_Alumno\":\"{alumno}\"}}", Encoding.UTF8, "application/json");
+                    response = await client.PostAsync("http://localhost:7130/Calificaciones/CreateCalificaciones", content);
+                }
 
-                    HttpResponseMessage response = await client.PostAsync("http://localhost:7130/Calificaciones/CreateCalificaciones", content);
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        this.ModelState.AddModelError("calificacion", "Hubo un error inesperado al crear la Calificacion");
-                        return null;
-                    }
+                // Manejar errores de la respuesta HTTP
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    ModelState.AddModelError("calificacion", calificacion.Id > 0
+                        ? "Hubo un error inesperado al actualizar la Calificacion: " + errorResponse
+                        : "Hubo un error inesperado al crear la Calificacion: " + errorResponse);
+
+                    await OnGetAsync();
+                    return Page();
                 }
             }
 
             Materia = materia;
+            TempData["SuccessMessage"] = "La calificación se guardó correctamente.";
             return RedirectToPage("Calificacion");
         }
 

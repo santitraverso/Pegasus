@@ -152,6 +152,7 @@ namespace PegasusWeb.Pages
                 return Page();
             }
 
+            TempData["SuccessMessage"] = "El curso se guardó correctamente.";
             return RedirectToPage("Curso");
         }
     }

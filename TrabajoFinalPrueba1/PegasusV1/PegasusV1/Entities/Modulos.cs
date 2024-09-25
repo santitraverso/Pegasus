@@ -9,6 +9,6 @@ namespace PegasusV1.Entities
         public string Modulo { get; set; }
         public int? Id_Perfil { get; set; }
         [ForeignKey("Id_Perfil")]
-        public Roles Perfil { get; set; }
+        public Perfiles Perfil { get; set; }
     }
 }

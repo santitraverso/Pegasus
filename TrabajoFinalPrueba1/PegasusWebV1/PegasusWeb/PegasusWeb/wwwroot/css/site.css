@@ -421,6 +421,27 @@ label {
     color: #c0c0c0;
 }
 
+.inputMio3 {
+    width: 100%;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 18px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    margin: 10px;
+}
+
+.inputMio3:focus {
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+    outline: none;
+}
+
+.inputMio3::placeholder {
+    color: #c0c0c0;
+}
+
 .selectMio {
     width: 30%;
     font-family: 'Tahoma', sans-serif;

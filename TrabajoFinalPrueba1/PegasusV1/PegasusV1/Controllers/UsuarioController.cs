@@ -14,10 +14,10 @@ namespace PegasusV1.Controllers
     {
         private readonly ILogger<UsuarioController> _logger;
         private readonly IService<Usuario> UsuarioService;
-        private readonly IService<Roles> RolesService;
+        private readonly IService<Perfiles> RolesService;
 
         public UsuarioController(ILogger<UsuarioController> logger, IService<Usuario> usuarioService,
-            IService<Roles> rolesService)
+            IService<Perfiles> rolesService)
         {
             _logger = logger;
             UsuarioService = usuarioService;
@@ -49,9 +49,9 @@ namespace PegasusV1.Controllers
 
             if (user != null)
             {
-                if (user.Perfil.HasValue)
+                if (user.Id_Perfil.HasValue)
                 {
-                    user.Rol = await RolesService.GetById(user.Perfil.Value);
+                    user.Perfil = await RolesService.GetById(user.Id_Perfil.Value);
                 }
 
             }

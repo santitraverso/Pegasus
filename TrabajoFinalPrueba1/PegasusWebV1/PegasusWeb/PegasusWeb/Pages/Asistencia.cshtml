@@ -19,8 +19,8 @@
         <div class="form-group" style="width:25%;">
             <label for="fechaAsistencia">Seleccionar fecha</label>
             <input type="date" class="form-control" asp-for="FechaAsistencia" name="fecha" id="fechaAsistencia" required />
+            <input type="hidden" name="materia" value="@Model.IdMateria" />
         </div>
-
         <button type="submit" class="btn btn-primary btn-custom">Cargar Asistencia</button>
     </form>
     <br />
@@ -78,8 +78,28 @@
     }
 
     <!-- Scripts -->
+    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Verifica si TempData tiene un mensaje de éxito
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                icon: "success",
+                title: "Guardado",
+                showConfirmButton: false,
+                width: '300px',
+                padding: '20px',
+                timer: 1500, 
+                customClass: {
+                    title: 'my-custom-title',
+                }
+            });
+            </text>
+        }
+    </script>
 </body>
 </html>
 

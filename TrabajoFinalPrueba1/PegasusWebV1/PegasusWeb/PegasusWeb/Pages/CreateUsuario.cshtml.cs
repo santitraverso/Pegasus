@@ -161,7 +161,7 @@ namespace PegasusWeb.Pages
                 await OnGetAsync();
                 return Page();
             }
-
+            TempData["SuccessMessage"] = "El Usuario se guardó correctamente.";
             return RedirectToPage("Usuario");
         }
     }

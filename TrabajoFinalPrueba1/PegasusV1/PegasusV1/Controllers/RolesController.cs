@@ -13,10 +13,10 @@ namespace PegasusV1.Controllers
     public class RolesController : ControllerBase
     {
         private readonly ILogger<RolesController> _logger;
-        private readonly IService<Roles> RolesService;
+        private readonly IService<Perfiles> RolesService;
 
         public RolesController(ILogger<RolesController> logger,
-            IService<Roles> rolesService)
+            IService<Perfiles> rolesService)
         {
             _logger = logger;
             RolesService = rolesService;
@@ -24,40 +24,40 @@ namespace PegasusV1.Controllers
 
         [HttpGet]
         [Route("GetRolesForCombo")]
-        public async Task<List<Roles>> GetRolessForCombo(string? query = null)
+        public async Task<List<Perfiles>> GetRolessForCombo(string? query = null)
         {
-            Expression<Func<Roles, bool>>? ex = null;
+            Expression<Func<Perfiles, bool>>? ex = null;
             if (!string.IsNullOrEmpty(query))
             {
-                var p = Expression.Parameter(typeof(Roles), query);
+                var p = Expression.Parameter(typeof(Perfiles), query);
                 var e = (Expression)DynamicExpressionParser.ParseLambda(new[] { p }, null, query);
-                ex = (Expression<Func<Roles, bool>>)e;
+                ex = (Expression<Func<Perfiles, bool>>)e;
             }
 
-            List<Roles> Roless = await RolesService.GetRolesForCombo(ex);
+            List<Perfiles> Roless = await RolesService.GetRolesForCombo(ex);
 
             return Roless;
         }
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<Roles?> GetById(int id)
+        public async Task<Perfiles?> GetById(int id)
         {
-            Roles Roles = await RolesService.GetById(id);
+            Perfiles Roles = await RolesService.GetById(id);
 
             return Roles;
         }
 
         [HttpPost]
         [Route("CreateRoles")]
-        public async Task<Roles> CreateRoles(Roles Roles)
+        public async Task<Perfiles> CreateRoles(Perfiles Roles)
         {
             return await RolesService.Create(Roles);
         }
 
         [HttpPut]
         [Route("UpdateRoles")]
-        public async Task<Roles> UpdateRoles(Roles Roles)
+        public async Task<Perfiles> UpdateRoles(Perfiles Roles)
         {
             return await RolesService.Update(Roles);
         }
@@ -66,28 +66,28 @@ namespace PegasusV1.Controllers
         [Route("DeleteRoles")]
         public async Task DeleteRoles(int id)
         {
-            Roles? Roles = await RolesService.GetById(id);
+            Perfiles? Roles = await RolesService.GetById(id);
             if (Roles != null)
                 await RolesService.Delete(Roles);
         }
 
         [HttpPut]
         [Route("CreateAllRoles")]
-        public async Task<List<Roles>> CreateAllRoles(List<Roles> Roless)
+        public async Task<List<Perfiles>> CreateAllRoles(List<Perfiles> Roless)
         {
             return await RolesService.CreateAll(Roless);
         }
 
         [HttpPut]
         [Route("UpdateAllRoles")]
-        public async Task<List<Roles>> UpdateAllRoles(List<Roles> Roless)
+        public async Task<List<Perfiles>> UpdateAllRoles(List<Perfiles> Roless)
         {
             return await RolesService.UpdateAll(Roless);
         }
 
         [HttpGet]
         [Route("DeleteAllRoles")]
-        public async Task DeleteAllRoles(List<Roles> Roless)
+        public async Task DeleteAllRoles(List<Perfiles> Roless)
         {
             await RolesService.DeleteAll(Roless);
         }

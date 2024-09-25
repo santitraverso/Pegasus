@@ -52,6 +52,27 @@
                 </tbody>
             </table>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: "success",
+                    title: "Guardado",
+                    showConfirmButton: false,
+                    width: '300px',
+                    padding: '20px',
+                    timer: 1500,
+                    customClass: {
+                        title: 'my-custom-title',
+                    }
+                });
+            </text>
+        }
+    </script>
 </body>
 </html>
 
@@ -109,5 +130,4 @@
             })
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }

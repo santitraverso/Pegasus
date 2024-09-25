@@ -2,10 +2,10 @@
 
 namespace PegasusV1.Entities
 {
-    [Table("ROLES")]
-    public class Roles
+    [Table("PERFILES")]
+    public class Perfiles
     {
         public int Id { get; set; } 
-        public string Nombre_Rol { get; set; }
+        public string Nombre { get; set; }
     }
 }

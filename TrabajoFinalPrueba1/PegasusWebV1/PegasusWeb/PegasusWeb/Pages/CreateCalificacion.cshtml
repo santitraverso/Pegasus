@@ -83,19 +83,7 @@
 @section scripts{
     <script>
         function confirmSave(){
-            Swal.fire({
-                icon: "success",
-                title: "Guardado",
-                showConfirmButton: false,
-                width: '300px',
-                padding: '20px',
-                timer: 1500, 
-                customClass: {
-                    title: 'my-custom-title',
-                }
-            }).then(() => {
-                document.getElementById('form').submit();
-            });
+            document.getElementById('form').submit();
         }
         function confirmDelete(id) {
 
@@ -103,7 +91,7 @@
 
                     Swal.fire({
                     title: "¿Estás seguro?",
-                    text: "¿Deseas eliminar esta calificacion?",
+                    text: "¿Deseas eliminar esta calificacion? Recuerde Guardar para confirmar",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: '#DD6B55',
