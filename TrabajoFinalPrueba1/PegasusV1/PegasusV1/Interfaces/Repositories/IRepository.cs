@@ -55,6 +55,6 @@ namespace PegasusV1.Interfaces
 
         Task<List<Calificaciones>> GetCalificacionesByUserAndMateria(int userId, int materiaId);
 
-        Task<List<ContenidoMaterias>> GetContenidoMateriasForCombo(Expression<Func<ContenidoMaterias, bool>>? predicate = null)
+        Task<List<ContenidoMaterias>> GetContenidoMateriasForCombo(Expression<Func<ContenidoMaterias, bool>>? predicate = null);
     }
 }
