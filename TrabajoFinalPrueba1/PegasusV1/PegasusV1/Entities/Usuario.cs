@@ -10,8 +10,8 @@ namespace PegasusV1.Entities
 
         public string? Apellido { get; set; }
 
-        public int? Perfil { get; set; }
-        [ForeignKey("Perfil")]
+        public int? Id_Perfil { get; set; }
+        [ForeignKey("Id_Perfil")]
         public Roles Rol { get; set; }
 
         public string? Mail { get; set; }
