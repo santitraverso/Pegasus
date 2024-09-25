@@ -48,7 +48,17 @@ namespace PegasusV1.Controllers
             }
             else
             {
-                return await UsuarioService.GetForCombo();
+                List<Usuario> users = await UsuarioService.GetForCombo();
+
+                foreach (var user in users)
+                {
+                    if (user.Id_Perfil.HasValue)
+                    {
+                        user.Perfil = await PerfilesService.GetById(user.Id_Perfil.Value);
+                    }
+                }
+
+                return users;
             }
         }
 
