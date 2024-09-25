@@ -68,6 +68,15 @@ body {
     text-decoration: none;
 }
 
+.card-img-top3 {
+    border-radius: 30px; /* Redondear los bordes de la imagen */
+    text-align: center;
+    width: 130px;
+    align-content: center;
+    height: 110px;
+    text-decoration: none;
+}
+
 .card-custom {
     border-radius: 50px; /* Redondear los bordes de la tarjeta */
     margin-top: 30px;
@@ -492,4 +501,23 @@ label {
 
 .toggle-switch:checked:before {
     transform: translateX(30px);
+}
+
+.card2 {
+    text-align: center; /* Centra el contenido dentro de la card */
+    cursor: pointer; /* Cambia el cursor a pointer al pasar por encima */
+    transition: transform 0.2s ease; /* Animación suave */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Aumenta el tamaño al pasar el mouse por encima */
+}
+
+.card-img-top4 {
+    width: 80%; /* Ajusta el tamaño de la imagen */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+}
+
+.card-title-center {
+    text-align: center; /* Asegura que el título también esté centrado */
 }

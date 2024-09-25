@@ -85,7 +85,7 @@ namespace PegasusWeb.Pages
             List<Perfiles> getperfiles = new List<Perfiles>();
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Pefiles/GetPefilesForCombo");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Perfiles/GetPerfilesForCombo");
             if (response.IsSuccessStatusCode)
             {
                 string perfilesJson = await response.Content.ReadAsStringAsync();

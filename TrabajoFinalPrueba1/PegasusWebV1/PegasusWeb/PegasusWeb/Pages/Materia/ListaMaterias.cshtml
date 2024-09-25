@@ -18,17 +18,23 @@
         @foreach (PegasusWeb.Entities.Materia materia in Model.Materias)
         {
             <div class="col-md-3 justify-content-center">
-                <form method="post">
-                    <div class="card card-custom card-title-center justify-content-center">
+                <form method="post" id="form-@materia.Id">
+                    <div class="card card-custom card-title-center justify-content-center" style="cursor: pointer;" onclick="submitForm(@materia.Id)">
                         <input type="hidden" name="materia" value="@materia.Id" />
-                        <button class="btn btn-default" type="submit">
-                            <h5 class="card-title card-title-center">@materia.Nombre</h5>
-                            <img src="~/img/libros.png" class="card-img-top2" alt="">
-                        </button>
+                        <h5 class="card-title card-title-center">@materia.Nombre</h5>
+                        <img src="~/img/libros.png" class="card-img-top2" alt="" style=" margin: 0 auto;">
                     </div>
+                    <input type="submit" id="submit-@materia.Id" name="submit" style="display:none" />
                 </form>
             </div>
         }
     </div>
 </body>
 </html>
+@section scripts{
+    <script>
+        function submitForm(materiaId) {
+            document.getElementById('submit-' + materiaId).click();
+        }
+    </script>
+}

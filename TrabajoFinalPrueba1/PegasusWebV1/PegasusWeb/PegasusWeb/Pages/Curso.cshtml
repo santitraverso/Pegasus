@@ -29,11 +29,13 @@
         {
             <div class="col-md-3 justify-content-center">
                 <div class="card card-custom card-title-center justify-content-center">
-                    <h5 class="card-title card-title-center">@curso.Nombre_Curso</h5>
-                    <p class="card-title card-title-center">@curso.Grado @curso.Division</p>
-                    <p class="card-title card-title-center">@curso.Turno</p>
+                    <h5 class="card-title card-title-center" style="margin-bottom:0px;">@curso.Nombre_Curso</h5>
+                    <p class="card-title card-title-center" style="margin-bottom:0px;">@curso.Grado @curso.Division @curso.Turno</p>
                     <form method="post">
                         <input type="hidden" name="curso" value="@curso.Id" />
+                        <img src="~/img/curso.png" class="card-img-top3" alt="">
+                        <br>
+                        <br>
                         <img src="~/img/lapiz.png" class="icon edit-image" alt="Editar" onclick="submitForm(@curso.Id)" style="padding-bottom: 5px;" />
                         <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@curso.Id)" style="padding-bottom: 5px;" />
                         <input type="submit" id="submit-@curso.Id" style="display:none" />

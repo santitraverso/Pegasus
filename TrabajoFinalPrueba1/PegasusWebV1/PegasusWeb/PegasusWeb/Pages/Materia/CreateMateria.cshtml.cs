@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using PegasusWeb.Entities;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Dynamic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -150,29 +152,43 @@ namespace PegasusWeb.Pages
             }
 
 
+            dynamic materiaData = new ExpandoObject();
+            materiaData.Nombre = nombre;
+            materiaData.Id_Curso = idCursoSeleccionado;
+
             if (id > 0)
             {
-                // Actualizar materia existente
-                var content = new StringContent($"{{\"Nombre\":\"{nombre}\", \"Id_Curso\":\"{idCursoSeleccionado}\", \"Id\":\"{id}\"}}", Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PutAsync("http://localhost:7130/Materia/UpdateMateria", content);
-                if (!response.IsSuccessStatusCode)
-                {
-                    this.ModelState.AddModelError("materia", "Hubo un error inesperado al actualizar la Materia.");
-                    return null;
-                }
+                materiaData.Id = id;
+            }
 
+            // Convertir el objeto dinámico a JSON
+            var jsonContent = JsonConvert.SerializeObject(materiaData);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            // Hacer la llamada HTTP (PUT si actualiza, POST si crea)
+            HttpResponseMessage response;
+            if (id > 0)
+            {
+                response = await client.PutAsync("http://localhost:7130/Materia/UpdateMateria", content);
             }
             else
             {
-                // Crear nueva materia
-                var content = new StringContent($"{{\"Nombre\":\"{nombre}\", \"id_Curso\":\"{idCursoSeleccionado}\"}}", Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync("http://localhost:7130/Materia/CreateMateria", content);
-                if (!response.IsSuccessStatusCode)
-                {
-                    this.ModelState.AddModelError("materia", "Hubo un error inesperado al crear la Materia.");
-                }
+                response = await client.PostAsync("http://localhost:7130/Materia/CreateMateria", content);
             }
 
+            // Manejar errores de la respuesta HTTP
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorResponse = await response.Content.ReadAsStringAsync();
+                ModelState.AddModelError("materia", id > 0
+                    ? "Hubo un error inesperado al actualizar la Materia: " + errorResponse
+                    : "Hubo un error inesperado al crear la Materia: " + errorResponse);
+
+                await OnGetAsync();
+                return Page();
+            }
+
+            TempData["SuccessMessage"] = "La Materia se guardó correctamente.";
             return RedirectToPage("../Materia");
         }
     }
