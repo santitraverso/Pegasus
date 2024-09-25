@@ -46,7 +46,7 @@ namespace PegasusV1.Interfaces
 
         Task<List<Modulos>> GetModulosForCombo(Expression<Func<Modulos, bool>>? predicate = null);
 
-        Task<List<Perfiles>> GetRolesForCombo(Expression<Func<Perfiles, bool>>? predicate = null);
+        Task<List<Perfiles>> GetPerfilesForCombo(Expression<Func<Perfiles, bool>>? predicate = null);
         
         Task<List<Calificaciones>> GetCalificacionesByUser(int userId);
 

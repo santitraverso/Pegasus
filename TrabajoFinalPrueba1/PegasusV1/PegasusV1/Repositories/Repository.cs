@@ -375,7 +375,7 @@ namespace PegasusV1.Repositories
             }
         }
 
-        public async Task<List<Perfiles>> GetRolesForCombo(Expression<Func<Perfiles, bool>>? predicate = null)
+        public async Task<List<Perfiles>> GetPerfilesForCombo(Expression<Func<Perfiles, bool>>? predicate = null)
         {
             using (DataContext dbContext = new DataContext(_configuration))
             {
