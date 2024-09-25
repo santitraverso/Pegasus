@@ -10,7 +10,7 @@ namespace PegasusWeb.Entities
 
         public string? Apellido { get; set; }
 
-        public int? Perfil { get; set; }  
+        public int? Id_Perfil { get; set; }  
 
         public string? Mail { get; set; }
 
@@ -19,7 +19,6 @@ namespace PegasusWeb.Entities
         [NotMapped]
         public List<Calificaciones>? Calificaciones { get; set; }
 
-        [NotMapped]
-        public List<Roles>? Roles { get; set; }
+        public Perfiles? Perfil { get; set; }
     }
 }

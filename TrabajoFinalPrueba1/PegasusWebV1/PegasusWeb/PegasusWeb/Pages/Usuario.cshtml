@@ -39,7 +39,7 @@
                             <input type="hidden" id="booleano-@usuario.Id" name="editar" value="true">
                             <td>@usuario.Apellido</td>
                             <td>@usuario.Nombre</td>
-                            <td>@usuario.Perfil</td>
+                            <td>@usuario.Perfil.Nombre</td>
                             <td>@(usuario.Activo ? "Sí" : "No")</td>
                             <td>
                                 <img src="~/img/lapiz.png" class="icon edit-image" alt="Editar" onclick="submitForm(@usuario.Id)" style="padding-bottom: 5px;" />

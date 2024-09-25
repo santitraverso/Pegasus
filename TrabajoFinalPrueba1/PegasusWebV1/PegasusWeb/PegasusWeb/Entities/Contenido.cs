@@ -14,5 +14,7 @@ namespace PegasusWeb.Entities
         public string Nombre { get; set; }
 
         public string Descripcion { get; set; }
+
+        public int Tipo_Contenido { get; set; }
     }
 }

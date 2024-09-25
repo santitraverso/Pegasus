@@ -41,7 +41,7 @@ namespace PegasusWeb.Pages
                     return NotFound();
                 }
 
-                PerfilSeleccionadoId = (int)Usuario.Perfil;
+                PerfilSeleccionadoId = (int)Usuario.Id_Perfil;
             }
             else
             {
@@ -76,23 +76,28 @@ namespace PegasusWeb.Pages
             PerfilesRelacionados = perfiles.Select(c => new SelectListItem
             {
                 Value = c.Id.ToString(),
-                Text = c.Nombre_Rol
+                Text = c.Nombre
             }).ToList();
         }
 
-        static async Task<List<Roles>> GetPerfilesAsync()
+        static async Task<List<Perfiles>> GetPerfilesAsync()
         {
-            List<Roles> getperfiles = new List<Roles>();
+            List<Perfiles> getperfiles = new List<Perfiles>();
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Roles/GetRolesForCombo");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Pefiles/GetPefilesForCombo");
             if (response.IsSuccessStatusCode)
             {
                 string perfilesJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(perfilesJson))
                 {
-                    getperfiles = JsonConvert.DeserializeObject<List<Roles>>(perfilesJson);
+                    getperfiles = JsonConvert.DeserializeObject<List<Perfiles>>(perfilesJson);
                 }
+            }
+            else
+            {
+                // Log or inspect the response details if the status is not successful
+                Console.WriteLine($"Error: {response.StatusCode}, {response.ReasonPhrase}");
             }
 
             return getperfiles;
