@@ -20,35 +20,42 @@
     <div class="form-container">
         <form method="post" onsubmit="handleSubmit(event)" id="form">
             <input type="hidden" name="id" asp-for="Usuario.Id" />
+            <table>
+                <tr>
+                    <td>Apellido</td>
+                    <td><input type="text" asp-for="Usuario.Apellido" class="inputMio3" name="apellido" id="apellido" required /></td>
+                </tr>
 
-            <div class="form-alter d-flex justify-content-between">
-                <div class="flex-item">
-                    <label for="apellido" class="text-center">Apellido</label>
-                    <input type="text" asp-for="Usuario.Apellido" class="inputMio2" name="apellido" id="apellido" required />
-                </div>
-                <div class="flex-item">
-                    <label for="nombre" class="text-center">Nombre</label>
-                    <input type="text" asp-for="Usuario.Nombre" class="inputMio2" name="nombre" id="nombre" required />
-                </div>
-            </div>
+                <tr>
+                    <td>Nombre</td>
+                    <td><input type="text" asp-for="Usuario.Nombre" class="inputMio3" name="nombre" id="nombre" required /></td>
+                </tr>
 
-            <div class="form-alter d-flex justify-content-between">
-                <div class="flex-item">
-                    <label for="activo" class="text-center">Activo</label>
-                    <input type="checkbox" asp-for="Usuario.Activo" class="inputCheckbox" name="activo" id="activo" />
-                </div>
-                <div class="flex-item">
-                    <label for="mail" class="text-center">Mail</label>
-                    <input type="email" asp-for="Usuario.Mail" class="inputMio2" name="mail" id="mail" required />
-                </div>
-                <div class="flex-item">
-                    <label for="perfil" class="text-center">Perfil</label>
-                    <select asp-for="PerfilSeleccionadoId" asp-items="Model.PerfilesRelacionados" class="form-control selectMio" id="perfilSeleccionadoId">
-                        <option value="">-- Seleccionar un perfil --</option>
-                    </select>
-                </div>
-            </div>
+                <tr>
+                    <td>Activo</td>
+                    <td>
+                        <label class="container2">
+                            <input type="checkbox" asp-for="Usuario.Activo" name="activo" id="activo" />
+                            <div class="checkmark"></div>
+                        </label>
+                    </td>
+                </tr>
 
+                <tr>
+                    <td>Mail</td>
+                    <td><input type="email" asp-for="Usuario.Mail" class="inputMio3" name="mail" id="mail" required /></td>
+                </tr>
+                <tr>
+                    <td>Perfil</td>
+                    <td>
+                        <select asp-for="PerfilSeleccionadoId" asp-items="Model.PerfilesRelacionados" class="form-control selectMio" id="perfilSeleccionadoId">
+                            <option value="">-- Seleccionar un perfil --</option>
+                        </select>
+                    </td>
+                </tr>
+
+            </table>
+            <br />
             <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
         </form>
     </div>

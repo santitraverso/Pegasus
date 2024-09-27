@@ -460,14 +460,15 @@ label {
 }
 
 .selectMio {
-    width: 30%;
-    font-family: 'Tahoma', sans-serif;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
     background-color: #ffffff;
     border: none;
     border-radius: 6px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
+    margin: 10px;
 }
 
 .selectMio:focus {
@@ -513,6 +514,7 @@ label {
     cursor: pointer;
     font-size: 20px;
     user-select: none;
+    margin-left: 10px;
 }
 
 /* Create a custom checkbox */
@@ -738,3 +740,77 @@ label {
     font-size: 14px;
     color: #333;
 }
+
+.custom-popup {
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.custom-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.custom-icon {
+    border-radius: 50%;
+    background-color: #2a9d1d;
+}
+
+.custom-popup .swal2-success {
+    background-color: #2a9d1d;
+}
+
+.modern-popup {
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.modern-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #ff6f61;
+}
+
+.modern-icon {
+    background-color: #f9f9f9;
+}
+
+/* Botón de confirmación personalizado */
+.modern-confirm-button {
+    background-color: #ff6f61; /* Color de fondo */
+    color: white; /* Color de texto */
+    border: none; /* Sin bordes */
+    border-radius: 25px; /* Bordes redondeados */
+    padding: 10px 25px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de la fuente */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+}
+
+/* Efecto hover en el botón de confirmación */
+.modern-confirm-button:hover {
+    background-color: #e45d54; /* Cambia el color al pasar el ratón */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+}
+
+/* Botón de cancelación personalizado */
+.modern-cancel-button {
+    background-color: #6c757d; /* Color de fondo */
+    color: white; /* Color de texto */
+    border: none; /* Sin bordes */
+    border-radius: 25px; /* Bordes redondeados */
+    padding: 10px 25px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de la fuente */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+}
+
+    /* Efecto hover en el botón de cancelación */
+.modern-cancel-button:hover {
+    background-color: #5a6268; /* Cambia el color al pasar el ratón */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+}
+

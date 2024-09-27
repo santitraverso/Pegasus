@@ -32,6 +32,9 @@ namespace PegasusWeb.Pages
 
         public async Task OnGetAsync()
         {
+            if(IdIntegrante == 0)
+                RedirectToPage("ListaMaterias");
+
             Alumno = await GetIntegranteMateriaAsync(IdIntegrante);
 
             if(Nuevo)

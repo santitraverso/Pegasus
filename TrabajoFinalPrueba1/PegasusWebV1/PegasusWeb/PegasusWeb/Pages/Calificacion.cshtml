@@ -92,11 +92,22 @@
                     icon: "success",
                     title: "Guardado",
                     showConfirmButton: false,
-                    width: '300px',
+                    width: '350px',
                     padding: '20px',
                     timer: 1500,
+                    background: '#fefefe',  // Fondo claro
+                    iconColor: '#00d1b2',    // Color del ícono
+                    color: '#333',           // Color del texto
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
                     customClass: {
-                        title: 'my-custom-title',
+                        popup: 'custom-popup',   // Personaliza el estilo del contenedor
+                        title: 'custom-title',   // Personaliza el estilo del título
+                        icon: 'custom-icon'      // Personaliza el estilo del ícono
                     }
                 });
             </text>

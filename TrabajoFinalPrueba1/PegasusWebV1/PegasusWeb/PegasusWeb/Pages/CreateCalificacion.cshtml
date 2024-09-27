@@ -89,21 +89,35 @@
 
             if (id !== null) {
 
-                    Swal.fire({
+                Swal.fire({
                     title: "¿Estás seguro?",
                     text: "¿Deseas eliminar esta calificacion? Recuerde Guardar para confirmar",
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: '#DD6B55',
+                    confirmButtonColor: '#ff6f61', // Color del botón de confirmación
+                    cancelButtonColor: '#6c757d',  // Color del botón de cancelar
                     confirmButtonText: 'Sí, eliminar',
                     cancelButtonText: "Cancelar",
-                    width: '350px',
-                    padding: '15px',
+                    width: '400px',
+                    padding: '20px',
+                    background: '#f0f0f5',
+                    color: '#333',
+                    iconColor: '#ff6f61',
                     customClass: {
-                        icon: 'swal2-icon'
+                        popup: 'modern-popup',
+                        title: 'modern-title',
+                        icon: 'modern-icon',
+                        confirmButton: 'modern-confirm-button',
+                        cancelButton: 'modern-cancel-button'
+                    },
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
                     }
-                    }).then((result) => {
-                    if(result.isConfirmed) {
+                }).then((result) => {
+                    if (result.isConfirmed) {
                         var row = document.getElementById("calificacion-" + id);
                         if (row) {
                             row.remove();
@@ -115,7 +129,8 @@
                         document.getElementById('calificacionesEliminadas').value = eliminadas.join(',');
                         updateInputNames();
                     }
-                    })
+                });
+
             } else {
                 console.error("Error: calificacionId no está definido.");
             }

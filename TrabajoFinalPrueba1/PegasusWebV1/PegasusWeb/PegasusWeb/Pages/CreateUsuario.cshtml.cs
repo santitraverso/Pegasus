@@ -136,7 +136,7 @@ namespace PegasusWeb.Pages
             // Crear objeto usuario
             var usuario = new
             {
-                Perfil = idPerfilSeleccionado,
+                Id_Perfil = idPerfilSeleccionado,
                 Activo = activo,
                 Apellido = apellido,
                 Nombre = nombre,

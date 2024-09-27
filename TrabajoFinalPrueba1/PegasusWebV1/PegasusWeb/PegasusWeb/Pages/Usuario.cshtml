@@ -73,11 +73,22 @@
                     icon: "success",
                     title: "Guardado",
                     showConfirmButton: false,
-                    width: '300px',
+                    width: '350px',
                     padding: '20px',
                     timer: 1500,
+                    background: '#fefefe',  // Fondo claro
+                    iconColor: '#00d1b2',    // Color del ícono
+                    color: '#333',           // Color del texto
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
                     customClass: {
-                        title: 'my-custom-title',
+                        popup: 'custom-popup',   // Personaliza el estilo del contenedor
+                        title: 'custom-title',   // Personaliza el estilo del título
+                        icon: 'custom-icon'      // Personaliza el estilo del ícono
                     }
                 });
             </text>
@@ -123,21 +134,34 @@
                 text: "¿Deseas eliminar este usuario?",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: '#DD6B55',
+                confirmButtonColor: '#ff6f61', // Color moderno para el botón de confirmación
+                cancelButtonColor: '#6c757d',  // Color gris para el botón de cancelar
                 confirmButtonText: 'Sí, eliminar',
                 cancelButtonText: "Cancelar",
-                width: '350px',
-                padding: '15px',
+                width: '400px',        // Ancho más amplio
+                padding: '20px',       // Aumentar el padding
+                background: '#f0f0f5', // Fondo suave y claro
+                color: '#333',         // Texto oscuro
+                iconColor: '#ff6f61',  // Color moderno para el ícono
                 customClass: {
-                    icon: 'swal2-icon'
+                    popup: 'modern-popup',
+                    title: 'modern-title',
+                    icon: 'modern-icon',
+                    confirmButton: 'modern-confirm-button',
+                    cancelButton: 'modern-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
                 }
             }).then((result) => {
-                if
-                    (result.isConfirmed) {
+                if (result.isConfirmed) {
                     document.getElementById('booleano-' + id).value = false;
                     submitForm(id);
                 }
-            })
+            });
         }
     </script>
 }
