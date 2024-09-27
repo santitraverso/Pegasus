@@ -43,7 +43,8 @@
                 {
                     <tr class="alumno-row">
                         <form method="post">
-                            <input type="hidden" name="usuario" value="@alumno.Id" />
+                            <input type="hidden" name="usuario" value="@alumno.Id_Usuario" />
+                            <input type="hidden" name="materia" value="@alumno.Id_Materia" />
                             <input type="hidden" id="booleano-@alumno.Id" name="nuevo" value="false">
                             <input type="submit" id="submit-@alumno.Id" style="display:none" />
                             <td class="apellido">@alumno.Usuario.Apellido</td>
@@ -66,7 +67,7 @@
                             <td class="actions-column">
                                 @if (alumno.Usuario.Calificaciones.Any())
                                 {
-                                <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@alumno.Id)" style="padding-bottom: 5px; padding-right: 5px; width:32px; height:30px;" />
+                                <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@alumno.Id)" style="padding-bottom: 5px; width:32px; height:30px;" />
                                 }
                                 <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="Agregar(@alumno.Id)" />
                             </td>

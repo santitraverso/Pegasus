@@ -32,27 +32,28 @@ namespace PegasusWeb.Pages
 
         public async Task OnGetAsync()
         {
-            if(IdIntegrante == 0)
+            if(IdIntegrante == 0 || Materia == 0)
                 RedirectToPage("ListaMaterias");
 
-            Alumno = await GetIntegranteMateriaAsync(IdIntegrante);
+            Alumno = await GetIntegranteMateriaAsync(IdIntegrante, Materia);
 
             if(Nuevo)
                 Alumno.Usuario.Calificaciones = new List<Calificaciones> { };
         }
 
-        static async Task<IntegrantesMaterias> GetIntegranteMateriaAsync(int id)
+        static async Task<IntegrantesMaterias> GetIntegranteMateriaAsync(int alumno, int materia)
         {
             IntegrantesMaterias getalumno = new IntegrantesMaterias();
 
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetById?id={id}");
+            string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia} && x.id_usuario=={alumno}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
                 string alumnoJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(alumnoJson))
                 {
-                    getalumno = JsonConvert.DeserializeObject<IntegrantesMaterias>(alumnoJson);
+                    getalumno = JsonConvert.DeserializeObject<List<IntegrantesMaterias>>(alumnoJson).FirstOrDefault();
                 }
             }
 

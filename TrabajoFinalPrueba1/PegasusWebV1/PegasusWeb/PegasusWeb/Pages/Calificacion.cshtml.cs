@@ -25,9 +25,10 @@ namespace PegasusWeb.Pages
             Alumnos = await GetIntegrantesMateriasAsync(Materia);
         }
 
-        public IActionResult OnPost(int usuario, bool nuevo)
+        public IActionResult OnPost(int usuario, int materia, bool nuevo)
         {
             IdIntegrante = usuario;
+            Materia = materia;
             Nuevo = nuevo;
             return RedirectToPage("CreateCalificacion");
         }
