@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Asistencia</title>
 </head>
 <body>
     <h4>Asistencia</h4>
@@ -60,12 +60,11 @@
                             <td>@Model.Alumnos[i].Alumno.Apellido</td>
                             <td>@Model.Alumnos[i].Alumno.Nombre</td>
                             <td>
-                                <input type="checkbox" class="form-check-input toggle-switch"
-                                       name="Alumnos[@i].Presente"
-                                       value="true"
-                                       id="checkbox-@i"
-                                @(Model.Alumnos[i].Presente ? "checked" : "")
-                                       onchange="updateHiddenInput(@i, this.checked)" />
+                                <div class="switch2-toggle">
+                                    <input type="checkbox" id="checkbox-@i" name="Alumnos[@i].Presente" value="true"
+                                    @(Model.Alumnos[i].Presente ? "checked" : "") onchange="updateHiddenInput(@i, this.checked)" />
+                                    <label for="checkbox-@i"></label>
+                                </div>
                                 <input type="hidden" name="Alumnos[@i].Presente" value="false" id="hidden-@i" />
                             </td>
                         </tr>

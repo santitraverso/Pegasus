@@ -65,7 +65,7 @@ namespace PegasusWeb.Pages
         {
             List<Usuario> getalumnos = new List<Usuario>();
 
-            string queryParam = Uri.EscapeDataString("x=>x.perfil == 2 && x.activo == true");
+            string queryParam = Uri.EscapeDataString("x=>x.id_perfil == 2 && x.activo == true");
             HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Usuario/GetUsuariosForCombo?query={queryParam}");
             if (response.IsSuccessStatusCode)
             {
