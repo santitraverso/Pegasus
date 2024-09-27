@@ -29,6 +29,8 @@
     
     <div class="container">
         <a class="btn btn-primary btn-custom" asp-page="/CreateUsuario" style="margin:10px;">Crear Usuario</a>
+        <br />
+        <br />
             <table id="tablaUsuarios" class="table">
                 <thead>
                     <tr>
@@ -51,9 +53,9 @@
                             <td>@usuario.Nombre</td>
                             <td>@usuario.Perfil.Nombre</td>
                             <td>@(usuario.Activo ? "Sí" : "No")</td>
-                            <td>
-                                <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@usuario.Id)" style="padding-bottom: 5px;" />
-                                <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@usuario.Id)" style="padding-bottom: 5px;" />
+                            <td class="actions-column">
+                                <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@usuario.Id)" />
+                                <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@usuario.Id)" />
                             </td>
                             <input type="submit" id="submit-@usuario.Id" style="display:none" />                  
                         </form>

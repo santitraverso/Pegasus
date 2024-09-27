@@ -27,6 +27,7 @@
         <input type="text" class="search__input" id="busqueda" placeholder="Buscar usuarios..." onkeyup="buscarUsuarios()">
     </div>
     <br />
+    <br />
     <div class="container">
         <table id="tablaUsuarios" class="table">
             <thead>
@@ -34,7 +35,6 @@
                     <th>Apellido</th>
                     <th>Nombre</th>
                     <th>Calificaciones</th>
-                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -44,12 +44,12 @@
                     <tr class="alumno-row">
                         <form method="post">
                             <input type="hidden" name="usuario" value="@alumno.Id" />
-                            <input type="hidden" id="booleano" name="nuevo" value="false">
+                            <input type="hidden" id="booleano-@alumno.Id" name="nuevo" value="false">
                             <input type="submit" id="submit-@alumno.Id" style="display:none" />
                             <td class="apellido">@alumno.Usuario.Apellido</td>
                             <td class="nombre">@alumno.Usuario.Nombre</td>
 
-                            <td style="width:17%;">
+                            <td style="width:15%;">
                                 <div class="flex-container">
                                     <ul class="calificaciones-lista">
                                             @{
@@ -57,20 +57,18 @@
                                             }
                                             @foreach (var calificacion in alumno.Usuario.Calificaciones)
                                             {
-                                            <li><strong>Nota @(index + 1): </strong> @calificacion.Calificacion</li>
+                                                <li><strong>Nota @(index + 1) </strong>: @calificacion.Calificacion</li>
                                                 index++;
                                             }
                                     </ul>
-
-                                    <div class="btn-group">
-                                            @if (alumno.Usuario.Calificaciones.Any())
-                                            {
-                                            <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@alumno.Id)" style="padding-bottom: 5px; padding-right: 5px; width:32px; height:30px;" />
-                                            }
-
-                                        <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="Agregar(@alumno.Id)" style="padding-bottom: 5px;"/>
-                                    </div>
                                 </div>
+                            </td>
+                            <td class="actions-column">
+                                @if (alumno.Usuario.Calificaciones.Any())
+                                {
+                                <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@alumno.Id)" style="padding-bottom: 5px; padding-right: 5px; width:32px; height:30px;" />
+                                }
+                                <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="Agregar(@alumno.Id)" />
                             </td>
                         </form>
                     </tr>
@@ -145,7 +143,7 @@
             }
 
         function Agregar(id) {
-            document.getElementById('booleano').value = true;
+            document.getElementById('booleano-'+ id).value = true;
             submitForm(id);
         }
 

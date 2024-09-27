@@ -105,11 +105,13 @@ body {
 
 .icon {
     width: 25px;
+    height: 26px;
     cursor: pointer;
 }
 
 .icon:hover {
-        opacity: 0.5;
+    opacity: 0.5;
+    transform: scale(1.2);
 }
 
 .centrado {
@@ -276,16 +278,18 @@ body {
 
 .edit-image:hover {
     opacity: 0.5;
+    transform: scale(1.2);
 }
 
 .nuevo-icon {
     cursor: pointer;
-    width: 35px;
+    width: 28px !important;
     height: 33px;
 }
 
 .nuevo-icon:hover {
     opacity: 0.5;
+    transform: scale(1.2);
 }
 
 
@@ -365,7 +369,7 @@ label {
 
 .calificaciones-lista li {
     margin-bottom: 5px; /* Espacio entre las notas */
-    border: 1px solid black;
+    border: none;
     padding: 5px;
     width: 100%;
     border-radius: 50px;
@@ -814,3 +818,84 @@ label {
     transform: scale(1.05); /* Aumenta ligeramente el tamaño */
 }
 
+/* Estilo general de la tabla */
+#tablaUsuarios {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px; /* Bordes redondeados */
+    overflow: hidden;
+    background-color: #f9f9f9; /* Fondo claro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+/* Encabezados de la tabla */
+#tablaUsuarios thead th {
+    background-color: rgb(49, 131, 196); /* Color principal */
+    color: white; /* Texto en blanco */
+    text-align: left; /* Alineación a la izquierda */
+    padding: 12px 15px; /* Espaciado interno */
+    font-weight: bold; /* Texto en negrita */
+    font-size: 14px; /* Tamaño de fuente */
+    border-bottom: 2px solid #ddd; /* Línea inferior */
+}
+
+/* Filas del cuerpo de la tabla */
+#tablaUsuarios tbody tr {
+    border-bottom: 1px solid #ddd; /* Línea separadora */
+    transition: background-color 0.2s ease-in-out; /* Transición para hover */
+}
+
+#tablaUsuarios tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de fondo alternado */
+}
+
+/* Efecto hover en las filas */
+#tablaUsuarios tbody tr:hover {
+    background-color: #e0e6f8b2; /* Color al pasar el ratón */
+}
+
+/* Celdas del cuerpo de la tabla */
+#tablaUsuarios tbody td {
+    padding: 10px 15px; /* Espaciado interno */
+    color: #333; /* Color del texto */
+    font-size: 14px; /* Tamaño de fuente */
+}
+
+/* Imágenes de acciones (editar, eliminar) */
+#tablaUsuarios .icon, #tablaUsuarios .edit-image {
+    cursor: pointer;
+    width: 20px; /* Tamaño de la imagen */
+    margin-right: 5px; /* Espacio entre imágenes */
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Efecto hover en las imágenes */
+#tablaUsuarios .icon:hover, #tablaUsuarios .edit-image:hover {
+    transform: scale(1.2); /* Aumenta ligeramente el tamaño */
+}
+
+/* Estilo del botón oculto (manteniendo el formulario funcional) */
+#tablaUsuarios input[type="submit"] {
+    display: none;
+}
+
+/* Alinear las imágenes a la derecha dentro del td */
+.actions-column {
+    text-align: right; /* Alinea todo el contenido del td a la derecha */
+    padding-right: 15px; /* Opcional: agrega un pequeño espacio en el borde derecho */
+    width:10%;
+}
+
+/* Espaciado entre las imágenes */
+.actions-column img {
+    margin-left: 3px; /* Espacio entre las imágenes */
+    cursor: pointer; /* Cambia el cursor a pointer al pasar sobre la imagen */
+    width: 20px; /* Tamaño de las imágenes */
+    transition: transform 0.2s ease-in-out; /* Suaviza la animación al pasar el ratón */
+}
+
+/* Efecto hover para las imágenes */
+.actions-column img:hover {
+    transform: scale(1.2); /* Efecto de agrandamiento en hover */
+}

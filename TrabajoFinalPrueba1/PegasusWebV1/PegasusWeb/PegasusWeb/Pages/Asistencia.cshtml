@@ -38,8 +38,9 @@
     @if (Model.Alumnos != null && Model.Alumnos.Count > 0)
     {
         <h5>Asistencia para @Model.FechaAsistencia.ToShortDateString()</h5>
+        <br />
         <form method="post" asp-page-handler="GuardarAsistencia" id="formAsistencia">
-            <table class="table">
+            <table class="table" id="tablaUsuarios">
                 <thead>
                     <tr>
                         <th>Apellido</th>
