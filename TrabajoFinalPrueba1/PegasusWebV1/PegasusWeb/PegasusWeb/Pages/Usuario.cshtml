@@ -52,7 +52,7 @@
                             <td>@usuario.Perfil.Nombre</td>
                             <td>@(usuario.Activo ? "Sí" : "No")</td>
                             <td>
-                                <img src="~/img/lapiz.png" class="icon edit-image" alt="Editar" onclick="submitForm(@usuario.Id)" style="padding-bottom: 5px;" />
+                                <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@usuario.Id)" style="padding-bottom: 5px;" />
                                 <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@usuario.Id)" style="padding-bottom: 5px;" />
                             </td>
                             <input type="submit" id="submit-@usuario.Id" style="display:none" />                  

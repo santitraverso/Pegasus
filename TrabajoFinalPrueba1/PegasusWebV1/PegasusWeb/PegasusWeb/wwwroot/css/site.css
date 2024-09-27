@@ -270,9 +270,25 @@ body {
 
 .edit-image, .delete-image {
     cursor: pointer;
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
 }
+
+.edit-image:hover {
+    opacity: 0.5;
+}
+
+.nuevo-icon {
+    cursor: pointer;
+    width: 35px;
+    height: 33px;
+}
+
+.nuevo-icon:hover {
+    opacity: 0.5;
+}
+
+
 .swal2-icon {
     font-size: 8px;
 }
@@ -688,4 +704,37 @@ h1, h2, h3, h4, h5 {
     height: 20px;
     width: 20px;
     fill: #999999;
+}
+
+/* Contenedor del input */
+.date-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modern-date-input {
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.1), inset -3px -3px 5px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+}
+
+/* Estilo al hacer foco */
+.modern-date-input:focus {
+    border-color: #7f5ee7;
+    outline: none;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(127, 94, 231, 0.5), inset 3px 3px 5px rgba(0, 0, 0, 0.1), inset -3px -3px 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Estilo del label */
+label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #333;
 }

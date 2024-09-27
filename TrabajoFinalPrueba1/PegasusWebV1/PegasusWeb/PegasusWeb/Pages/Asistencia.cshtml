@@ -10,15 +10,16 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Asistencia</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 </head>
 <body>
     <h4>Asistencia</h4>
     <hr />
 
     <form method="post">
-        <div class="form-group" style="width:25%;">
+        <div class="form-group date-input-container" style="width:25%;">
             <label for="fechaAsistencia">Seleccionar fecha</label>
-            <input type="date" class="form-control" asp-for="FechaAsistencia" name="fecha" id="fechaAsistencia" required />
+            <input type="date" class="form-control modern-date-input" asp-for="FechaAsistencia" name="fecha" id="fechaAsistencia" required />
             <input type="hidden" name="materia" value="@Model.IdMateria" />
         </div>
         <button type="submit" class="btn btn-primary btn-custom">Cargar Asistencia</button>
@@ -77,8 +78,8 @@
     }
 
     <!-- Scripts -->
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Verifica si TempData tiene un mensaje de éxito
