@@ -1,32 +1,123 @@
 ﻿@page
-@using Microsoft.AspNetCore.Mvc;
-@using Microsoft.AspNetCore.Mvc.RazorPages;
-@using Newtonsoft.Json;
-@using PegasusWeb.Entities;
-@using System.Text;
-@model PegasusWeb.Pages.CreateContactosModel
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.CreateContactoModel
 @{
+    var esEdicion = Model.Contacto.Id > 0;
+    var titulo = esEdicion ? "Editar Contacto" : "Cargar Nuevo Contacto";
 }
-<form method="post">
-    @Html.ValidationMessageFor(a =>a.contacto, "Hubo un error inesperado creando el Contacto")
-    <table>
-        <tr>
-            <td>Nombre del Contacto</td>
-            <td><input type="text" id="nombreContacto" name="nombreContacto" /></td>
-            @Html.ValidationMessageFor(a =>a.nombreContacto, "El campo es requerido")
-        </tr>
-        <tr>
-            <td>Mail</td>
-            <td><input type="text" id="mail" name="mail" /></td>
-            <!--No deberia mostrarlos todo el tiempo-->
-            @Html.ValidationMessageFor(a =>a.mail, "El campo es requerido")
-        </tr>
-        <tr>
-            <td>Telefono</td>
-            <td><input type="text" id="telefono" name="telefono" /></td>
-            <!--No deberia mostrarlos todo el tiempo-->
-            @Html.ValidationMessageFor(a =>a.telefono, "El campo es requerido")
-        </tr>
-    </table>
-    <button class="btn btn-default">Guardar</button>
-</form>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Contactos</title>
+</head>
+<body>
+    <h4>@titulo</h4>
+    <hr />
+
+    <div class="form-container">
+        <form method="post" onsubmit="handleSubmit(event)" id="form">
+            <input type="hidden" name="id" asp-for="Contacto.Id" />
+            <table>
+                <tr>
+                    <td>Nombre</td>
+                    <td><input type="text" asp-for="Contacto.NombreDividido" class="inputMio3" name="nombre" id="nombre" required /></td>
+                </tr>
+
+                <tr id="apellido-row">
+                    <td>Apellido</td>
+                    <td><input type="text" asp-for="Contacto.Apellido" class="inputMio3" name="apellido" id="apellido"/></td>
+                </tr>
+
+                <tr>
+                    <td>Mail</td>
+                    <td><input type="email" asp-for="Contacto.Mail" class="inputMio3" name="mail" id="mail" required /></td>
+                </tr>
+                <tr>
+                    <td>Telefono</td>
+                    <td><input type="tel" asp-for="Contacto.Telefono" class="inputMio3" name="telefono" id="telefono" required /></td>
+                </tr>
+                <tr>
+                    <td>Perfil</td>
+                    <td>
+                        <select asp-for="TipoContactoSeleccionadoId" asp-items="Model.TipoContactoRelacionados" class="form-control selectMio" id="tipoContactoSeleccionadoId" onchange="checkTipoContacto()">
+                            <option value="">-- Seleccionar un Tipo de Contacto --</option>
+                        </select>
+                    </td>
+                </tr>
+
+            </table>
+            <br />
+            <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        function validateForm() {
+            const apellido = document.querySelector('#apellido').value.trim();
+            const nombre = document.querySelector('#nombre').value.trim();
+            const mail = document.querySelector('#mail').value.trim();
+            const telefono = document.querySelector('#telefono').value.trim();
+            const tipoContacto = document.querySelector('#tipoContactoSeleccionadoId').value.trim();
+
+            if ((apellido === '' && tipoContacto === '2') || nombre === '' || mail === '' || tipoContacto === '' || telefono === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Por favor, completa todos los campos.',
+                    width: '400px',
+                    padding: '20px',
+                    background: '#f0f0f5',
+                    color: '#333',
+                    iconColor: '#ff6f61',
+                    customClass: {
+                        popup: 'modern-popup',
+                        title: 'modern-title',
+                        icon: 'modern-icon',
+                        confirmButton: 'modern-confirm-button',
+                        cancelButton: 'modern-cancel-button'
+                    },
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+                return false;
+            }
+            return true;
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault(); 
+            if (validateForm()) {
+                document.getElementById('form').submit(); 
+            }
+        }
+
+        function checkTipoContacto() {
+            var tipoContacto = document.getElementById('tipoContactoSeleccionadoId').value;
+            var apellidoInput = document.getElementById('apellido');
+            var apellidoRow = document.getElementById('apellido-row');
+
+            if (tipoContacto === '2') {
+                apellidoRow.style.display = '';
+                apellidoInput.setAttribute('required', 'required');
+            } else {
+                apellidoRow.style.display = 'none';
+                apellidoInput.removeAttribute('required');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkTipoContacto);
+
+    </script>
+}
