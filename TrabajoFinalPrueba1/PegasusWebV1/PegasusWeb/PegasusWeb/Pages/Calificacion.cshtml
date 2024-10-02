@@ -39,45 +39,51 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var alumno in Model.Alumnos)
+                @if (Model.Alumnos != null && Model.Alumnos.Count > 0)
                 {
-                    <tr class="alumno-row">
-                        <form method="post">
-                            <input type="hidden" name="usuario" value="@alumno.Id_Usuario" />
-                            <input type="hidden" name="materia" value="@alumno.Id_Materia" />
-                            <input type="hidden" id="booleano-@alumno.Id" name="nuevo" value="false">
-                            <input type="submit" id="submit-@alumno.Id" style="display:none" />
-                            <td class="apellido">@alumno.Usuario.Apellido</td>
-                            <td class="nombre">@alumno.Usuario.Nombre</td>
+                    @foreach (var alumno in Model.Alumnos)
+                    {
+                        <tr class="alumno-row">
+                            <form method="post" id="form-@alumno.Id">
+                                <input type="hidden" name="usuario" value="@alumno.Id_Usuario" />
+                                <input type="hidden" name="materia" value="@alumno.Id_Materia" />
+                                <input type="hidden" id="booleano-@alumno.Id" name="nuevo" value="false">
+                                <td class="apellido">@alumno.Usuario.Apellido</td>
+                                <td class="nombre">@alumno.Usuario.Nombre</td>
 
-                            <td style="width:15%;">
-                                <div class="flex-container">
-                                    <ul class="calificaciones-lista">
-                                            @{
-                                                var index = 0;
-                                            }
-                                            @foreach (var calificacion in alumno.Usuario.Calificaciones)
-                                            {
-                                                <li><strong>Nota @(index + 1) </strong>: @calificacion.Calificacion</li>
-                                                index++;
-                                            }
-                                    </ul>
-                                </div>
-                            </td>
-                            <td class="actions-column">
-                                @if (alumno.Usuario.Calificaciones.Any())
-                                {
-                                <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@alumno.Id)" style="padding-bottom: 5px; width:32px; height:30px;" />
-                                }
-                                <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="Agregar(@alumno.Id)" />
-                            </td>
-                        </form>
-                    </tr>
+                                <td style="width:15%;">
+                                    <div class="flex-container">
+                                        <ul class="calificaciones-lista">
+                                                @{
+                                                    var index = 0;
+                                                }
+                                                @foreach (var calificacion in alumno.Usuario.Calificaciones)
+                                                {
+                                                <li><strong>Nota @(index + 1)</strong>: @calificacion.Calificacion</li>
+                                                    index++;
+                                                }
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="actions-column">
+                                        @if (alumno.Usuario.Calificaciones.Any())
+                                        {
+                                        <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@alumno.Id)" style="padding-bottom: 5px; width:32px; height:30px;" />
+                                        }
+                                    <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="agregar(@alumno.Id)" />
+                                </td>
+                            </form>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
         <div class="center-screen">
             <button class="btn btn-primary btn-custom" asp-area="" asp-page="/CreateMateria" style="margin:10px;">Reporte</button>
+            <form method="post" asp-page-handler="Atras" style="display: inline;" id="form2">
+                <input type="hidden" name="curso" value="@Model.IdCurso" />
+                <button type="button" class="btn btn-primary btn-custom" asp-area="" style="margin:10px;" onclick="atras()">Atras</button>
+            </form>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -143,13 +149,19 @@
                 }
             }
 
-        function Agregar(id) {
-            document.getElementById('booleano-'+ id).value = true;
+        function agregar(id) {
+            document.getElementById('booleano-' + id).value = true;
             submitForm(id);
         }
 
         function submitForm(id) {
-            document.getElementById('submit-' + id).click();
+            // Utiliza el ID del formulario para enviarlo
+            document.getElementById('form-' + id).submit();
+        }
+
+        function atras() {
+            // Utiliza el ID del formulario para enviarlo
+            document.getElementById('form2').submit();
         }
     </script>
 }

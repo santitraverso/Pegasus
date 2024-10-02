@@ -15,7 +15,8 @@
     <h4>Contactos</h4>
     <hr />
     <div class="container">
-        <a class="btn btn-primary btn-custom" asp-page="/CreateContacto" style="margin:10px;">Crear Contacto</a>
+        <a class="btn btn-primary btn-custom" asp-page="/CreateContacto" asp-route-tipoContacto="@Model.TipoContacto" style="margin:10px;">Crear Contacto</a>
+        <a class="btn btn-primary btn-custom" asp-page="/ListaContacto" style="margin:10px;">Atras</a>
         <br />
         <br />
         <table id="tablaUsuarios" class="table">

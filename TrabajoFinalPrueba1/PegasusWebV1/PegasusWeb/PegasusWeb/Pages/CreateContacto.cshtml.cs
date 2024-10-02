@@ -32,7 +32,7 @@ namespace PegasusWeb.Pages
 
         public List<SelectListItem> TipoContactoRelacionados { get; set; } = new List<SelectListItem> { };
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int tipoContacto = 0)
         {
             CargarTipoContactosAsync();
 
@@ -62,6 +62,7 @@ namespace PegasusWeb.Pages
             else
             {
                 Contacto = new Contactos { Id = 0 };
+                TipoContactoSeleccionadoId = tipoContacto;
             }
             return Page();
         }
@@ -93,82 +94,90 @@ namespace PegasusWeb.Pages
             return getcontacto;
         }
 
-        public async Task<IActionResult> OnPostAsync(string telefono, string nombre, string apellido, string mail, int id)
+        public async Task<IActionResult> OnPostAsync(string telefono, string nombre, string apellido, string mail, int id, bool atras)
         {
-            int idTipoContactoSeleccionado = TipoContactoSeleccionadoId;
-
-            // Validaciones
-            if (idTipoContactoSeleccionado < 1)
+            if (atras)
             {
-                this.ModelState.AddModelError("tipoContacto", "El campo Tipo de Contacto es requerido");
-            }
-            if (string.IsNullOrEmpty(nombre))
-            {
-                this.ModelState.AddModelError("nombre", "El campo Nombre es requerido");
-            }
-            if (string.IsNullOrEmpty(apellido) && idTipoContactoSeleccionado == 2)
-            {
-                this.ModelState.AddModelError("apellido", "El campo Apellido es requerido");
-            }
-            if (string.IsNullOrEmpty(mail))
-            {
-                this.ModelState.AddModelError("mail", "El campo Mail es requerido");
-            }
-            if (string.IsNullOrEmpty(telefono))
-            {
-                this.ModelState.AddModelError("telefono", "El campo Telefono es requerido");
-            }
-
-            this.ModelState.Remove("apellido");
-
-            // Retornar si el modelo no es válido
-            if (!ModelState.IsValid)
-            {
-                await OnGetAsync();
-                return Page();
-            }
-
-            dynamic contactoData = new ExpandoObject();
-            contactoData.Nombre = nombre + ' ' + apellido;
-            contactoData.Mail = mail;
-            contactoData.telefono = telefono;
-            contactoData.Tipo_Contacto = idTipoContactoSeleccionado;
-
-            if (id > 0)
-            {
-                contactoData.Id = id;
-            }
-
-            // Convertir el objeto dinámico a JSON
-            var jsonContent = JsonConvert.SerializeObject(contactoData);
-            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            // Hacer la llamada HTTP (PUT si actualiza, POST si crea)
-            HttpResponseMessage response;
-            if (id > 0)
-            {
-                response = await client.PutAsync("http://localhost:7130/Contactos/UpdateContacto", content);
+                TipoContacto = TipoContactoSeleccionadoId;
+                return RedirectToPage("Contacto");
             }
             else
             {
-                response = await client.PostAsync("http://localhost:7130/Contactos/CreateContacto", content);
+                int idTipoContactoSeleccionado = TipoContactoSeleccionadoId;
+
+                // Validaciones
+                if (idTipoContactoSeleccionado < 1)
+                {
+                    this.ModelState.AddModelError("tipoContacto", "El campo Tipo de Contacto es requerido");
+                }
+                if (string.IsNullOrEmpty(nombre))
+                {
+                    this.ModelState.AddModelError("nombre", "El campo Nombre es requerido");
+                }
+                if (string.IsNullOrEmpty(apellido) && idTipoContactoSeleccionado == 2)
+                {
+                    this.ModelState.AddModelError("apellido", "El campo Apellido es requerido");
+                }
+                if (string.IsNullOrEmpty(mail))
+                {
+                    this.ModelState.AddModelError("mail", "El campo Mail es requerido");
+                }
+                if (string.IsNullOrEmpty(telefono))
+                {
+                    this.ModelState.AddModelError("telefono", "El campo Telefono es requerido");
+                }
+
+                this.ModelState.Remove("apellido");
+
+                // Retornar si el modelo no es válido
+                if (!ModelState.IsValid)
+                {
+                    await OnGetAsync();
+                    return Page();
+                }
+
+                dynamic contactoData = new ExpandoObject();
+                contactoData.Nombre = nombre + ' ' + apellido;
+                contactoData.Mail = mail;
+                contactoData.telefono = telefono;
+                contactoData.Tipo_Contacto = idTipoContactoSeleccionado;
+
+                if (id > 0)
+                {
+                    contactoData.Id = id;
+                }
+
+                // Convertir el objeto dinámico a JSON
+                var jsonContent = JsonConvert.SerializeObject(contactoData);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // Hacer la llamada HTTP (PUT si actualiza, POST si crea)
+                HttpResponseMessage response;
+                if (id > 0)
+                {
+                    response = await client.PutAsync("http://localhost:7130/Contactos/UpdateContacto", content);
+                }
+                else
+                {
+                    response = await client.PostAsync("http://localhost:7130/Contactos/CreateContacto", content);
+                }
+
+                // Manejar errores de la respuesta HTTP
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    ModelState.AddModelError("contacto", id > 0
+                        ? "Hubo un error inesperado al actualizar el Contacto: " + errorResponse
+                        : "Hubo un error inesperado al crear el Contacto: " + errorResponse);
+
+                    await OnGetAsync();
+                    return Page();
+                }
+
+                TipoContacto = TipoContactoSeleccionadoId;
+                TempData["SuccessMessage"] = "El contacto se guardó correctamente.";
+                return RedirectToPage("Contacto");
             }
-
-            // Manejar errores de la respuesta HTTP
-            if (!response.IsSuccessStatusCode)
-            {
-                var errorResponse = await response.Content.ReadAsStringAsync();
-                ModelState.AddModelError("contacto", id > 0
-                    ? "Hubo un error inesperado al actualizar el Contacto: " + errorResponse
-                    : "Hubo un error inesperado al crear el Contacto: " + errorResponse);
-
-                await OnGetAsync();
-                return Page();
-            }
-
-            TipoContacto = TipoContactoSeleccionadoId;
-            TempData["SuccessMessage"] = "El contacto se guardó correctamente.";
-            return RedirectToPage("Contacto");
         }
     }
 }

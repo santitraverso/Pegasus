@@ -20,6 +20,7 @@
     <div class="form-container">
         <form method="post" onsubmit="handleSubmit(event)" id="form">
             <input type="hidden" name="id" asp-for="Contacto.Id" />
+            <input type="hidden" id="booleano" name="atras" value="false">
             <table>
                 <tr>
                     <td>Nombre</td>
@@ -51,6 +52,7 @@
             </table>
             <br />
             <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
+            <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -101,6 +103,11 @@
             if (validateForm()) {
                 document.getElementById('form').submit(); 
             }
+        }
+
+        function atrasBoton() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('form').submit();
         }
 
         function checkTipoContacto() {

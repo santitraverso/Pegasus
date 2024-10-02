@@ -19,6 +19,8 @@ namespace PegasusWeb.Pages
         public int IdIntegrante { get; set; }
         [TempData]
         public bool Nuevo { get; set; }
+        [TempData]
+        public int IdCurso { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -31,6 +33,12 @@ namespace PegasusWeb.Pages
             Materia = materia;
             Nuevo = nuevo;
             return RedirectToPage("CreateCalificacion");
+        }
+
+        public IActionResult OnPostAtras(int curso)
+        {
+            IdCurso = curso;
+            return RedirectToPage("Materia/ListaMaterias");
         }
 
         static async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasAsync(int materia)
