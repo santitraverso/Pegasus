@@ -45,7 +45,9 @@
     <br />
     <form method="post" asp-page-handler="AgregarContenido">
         <input type="hidden" name="materia" value="@Model.IdMateria" />
-        <button type="submit" class="btn btn-primary btn-custom"> Crear Contenido</button>
+        <input type="hidden" id="booleano" name="atras" value="false">
+        <button type="submit" class="btn btn-primary btn-custom" id="contenido"> Crear Contenido</button>
+        <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
     </form>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -97,6 +99,11 @@
 
         function submitForm(id) {
             document.getElementById('submit-' + id).click();
+        }
+
+        function atrasBoton() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('contenido').click();
         }
 
         function confirmDelete(id) {

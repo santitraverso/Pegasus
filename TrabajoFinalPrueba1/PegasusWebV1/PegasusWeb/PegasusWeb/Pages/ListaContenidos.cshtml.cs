@@ -57,10 +57,19 @@ namespace PegasusWeb.Pages
             
         }
 
-        public IActionResult OnPostAgregarContenido(int materia)
+        public IActionResult OnPostAgregarContenido(int materia, bool atras)
         {
             IdMateria = materia;
-            return RedirectToPage("CreateContenidoMaterias");
+
+            if (atras)
+            {
+                return RedirectToPage("Materia/CreateMateria");
+            }
+            else
+            {
+                return RedirectToPage("CreateContenidoMaterias");
+            }
+            
         }
 
         public async Task EliminarContenidoMateriasAsync(int contenido)

@@ -27,10 +27,12 @@
         </button>
         <input type="text" class="search__input" id="busqueda" placeholder="Buscar usuarios..." onkeyup="buscarUsuarios()">
     </div>
+    <br />
 
     <form method="post" id="form">
         <div class="container">
             <input type="hidden" name="curso" asp-for="IdCurso" />
+            <input type="hidden" id="booleano" name="atras" value="false">
             <table id="tablaUsuarios" class="table">
                 <thead>
                     <tr>
@@ -57,6 +59,7 @@
                 </tbody>
             </table>
             <button type="button" onclick="confirmSave()" class="btn btn-primary btn-custom">Guardar</button>
+            <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
         </div>
     </form>
 </body>
@@ -92,6 +95,11 @@
 
         function confirmSave() {
                 document.getElementById('form').submit();
+        }
+
+        function atrasBoton() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('form').submit();
         }
         
     </script>

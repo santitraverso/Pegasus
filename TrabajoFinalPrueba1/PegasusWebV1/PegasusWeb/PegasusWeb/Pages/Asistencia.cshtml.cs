@@ -22,6 +22,9 @@ namespace PegasusWeb.Pages
 
         public async Task OnGetAsync()
         {
+            if (Fecha != DateTime.MinValue)
+                FechaAsistencia = Fecha;
+
             // Verificar si hay asistencia para el día actual
             if (!await ExisteAsistenciaParaFecha(1, FechaAsistencia))
             {
@@ -56,7 +59,7 @@ namespace PegasusWeb.Pages
         public async Task<bool> ExisteAsistenciaParaFecha(int materia, DateTime fecha)
         {
             // Cargar asistencia para la fecha seleccionada
-            Alumnos = await GetAsistenciaAsync(1, fecha);
+            Alumnos = await GetAsistenciaAsync(materia, fecha);
 
             return Alumnos.Count() > 0;
         }

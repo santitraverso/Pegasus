@@ -86,21 +86,29 @@ namespace PegasusWeb.Pages
             return getalumnos;
         }
 
-        public async Task<IActionResult?> OnPost(int curso)
+        public async Task<IActionResult?> OnPost(int curso, bool atras)
         {
-            IntegrantesCurso = await GetIntegrantesCursosAsync(curso);
-            //Borro los integrantes actuales del curso ya que voy a volver a generarlos con los enviados
-            bool correct = await BorrarIntegrantesAsync();
-            if (correct)
+            if(atras)
             {
-                foreach (var alumno in SelectedAlumnosIds)
-                {
-                    await GuardarIntegrantesAsync(curso, alumno);
-                }
+                IdCurso = curso;
+                return RedirectToPage("CreateCurso");
             }
+            else
+            {
+                IntegrantesCurso = await GetIntegrantesCursosAsync(curso);
+                //Borro los integrantes actuales del curso ya que voy a volver a generarlos con los enviados
+                bool correct = await BorrarIntegrantesAsync();
+                if (correct)
+                {
+                    foreach (var alumno in SelectedAlumnosIds)
+                    {
+                        await GuardarIntegrantesAsync(curso, alumno);
+                    }
+                }
 
-            TempData["SuccessMessage"] = "Los integrantes se guardaron correctamente.";
-            return RedirectToPage("Curso");
+                TempData["SuccessMessage"] = "Los integrantes se guardaron correctamente.";
+                return RedirectToPage("Curso");
+            }
         }
 
         public async Task<bool> BorrarIntegrantesAsync()

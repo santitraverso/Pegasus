@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Net.Http;
 using System.Dynamic;
+using System;
 
 namespace PegasusWeb.Pages
 {
@@ -66,90 +67,76 @@ namespace PegasusWeb.Pages
         }
 
 
-        public async Task<IActionResult> OnPostAsync(int materia, string titulo, string descripcion, int id)
+        public async Task<IActionResult> OnPostAsync(bool atras, int materia, string titulo, string descripcion, int id)
         {
-            if (materia < 1)
+            if (atras)
             {
-                this.ModelState.AddModelError("materia", "El campo Materia es requerido");
-            }
-            if (string.IsNullOrEmpty(titulo))
-            {
-                this.ModelState.AddModelError("titulo", "El campo Titulo es requerido");
-            }
-            if (string.IsNullOrEmpty(descripcion))
-            {
-                this.ModelState.AddModelError("descripcion", "El campo Descripcion es requerido");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                await GetContenidoMateriasAsync(id);
-                return Page();
-            }
-
-
-            dynamic contenidoData = new ExpandoObject();
-            contenidoData.Id_Materia = materia;
-            contenidoData.Titulo = titulo;
-            contenidoData.Descripcion = descripcion;
-
-            if (id > 0)
-            {
-                contenidoData.Id = id;
-            }
-
-            // Convertir el objeto dinámico a JSON
-            var jsonContent = JsonConvert.SerializeObject(contenidoData);
-            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            // Hacer la llamada HTTP (PUT si actualiza, POST si crea)
-            HttpResponseMessage response;
-            if (id > 0)
-            {
-                response = await client.PutAsync("http://localhost:7130/ContenidoMaterias/UpdateContenidoMaterias", content);
+                IdMateria = materia;
+                return RedirectToPage("ListaContenidos");
             }
             else
             {
-                response = await client.PostAsync("http://localhost:7130/ContenidoMaterias/CreateContenidoMaterias", content);
+                if (materia < 1)
+                {
+                    this.ModelState.AddModelError("materia", "El campo Materia es requerido");
+                }
+                if (string.IsNullOrEmpty(titulo))
+                {
+                    this.ModelState.AddModelError("titulo", "El campo Titulo es requerido");
+                }
+                if (string.IsNullOrEmpty(descripcion))
+                {
+                    this.ModelState.AddModelError("descripcion", "El campo Descripcion es requerido");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    await GetContenidoMateriasAsync(id);
+                    return Page();
+                }
+
+
+                dynamic contenidoData = new ExpandoObject();
+                contenidoData.Id_Materia = materia;
+                contenidoData.Titulo = titulo;
+                contenidoData.Descripcion = descripcion;
+
+                if (id > 0)
+                {
+                    contenidoData.Id = id;
+                }
+
+                // Convertir el objeto dinámico a JSON
+                var jsonContent = JsonConvert.SerializeObject(contenidoData);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // Hacer la llamada HTTP (PUT si actualiza, POST si crea)
+                HttpResponseMessage response;
+                if (id > 0)
+                {
+                    response = await client.PutAsync("http://localhost:7130/ContenidoMaterias/UpdateContenidoMaterias", content);
+                }
+                else
+                {
+                    response = await client.PostAsync("http://localhost:7130/ContenidoMaterias/CreateContenidoMaterias", content);
+                }
+
+                // Manejar errores de la respuesta HTTP
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    ModelState.AddModelError("contenido", id > 0
+                        ? "Hubo un error inesperado al actualizar el Contenido: " + errorResponse
+                        : "Hubo un error inesperado al crear el Contenido: " + errorResponse);
+
+                    await GetContenidoMateriasAsync(id);
+                    return Page();
+                }
+
+                IdMateria = materia;
+                TempData["SuccessMessage"] = "El Contenido se guardó correctamente.";
+                return RedirectToPage("ListaContenidos");
             }
-
-            // Manejar errores de la respuesta HTTP
-            if (!response.IsSuccessStatusCode)
-            {
-                var errorResponse = await response.Content.ReadAsStringAsync();
-                ModelState.AddModelError("contenido", id > 0
-                    ? "Hubo un error inesperado al actualizar el Contenido: " + errorResponse
-                    : "Hubo un error inesperado al crear el Contenido: " + errorResponse);
-
-                await GetContenidoMateriasAsync(id);
-                return Page();
-            }
-
-            //if (id > 0)
-            //{
-            //    var content = new StringContent($"{{\"Id_Materia\":\"{materia}\", \"Titulo\":\"{titulo}\", \"Descripcion\":\"{descripcion}\", \"Id\":\"{id}\"}}", Encoding.UTF8, "application/json");
-            //    HttpResponseMessage response = await client.PutAsync("http://localhost:7130/ContenidoMaterias/UpdateContenidoMaterias", content);
-            //    if (!response.IsSuccessStatusCode)
-            //    {
-            //        this.ModelState.AddModelError("contenido", "Hubo un error inesperado al actualizar el Contenido");
-            //        return null;
-            //    }               
-                
-            //}
-            //else
-            //{
-            //    var content = new StringContent($"{{\"Id_Materia\":\"{materia}\", \"Titulo\":\"{titulo}\", \"Descripcion\":\"{descripcion}\"}}", Encoding.UTF8, "application/json");
-            //    HttpResponseMessage response = await client.PostAsync("http://localhost:7130/ContenidoMaterias/CreateContenidoMaterias", content);
-            //    if (!response.IsSuccessStatusCode)
-            //    {
-            //        this.ModelState.AddModelError("contenido", "Hubo un error inesperado al crear el Contenido");
-            //        return null;
-            //    }
-            //}
-
-            IdMateria = materia;
-            TempData["SuccessMessage"] = "El Contenido se guardó correctamente.";
-            return RedirectToPage("ListaContenidos");
         }
     }
 }

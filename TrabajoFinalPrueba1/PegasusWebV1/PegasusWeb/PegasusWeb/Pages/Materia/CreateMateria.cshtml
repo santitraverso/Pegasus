@@ -23,6 +23,7 @@
     <hr />
     <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Materia.Id" />
+        <input type="hidden" id="booleano" name="atras" value="false">
         <table>
             <tr>
                 <td>Nombre de la materia</td>
@@ -38,7 +39,10 @@
             </tr>
             <span class="text-danger" asp-validation-for="CursoSeleccionadoId"></span>
         </table>
+        <br />
         <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
+        <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
+
     </form>
     <br />
     <br />
@@ -118,6 +122,12 @@
                     document.getElementById('form').submit();
             }
         }
+
+        function atrasBoton() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('form').submit();
+        }
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }

@@ -51,6 +51,13 @@ namespace PegasusWeb.Pages
 
             return getalumnos.Where(a => a.Fecha?.ToShortDateString() == fecha.ToShortDateString()).ToList();
         }
+
+        public IActionResult OnPostAtras(int materia, DateTime fecha)
+        {
+            IdMateria = materia;
+            Fecha = fecha;
+            return RedirectToPage("Asistencia");
+        }
     }
 
 }
