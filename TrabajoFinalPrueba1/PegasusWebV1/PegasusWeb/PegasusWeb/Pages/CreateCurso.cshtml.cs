@@ -15,18 +15,6 @@ namespace PegasusWeb.Pages
     {
         static HttpClient client = new HttpClient();
 
-        [DisplayName("Nombre"), Required(ErrorMessage = "El campo Nombre es requerido")]
-        public string nombre { get; set; }
-
-        [DisplayName("Grado"), Required(ErrorMessage = "El campo Grado es requerido")]
-        public string grado { get; set; }
-
-        [DisplayName("Division"), Required(ErrorMessage = "El campo Division es requerido")]
-        public string division { get; set; }
-
-        [DisplayName("Turno"), Required(ErrorMessage = "El campo Turno es requerido")]
-        public string turno { get; set; }
-
         [BindProperty]
         public Curso Curso { get; set; }
 
@@ -100,7 +88,7 @@ namespace PegasusWeb.Pages
                 ModelState.AddModelError("grado", "El campo Grado es requerido");
 
             if (string.IsNullOrEmpty(nombre))
-                ModelState.AddModelError("nombre", "El campo Curso es requerido");
+                ModelState.AddModelError("nombre", "El campo Nombre es requerido");
 
             if (division == '\0')
                 ModelState.AddModelError("division", "El campo Division es requerido");

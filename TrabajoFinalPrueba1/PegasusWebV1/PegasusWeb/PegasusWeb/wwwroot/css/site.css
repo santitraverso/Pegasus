@@ -102,6 +102,32 @@ body {
     color: inherit;
 }
 
+.card2-custom {
+    border-radius: 50px; /* Redondear los bordes de la tarjeta */
+    margin-top: 30px;
+    padding: 30px;
+    text-align: center;
+    object-fit: cover;
+    align-content: center;
+    width: 350px; /* Ancho fijo */
+    height: 350px; /* Alto fijo */
+    color: inherit;
+    text-decoration: none;
+    transition: box-shadow 0.3s, background-color 0.3s; /* Transición suave */
+}
+
+.card2-custom:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 255, 0.5); /* Sombra al pasar el mouse */
+    background-color: #cce5ff; /* Cambiar el color de fondo al pasar el mouse */
+}
+
+.card2-title-centar {
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+    color: inherit;
+}
+
 
 .icon {
     width: 25px;
