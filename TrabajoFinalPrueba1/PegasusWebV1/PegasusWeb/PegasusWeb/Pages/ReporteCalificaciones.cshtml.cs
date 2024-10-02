@@ -2,58 +2,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using PegasusWeb.Entities;
-using System.Reflection;
+using System.Dynamic;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace PegasusWeb.Pages
 {
-    public class CalificacionModel : PageModel
+    public class ReporteCalificacionesModel : PageModel
     {
         static HttpClient client = new HttpClient();
-
         public List<IntegrantesMaterias> Alumnos { get; set; }
-
 
         [TempData]
         public int Materia { get; set; }
-        [TempData]
-        public int IdIntegrante { get; set; }
-        [TempData]
-        public bool Nuevo { get; set; }
-        [TempData]
-        public int IdCurso { get; set; }
 
-        [TempData]
-        public string Modulo { get; set; }
+        [BindProperty]
+        public string Nombre { get; set; }
 
         public async Task OnGetAsync()
         {
             Alumnos = await GetIntegrantesMateriasAsync(Materia);
+            var materia = await GetNombreMateriaAsync(Materia);
+            Nombre = materia.Nombre;
         }
 
-        public IActionResult OnPost(int usuario, int materia, bool nuevo, int curso, string modulo)
-        {
-            IdIntegrante = usuario;
-            Materia = materia;
-            Nuevo = nuevo;
-            IdCurso = curso;
-            Modulo = modulo;
-            return RedirectToPage("CreateCalificacion");
-        }
 
-        public IActionResult OnPostAtras(int curso, string modulo)
-        {
-            IdCurso = curso;
-            Modulo = modulo;
-            return RedirectToPage("Materia/ListaMaterias");
-        }
-
-        public IActionResult OnPostReporte(int materia, int curso, string modulo)
+        public IActionResult OnPostAtras(int materia)
         {
             Materia = materia;
-            IdCurso = curso;
-            Modulo = modulo;
-            return RedirectToPage("ReporteCalificaciones");
+            return RedirectToPage("Calificacion");
         }
 
         static async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasAsync(int materia)
@@ -75,5 +52,24 @@ namespace PegasusWeb.Pages
 
             return getalumnos;
         }
+
+        static async Task<Entities.Materia> GetNombreMateriaAsync(int materia)
+        {
+            Entities.Materia getMateria = new Entities.Materia();
+
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Materia/GetById?id={materia}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string materiaJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(materiaJson))
+                {
+                    getMateria = JsonConvert.DeserializeObject<Entities.Materia>(materiaJson);
+                }
+            }
+
+            return getMateria;
+        }
     }
+
 }

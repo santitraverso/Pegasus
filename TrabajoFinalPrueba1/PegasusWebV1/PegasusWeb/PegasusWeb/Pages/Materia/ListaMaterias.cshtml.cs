@@ -13,17 +13,24 @@ namespace PegasusWeb.Pages.Materia
 
         [TempData]
         public int Materia { get; set; }
+
+        [TempData]
+        public int IdCurso { get; set; }
+
+        [TempData]
+        public string Modulo { get; set; }
+
         public async Task OnGetAsync()
         {
-            Materias = await GetMateriasAsync();
+            Materias = await GetMateriasAsync(IdCurso);
         }
 
-        static async Task<List<Entities.Materia>> GetMateriasAsync()
+        static async Task<List<Entities.Materia>> GetMateriasAsync(int curso)
         {
             List<Entities.Materia> getmaterias = new List<Entities.Materia>();
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Materia/GetMateriasForCombo");
+            string queryParam = Uri.EscapeDataString($"x=>x.id_curso == {curso}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Materia/GetMateriasForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -37,10 +44,21 @@ namespace PegasusWeb.Pages.Materia
             return getmaterias;
         }
 
-        public async Task<IActionResult> OnPostAsync(int materia)
+        public async Task<IActionResult> OnPostAsync(int materia, string modulo, int curso)
         {
             Materia = materia;
-            return RedirectToPage("../Calificacion");
+            Modulo = modulo;
+            IdCurso = curso;
+
+            switch (modulo)
+            {
+                case "Calificacion":
+                    return RedirectToPage("../Calificacion");
+                case "Asistencia":
+                    return RedirectToPage("../Asistencia");
+                default: 
+                    return RedirectToPage("../Index");
+            }
         }
     }
 }

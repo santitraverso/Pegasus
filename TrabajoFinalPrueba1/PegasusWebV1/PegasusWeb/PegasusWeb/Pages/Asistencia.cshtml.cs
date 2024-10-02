@@ -15,10 +15,16 @@ namespace PegasusWeb.Pages
         public DateTime FechaAsistencia { get; set; } = DateTime.Now; // Fecha predeterminada, hoy
 
         [TempData]
-        public int IdMateria { get; set; }
+        public int Materia { get; set; }
 
         [TempData]
         public DateTime Fecha { get; set; }
+
+        [TempData]
+        public int IdCurso { get; set; }
+
+        [TempData]
+        public string Modulo { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -26,34 +32,43 @@ namespace PegasusWeb.Pages
                 FechaAsistencia = Fecha;
 
             // Verificar si hay asistencia para el día actual
-            if (!await ExisteAsistenciaParaFecha(1, FechaAsistencia))
+            if (!await ExisteAsistenciaParaFecha(Materia, FechaAsistencia))
             {
                 // Si no hay asistencia, obtener todos los alumnos
-                await GetAlumnosAsync(1);
+                await GetAlumnosAsync(Materia);
             }
             else
             {
                 // Si ya hay asistencia, cargar los alumnos con su asistencia
-                Alumnos = await GetAsistenciaAsync(1, FechaAsistencia);
+                Alumnos = await GetAsistenciaAsync(Materia, FechaAsistencia);
             }
         }
 
-        public async Task<IActionResult> OnPost(DateTime fecha, int materia)
+        public async Task<IActionResult> OnPost(DateTime fecha, int materia, int curso, string modulo)
         {
             FechaAsistencia = fecha;
-            IdMateria = materia;
+            Materia = materia;
+            IdCurso = curso;
+            Modulo = modulo;
 
-            if (!await ExisteAsistenciaParaFecha(1, FechaAsistencia))
+            if (!await ExisteAsistenciaParaFecha(materia, FechaAsistencia))
             {
-                await GetAlumnosAsync(1);
+                await GetAlumnosAsync(materia);
             }
             else
             {
                 // Cargar asistencia para la fecha seleccionada
-                Alumnos = await GetAsistenciaAsync(1, fecha);
+                Alumnos = await GetAsistenciaAsync(materia, fecha);
             }
             
             return Page();
+        }
+
+        public IActionResult OnPostAtras(int curso, string modulo)
+        {
+            IdCurso = curso;
+            Modulo = modulo;
+            return RedirectToPage("Materia/ListaMaterias");
         }
 
         public async Task<bool> ExisteAsistenciaParaFecha(int materia, DateTime fecha)
@@ -162,11 +177,14 @@ namespace PegasusWeb.Pages
             return getalumnos.Where(a => a.Fecha?.ToShortDateString() == fecha.ToShortDateString()).ToList();
         }
 
-        public async Task<IActionResult> OnPostGuardarAsistencia(List<Asistencia> Alumnos, bool reporte, int materia, DateTime fecha)
+        public async Task<IActionResult> OnPostGuardarAsistencia(List<Asistencia> Alumnos, bool reporte, int materia, DateTime fecha, int curso, string modulo)
         {
+            Materia = materia;
+            IdCurso = curso;
+            Modulo = modulo;
+
             if (reporte)
             {
-                IdMateria = materia;
                 Fecha = fecha;
                 return RedirectToPage("ReporteAsistencia");
             }

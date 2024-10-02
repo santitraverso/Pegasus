@@ -16,7 +16,19 @@ namespace PegasusWeb.Pages
 
         public async Task OnGetAsync()
         {
-            Materias = await GetMateriasAsync();
+            var materias = await GetMateriasAsync();
+
+            await AsignarCursosAsync(materias);
+
+            Materias = materias;
+        }
+
+        private async Task AsignarCursosAsync(List<Entities.Materia> materias)
+        {
+            foreach (var materia in materias)
+            {
+                materia.Curso = await GetCursoAsync((int)materia.Id_Curso);
+            }
         }
 
         public async Task<IActionResult> OnPostAsync(int materia, bool editar)
@@ -29,10 +41,37 @@ namespace PegasusWeb.Pages
             }
             else
             {
+                var tieneAsistencias = await TieneAsistenciasMateria(materia);
+
+                if (tieneAsistencias)
+                {
+                    ModelState.AddModelError("materia", "No se puede eliminar la materia. Primero elimine las asistencias asociadas.");
+                    await OnGetAsync();
+                    return Page();
+                }
+
                 await EliminarMateriaAsync(materia);
                 Materias = await GetMateriasAsync();
                 return RedirectToPage("Materia");
             }
+        }
+
+        private async Task<bool> TieneAsistenciasMateria(int materia)
+        {
+            List<Asistencia> getasistencias = new List<Asistencia>();
+
+            string queryParam = Uri.EscapeDataString($"x=>x.id_materia == {materia}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Asistencia/GetAsistenciasForCombo?query={queryParam}");
+            if (response.IsSuccessStatusCode)
+            {
+                string asistenciasJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(asistenciasJson))
+                {
+                    getasistencias = JsonConvert.DeserializeObject<List<Asistencia>>(asistenciasJson);
+                }
+            }
+
+            return getasistencias.Count > 0;
         }
 
         static async Task<List<Entities.Materia>> GetMateriasAsync()
@@ -51,6 +90,23 @@ namespace PegasusWeb.Pages
             }
 
             return getMaterias;
+        }
+
+        static async Task<Curso> GetCursoAsync(int curso)
+        {
+            Curso getCurso = new Curso();
+
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Curso/GetById?id={curso}");
+            if (response.IsSuccessStatusCode)
+            {
+                string cursoJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(cursoJson))
+                {
+                    getCurso = JsonConvert.DeserializeObject<Curso>(cursoJson);
+                }
+            }
+
+            return getCurso;
         }
 
         public async Task EliminarMateriaAsync(int materia)

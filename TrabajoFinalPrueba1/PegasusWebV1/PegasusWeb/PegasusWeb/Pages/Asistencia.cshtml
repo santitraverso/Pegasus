@@ -16,13 +16,20 @@
     <h4>Asistencia</h4>
     <hr />
 
-    <form method="post">
+    <form method="post" style="display: inline;">
         <div class="form-group date-input-container" style="width:25%;">
             <label for="fechaAsistencia">Seleccionar fecha</label>
             <input type="date" class="form-control modern-date-input" asp-for="FechaAsistencia" name="fecha" id="fechaAsistencia" required />
-            <input type="hidden" name="materia" value="@Model.IdMateria" />
+            <input type="hidden" name="materia" value="@Model.Materia" />
+            <input type="hidden" name="modulo" value="@Model.Modulo" />
+            <input type="hidden" name="curso" value="@Model.IdCurso" />
         </div>
         <button type="submit" class="btn btn-primary btn-custom">Cargar Asistencia</button>
+    </form>
+    <form method="post" asp-page-handler="Atras" style="display: inline;" id="form2">
+        <input type="hidden" name="curso" value="@Model.IdCurso" />
+        <input type="hidden" name="modulo" value="@Model.Modulo" />
+        <button type="button" class="btn btn-primary btn-custom" asp-area="" style="margin:10px;" onclick="atras()">Atras</button>
     </form>
     <br />
     <br />
@@ -59,6 +66,8 @@
                             <input type="hidden" name="fecha" value="@Model.FechaAsistencia" />
                             <input type="hidden" name="materia" value="@Model.Alumnos[i].Id_Materia" />
                             <input type="hidden" id="booleano" name="reporte" value="false">
+                            <input type="hidden" name="modulo" value="@Model.Modulo" />
+                            <input type="hidden" name="curso" value="@Model.IdCurso" />
                             <td>@Model.Alumnos[i].Alumno.Apellido</td>
                             <td>@Model.Alumnos[i].Alumno.Nombre</td>
                             <td>
@@ -141,6 +150,10 @@
         function reportAsis() {
             document.getElementById('booleano').value = true;
             document.getElementById('formAsistencia').submit();
+        }
+
+        function atras() {
+            document.getElementById('form2').submit();
         }
     </script>
 }

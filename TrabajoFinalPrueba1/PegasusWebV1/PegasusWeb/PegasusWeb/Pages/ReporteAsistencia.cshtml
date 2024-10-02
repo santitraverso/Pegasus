@@ -42,7 +42,7 @@
         <button type="button" class="btn btn-primary btn-custom" onclick="generatePDF()">Imprimir PDF</button>
     }
     <form method="post" asp-page-handler="Atras" style="display: inline;" id="form2">
-        <input type="hidden" name="materia" value="@Model.IdMateria" />
+        <input type="hidden" name="materia" value="@Model.Materia" />
         <input type="hidden" name="fecha" value="@Model.Fecha" />
         <button type="button" class="btn btn-primary btn-custom" asp-area="" style="margin:10px;" onclick="atras()">Atras</button>
     </form>

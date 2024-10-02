@@ -15,12 +15,22 @@
     <h4>Materias</h4>
     <hr />
     <a class="btn btn-primary btn-custom" asp-page="/Materia/CreateMateria" style="margin:10px;">Crear Materia</a>
+    @if (ModelState.ContainsKey("materia"))
+    {
+    <div class="alert alert-danger">
+        @foreach (var error in ModelState["materia"].Errors)
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+    }
     <div class="row">
         @foreach (Entities.Materia materia in Model.Materias)
         {
             <div class="col-md-3 justify-content-center">
                 <div class="card card-custom card-title-center justify-content-center">
                     <h5 class="card-title card-title-center">@materia.Nombre</h5>
+                    <p class="card-title card-title-center" style="margin-bottom:0px;">@materia.Curso.Nombre_Curso</p>
                     <form method="post">
                         <input type="hidden" name="materia" value="@materia.Id" />
                         <img src="~/img/libros.png" class="card-img-top2" alt="">

@@ -30,10 +30,17 @@ namespace PegasusWeb.Pages
             else
             {
                 var tieneIntegrantes = await TieneIntegrantesCurso(curso);
+                var tieneMaterias = await TieneMateriasCurso(curso);
 
                 if (tieneIntegrantes)
                 {
                     ModelState.AddModelError("curso", "No se puede eliminar el curso. Primero elimine los integrantes asociados.");
+                    Cursos = await GetCursosAsync();
+                    return Page();
+                }
+                else if (tieneMaterias)
+                {
+                    ModelState.AddModelError("curso", "No se puede eliminar el curso. Primero elimine las materias asociadas.");
                     Cursos = await GetCursosAsync();
                     return Page();
                 }
@@ -63,6 +70,24 @@ namespace PegasusWeb.Pages
             }
 
             return getintegrantes.Count > 0;
+        }
+
+        private async Task<bool> TieneMateriasCurso(int curso)
+        {
+            List<Entities.Materia> getmaterias = new List<Entities.Materia>();
+
+            string queryParam = Uri.EscapeDataString($"x=>x.id_curso == {curso}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Materia/GetMateriasForCombo?query={queryParam}");
+            if (response.IsSuccessStatusCode)
+            {
+                string materiasJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(materiasJson))
+                {
+                    getmaterias = JsonConvert.DeserializeObject<List<Entities.Materia>>(materiasJson);
+                }
+            }
+
+            return getmaterias.Count > 0;
         }
 
 

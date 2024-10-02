@@ -14,14 +14,14 @@ namespace PegasusWeb.Pages
         public List<Asistencia> Alumnos { get; set; } = new List<Asistencia>();
 
         [TempData]
-        public int IdMateria { get; set; }
+        public int Materia { get; set; }
 
         [TempData]
         public DateTime Fecha { get; set; }
 
         public async Task OnGetAsync()
         {
-             Alumnos = await GetAsistenciaAsync(IdMateria, Fecha);
+             Alumnos = await GetAsistenciaAsync(Materia, Fecha);
         }
 
         static async Task<List<Asistencia>> GetAsistenciaAsync(int materia, DateTime fecha)
@@ -54,7 +54,7 @@ namespace PegasusWeb.Pages
 
         public IActionResult OnPostAtras(int materia, DateTime fecha)
         {
-            IdMateria = materia;
+            Materia = materia;
             Fecha = fecha;
             return RedirectToPage("Asistencia");
         }
