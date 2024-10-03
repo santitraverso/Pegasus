@@ -15,9 +15,12 @@ namespace PegasusWeb.Pages
 
         [TempData]
         public int Materia { get; set; }
-
         [TempData]
         public DateTime Fecha { get; set; }
+        [TempData]
+        public int IdCurso { get; set; }
+        [TempData]
+        public string Modulo { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -52,10 +55,12 @@ namespace PegasusWeb.Pages
             return getalumnos.Where(a => a.Fecha?.ToShortDateString() == fecha.ToShortDateString()).ToList();
         }
 
-        public IActionResult OnPostAtras(int materia, DateTime fecha)
+        public IActionResult OnPostAtras(int materia, DateTime fecha, int curso, string modulo)
         {
             Materia = materia;
             Fecha = fecha;
+            Modulo = modulo;
+            IdCurso = curso;
             return RedirectToPage("Asistencia");
         }
     }
