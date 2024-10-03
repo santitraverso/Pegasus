@@ -19,7 +19,8 @@ namespace PegasusWeb.Pages
 
         public async Task OnGetAsync(string modulo)
         {
-            Modulo = modulo;
+            if(!string.IsNullOrEmpty(modulo))
+                Modulo = modulo;
             Cursos = await GetCursosAsync();
         }
 
@@ -45,7 +46,17 @@ namespace PegasusWeb.Pages
         {
             IdCurso = curso;
             Modulo = modulo;
-            return RedirectToPage("Materia/ListaMaterias");
+
+            switch (modulo)
+            {
+                case "Cuaderno":
+                    return RedirectToPage("Cuaderno");
+                case "Desempeno":
+                    return RedirectToPage("Desempeno");
+                default:
+                    return RedirectToPage("Materia/ListaMaterias");
+            }
+
         }
     }
 }
