@@ -11,8 +11,7 @@ namespace PegasusWeb.Pages
     {
         static HttpClient client = new HttpClient();
 
-        public List<IntegrantesMaterias> Alumnos { get; set; }
-
+        public List<IntegrantesMaterias> Alumnos { get; set; } = new List<IntegrantesMaterias>();
 
         [TempData]
         public int Materia { get; set; }
@@ -28,7 +27,44 @@ namespace PegasusWeb.Pages
 
         public async Task OnGetAsync()
         {
-            Alumnos = await GetIntegrantesMateriasAsync(Materia);
+            //Alumnos = await GetIntegrantesMateriasAsync(Materia);
+
+            var alumnos = await GetIntegrantesCursosAsync(IdCurso);
+
+            //alumnos.ForEach(async alumno =>
+            //{
+            //    IntegrantesMaterias inte =  new IntegrantesMaterias
+            //    {
+            //        Id_Materia = this.Materia,
+            //        Id_Usuario = alumno.Id_Usuario,
+            //        Usuario = alumno.Usuario
+            //    };
+
+            //    inte.Usuario.Calificaciones = await GetCalificacionesAsync(this.Materia, IdCurso, (int)inte.Id_Usuario);
+
+            //    Alumnos.Add(inte);
+            //});
+
+            // Crea una lista para almacenar las tareas
+            var tasks = alumnos.Select(async alumno =>
+            {
+                // Crea un nuevo objeto IntegrantesMaterias
+                IntegrantesMaterias inte = new IntegrantesMaterias
+                {
+                    Id_Materia = this.Materia,
+                    Id_Usuario = alumno.Id_Usuario,
+                    Usuario = alumno.Usuario
+                };
+
+                // Obtiene las calificaciones de manera asíncrona
+                inte.Usuario.Calificaciones = await GetCalificacionesAsync(this.Materia, IdCurso, (int)inte.Id_Usuario);
+
+                // Agrega el objeto a la lista
+                return inte; // Retorna el objeto para agregarlo a la lista
+            });
+
+            // Espera a que todas las tareas se completen y agrega los resultados a la lista
+            Alumnos.AddRange(await Task.WhenAll(tasks));
         }
 
         public IActionResult OnPost(int usuario, int materia, bool nuevo, int curso, string modulo)
@@ -56,24 +92,63 @@ namespace PegasusWeb.Pages
             return RedirectToPage("ReporteCalificaciones");
         }
 
-        static async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasAsync(int materia)
+        //public static async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasAsync(int materia)
+        //{
+        //    List<IntegrantesMaterias> getalumnos = new List<IntegrantesMaterias>();
+
+        //    //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
+        //    string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia}");
+        //    HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
+
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        string alumnosJson = await response.Content.ReadAsStringAsync();
+        //        if (!string.IsNullOrEmpty(alumnosJson))
+        //        {
+        //            getalumnos = JsonConvert.DeserializeObject<List<IntegrantesMaterias>>(alumnosJson);
+        //        }
+        //    }
+
+        //    return getalumnos;
+        //}
+
+        public static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso)
         {
-            List<IntegrantesMaterias> getalumnos = new List<IntegrantesMaterias>();
+            List<IntegrantesCursos> getalumnos = new List<IntegrantesCursos>();
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
-            string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
+            string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
                 string alumnosJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(alumnosJson))
                 {
-                    getalumnos = JsonConvert.DeserializeObject<List<IntegrantesMaterias>>(alumnosJson);
+                    getalumnos = JsonConvert.DeserializeObject<List<IntegrantesCursos>>(alumnosJson);
                 }
             }
 
             return getalumnos;
+        }
+
+        public static async Task<List<Calificaciones>> GetCalificacionesAsync(int materia, int curso, int usuario)
+        {
+            List<Calificaciones> getCalificaciones = new List<Calificaciones>();
+
+            string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia} && x.id_curso=={curso} && x.id_alumno=={usuario}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Calificaciones/GetCalificacionesForCombo?query={queryParam}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string alumnosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(alumnosJson))
+                {
+                    getCalificaciones = JsonConvert.DeserializeObject<List<Calificaciones>>(alumnosJson);
+                }
+            }
+
+            return getCalificaciones;
         }
     }
 }

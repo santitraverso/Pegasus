@@ -15,18 +15,18 @@
     <h4>Cursos</h4>
     <hr />
     <div class="row">
-        @foreach (Curso curso in Model.Cursos)
+        @foreach (IntegrantesCursos curso in Model.Cursos)
         {
             <div class="col-md-3 justify-content-center">
-                <form method="post" id="form-@curso.Id">
-                    <div class="card card-custom card-title-center justify-content-center" style="cursor: pointer;" onclick="submitForm(@curso.Id)">
-                        <input type="hidden" name="curso" value="@curso.Id" />
+                <form method="post" id="form-@curso.Curso.Id">
+                    <div class="card card-custom card-title-center justify-content-center" style="cursor: pointer;" onclick="submitForm(@curso.Curso.Id)">
+                        <input type="hidden" name="curso" value="@curso.Curso.Id" />
                         <input type="hidden" name="modulo" value="@Model.Modulo" />
-                        <h5 class="card-title card-title-center" style="margin-bottom:0px;">@curso.Nombre_Curso</h5>
-                        <p class="card-title card-title-center" style="margin-bottom:0px;">@curso.Grado @curso.Division @curso.Turno</p>
+                        <h5 class="card-title card-title-center" style="margin-bottom:0px;">@curso.Curso.Nombre_Curso</h5>
+                        <p class="card-title card-title-center" style="margin-bottom:0px;">@curso.Curso.Grado @curso.Curso.Division @curso.Curso.Turno</p>
                         <img src="~/img/curso.png" class="card-img-top2" alt="" style=" margin: 0 auto;">
                     </div>
-                    <input type="submit" id="submit-@curso.Id" name="submit" style="display:none" />
+                    <input type="submit" id="submit-@curso.Curso.Id" name="submit" style="display:none" />
                 </form>
             </div>
         }

@@ -9,7 +9,7 @@ namespace PegasusWeb.Pages
     public class ListaCursosModel : PageModel
     {
         static HttpClient client = new HttpClient();
-        public List<Curso> Cursos { get; set; }
+        public List<IntegrantesCursos> Cursos { get; set; }
 
         [TempData]
         public int IdCurso { get; set; }
@@ -21,21 +21,44 @@ namespace PegasusWeb.Pages
         {
             if(!string.IsNullOrEmpty(modulo))
                 Modulo = modulo;
-            Cursos = await GetCursosAsync();
+
+            bool conUsuario = false;
+            int idUsuario = 1;
+
+            if(conUsuario)
+            {
+                Cursos = await GetCursosAsync(idUsuario);
+            }
+            else
+            {
+                var cursos = await GetCursosAsync();
+
+                Cursos = cursos.GroupBy(ic => ic.Id_Curso).Select(g => g.First()).OrderBy(c => c.Id_Curso).ToList();
+            }
+            
         }
 
-        static async Task<List<Curso>> GetCursosAsync()
+        static async Task<List<IntegrantesCursos>> GetCursosAsync(int usuario = 0)
         {
-            List<Curso> getcursos = new List<Curso>();
+            List<IntegrantesCursos> getcursos = new List<IntegrantesCursos>();
+            HttpResponseMessage response;
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Curso/GetCursosForCombo");
+            if (usuario > 0)
+            {
+                string queryParam = Uri.EscapeDataString($"x=>x.id_usuario=={usuario}");
+                response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            }
+            else
+            {
+                response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo");
+            }
+           
             if (response.IsSuccessStatusCode)
             {
                 string cursosJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(cursosJson))
                 {
-                    getcursos = JsonConvert.DeserializeObject<List<Curso>>(cursosJson);
+                    getcursos = JsonConvert.DeserializeObject<List<IntegrantesCursos>>(cursosJson);
                 }
             }
 

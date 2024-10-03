@@ -44,12 +44,12 @@
                     @foreach (var alumno in Model.Alumnos)
                     {
                         <tr class="alumno-row">
-                            <form method="post" id="form-@alumno.Id">
+                            <form method="post" id="form-@alumno.Id_Usuario">
                                 <input type="hidden" name="usuario" value="@alumno.Id_Usuario" />
                                 <input type="hidden" name="materia" value="@alumno.Id_Materia" />
                                 <input type="hidden" name="modulo" value="@Model.Modulo" />
                                 <input type="hidden" name="curso" value="@Model.IdCurso" />
-                                <input type="hidden" id="booleano-@alumno.Id" name="nuevo" value="false">
+                                <input type="hidden" id="booleano-@alumno.Id_Usuario" name="nuevo" value="false">
                                 <td class="apellido">@alumno.Usuario.Apellido</td>
                                 <td class="nombre">@alumno.Usuario.Nombre</td>
 
@@ -70,9 +70,9 @@
                                 <td class="actions-column">
                                         @if (alumno.Usuario.Calificaciones.Any())
                                         {
-                                        <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@alumno.Id)" style="padding-bottom: 5px; width:28px; height:30px;" />
+                                        <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@alumno.Id_Usuario)" style="padding-bottom: 5px; width:28px; height:30px;" />
                                         }
-                                    <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="agregar(@alumno.Id)" />
+                                    <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="agregar(@alumno.Id_Usuario)" />
                                 </td>
                             </form>
                         </tr>

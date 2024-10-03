@@ -41,6 +41,19 @@ namespace PegasusV1.Controllers
 
             List<IntegrantesCursos> IntegrantesCursoss = await IntegrantesCursosService.GetIntegrantesCursosForCombo(ex);
 
+            foreach (IntegrantesCursos integrante in IntegrantesCursoss)
+            {
+                if (integrante.Id_Curso.HasValue)
+                {
+                    integrante.Curso = await CursoService.GetById(integrante.Id_Curso.Value);
+                }
+
+                if (integrante.Id_Usuario.HasValue)
+                {
+                    integrante.Usuario = await UsuarioService.GetById(integrante.Id_Usuario.Value);
+                }
+            }
+
             return IntegrantesCursoss;
         }
 
