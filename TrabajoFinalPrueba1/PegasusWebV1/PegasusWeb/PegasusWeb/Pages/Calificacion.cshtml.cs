@@ -21,7 +21,6 @@ namespace PegasusWeb.Pages
         public bool Nuevo { get; set; }
         [TempData]
         public int IdCurso { get; set; }
-
         [TempData]
         public string Modulo { get; set; }
 
