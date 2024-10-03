@@ -19,8 +19,9 @@
     <form method="post" id="form">
         <input type="hidden" name="alumno" value="@Model.Alumno.Id_Usuario" />
         <input type="hidden" name="materia" value="@Model.Alumno.Id_Materia" />
-        <input type="hidden" name="curso" value="@Model.Alumno.Materia.Id_Curso" />
+        <input type="hidden" name="curso" value="@Model.IdCurso" />
         <input type="hidden" id="booleano" name="atras" value="false">
+        <input type="hidden" name="modulo" value="@Model.Modulo" />
     <div class="container">
             <table id="tablaAlumnos" class="table">
                 <thead style="border-bottom: 2px solid">

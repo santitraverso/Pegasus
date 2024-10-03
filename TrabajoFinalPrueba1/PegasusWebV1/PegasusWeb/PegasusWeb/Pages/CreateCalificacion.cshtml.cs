@@ -15,19 +15,19 @@ namespace PegasusWeb.Pages
     {
         static HttpClient client = new HttpClient();
 
-        [DisplayName("Nota"), Required(ErrorMessage = "El campo Nota es requerido")]
-
         public IntegrantesMaterias Alumno { get; set; } =new IntegrantesMaterias();
         public List<Calificaciones> Calificaciones { get; set; } = new List<Calificaciones>();
 
         [TempData]
         public int IdIntegrante { get; set; }
-
         [TempData]
         public bool Nuevo { get; set; }
-
         [TempData]
         public int Materia { get; set; }
+        [TempData]
+        public int IdCurso { get; set; }
+        [TempData]
+        public string Modulo { get; set; }
 
 
         public async Task OnGetAsync()
@@ -35,36 +35,100 @@ namespace PegasusWeb.Pages
             if(IdIntegrante == 0 || Materia == 0)
                 RedirectToPage("ListaMaterias");
 
-            Alumno = await GetIntegranteMateriaAsync(IdIntegrante, Materia);
+            //Alumno = await GetIntegranteMateriaAsync(IdIntegrante, Materia);
 
-            if(Nuevo)
+            //if(Nuevo)
+            //    Alumno.Usuario.Calificaciones = new List<Calificaciones> { };
+
+            Alumno = await GenerarAlumno(IdCurso, IdIntegrante, Materia);
+
+            if (Nuevo)
                 Alumno.Usuario.Calificaciones = new List<Calificaciones> { };
         }
 
-        static async Task<IntegrantesMaterias> GetIntegranteMateriaAsync(int alumno, int materia)
+        private async Task<IntegrantesMaterias> GenerarAlumno(int idCurso, int idIntegrante, int materia)
         {
-            IntegrantesMaterias getalumno = new IntegrantesMaterias();
+            var alumno = await GetIntegranteCursoAsync(idCurso, idIntegrante);
 
-            string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia} && x.id_usuario=={alumno}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
+            // Crea un nuevo objeto IntegrantesMaterias
+            IntegrantesMaterias inte = new IntegrantesMaterias
+            {
+                Id_Materia = materia,
+                Id_Usuario = alumno.Id_Usuario,
+                Usuario = alumno.Usuario
+            };
 
+            inte.Usuario.Calificaciones = await GetCalificacionesAsync(materia, idCurso, (int)inte.Id_Usuario);
+
+            return inte;
+        }
+
+        public static async Task<IntegrantesCursos> GetIntegranteCursoAsync(int curso, int usuario)
+        {
+            IntegrantesCursos getIntegrante = new IntegrantesCursos();
+  
+            string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso} && x.id_usuario=={usuario}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            
             if (response.IsSuccessStatusCode)
             {
-                string alumnoJson = await response.Content.ReadAsStringAsync();
-                if (!string.IsNullOrEmpty(alumnoJson))
+                string integranteJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(integranteJson))
                 {
-                    getalumno = JsonConvert.DeserializeObject<List<IntegrantesMaterias>>(alumnoJson).FirstOrDefault();
+                    getIntegrante = JsonConvert.DeserializeObject<List<IntegrantesCursos>>(integranteJson).FirstOrDefault();
                 }
             }
 
-            return getalumno;
+            return getIntegrante;
         }
 
-        public async Task<IActionResult> OnPostAsync(List<Calificaciones> calificaciones, int alumno, int materia, string calificacionesEliminadas, int curso, bool atras)
+        public static async Task<List<Calificaciones>> GetCalificacionesAsync(int materia, int curso, int usuario)
         {
+            List<Calificaciones> getCalificaciones = new List<Calificaciones>();
+
+            string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia} && x.id_curso=={curso} && x.id_alumno=={usuario}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Calificaciones/GetCalificacionesForCombo?query={queryParam}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string alumnosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(alumnosJson))
+                {
+                    getCalificaciones = JsonConvert.DeserializeObject<List<Calificaciones>>(alumnosJson);
+                }
+            }
+
+            return getCalificaciones;
+        }
+
+        //static async Task<IntegrantesMaterias> GetIntegranteMateriaAsync(int alumno, int materia)
+        //{
+        //    IntegrantesMaterias getalumno = new IntegrantesMaterias();
+
+        //    string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia} && x.id_usuario=={alumno}");
+        //    HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
+
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        string alumnoJson = await response.Content.ReadAsStringAsync();
+        //        if (!string.IsNullOrEmpty(alumnoJson))
+        //        {
+        //            getalumno = JsonConvert.DeserializeObject<List<IntegrantesMaterias>>(alumnoJson).FirstOrDefault();
+        //        }
+        //    }
+
+        //    return getalumno;
+        //}
+
+        public async Task<IActionResult> OnPostAsync(List<Calificaciones> calificaciones, int alumno, int materia, string calificacionesEliminadas, int curso, bool atras, string modulo)
+        {
+            Materia = materia;
+            IdCurso = curso;
+            Modulo = modulo;
+            IdIntegrante = alumno;
+
             if (atras)
             {
-                Materia = materia;
                 return RedirectToPage("Calificacion");
             }
             else
@@ -122,7 +186,6 @@ namespace PegasusWeb.Pages
                     }
                 }
 
-                Materia = materia;
                 TempData["SuccessMessage"] = "La calificación se guardó correctamente.";
                 return RedirectToPage("Calificacion");
             }

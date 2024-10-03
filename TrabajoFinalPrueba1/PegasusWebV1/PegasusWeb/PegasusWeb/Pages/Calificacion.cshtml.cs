@@ -27,23 +27,8 @@ namespace PegasusWeb.Pages
 
         public async Task OnGetAsync()
         {
-            //Alumnos = await GetIntegrantesMateriasAsync(Materia);
 
             var alumnos = await GetIntegrantesCursosAsync(IdCurso);
-
-            //alumnos.ForEach(async alumno =>
-            //{
-            //    IntegrantesMaterias inte =  new IntegrantesMaterias
-            //    {
-            //        Id_Materia = this.Materia,
-            //        Id_Usuario = alumno.Id_Usuario,
-            //        Usuario = alumno.Usuario
-            //    };
-
-            //    inte.Usuario.Calificaciones = await GetCalificacionesAsync(this.Materia, IdCurso, (int)inte.Id_Usuario);
-
-            //    Alumnos.Add(inte);
-            //});
 
             // Crea una lista para almacenar las tareas
             var tasks = alumnos.Select(async alumno =>
@@ -56,11 +41,9 @@ namespace PegasusWeb.Pages
                     Usuario = alumno.Usuario
                 };
 
-                // Obtiene las calificaciones de manera asíncrona
                 inte.Usuario.Calificaciones = await GetCalificacionesAsync(this.Materia, IdCurso, (int)inte.Id_Usuario);
 
-                // Agrega el objeto a la lista
-                return inte; // Retorna el objeto para agregarlo a la lista
+                return inte;
             });
 
             // Espera a que todas las tareas se completen y agrega los resultados a la lista
@@ -91,26 +74,6 @@ namespace PegasusWeb.Pages
             Modulo = modulo;
             return RedirectToPage("ReporteCalificaciones");
         }
-
-        //public static async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasAsync(int materia)
-        //{
-        //    List<IntegrantesMaterias> getalumnos = new List<IntegrantesMaterias>();
-
-        //    //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
-        //    string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia}");
-        //    HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
-
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        string alumnosJson = await response.Content.ReadAsStringAsync();
-        //        if (!string.IsNullOrEmpty(alumnosJson))
-        //        {
-        //            getalumnos = JsonConvert.DeserializeObject<List<IntegrantesMaterias>>(alumnosJson);
-        //        }
-        //    }
-
-        //    return getalumnos;
-        //}
 
         public static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso)
         {
