@@ -2,7 +2,7 @@
 @using PegasusWeb.Entities
 @model PegasusWeb.Pages.CreateComunicadoModel
 @{
-    var esEdicion = Model.Contenido.Id > 0;
+    var esEdicion = Model.Comunicado.Id > 0;
     var titulo = esEdicion ? "Editar Comunicado" : "Cargar Nuevo Comunicado";
 }
 
@@ -20,16 +20,18 @@
     <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Comunicado.Id" />
         <input type="hidden" name="materia" asp-for="@Model.IdCurso" />
+        <input type="hidden" name="profesor" asp-for="@Model.IdProfesor" />
+        <input type="hidden" name="modulo" asp-for="@Model.Modulo" />
         <input type="hidden" name="idsAlumnos" asp-for="@Model.IdsAlumnos" />
         <input type="hidden" id="booleano" name="atras" value="false">
 
         <div class="form-group">
-            <label for="titulo" class="text-center" required>Título</label>
-            <input type="text" asp-for="Contenido.Titulo" class="inputMio" name="titulo" id="titulo" />
+            <label for="titulo" class="text-center" required>Alumnos</label>
+            <input type="text" asp-for="@Model.Alumnos" class="inputMio" name="@Model.IdsAlumnos" id="IdsAlumnos" />
         </div>
         <div class="form-group">
             <label for="descripcion" class="text-center">Descripción</label>
-            <textarea asp-for="Contenido.Descripcion" id="descripcion" name="descripcion" rows="3" cols="40" maxlength="300" placeholder="Máximo 300 caracteres" required></textarea>
+            <textarea asp-for="Comunicado.Descripcion" id="descripcion" name="descripcion" rows="3" cols="40" maxlength="300" placeholder="Máximo 300 caracteres" required></textarea>
         </div>   
         
         <button type="submit" class="btn btn-primary btn-custom">Guardar</button>

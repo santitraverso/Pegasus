@@ -33,6 +33,9 @@ namespace PegasusWeb.Pages
         [TempData]
         public List<int> IdsAlumnos { get; set; }
 
+        [BindProperty]
+        public string NombresConcatenados { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
             if (IdComunicado > 0)
@@ -42,15 +45,7 @@ namespace PegasusWeb.Pages
 
                 var alumnos = await GetAlumnosComunicadoAsync(IdComunicado);
 
-                foreach (var alu in alumnos)
-                {
-                    Usuario usu = new Usuario();
-                    usu.Id = alu.Id;
-                    usu.Nombre = alu.Nombre;
-                    usu.Apellido = alu.Apellido;
-
-                    Alumnos.AddRange((IEnumerable<Usuario>)usu);
-                }
+                NombresConcatenados = string.Join(", ", alumnos.Select(a => a.Apellido + ' ' + a.Nombre));
 
                 if (Comunicado == null)
                 {
@@ -61,12 +56,22 @@ namespace PegasusWeb.Pages
             {
                 Comunicado = new CuadernoComunicados { Id = 0 };
 
+                string nombresConcatenados = "";
+
                 foreach (var idAlumno in IdsAlumnos)
                 {
                     Usuario usu = await GetUsuarioAsync(idAlumno);
 
-                    Alumnos.AddRange((IEnumerable<Usuario>)usu);
+                    nombresConcatenados += $"{usu.Apellido} {usu.Nombre}, ";
                 }
+
+                // Remover la última coma y espacio si es necesario
+                if (nombresConcatenados.EndsWith(", "))
+                {
+                    nombresConcatenados = nombresConcatenados.Substring(0, nombresConcatenados.Length - 2);
+                }
+
+                NombresConcatenados = nombresConcatenados;
             }
 
             return Page();
