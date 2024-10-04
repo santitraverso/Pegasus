@@ -32,7 +32,7 @@ namespace PegasusWeb.Pages
                 FechaAsistencia = Fecha;
 
             // Verificar si hay asistencia para el día actual
-            if (!await ExisteAsistenciaParaFecha(Materia, FechaAsistencia))
+            if (!await ExisteAsistenciaParaFecha(Materia, FechaAsistencia, IdCurso))
             {
                 // Si no hay asistencia, obtener todos los alumnos
                 await GetAlumnosAsync(Materia);
@@ -40,7 +40,7 @@ namespace PegasusWeb.Pages
             else
             {
                 // Si ya hay asistencia, cargar los alumnos con su asistencia
-                Alumnos = await GetAsistenciaAsync(Materia, FechaAsistencia);
+                Alumnos = await GetAsistenciaAsync(Materia, FechaAsistencia, IdCurso);
             }
         }
 
@@ -51,14 +51,14 @@ namespace PegasusWeb.Pages
             IdCurso = curso;
             Modulo = modulo;
 
-            if (!await ExisteAsistenciaParaFecha(materia, FechaAsistencia))
+            if (!await ExisteAsistenciaParaFecha(materia, FechaAsistencia, IdCurso))
             {
                 await GetAlumnosAsync(materia);
             }
             else
             {
                 // Cargar asistencia para la fecha seleccionada
-                Alumnos = await GetAsistenciaAsync(materia, fecha);
+                Alumnos = await GetAsistenciaAsync(materia, fecha, IdCurso);
             }
             
             return Page();
@@ -71,51 +71,14 @@ namespace PegasusWeb.Pages
             return RedirectToPage("Materia/ListaMaterias");
         }
 
-        public async Task<bool> ExisteAsistenciaParaFecha(int materia, DateTime fecha)
+        public async Task<bool> ExisteAsistenciaParaFecha(int materia, DateTime fecha, int curso)
         {
             // Cargar asistencia para la fecha seleccionada
-            Alumnos = await GetAsistenciaAsync(materia, fecha);
+            Alumnos = await GetAsistenciaAsync(materia, fecha, curso);
 
             return Alumnos.Count() > 0;
         }
 
-        //public static async Task<List<Usuario>> GetUsuariosAlumnosAsync()
-        //{
-        //    List<Usuario> getalumnos = new List<Usuario>();
-
-        //    string queryParam = Uri.EscapeDataString("x=>x.id_perfil == 2 && x.activo == true");
-        //    HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Usuario/GetUsuariosForCombo?query={queryParam}");
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        string alumnosJson = await response.Content.ReadAsStringAsync();
-        //        if (!string.IsNullOrEmpty(alumnosJson))
-        //        {
-        //            getalumnos = JsonConvert.DeserializeObject<List<Usuario>>(alumnosJson);
-        //        }
-        //    }
-
-        //    return getalumnos;
-        //}
-
-        //static async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasAsync(int materia)
-        //{
-        //    List<IntegrantesMaterias> getalumnos = new List<IntegrantesMaterias>();
-
-        //    //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
-        //    string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia}");
-        //    HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
-
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        string alumnosJson = await response.Content.ReadAsStringAsync();
-        //        if (!string.IsNullOrEmpty(alumnosJson))
-        //        {
-        //            getalumnos = JsonConvert.DeserializeObject<List<IntegrantesMaterias>>(alumnosJson);
-        //        }
-        //    }
-
-        //    return getalumnos;
-        //}
 
         public static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso)
         {
@@ -161,16 +124,9 @@ namespace PegasusWeb.Pages
             }
         }
 
-        //private static async Task<IEnumerable<Usuario>> GetUsuariosMateriaAsync(int materia)
-        //{
-        //    var usuarios = await GetUsuariosAlumnosAsync();
+    
 
-        //    var integrantesMateria = await GetIntegrantesMateriasAsync(materia);
-
-        //    return usuarios.Where(u => integrantesMateria.Exists(i => i.Id_Usuario == u.Id)).ToList();
-        //}
-
-        static async Task<List<Asistencia>> GetAsistenciaAsync(int materia, DateTime fecha)
+        static async Task<List<Asistencia>> GetAsistenciaAsync(int materia, DateTime fecha, int curso)
         {
             List<Asistencia> getalumnos = new List<Asistencia>();
 
@@ -178,7 +134,7 @@ namespace PegasusWeb.Pages
             //var fecha2 = new DateTime(2024, 9, 24);
 
             //string queryParam = Uri.EscapeDataString($"x=>x.id_Materia=={materia} && x.Fecha.Value.Date == new DateTime({fecha2.Year}, {fecha2.Month}, {fecha2.Day}).Date");
-            string queryParam = Uri.EscapeDataString($"x=>x.id_Materia=={materia}");
+            string queryParam = Uri.EscapeDataString($"x=>x.id_Materia=={materia} && x.id_curso=={curso}");
             HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Asistencia/GetAsistenciasForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)

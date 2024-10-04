@@ -91,7 +91,8 @@ namespace PegasusWeb.Pages
 
                 if (!ModelState.IsValid)
                 {
-                    await GetContenidoMateriasAsync(id);
+                    IdContenido = id;
+                    await OnGetAsync();
                     return Page();
                 }
 
