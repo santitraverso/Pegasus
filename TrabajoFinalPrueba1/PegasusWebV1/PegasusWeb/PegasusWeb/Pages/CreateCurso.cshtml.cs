@@ -23,6 +23,10 @@ namespace PegasusWeb.Pages
         public int IdCurso { get; set; }
 
         public List<IntegrantesCursos> Alumnos { get; set; } = new List<IntegrantesCursos>();
+        public List<Entities.Materia> Materias { get; set; } = new List<Entities.Materia>();
+
+        [BindProperty]
+        public List<int> SelectedAlumnosIds { get; set; } = new List<int>(); // IDs de los alumnos seleccionados en el formulario
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -39,6 +43,8 @@ namespace PegasusWeb.Pages
                         Curso = JsonConvert.DeserializeObject<Curso>(cursoJson);
 
                         Alumnos = await GetIntegrantesCursosAsync(IdCurso);
+
+                        Materias = await GetMateriasCursoAsync(IdCurso);
                     }
                 }
 
@@ -56,10 +62,35 @@ namespace PegasusWeb.Pages
             return Page();
         }
 
+        private async Task<List<Entities.Materia>> GetMateriasCursoAsync(int curso)
+        {
+            List<Entities.Materia> getMaterias = new List<Entities.Materia>();
+
+            string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string materiasJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(materiasJson))
+                {
+                    getMaterias = JsonConvert.DeserializeObject<List<Entities.Materia>>(materiasJson);
+                }
+            }
+
+            return getMaterias;
+        }
+
         public IActionResult OnPostAgregarAlumno(int curso)
         {
             IdCurso = curso;
             return RedirectToPage("IntegrantesCursos");
+        }
+
+        public IActionResult OnPostAgregarMateria(int curso)
+        {
+            IdCurso = curso;
+            return RedirectToPage("MateriasCurso");
         }
 
         static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso)

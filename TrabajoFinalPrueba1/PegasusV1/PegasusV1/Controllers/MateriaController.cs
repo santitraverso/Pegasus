@@ -43,17 +43,7 @@ namespace PegasusV1.Controllers
         [Route("GetById")]
         public async Task<Materia?> GetById(int id)
         {
-            Materia materia = await MateriaService.GetById(id);
-
-            if (materia != null)
-            {
-                if (materia.Id_Curso.HasValue)
-                {
-                    materia.Curso = await CursoService.GetById(materia.Id_Curso.Value);
-                }
-            }
-
-            return materia;
+            return await MateriaService.GetById(id);
         }
 
         [HttpPost]

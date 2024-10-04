@@ -47,8 +47,63 @@
     </form>
     <br />
     <br />
-    
-        <form method="post" asp-page-handler="AgregarAlumno" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <form method="post" asp-page-handler="AgregarAlumno" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">
+                    <h5>Alumnos</h5>
+                    <div class="container">
+                        <input type="hidden" name="curso" asp-for="Curso.Id" />
+                        <table id="tablaAlumnos" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Apellido</th>
+                                    <th>Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var alumno in Model.Alumnos)
+                                {
+                                    <tr>
+                                        <td>@alumno.Usuario.Apellido</td>
+                                        <td>@alumno.Usuario.Nombre</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary btn-custom"> @(Model.Alumnos != null && Model.Alumnos.Any() ? "Modificar Alumnos" : "Agregar Alumnos")</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <form method="post" asp-page-handler="AgregarMateria" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">
+                    <h5>Materias</h5>
+                    <div class="container">
+                        <input type="hidden" name="curso" asp-for="Curso.Id" />
+                        <table id="tablaAlumnos" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var materia in Model.Materias)
+                                {
+                                    <tr>
+                                        <td>@materia.Nombre</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary btn-custom"> @(Model.Materias != null && Model.Materias.Any() ? "Modificar Materias" : "Agregar Materias")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        @*<form method="post" asp-page-handler="AgregarAlumno" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">
             <h3>Alumnos</h3>
             <div class="container">
                 <input type="hidden" name="curso" asp-for="Curso.Id" />
@@ -69,9 +124,9 @@
                         }
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary btn-custom"> Modificar Alumnos</button>
+            <button type="submit" class="btn btn-primary btn-custom"> @(Model.Alumnos != null && Model.Alumnos.Any() ? "Modificar Alumnos" : "Agregar Alumnos")</button>
             </div>
-        </form>
+        </form>*@
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

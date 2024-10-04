@@ -42,7 +42,7 @@ namespace PegasusWeb.Pages
         public async Task<IActionResult> OnGetAsync()
         {
 
-            await CargarCursosAsync();
+            //await CargarCursosAsync();
 
             if (IdMateria > 0)
             {
@@ -56,7 +56,7 @@ namespace PegasusWeb.Pages
                     {
                         Materia = JsonConvert.DeserializeObject<Entities.Materia>(materiaJson);
 
-                        CursoSeleccionadoId = (int)Materia.Id_Curso;
+                        //CursoSeleccionadoId = (int)Materia.Id_Curso;
 
                         Contenidos = await GetContenidosMateriaAsync(IdMateria);
                     }
@@ -77,23 +77,23 @@ namespace PegasusWeb.Pages
             return Page();
         }
 
-        static async Task<List<Curso>> GetCursosAsync()
-        {
-            List<Curso> getcursos = new List<Curso>();
+        //static async Task<List<Curso>> GetCursosAsync()
+        //{
+        //    List<Curso> getcursos = new List<Curso>();
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Curso/GetCursosForCombo");
-            if (response.IsSuccessStatusCode)
-            {
-                string cursosJson = await response.Content.ReadAsStringAsync();
-                if (!string.IsNullOrEmpty(cursosJson))
-                {
-                    getcursos = JsonConvert.DeserializeObject<List<Curso>>(cursosJson);
-                }
-            }
+        //    //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
+        //    HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Curso/GetCursosForCombo");
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        string cursosJson = await response.Content.ReadAsStringAsync();
+        //        if (!string.IsNullOrEmpty(cursosJson))
+        //        {
+        //            getcursos = JsonConvert.DeserializeObject<List<Curso>>(cursosJson);
+        //        }
+        //    }
 
-            return getcursos;
-        }
+        //    return getcursos;
+        //}
 
         public IActionResult OnPostModificarContenido(int materia)
         {
@@ -120,16 +120,16 @@ namespace PegasusWeb.Pages
             return getContenidos;
         }
 
-        private async Task CargarCursosAsync()
-        {
-            var cursos = await GetCursosAsync();
+        //private async Task CargarCursosAsync()
+        //{
+        //    var cursos = await GetCursosAsync();
 
-            CursosRelacionados = cursos.Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.Nombre_Curso
-            }).ToList();
-        }
+        //    CursosRelacionados = cursos.Select(c => new SelectListItem
+        //    {
+        //        Value = c.Id.ToString(),
+        //        Text = c.Nombre_Curso
+        //    }).ToList();
+        //}
 
         public async Task<IActionResult> OnPost(string nombre, int id, bool atras)
         {
@@ -154,7 +154,7 @@ namespace PegasusWeb.Pages
 
                 if (!ModelState.IsValid)
                 {
-                    await CargarCursosAsync();
+                    //await CargarCursosAsync();
                     return Page();
                 }
 

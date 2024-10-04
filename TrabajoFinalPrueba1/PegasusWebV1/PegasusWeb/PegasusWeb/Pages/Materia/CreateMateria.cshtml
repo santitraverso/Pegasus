@@ -29,7 +29,7 @@
                 <td>Nombre de la materia</td>
                 <td><input type="text" asp-for="Materia.Nombre" class="inputMio3" name="nombre" id="nombre" /></td>
             </tr>
-            <tr>
+            @*<tr>
                 <td>Seleccionar Curso</td>
                 <td>
                     <select asp-for="CursoSeleccionadoId" asp-items="Model.CursosRelacionados" class="inputMio3" id="cursoSeleccionadoId">
@@ -37,7 +37,7 @@
                     </select>
                 </td>
             </tr>
-            <span class="text-danger" asp-validation-for="CursoSeleccionadoId"></span>
+            <span class="text-danger" asp-validation-for="CursoSeleccionadoId"></span>*@
         </table>
         <br />
         <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
@@ -96,10 +96,10 @@
 
         function validateForm() {
             const nombre = document.querySelector('#nombre').value.trim();
-            const cursoSeleccionadoId = document.querySelector('#cursoSeleccionadoId').value.trim();
+            //const cursoSeleccionadoId = document.querySelector('#cursoSeleccionadoId').value.trim();
 
 
-            if (nombre === '' || cursoSeleccionadoId === '') {
+            if (nombre === '' /*|| cursoSeleccionadoId === ''*/) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
