@@ -27,7 +27,7 @@
 
         <div class="form-group">
             <label for="titulo" class="text-center" required>Alumnos</label>
-            <input type="text" asp-for="@Model.Alumnos" class="inputMio" name="@Model.IdsAlumnos" id="IdsAlumnos" />
+            <input type="text" value="@Model.NombresConcatenados" class="inputMio" name="nombresAlumnos" id="nombresAlumnos" readonly />
         </div>
         <div class="form-group">
             <label for="descripcion" class="text-center">Descripción</label>
