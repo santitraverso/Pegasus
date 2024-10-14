@@ -366,7 +366,7 @@ body {
 .edit-image, .delete-image {
     cursor: pointer;
     width: 28px;
-    height: 28px;
+    height: 26px;
 }
 
 .edit-image:hover {
