@@ -53,7 +53,7 @@ namespace PegasusWeb.Pages
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
             string queryParam = Uri.EscapeDataString("x=>x.id_perfil == 2 && x.activo == true");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Usuario/GetUsuariosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Usuario/GetUsuariosForCombo?query={queryParam}");
             if (response.IsSuccessStatusCode)
             {
                 string alumnosJson = await response.Content.ReadAsStringAsync();
@@ -72,7 +72,7 @@ namespace PegasusWeb.Pages
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso == {curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -115,7 +115,7 @@ namespace PegasusWeb.Pages
         {
             foreach (var alumno in IntegrantesCurso)
             {
-                HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/DeleteIntegrantesCursos?id={alumno.Id}");
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/DeleteIntegrantesCursos?id={alumno.Id}");
                 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -130,7 +130,7 @@ namespace PegasusWeb.Pages
         {
             var content = new StringContent($"{{\"ID_CURSO\":\"{curso}\", \"ID_USUARIO\":\"{idAlumno}\"}}", Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("http://localhost:7130/IntegrantesCursos/CreateIntegrantesCursos", content);
+            HttpResponseMessage response = await client.PostAsync("https://localhost:7130/IntegrantesCursos/CreateIntegrantesCursos", content);
             if (!response.IsSuccessStatusCode)
             {
                 this.ModelState.AddModelError("curso", "Hubo un error inesperado al agregar alumnos al curso");

@@ -80,7 +80,7 @@ namespace PegasusWeb.Pages
         {
             Contactos getcontacto = new Contactos();
 
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Contactos/GetById?id={contacto}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Contactos/GetById?id={contacto}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -155,11 +155,11 @@ namespace PegasusWeb.Pages
                 HttpResponseMessage response;
                 if (id > 0)
                 {
-                    response = await client.PutAsync("http://localhost:7130/Contactos/UpdateContacto", content);
+                    response = await client.PutAsync("https://localhost:7130/Contactos/UpdateContacto", content);
                 }
                 else
                 {
-                    response = await client.PostAsync("http://localhost:7130/Contactos/CreateContacto", content);
+                    response = await client.PostAsync("https://localhost:7130/Contactos/CreateContacto", content);
                 }
 
                 // Manejar errores de la respuesta HTTP

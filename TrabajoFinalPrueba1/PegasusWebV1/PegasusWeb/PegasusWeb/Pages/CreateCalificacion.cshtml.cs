@@ -68,7 +68,7 @@ namespace PegasusWeb.Pages
             IntegrantesCursos getIntegrante = new IntegrantesCursos();
   
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso} && x.id_usuario=={usuario}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
             
             if (response.IsSuccessStatusCode)
             {
@@ -87,7 +87,7 @@ namespace PegasusWeb.Pages
             List<Calificaciones> getCalificaciones = new List<Calificaciones>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia} && x.id_curso=={curso} && x.id_alumno=={usuario}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Calificaciones/GetCalificacionesForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Calificaciones/GetCalificacionesForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -106,7 +106,7 @@ namespace PegasusWeb.Pages
         //    IntegrantesMaterias getalumno = new IntegrantesMaterias();
 
         //    string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia} && x.id_usuario=={alumno}");
-        //    HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
+        //    HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesMaterias/GetIntegrantesMateriasForCombo?query={queryParam}");
 
         //    if (response.IsSuccessStatusCode)
         //    {
@@ -166,11 +166,11 @@ namespace PegasusWeb.Pages
                     HttpResponseMessage response;
                     if (calificacion.Id > 0)
                     {
-                        response = await client.PutAsync("http://localhost:7130/Calificaciones/UpdateCalificaciones", content);
+                        response = await client.PutAsync("https://localhost:7130/Calificaciones/UpdateCalificaciones", content);
                     }
                     else
                     {
-                        response = await client.PostAsync("http://localhost:7130/Calificaciones/CreateCalificaciones", content);
+                        response = await client.PostAsync("https://localhost:7130/Calificaciones/CreateCalificaciones", content);
                     }
 
                     // Manejar errores de la respuesta HTTP
@@ -195,7 +195,7 @@ namespace PegasusWeb.Pages
         {
             foreach (var calificacion in eliminadas)
             {
-                HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Calificaciones/DeleteCalificaciones?id={calificacion}");
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Calificaciones/DeleteCalificaciones?id={calificacion}");
 
                 if (!response.IsSuccessStatusCode)
                 {

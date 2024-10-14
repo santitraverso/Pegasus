@@ -86,7 +86,7 @@ namespace PegasusWeb.Pages
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -135,7 +135,7 @@ namespace PegasusWeb.Pages
 
             //string queryParam = Uri.EscapeDataString($"x=>x.id_Materia=={materia} && x.Fecha.Value.Date == new DateTime({fecha2.Year}, {fecha2.Month}, {fecha2.Day}).Date");
             string queryParam = Uri.EscapeDataString($"x=>x.id_Materia=={materia} && x.id_curso=={curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Asistencia/GetAsistenciasForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Asistencia/GetAsistenciasForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -179,11 +179,11 @@ namespace PegasusWeb.Pages
                     HttpResponseMessage response;
                     if (alumno.Id > 0)
                     {
-                        response = await client.PutAsync("http://localhost:7130/Asistencia/UpdateAsistencia", content);
+                        response = await client.PutAsync("https://localhost:7130/Asistencia/UpdateAsistencia", content);
                     }
                     else
                     {
-                        response = await client.PostAsync("http://localhost:7130/Asistencia/CreateAsistencia", content);
+                        response = await client.PostAsync("https://localhost:7130/Asistencia/CreateAsistencia", content);
                     }
 
                     // Manejar errores de la respuesta HTTP

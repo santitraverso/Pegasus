@@ -59,7 +59,7 @@ namespace PegasusWeb.Pages
             List<Asistencia> getasistencias = new List<Asistencia>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_materia == {materia}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Asistencia/GetAsistenciasForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Asistencia/GetAsistenciasForCombo?query={queryParam}");
             if (response.IsSuccessStatusCode)
             {
                 string asistenciasJson = await response.Content.ReadAsStringAsync();
@@ -77,7 +77,7 @@ namespace PegasusWeb.Pages
             List<Curso> getCursos = new List<Curso>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_materia == {materia}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
             if (response.IsSuccessStatusCode)
             {
                 string cursosJson = await response.Content.ReadAsStringAsync();
@@ -95,7 +95,7 @@ namespace PegasusWeb.Pages
             List <Entities.Materia> getMaterias = new List<Entities.Materia>();
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Materia/GetMateriasForCombo");
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Materia/GetMateriasForCombo");
             if (response.IsSuccessStatusCode)
             {
                 string materiasJson = await response.Content.ReadAsStringAsync();
@@ -112,7 +112,7 @@ namespace PegasusWeb.Pages
         //{
         //    Curso getCurso = new Curso();
 
-        //    HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Curso/GetById?id={curso}");
+        //    HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Curso/GetById?id={curso}");
         //    if (response.IsSuccessStatusCode)
         //    {
         //        string cursoJson = await response.Content.ReadAsStringAsync();
@@ -127,7 +127,7 @@ namespace PegasusWeb.Pages
 
         public async Task EliminarMateriaAsync(int materia)
         {
-            HttpResponseMessage response = await client.DeleteAsync($"http://localhost:7130/Materia/DeleteMateria?id={materia}");
+            HttpResponseMessage response = await client.DeleteAsync($"https://localhost:7130/Materia/DeleteMateria?id={materia}");
 
             if (!response.IsSuccessStatusCode)
             {

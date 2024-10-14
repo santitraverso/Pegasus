@@ -59,7 +59,7 @@ namespace PegasusWeb.Pages
             List<IntegrantesCursos> getintegrantes = new List<IntegrantesCursos>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso == {curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
             if (response.IsSuccessStatusCode)
             {
                 string integrantesJson = await response.Content.ReadAsStringAsync();
@@ -77,7 +77,7 @@ namespace PegasusWeb.Pages
             List<Entities.Materia> getmaterias = new List<Entities.Materia>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso == {curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Materia/GetMateriasForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Materia/GetMateriasForCombo?query={queryParam}");
             if (response.IsSuccessStatusCode)
             {
                 string materiasJson = await response.Content.ReadAsStringAsync();
@@ -96,7 +96,7 @@ namespace PegasusWeb.Pages
             List<Curso> getcursos = new List<Curso>();
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Curso/GetCursosForCombo");
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Curso/GetCursosForCombo");
             if (response.IsSuccessStatusCode)
             {
                 string cursosJson = await response.Content.ReadAsStringAsync();
@@ -111,7 +111,7 @@ namespace PegasusWeb.Pages
 
         public async Task EliminarCursoAsync(int curso)
         {
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Curso/DeleteCurso?id={curso}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Curso/DeleteCurso?id={curso}");
 
             if (!response.IsSuccessStatusCode)
             {

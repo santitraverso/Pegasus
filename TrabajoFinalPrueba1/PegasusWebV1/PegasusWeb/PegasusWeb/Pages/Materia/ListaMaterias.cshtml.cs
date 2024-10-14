@@ -30,7 +30,7 @@ namespace PegasusWeb.Pages.Materia
             List<Entities.Materia> getmaterias = new List<Entities.Materia>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso == {curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/CursoMateria/CursoMateriaForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CursoMateria/CursoMateriaForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {

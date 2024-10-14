@@ -41,7 +41,7 @@ namespace PegasusWeb.Pages
         {
             List<Usuario> getusuarios = new List<Usuario>();
 
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Usuario/GetUsuariosForCombo");
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Usuario/GetUsuariosForCombo");
 
             if (response.IsSuccessStatusCode)
             {
@@ -57,7 +57,7 @@ namespace PegasusWeb.Pages
 
         public async Task EliminarUsuarioAsync(int usuario)
         {
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Usuario/DeleteUsuario?id={usuario}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Usuario/DeleteUsuario?id={usuario}");
 
             if (!response.IsSuccessStatusCode)
             {

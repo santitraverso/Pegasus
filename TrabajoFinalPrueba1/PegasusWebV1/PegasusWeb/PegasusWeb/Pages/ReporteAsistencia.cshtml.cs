@@ -36,7 +36,7 @@ namespace PegasusWeb.Pages
 
             //string queryParam = Uri.EscapeDataString($"x=>x.id_Materia=={materia} && x.Fecha.Value.Date == new DateTime({fecha2.Year}, {fecha2.Month}, {fecha2.Day}).Date");
             string queryParam = Uri.EscapeDataString($"x=>x.id_Materia=={materia}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Asistencia/GetAsistenciasForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Asistencia/GetAsistenciasForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {

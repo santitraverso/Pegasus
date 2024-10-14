@@ -82,7 +82,7 @@ namespace PegasusWeb.Pages
             List<Usuario> getusuarios = new List<Usuario>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_comunicado == {idComunicado}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/ComunicadoAlumnos/GetComunicadoAlumnosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ComunicadoAlumnos/GetComunicadoAlumnosForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -100,7 +100,7 @@ namespace PegasusWeb.Pages
         {
             Usuario getusuario = new Usuario();
 
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Usuario/GetById?id={usuario}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Usuario/GetById?id={usuario}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -118,7 +118,7 @@ namespace PegasusWeb.Pages
         {
             CuadernoComunicados getcomunicado = new CuadernoComunicados();
 
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/CuadernoComunicados/GetById?id={comunicado}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CuadernoComunicados/GetById?id={comunicado}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -177,11 +177,11 @@ namespace PegasusWeb.Pages
                 HttpResponseMessage response;
                 if (id > 0)
                 {
-                    response = await client.PutAsync("http://localhost:7130/CuadernoComunicados/UpdateCuadernoComunicados", content);
+                    response = await client.PutAsync("https://localhost:7130/CuadernoComunicados/UpdateCuadernoComunicados", content);
                 }
                 else
                 {
-                    response = await client.PostAsync("http://localhost:7130/CuadernoComunicados/CreateCuadernoComunicados", content);
+                    response = await client.PostAsync("https://localhost:7130/CuadernoComunicados/CreateCuadernoComunicados", content);
                 }
 
                 // Manejar errores de la respuesta HTTP
@@ -208,7 +208,7 @@ namespace PegasusWeb.Pages
                         var jsonContentAl = JsonConvert.SerializeObject(comunicadoAlumnoData);
                         var contentAl = new StringContent(jsonContentAl, Encoding.UTF8, "application/json");
 
-                        HttpResponseMessage responseAl = await client.PostAsync("http://localhost:7130/ComunicadoAlumnos/CreateComunicadoAlumnos", contentAl);
+                        HttpResponseMessage responseAl = await client.PostAsync("https://localhost:7130/ComunicadoAlumnos/CreateComunicadoAlumnos", contentAl);
                         
 
                         // Manejar errores de la respuesta HTTP

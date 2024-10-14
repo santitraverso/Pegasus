@@ -33,7 +33,7 @@ namespace PegasusWeb.Pages
             if (IdCurso > 0)
             {
                 // Es una edición, se carga el curso existente
-                HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Curso/GetById?id={IdCurso}");
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Curso/GetById?id={IdCurso}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -67,7 +67,7 @@ namespace PegasusWeb.Pages
             List<Entities.Materia> getMaterias = new List<Entities.Materia>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -99,7 +99,7 @@ namespace PegasusWeb.Pages
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -159,11 +159,11 @@ namespace PegasusWeb.Pages
                 HttpResponseMessage response;
                 if (id > 0)
                 {
-                    response = await client.PutAsync("http://localhost:7130/Curso/UpdateCurso", content);
+                    response = await client.PutAsync("https://localhost:7130/Curso/UpdateCurso", content);
                 }
                 else
                 {
-                    response = await client.PostAsync("http://localhost:7130/Curso/CreateCurso", content);
+                    response = await client.PostAsync("https://localhost:7130/Curso/CreateCurso", content);
                 }
 
                 // Manejar errores de la respuesta HTTP

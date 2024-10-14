@@ -28,7 +28,7 @@ namespace PegasusWeb.Pages
             List<Contactos> getcontactos = new List<Contactos>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.tipo_contacto=={tipoContacto}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Contactos/GetContactosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Contactos/GetContactosForCombo?query={queryParam}");
             if (response.IsSuccessStatusCode)
             {
                 string contactosJson = await response.Content.ReadAsStringAsync();
@@ -59,7 +59,7 @@ namespace PegasusWeb.Pages
 
         public async Task EliminarContactoAsync(int contacto)
         {
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Contactos/DeleteContacto?id={contacto}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Contactos/DeleteContacto?id={contacto}");
 
             if (!response.IsSuccessStatusCode)
             {

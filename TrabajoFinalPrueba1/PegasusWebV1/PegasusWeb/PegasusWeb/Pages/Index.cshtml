@@ -8,3 +8,46 @@
     <h1 class="display-4">Pegasus</h1>
     <p>Bienvenidos</p>
 </div>
+
+<h1>Login con Google</h1>
+
+<div id="g_id_onload"
+     data-client_id="579011975819-tsmscfrfs7p4ai2n72rm5g9isvfqtubo.apps.googleusercontent.com"
+     data-callback="handleCredentialResponse"
+     data-auto_prompt="false">
+</div>
+
+<div class="g_id_signin"
+     data-type="standard"
+     data-shape="rectangular"
+     data-theme="outline"
+     data-text="signin_with"
+     data-size="large">
+</div>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    function handleCredentialResponse(response) {
+        const googleUserToken = response.credential;
+
+        // Enviar el token al backend
+        fetch('https://localhost:7130/account/google/callback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token: googleUserToken }), // Envolviendo el token en un objeto
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.Token) {
+                    console.log("Autenticación exitosa, token JWT recibido:", data.Token);
+                } else {
+                    console.error("Error en la autenticación:", data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error al hacer la solicitud:", error);
+            });
+    }
+</script>

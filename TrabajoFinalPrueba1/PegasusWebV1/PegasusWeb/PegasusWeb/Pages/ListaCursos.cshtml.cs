@@ -46,11 +46,11 @@ namespace PegasusWeb.Pages
             if (usuario > 0)
             {
                 string queryParam = Uri.EscapeDataString($"x=>x.id_usuario=={usuario}");
-                response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+                response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
             }
             else
             {
-                response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo");
+                response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo");
             }
            
             if (response.IsSuccessStatusCode)

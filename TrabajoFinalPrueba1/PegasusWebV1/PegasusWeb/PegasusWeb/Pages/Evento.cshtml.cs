@@ -26,7 +26,7 @@ namespace PegasusWeb.Pages
             List<Evento> geteventos = new List<Evento>();
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Evento/GetEventosForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Evento/GetEventosForCombo");
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Evento/GetEventosForCombo");
             if (response.IsSuccessStatusCode)
             {
                 string eventosJson = await response.Content.ReadAsStringAsync();
@@ -57,7 +57,7 @@ namespace PegasusWeb.Pages
 
         public async Task EliminarEventoAsync(int evento)
         {
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Evento/DeleteEvento?id={evento}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Evento/DeleteEvento?id={evento}");
 
             if (!response.IsSuccessStatusCode)
             {

@@ -25,7 +25,7 @@ namespace PegasusWeb.Pages
             List<ContenidoMaterias> getcontenidos = new List<ContenidoMaterias>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/ContenidoMaterias/GetContenidoMateriasForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ContenidoMaterias/GetContenidoMateriasForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -74,7 +74,7 @@ namespace PegasusWeb.Pages
 
         public async Task EliminarContenidoMateriasAsync(int contenido)
         {
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/ContenidoMaterias/DeleteContenidoMaterias?id={contenido}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ContenidoMaterias/DeleteContenidoMaterias?id={contenido}");
 
             if (!response.IsSuccessStatusCode)
             {

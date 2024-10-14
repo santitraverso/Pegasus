@@ -55,7 +55,7 @@ namespace PegasusWeb.Pages
         {
             Usuario getusuario = new Usuario();
 
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Usuario/GetById?id={usuario}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Usuario/GetById?id={usuario}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -85,7 +85,7 @@ namespace PegasusWeb.Pages
             List<Perfiles> getperfiles = new List<Perfiles>();
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Perfiles/GetPerfilesForCombo");
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Perfiles/GetPerfilesForCombo");
             if (response.IsSuccessStatusCode)
             {
                 string perfilesJson = await response.Content.ReadAsStringAsync();
@@ -152,11 +152,11 @@ namespace PegasusWeb.Pages
             HttpResponseMessage response;
             if (id > 0)
             {
-                response = await client.PutAsync("http://localhost:7130/Usuario/UpdateUsuario", content);
+                response = await client.PutAsync("https://localhost:7130/Usuario/UpdateUsuario", content);
             }
             else
             {
-                response = await client.PostAsync("http://localhost:7130/Usuario/CreateUsuario", content);
+                response = await client.PostAsync("https://localhost:7130/Usuario/CreateUsuario", content);
             }
 
             // Manejar errores si la solicitud falla

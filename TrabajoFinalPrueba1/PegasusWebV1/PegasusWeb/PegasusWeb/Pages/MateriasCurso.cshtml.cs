@@ -41,7 +41,7 @@ namespace PegasusWeb.Pages
             List<Entities.Materia> getMaterias = new List<Entities.Materia>();
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Materia/GetMateriasForCombo");
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Materia/GetMateriasForCombo");
             if (response.IsSuccessStatusCode)
             {
                 string materiasJson = await response.Content.ReadAsStringAsync();
@@ -59,7 +59,7 @@ namespace PegasusWeb.Pages
             List<Entities.Materia> getMaterias = new List<Entities.Materia>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -102,7 +102,7 @@ namespace PegasusWeb.Pages
         {
             foreach (var materia in MateriasCurso)
             {
-                HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/CursoMateria/DeleteCursoMateria?id={materia.Id}");
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CursoMateria/DeleteCursoMateria?id={materia.Id}");
                 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -117,7 +117,7 @@ namespace PegasusWeb.Pages
         {
             var content = new StringContent($"{{\"ID_CURSO\":\"{curso}\", \"ID_MATERIA\":\"{materia}\"}}", Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("http://localhost:7130/CursoMateria/CreateCursoMateria", content);
+            HttpResponseMessage response = await client.PostAsync("https://localhost:7130/CursoMateria/CreateCursoMateria", content);
             if (!response.IsSuccessStatusCode)
             {
                 this.ModelState.AddModelError("curso", "Hubo un error inesperado al agregar materias al curso");

@@ -52,7 +52,7 @@ namespace PegasusWeb.Pages
         {
             ContenidoMaterias getcontenido = new ContenidoMaterias();
 
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/ContenidoMaterias/GetById?id={contenido}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ContenidoMaterias/GetById?id={contenido}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -115,11 +115,11 @@ namespace PegasusWeb.Pages
                 HttpResponseMessage response;
                 if (id > 0)
                 {
-                    response = await client.PutAsync("http://localhost:7130/ContenidoMaterias/UpdateContenidoMaterias", content);
+                    response = await client.PutAsync("https://localhost:7130/ContenidoMaterias/UpdateContenidoMaterias", content);
                 }
                 else
                 {
-                    response = await client.PostAsync("http://localhost:7130/ContenidoMaterias/CreateContenidoMaterias", content);
+                    response = await client.PostAsync("https://localhost:7130/ContenidoMaterias/CreateContenidoMaterias", content);
                 }
 
                 // Manejar errores de la respuesta HTTP

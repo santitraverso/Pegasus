@@ -66,7 +66,7 @@ namespace PegasusWeb.Pages
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -85,7 +85,7 @@ namespace PegasusWeb.Pages
             List<Calificaciones> getCalificaciones = new List<Calificaciones>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia} && x.id_curso=={curso} && x.id_alumno=={usuario}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Calificaciones/GetCalificacionesForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Calificaciones/GetCalificacionesForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -103,7 +103,7 @@ namespace PegasusWeb.Pages
         {
             Entities.Materia getMateria = new Entities.Materia();
 
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Materia/GetById?id={materia}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Materia/GetById?id={materia}");
 
             if (response.IsSuccessStatusCode)
             {

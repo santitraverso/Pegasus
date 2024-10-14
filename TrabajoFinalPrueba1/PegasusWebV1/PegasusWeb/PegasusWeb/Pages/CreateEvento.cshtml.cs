@@ -24,7 +24,7 @@ namespace PegasusWeb.Pages
             if (IdEvento > 0)
             {
                 // Es una edición, se carga el curso existente
-                HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Evento/GetById?id={IdEvento}");
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Evento/GetById?id={IdEvento}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -86,11 +86,11 @@ namespace PegasusWeb.Pages
             HttpResponseMessage response;
             if (id > 0)
             {
-                response = await client.PutAsync("http://localhost:7130/Evento/UpdateEvento", content);
+                response = await client.PutAsync("https://localhost:7130/Evento/UpdateEvento", content);
             }
             else
             {
-                response = await client.PostAsync("http://localhost:7130/Evento/CreateEvento", content);
+                response = await client.PostAsync("https://localhost:7130/Evento/CreateEvento", content);
             }
 
             // Manejar errores de la respuesta HTTP

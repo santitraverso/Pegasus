@@ -47,7 +47,7 @@ namespace PegasusWeb.Pages
             if (IdMateria > 0)
             {
                 // Es una edición, se carga el curso existente
-                HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Materia/GetById?id={IdMateria}");
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Materia/GetById?id={IdMateria}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -82,7 +82,7 @@ namespace PegasusWeb.Pages
         //    List<Curso> getcursos = new List<Curso>();
 
         //    //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-        //    HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Curso/GetCursosForCombo");
+        //    HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Curso/GetCursosForCombo");
         //    if (response.IsSuccessStatusCode)
         //    {
         //        string cursosJson = await response.Content.ReadAsStringAsync();
@@ -106,7 +106,7 @@ namespace PegasusWeb.Pages
             List<ContenidoMaterias> getContenidos = new List<ContenidoMaterias>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/ContenidoMaterias/GetContenidoMateriasForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ContenidoMaterias/GetContenidoMateriasForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -176,11 +176,11 @@ namespace PegasusWeb.Pages
                 HttpResponseMessage response;
                 if (id > 0)
                 {
-                    response = await client.PutAsync("http://localhost:7130/Materia/UpdateMateria", content);
+                    response = await client.PutAsync("https://localhost:7130/Materia/UpdateMateria", content);
                 }
                 else
                 {
-                    response = await client.PostAsync("http://localhost:7130/Materia/CreateMateria", content);
+                    response = await client.PostAsync("https://localhost:7130/Materia/CreateMateria", content);
                 }
 
                 // Manejar errores de la respuesta HTTP
