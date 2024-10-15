@@ -7,24 +7,14 @@ using System.ComponentModel;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Net.Http;
+using System.Dynamic;
+using System;
 
 namespace PegasusWeb.Pages
 {
     public class CreateCursoModel : PageModel
     {
         static HttpClient client = new HttpClient();
-
-        [DisplayName("Nombre"), Required(ErrorMessage = "El campo Nombre es requerido")]
-        public string nombre { get; set; }
-
-        [DisplayName("Grado"), Required(ErrorMessage = "El campo Grado es requerido")]
-        public string grado { get; set; }
-
-        [DisplayName("Division"), Required(ErrorMessage = "El campo Division es requerido")]
-        public string division { get; set; }
-
-        [DisplayName("Turno"), Required(ErrorMessage = "El campo Turno es requerido")]
-        public string turno { get; set; }
 
         [BindProperty]
         public Curso Curso { get; set; }
@@ -33,13 +23,17 @@ namespace PegasusWeb.Pages
         public int IdCurso { get; set; }
 
         public List<IntegrantesCursos> Alumnos { get; set; } = new List<IntegrantesCursos>();
+        public List<Entities.Materia> Materias { get; set; } = new List<Entities.Materia>();
+
+        [BindProperty]
+        public List<int> SelectedAlumnosIds { get; set; } = new List<int>(); // IDs de los alumnos seleccionados en el formulario
 
         public async Task<IActionResult> OnGetAsync()
         {
             if (IdCurso > 0)
             {
                 // Es una edición, se carga el curso existente
-                HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Curso/GetById?id={IdCurso}");
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Curso/GetById?id={IdCurso}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -49,6 +43,8 @@ namespace PegasusWeb.Pages
                         Curso = JsonConvert.DeserializeObject<Curso>(cursoJson);
 
                         Alumnos = await GetIntegrantesCursosAsync(IdCurso);
+
+                        Materias = await GetMateriasCursoAsync(IdCurso);
                     }
                 }
 
@@ -66,10 +62,35 @@ namespace PegasusWeb.Pages
             return Page();
         }
 
+        private async Task<List<Entities.Materia>> GetMateriasCursoAsync(int curso)
+        {
+            List<Entities.Materia> getMaterias = new List<Entities.Materia>();
+
+            string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string materiasJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(materiasJson))
+                {
+                    getMaterias = JsonConvert.DeserializeObject<List<Entities.Materia>>(materiasJson);
+                }
+            }
+
+            return getMaterias;
+        }
+
         public IActionResult OnPostAgregarAlumno(int curso)
         {
             IdCurso = curso;
             return RedirectToPage("IntegrantesCursos");
+        }
+
+        public IActionResult OnPostAgregarMateria(int curso)
+        {
+            IdCurso = curso;
+            return RedirectToPage("MateriasCurso");
         }
 
         static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso)
@@ -78,7 +99,7 @@ namespace PegasusWeb.Pages
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -92,56 +113,74 @@ namespace PegasusWeb.Pages
             return getalumnos;
         }
 
-        public async Task<IActionResult> OnPostAsync(int grado, string nombre, string division, string turno, int id)
+        public async Task<IActionResult> OnPostAsync(bool atras, byte grado, string nombre, char division, string turno, int id)
         {
-            if (grado < 1)
+            if (atras)
             {
-                this.ModelState.AddModelError("grado", "El campo Grado es requerido");
-                return null;
-            }
-            if (string.IsNullOrEmpty(nombre))
-            {
-                this.ModelState.AddModelError("nombre", "El campo Curso es requerido");
-                return null;
-            }
-            if (string.IsNullOrEmpty(division))
-            {
-                this.ModelState.AddModelError("division", "El campo Division es requerido");
-                return null;
-            }
-            if (string.IsNullOrEmpty(turno))
-            {
-                this.ModelState.AddModelError("turno", "El campo Turno es requerido");
-                return null;
-            }
-
-            if (id > 0)
-            {
-                // Actualizar curso existente
-                var content = new StringContent($"{{\"Nombre_Curso\":\"{nombre}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\", \"Id\":\"{id}\"}}", Encoding.UTF8, "application/json");
-                //HttpResponseMessage response = await client.PutAsync("https://pegasus.azure-api.net/v1/Curso/UpdateCurso", content);
-                HttpResponseMessage response = await client.PutAsync("http://localhost:7130/Curso/UpdateCurso", content);
-                if (!response.IsSuccessStatusCode)
-                {
-                    this.ModelState.AddModelError("curso", "Hubo un error inesperado al actualizar el Curso");
-                    return null;
-                }               
-                
+                return RedirectToPage("Curso");
             }
             else
             {
-                // Crear nuevo curso
-                var content = new StringContent($"{{\"Nombre_Curso\":\"{nombre}\", \"Grado\":\"{grado}\", \"Division\":\"{division}\", \"Turno\":\"{turno}\"}}", Encoding.UTF8, "application/json");
-                //HttpResponseMessage response = await client.PostAsync("https://pegasus.azure-api.net/v1/Materia/CreateMateria", content);
-                HttpResponseMessage response = await client.PostAsync("http://localhost:7130/Curso/CreateCurso", content);
+                // Validaciones de entrada
+                if (grado < 1)
+                    ModelState.AddModelError("grado", "El campo Grado es requerido");
+
+                if (string.IsNullOrEmpty(nombre))
+                    ModelState.AddModelError("nombre", "El campo Nombre es requerido");
+
+                if (division == '\0')
+                    ModelState.AddModelError("division", "El campo Division es requerido");
+
+                if (string.IsNullOrEmpty(turno))
+                    ModelState.AddModelError("turno", "El campo Turno es requerido");
+
+                if (!ModelState.IsValid)
+                {
+                    await OnGetAsync();
+                    return Page();
+                }
+
+                dynamic cursoData = new ExpandoObject();
+                cursoData.Nombre_Curso = nombre;
+                cursoData.Grado = grado;
+                cursoData.Division = division;
+                cursoData.Turno = turno;
+
+                if (id > 0)
+                {
+                    cursoData.Id = id;
+                }
+
+                // Convertir el objeto dinámico a JSON
+                var jsonContent = JsonConvert.SerializeObject(cursoData);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // Hacer la llamada HTTP (PUT si actualiza, POST si crea)
+                HttpResponseMessage response;
+                if (id > 0)
+                {
+                    response = await client.PutAsync("https://localhost:7130/Curso/UpdateCurso", content);
+                }
+                else
+                {
+                    response = await client.PostAsync("https://localhost:7130/Curso/CreateCurso", content);
+                }
+
+                // Manejar errores de la respuesta HTTP
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.ModelState.AddModelError("curso", "Hubo un error inesperado al crear el Curso");
-                    return null;
-                }
-            }
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    ModelState.AddModelError("curso", id > 0
+                        ? "Hubo un error inesperado al actualizar el Curso: " + errorResponse
+                        : "Hubo un error inesperado al crear el Curso: " + errorResponse);
 
-            return RedirectToPage("Curso");
+                    await OnGetAsync();
+                    return Page();
+                }
+
+                TempData["SuccessMessage"] = "El curso se guardó correctamente.";
+                return RedirectToPage("Curso");
+            }
         }
     }
 }

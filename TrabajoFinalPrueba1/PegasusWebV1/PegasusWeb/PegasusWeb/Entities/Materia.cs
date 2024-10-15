@@ -9,10 +9,5 @@ namespace PegasusWeb.Entities
         public int? Id { get; set; }
         [Display(Name = "Nombre")]
         public string? Nombre { get; set; }
-        [Display(Name = "Curso")]
-        public Curso? Curso { get; set; }
-
-        [Display(Name = "ID_Curso")]
-        public int? Id_Curso { get; set; }
     }
 }

@@ -375,11 +375,11 @@ namespace PegasusV1.Repositories
             }
         }
 
-        public async Task<List<Roles>> GetRolesForCombo(Expression<Func<Roles, bool>>? predicate = null)
+        public async Task<List<Perfiles>> GetPerfilesForCombo(Expression<Func<Perfiles, bool>>? predicate = null)
         {
             using (DataContext dbContext = new DataContext(_configuration))
             {
-                IQueryable<Roles>? query = dbContext.Set<Roles>().AsQueryable();
+                IQueryable<Perfiles>? query = dbContext.Set<Perfiles>().AsQueryable();
 
                 if (predicate != null)
                 {

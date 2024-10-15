@@ -12,13 +12,15 @@ namespace PegasusV1.Entities
 
         public int? Id_Perfil { get; set; }
         [ForeignKey("Id_Perfil")]
-        public Roles Rol { get; set; }
+
+        [NotMapped]
+        public Perfiles? Perfil { get; set; }
 
         public string? Mail { get; set; }
 
         public bool? Activo { get; set; }
 
         [NotMapped]
-        public List<Calificaciones> Calificaciones { get; set; }
+        public List<Calificaciones> ?Calificaciones { get; set; }
     }
 }

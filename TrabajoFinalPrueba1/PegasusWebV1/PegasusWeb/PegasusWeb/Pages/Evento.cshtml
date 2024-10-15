@@ -12,22 +12,108 @@
     <title>Index</title>
 </head>
 <body>
-    <h4>Evento</h4>
+    <h4>Eventos</h4>
     <hr />
-    <a class="nav-link text-dark" asp-area="" asp-page="/CreateEvento">Crear Evento</a>
-    @foreach (Evento evento in Model.Eventos)
-    {
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="card col-4" style="width: 25rem; margin-top:1rem; margin-right:3rem; margin-bottom:1rem; margin-left:2rem; position:center">
-                <div class="card-body">
-                    <h3 class="card-title">@evento.Nombre</h3>
-                    <p class="card-text">@evento.Descripcion</p>
-                    <p class="card-text">@evento.Fecha</p>
+    <a class="btn btn-primary btn-custom" asp-page="/CreateEvento" style="margin:10px;">Crear Evento</a>
+
+    <div class="row">
+        @foreach (Evento evento in Model.Eventos)
+        {
+            <div class="col-md-4 justify-content-center">
+                <div class="card card2-custom card2-title-center justify-content-center">
+                    <h4 class="card-title card-title-center" style="margin-bottom:0px;">@(evento.Fecha.ToShortDateString())</h4>
+                    <h5 class="card-title card-title-center" style="margin-bottom:0px;">@evento.Nombre</h5>
+                    <p class="card-title card-title-center" style="margin-bottom:0px;">@evento.Descripcion</p>
+                    <form method="post">
+                        <input type="hidden" name="evento" value="@evento.Id" />
+                        <img src="~/img/escuela.png" class="card-img-top2" alt="">
+                        <br>
+                        <br>
+                        <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@evento.Id)" style="padding-bottom: 5px;" />
+                        <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@evento.Id)" style="padding-bottom: 5px;" />
+                        <input type="submit" id="submit-@evento.Id" style="display:none" />
+                        <input type="hidden" id="booleano-@evento.Id" name="editar" value="true">
+                    </form>
                 </div>
             </div>
-            <div class="col-4"></div>
-        </div>
-    }
+        }
+    </div>
+  
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: "success",
+                    title: "Guardado",
+                    showConfirmButton: false,
+                    width: '350px',
+                    padding: '20px',
+                    timer: 1500,
+                    background: '#fefefe',  // Fondo claro
+                    iconColor: '#00d1b2',    // Color del ícono
+                    color: '#333',           // Color del texto
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
+                    customClass: {
+                        popup: 'custom-popup',   // Personaliza el estilo del contenedor
+                        title: 'custom-title',   // Personaliza el estilo del título
+                        icon: 'custom-icon'      // Personaliza el estilo del ícono
+                    }
+                });
+            </text>
+        }
+    </script>
 </body>
 </html>
+
+@section scripts{
+    <script>
+            function submitForm(id) {
+                document.getElementById('submit-' + id).click();
+            }
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Deseas eliminar este evento?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#ff6f61', // Color del botón de confirmación
+                cancelButtonColor: '#6c757d',  // Color del botón de cancelar
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: "Cancelar",
+                width: '400px',
+                padding: '20px',
+                background: '#f0f0f5',
+                color: '#333',
+                iconColor: '#ff6f61',
+                customClass: {
+                    popup: 'modern-popup',
+                    title: 'modern-title',
+                    icon: 'modern-icon',
+                    confirmButton: 'modern-confirm-button',
+                    cancelButton: 'modern-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('booleano-' + id).value = false;
+                    submitForm(id);
+                }
+            });
+        }
+    </script>
+}

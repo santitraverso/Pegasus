@@ -14,11 +14,11 @@ namespace PegasusV1.Controllers
     {
         private readonly ILogger<ModulosController> _logger;
         private readonly IService<Modulos> ModulosService;
-        private readonly IService<Roles> RolesService;
+        private readonly IService<Perfiles> RolesService;
 
         public ModulosController(ILogger<ModulosController> logger,
             IService<Modulos> modulosService,
-            IService<Roles> rolesService)
+            IService<Perfiles> rolesService)
         {
             _logger = logger;
             ModulosService = modulosService;

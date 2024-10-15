@@ -14,20 +14,121 @@
 <body>
     <h4>Contactos</h4>
     <hr />
-    <a class="nav-link text-dark" asp-area="" asp-page="/CreateContacto">Crear Contacto</a>
-    @foreach (Contactos contacto in Model.Contactos)
-    {
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="card col-4" style="width: 17rem; margin-top:1rem; margin-right:3rem; margin-bottom:1rem; margin-left:2rem; position:center">
-                <div class="card-body">
-                    <h3 class="card-title">@contacto.Nombre</h3>
-                    <p class="card-text">@contacto.Mail</p>
-                    <p class="card-text">@contacto.Telefono</p>
-                </div>
-            </div>
-            <div class="col-4"></div>
-        </div>
-    }
+    <div class="container">
+        <a class="btn btn-primary btn-custom" asp-page="/CreateContacto" asp-route-tipoContacto="@Model.TipoContacto" style="margin:10px;">Crear Contacto</a>
+        <a class="btn btn-primary btn-custom" asp-page="/ListaContacto" style="margin:10px;">Atras</a>
+        <br />
+        <br />
+        <table id="tablaUsuarios" class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Mail</th>
+                    <th>Telefono</th>
+                    <th>Tipo de Contacto</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var contacto in Model.Contactos)
+                {
+
+                    <tr>
+                        <form method="post">
+                            <input type="hidden" name="contacto" value="@contacto.Id" />
+                            <input type="hidden" id="booleano-@contacto.Id" name="editar" value="true">
+                            <input type="hidden" name="tipoContacto" value="@Model.TipoContacto">
+                        <td>@contacto.Nombre</td>
+                        <td>@contacto.Mail</td>
+                        <td>@contacto.Telefono</td>
+                        <td>@(contacto.Tipo_Contacto == 1 ? "Institucional" : "Docente")</td>
+                        <td class="actions-column">
+                            <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@contacto.Id)" />
+                            <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@contacto.Id)" />
+                        </td>
+                        <input type="submit" id="submit-@contacto.Id" style="display:none" />
+                        </form>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: "success",
+                    title: "Guardado",
+                    showConfirmButton: false,
+                    width: '350px',
+                    padding: '20px',
+                    timer: 1500,
+                    background: '#fefefe',  // Fondo claro
+                    iconColor: '#00d1b2',    // Color del ícono
+                    color: '#333',           // Color del texto
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
+                    customClass: {
+                        popup: 'custom-popup',   // Personaliza el estilo del contenedor
+                        title: 'custom-title',   // Personaliza el estilo del título
+                        icon: 'custom-icon'      // Personaliza el estilo del ícono
+                    }
+                });
+            </text>
+        }
+    </script>
 </body>
 </html>
+
+
+@section scripts{
+    <script>
+        function submitForm(id) {
+            document.getElementById('submit-' + id).click();
+        }
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Deseas eliminar este contacto?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#ff6f61', // Color del botón de confirmación
+                cancelButtonColor: '#6c757d',  // Color del botón de cancelar
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: "Cancelar",
+                width: '400px',
+                padding: '20px',
+                background: '#f0f0f5',
+                color: '#333',
+                iconColor: '#ff6f61',
+                customClass: {
+                    popup: 'modern-popup',
+                    title: 'modern-title',
+                    icon: 'modern-icon',
+                    confirmButton: 'modern-confirm-button',
+                    cancelButton: 'modern-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('booleano-' + id).value = false;
+                    submitForm(id);
+                }
+            });
+        }
+    </script>
+}

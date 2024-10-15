@@ -15,6 +15,8 @@ namespace PegasusV1.Entities
         public Usuario? Usuario { get; set; }
         public int? Id_Alumno { get; set; }
 
+        public int? Id_Curso { get; set; }
+
         public Byte Calificacion { get; set; }
     }
 }

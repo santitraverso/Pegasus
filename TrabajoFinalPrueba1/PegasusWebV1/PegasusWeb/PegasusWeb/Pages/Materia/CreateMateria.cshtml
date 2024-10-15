@@ -21,53 +21,116 @@
 <body>
     <h4>@titulo</h4>
     <hr />
-    <form method="post">
+    <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Materia.Id" />
+        <input type="hidden" id="booleano" name="atras" value="false">
         <table>
             <tr>
                 <td>Nombre de la materia</td>
-                <td><input type="text" asp-for="Materia.Nombre" class="form-control" name="nombre" /></td>
+                <td><input type="text" asp-for="Materia.Nombre" class="inputMio3" name="nombre" id="nombre" /></td>
             </tr>
-            <span class="text-danger" asp-validation-for="nombre"></span>
-            <tr>
+            @*<tr>
                 <td>Seleccionar Curso</td>
                 <td>
-                    <select asp-for="CursoSeleccionadoId" asp-items="Model.CursosRelacionados" class="form-control">
+                    <select asp-for="CursoSeleccionadoId" asp-items="Model.CursosRelacionados" class="inputMio3" id="cursoSeleccionadoId">
                         <option value="">-- Seleccionar un curso --</option>
                     </select>
                 </td>
             </tr>
-            <span class="text-danger" asp-validation-for="CursoSeleccionadoId"></span>
+            <span class="text-danger" asp-validation-for="CursoSeleccionadoId"></span>*@
         </table>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <br />
+        <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
+        <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
+
     </form>
     <br />
     <br />
 
     <form method="post" asp-page-handler="ModificarContenido" style="@(Model.Materia.Id <= 0 ? "display:none;" : "")">
-        <h3>Contenidos</h3>
+        <h3>Contenido</h3>
         <div class="container">
             <input type="hidden" name="materia" asp-for="Materia.Id" />
-            <table id="tablaAlumnos" class="table">
-                <thead>
-                    <tr>
-                        <th>Apellido</th>
-                        <th>Nombre</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var alumno in Model.Contenidos)
-                    {
-                        <tr>
-                            <td>@alumno.Usuario.Apellido</td>
-                            <td>@alumno.Usuario.Nombre</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <button type="submit" class="btn btn-primary Model.Materia.Id"> Modificar Contenidos</button>
+            @{
+                var index = 1;
+            }
+            @foreach (var contenido in Model.Contenidos)
+            {
+                <div class="button-container">
+                    <button type="button" class="toggle-button">
+                         Unidad @(index): @contenido.Titulo
+                        <span class="symbol-button">+</span>
+                    </button>
+                    <div class="content">
+                        <p>@contenido.Descripcion</p>
+                    </div>
+                </div>
+
+                index++;
+            }
+            <br />
+            <button type="submit" class="btn btn-primary btn-custom"> Modificar Contenidos</button>
         </div>
     </form>
 
 </body>
 </html>
+@section scripts{
+    <script>
+        var buttons = document.querySelectorAll('.toggle-button');
+
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                this.classList.toggle('active');
+
+                var symbol = this.querySelector('.symbol-button');
+                if (this.classList.contains('active')) {
+                    symbol.textContent = '-';
+                } else {
+                    symbol.textContent = '+';
+                }
+            });
+        });
+
+        function validateForm() {
+            const nombre = document.querySelector('#nombre').value.trim();
+            //const cursoSeleccionadoId = document.querySelector('#cursoSeleccionadoId').value.trim();
+
+
+            if (nombre === '' /*|| cursoSeleccionadoId === ''*/) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Por favor, completa todos los campos.',
+                    width: '350px',
+                    padding: '20px',
+                    customClass: {
+                        title: 'my-custom-title',
+                        confirmButton: "btn btn-danger",
+                    }
+                });
+                return false;
+            }
+            return true;
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            if (validateForm()) {
+                    document.getElementById('form').submit();
+            }
+        }
+
+        function atrasBoton() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('form').submit();
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}
+
+
+    

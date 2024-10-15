@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using PegasusWeb.Entities;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Dynamic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -30,7 +32,7 @@ namespace PegasusWeb.Pages
         [TempData]
         public int IdMateria { get; set; }
 
-        public List<IntegrantesCursos> Contenidos { get; set; } = new List<IntegrantesCursos>();
+        public List<ContenidoMaterias> Contenidos { get; set; } = new List<ContenidoMaterias>();
 
         [BindProperty]
         public int CursoSeleccionadoId { get; set; }
@@ -40,12 +42,12 @@ namespace PegasusWeb.Pages
         public async Task<IActionResult> OnGetAsync()
         {
 
-            await CargarCursosAsync();
+            //await CargarCursosAsync();
 
             if (IdMateria > 0)
             {
                 // Es una edición, se carga el curso existente
-                HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Materia/GetById?id={IdMateria}");
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Materia/GetById?id={IdMateria}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -54,9 +56,9 @@ namespace PegasusWeb.Pages
                     {
                         Materia = JsonConvert.DeserializeObject<Entities.Materia>(materiaJson);
 
-                        CursoSeleccionadoId = (int)Materia.Id_Curso;
+                        //CursoSeleccionadoId = (int)Materia.Id_Curso;
 
-                        //Alumnos = await GetIntegrantesCursosAsync(IdCurso);
+                        Contenidos = await GetContenidosMateriaAsync(IdMateria);
                     }
                 }
 
@@ -75,106 +77,127 @@ namespace PegasusWeb.Pages
             return Page();
         }
 
-        static async Task<List<Curso>> GetCursosAsync()
-        {
-            List<Curso> getcursos = new List<Curso>();
+        //static async Task<List<Curso>> GetCursosAsync()
+        //{
+        //    List<Curso> getcursos = new List<Curso>();
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Curso/GetCursosForCombo");
-            if (response.IsSuccessStatusCode)
-            {
-                string cursosJson = await response.Content.ReadAsStringAsync();
-                if (!string.IsNullOrEmpty(cursosJson))
-                {
-                    getcursos = JsonConvert.DeserializeObject<List<Curso>>(cursosJson);
-                }
-            }
+        //    //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
+        //    HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Curso/GetCursosForCombo");
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        string cursosJson = await response.Content.ReadAsStringAsync();
+        //        if (!string.IsNullOrEmpty(cursosJson))
+        //        {
+        //            getcursos = JsonConvert.DeserializeObject<List<Curso>>(cursosJson);
+        //        }
+        //    }
 
-            return getcursos;
-        }
+        //    return getcursos;
+        //}
 
         public IActionResult OnPostModificarContenido(int materia)
         {
             IdMateria = materia;
-            return RedirectToPage("ListaContenido");
+            return RedirectToPage("../ListaContenidos");
         }
 
-        static async Task<List<IntegrantesCursos>> GetContenidosMateriaAsync(int materia)
+        static async Task<List<ContenidoMaterias>> GetContenidosMateriaAsync(int materia)
         {
-            List<IntegrantesCursos> getContenidos = new List<IntegrantesCursos>();
+            List<ContenidoMaterias> getContenidos = new List<ContenidoMaterias>();
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
             string queryParam = Uri.EscapeDataString($"x=>x.id_materia=={materia}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ContenidoMaterias/GetContenidoMateriasForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
                 string contenidosJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(contenidosJson))
                 {
-                    getContenidos = JsonConvert.DeserializeObject<List<IntegrantesCursos>>(contenidosJson);
+                    getContenidos = JsonConvert.DeserializeObject<List<ContenidoMaterias>>(contenidosJson);
                 }
             }
 
             return getContenidos;
         }
 
-        private async Task CargarCursosAsync()
+        //private async Task CargarCursosAsync()
+        //{
+        //    var cursos = await GetCursosAsync();
+
+        //    CursosRelacionados = cursos.Select(c => new SelectListItem
+        //    {
+        //        Value = c.Id.ToString(),
+        //        Text = c.Nombre_Curso
+        //    }).ToList();
+        //}
+
+        public async Task<IActionResult> OnPost(string nombre, int id, bool atras)
         {
-            var cursos = await GetCursosAsync();
-
-            CursosRelacionados = cursos.Select(c => new SelectListItem
+            if (atras)
             {
-                Value = c.Id.ToString(),
-                Text = c.Nombre_Curso
-            }).ToList();
-        }
-
-        public async Task<IActionResult> OnPost(string nombre, int id)
-        {
-            int idCursoSeleccionado = CursoSeleccionadoId;
-
-            if (idCursoSeleccionado < 1)
-            {
-                this.ModelState.AddModelError("curso", "El campo Curso es requerido");
-            }
-
-            if(string.IsNullOrEmpty(nombre))
-            {
-                this.ModelState.AddModelError("nombreMateria", "El campo Nombre de la materia es requerido");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                await CargarCursosAsync();
-                return Page();
-            }
-
-
-            if (id > 0)
-            {
-                // Actualizar materia existente
-                var content = new StringContent($"{{\"Nombre\":\"{nombre}\", \"Id_Curso\":\"{idCursoSeleccionado}\", \"Id\":\"{id}\"}}", Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PutAsync("http://localhost:7130/Materia/UpdateMateria", content);
-                if (!response.IsSuccessStatusCode)
-                {
-                    this.ModelState.AddModelError("materia", "Hubo un error inesperado al actualizar la Materia.");
-                    return null;
-                }
-
+                IdMateria = id;
+                return RedirectToPage("../Materia");
             }
             else
             {
-                // Crear nueva materia
-                var content = new StringContent($"{{\"Nombre\":\"{nombre}\", \"id_Curso\":\"{idCursoSeleccionado}\"}}", Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync("http://localhost:7130/Materia/CreateMateria", content);
+                int idCursoSeleccionado = CursoSeleccionadoId;
+
+                if (idCursoSeleccionado < 1)
+                {
+                    this.ModelState.AddModelError("curso", "El campo Curso es requerido");
+                }
+
+                if (string.IsNullOrEmpty(nombre))
+                {
+                    this.ModelState.AddModelError("nombreMateria", "El campo Nombre de la materia es requerido");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    //await CargarCursosAsync();
+                    return Page();
+                }
+
+
+                dynamic materiaData = new ExpandoObject();
+                materiaData.Nombre = nombre;
+                materiaData.Id_Curso = idCursoSeleccionado;
+
+                if (id > 0)
+                {
+                    materiaData.Id = id;
+                }
+
+                // Convertir el objeto dinámico a JSON
+                var jsonContent = JsonConvert.SerializeObject(materiaData);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // Hacer la llamada HTTP (PUT si actualiza, POST si crea)
+                HttpResponseMessage response;
+                if (id > 0)
+                {
+                    response = await client.PutAsync("https://localhost:7130/Materia/UpdateMateria", content);
+                }
+                else
+                {
+                    response = await client.PostAsync("https://localhost:7130/Materia/CreateMateria", content);
+                }
+
+                // Manejar errores de la respuesta HTTP
                 if (!response.IsSuccessStatusCode)
                 {
-                    this.ModelState.AddModelError("materia", "Hubo un error inesperado al crear la Materia.");
-                }
-            }
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    ModelState.AddModelError("materia", id > 0
+                        ? "Hubo un error inesperado al actualizar la Materia: " + errorResponse
+                        : "Hubo un error inesperado al crear la Materia: " + errorResponse);
 
-            return RedirectToPage("../Materia");
+                    await OnGetAsync();
+                    return Page();
+                }
+
+                TempData["SuccessMessage"] = "La Materia se guardó correctamente.";
+                return RedirectToPage("../Materia");
+            }
         }
     }
 }

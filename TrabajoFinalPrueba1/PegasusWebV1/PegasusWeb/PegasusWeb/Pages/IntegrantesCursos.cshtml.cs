@@ -19,12 +19,6 @@ namespace PegasusWeb.Pages
         [BindProperty]
         public List<int> SelectedAlumnosIds { get; set; } = new List<int>(); // IDs de los alumnos seleccionados en el formulario
 
-        [TempData]
-        public bool IsSaved { get; set; }
-
-        [TempData]
-        public string ErrorMessage { get; set; }
-
 
         public async Task OnGetAsync()
         {
@@ -58,8 +52,8 @@ namespace PegasusWeb.Pages
             List<Usuario> getalumnos = new List<Usuario>();
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
-            string queryParam = Uri.EscapeDataString("x=>x.perfil == 2 && x.activo == true");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/Usuario/GetUsuariosForCombo?query={queryParam}");
+            string queryParam = Uri.EscapeDataString("x=>x.id_perfil == 2 && x.activo == true");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Usuario/GetUsuariosForCombo?query={queryParam}");
             if (response.IsSuccessStatusCode)
             {
                 string alumnosJson = await response.Content.ReadAsStringAsync();
@@ -78,7 +72,7 @@ namespace PegasusWeb.Pages
 
             //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso == {curso}");
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -92,27 +86,28 @@ namespace PegasusWeb.Pages
             return getalumnos;
         }
 
-        public async Task<IActionResult?> OnPost(int curso)
+        public async Task<IActionResult?> OnPost(int curso, bool atras)
         {
-            IntegrantesCurso = await GetIntegrantesCursosAsync(curso);
-            //Borro los integrantes actuales del curso ya que voy a volver a generarlos con los enviados
-            bool correct = await BorrarIntegrantesAsync();
-            if (correct)
+            if(atras)
             {
-                foreach (var alumno in SelectedAlumnosIds)
-                {
-                    await GuardarIntegrantesAsync(curso, alumno);
-                }
-
-                IsSaved = true;
-                ErrorMessage = string.Empty;
-                return RedirectToPage();
+                IdCurso = curso;
+                return RedirectToPage("CreateCurso");
             }
             else
             {
-                IsSaved = false;
-                ErrorMessage = "Error al guardar los datos";
-                return RedirectToPage();
+                IntegrantesCurso = await GetIntegrantesCursosAsync(curso);
+                //Borro los integrantes actuales del curso ya que voy a volver a generarlos con los enviados
+                bool correct = await BorrarIntegrantesAsync();
+                if (correct)
+                {
+                    foreach (var alumno in SelectedAlumnosIds)
+                    {
+                        await GuardarIntegrantesAsync(curso, alumno);
+                    }
+                }
+
+                TempData["SuccessMessage"] = "Los integrantes se guardaron correctamente.";
+                return RedirectToPage("Curso");
             }
         }
 
@@ -120,7 +115,7 @@ namespace PegasusWeb.Pages
         {
             foreach (var alumno in IntegrantesCurso)
             {
-                HttpResponseMessage response = await client.GetAsync($"http://localhost:7130/IntegrantesCursos/DeleteIntegrantesCursos?id={alumno.Id}");
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/DeleteIntegrantesCursos?id={alumno.Id}");
                 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -135,7 +130,7 @@ namespace PegasusWeb.Pages
         {
             var content = new StringContent($"{{\"ID_CURSO\":\"{curso}\", \"ID_USUARIO\":\"{idAlumno}\"}}", Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("http://localhost:7130/IntegrantesCursos/CreateIntegrantesCursos", content);
+            HttpResponseMessage response = await client.PostAsync("https://localhost:7130/IntegrantesCursos/CreateIntegrantesCursos", content);
             if (!response.IsSuccessStatusCode)
             {
                 this.ModelState.AddModelError("curso", "Hubo un error inesperado al agregar alumnos al curso");

@@ -18,12 +18,25 @@
         @foreach (PegasusWeb.Entities.Materia materia in Model.Materias)
         {
             <div class="col-md-3 justify-content-center">
-                <a asp-page="/IntegrantesMaterias" asp-route-materia="@materia.Id" class="card card-custom card-title-center justify-content-center">
-                    <img src="~/img/libros.png" class="card-img-top" alt="">
-                    <h5 class="card-title card-title-center">@materia.Nombre</h5>
-                </a>
+                <form method="post" id="form-@materia.Id">
+                    <div class="card card-custom card-title-center justify-content-center" style="cursor: pointer;" onclick="submitForm(@materia.Id)">
+                        <input type="hidden" name="materia" value="@materia.Id" />
+                        <input type="hidden" name="modulo" value="@Model.Modulo" />
+                        <input type="hidden" name="curso" value="@Model.IdCurso" />
+                        <h5 class="card-title card-title-center">@materia.Nombre</h5>
+                        <img src="~/img/libros.png" class="card-img-top2" alt="" style=" margin: 0 auto;">
+                    </div>
+                    <input type="submit" id="submit-@materia.Id" name="submit" style="display:none" />
+                </form>
             </div>
         }
     </div>
 </body>
 </html>
+@section scripts{
+    <script>
+        function submitForm(materiaId) {
+            document.getElementById('submit-' + materiaId).click();
+        }
+    </script>
+}

@@ -2,62 +2,161 @@
 @using PegasusWeb.Entities
 @model PegasusWeb.Pages.CreateCalificacionModel
 @{
+    var esEdicion = Model.Alumno.Usuario is not null ? Model.Alumno.Usuario.Calificaciones.Count > 0: false;
+    var titulo = esEdicion ? "Editar Calificacion" : "Cargar Nueva Calificacion";
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h4 class="centrado">Alumnos</h4>
+    <h4 class="centrado">@titulo</h4>
     <br />
+    <form method="post" id="form">
+        <input type="hidden" name="alumno" value="@Model.Alumno.Id_Usuario" />
+        <input type="hidden" name="materia" value="@Model.Alumno.Id_Materia" />
+        <input type="hidden" name="curso" value="@Model.IdCurso" />
+        <input type="hidden" id="booleano" name="atras" value="false">
+        <input type="hidden" name="modulo" value="@Model.Modulo" />
     <div class="container">
-        <form method="post">
             <table id="tablaAlumnos" class="table">
-                <thead>
+                <thead style="border-bottom: 2px solid">
+                    <tr style="border: none;">
+                        <th style="border: none;">Apellido</th>
+                        <th style="border: none;">Nombre</th>
+                        <th style="border: none;">Calificaciones</th>
+                </tr>
+            </thead>
+            <tbody>
                     <tr>
-                        <th>Apellido</th>
-                        <th>Nombre</th>
-                        <th>Nota</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                   @* <tr>
-                        <td>
-                            Linares
-                        </td>
-                        <td>
-                            Santiago
-                        </td>
-                        <td>
-                            <input type="text" name="Nota" value="@Model.Usuario" />
-                        </td>
-                    </tr>*@
-                    @foreach (IntegrantesMaterias alumno in Model.Alumnos)
-                    {
-                        <tr>
-                            <td>
-                                @alumno.Usuario.Apellido
-                            </td>
-                            <td>
-                                @alumno.Usuario.Nombre
-                            </td>
-                            <td>
-                                <input type="text" name="Nota" value="@Model.Nota" />
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </form>
+                        <td>@Model.Alumno.Usuario.Apellido</td>
+                        <td>@Model.Alumno.Usuario.Nombre</td>
+                        <td style="padding-top:0px;">
 
-        <div class="center-screen">
-            <button class="btn btn-primary btn-custom" asp-area="" asp-page="/CreateMateria" style="margin:10px; ">Reporte</button>
-        </div>
+                            <table class="nested-table2" id="calificacionesTable">
+                                @if (Model.Alumno.Usuario.Calificaciones.Count > 0)
+                                {
+                                    var index = 0;
+                                    @foreach (var calificacion in Model.Alumno.Usuario.Calificaciones)
+                                    {
+                                        <tr id="calificacion-@calificacion.Id">
+                                            <td style="border: none; padding-top:16px;">Nota @(index + 1)</td>
+                                            <td style="display: flex; align-items: center; border: none;" >
+                                                <input type="number" id="calificacion-@calificacion.Id"
+                                                       class="form-control"
+                                                       name="Calificaciones[@index].Calificacion"
+                                                       asp-for="@calificacion.Calificacion" required min="0" max="10"
+                                                       style="border: none; background-color: transparent; border-bottom: 2px solid rgba(0, 0, 0, 0.1); width: 50%;" />
+                                                
+                                                <img src="~/img/eliminar.png" class="icon" alt="Eliminar"
+                                                     style="cursor: pointer;"
+                                                     data-toggle="modal" data-target="#deleteModal"
+                                                     onclick="confirmDelete(@calificacion.Id)" />
+                                            </td>
+                                            <input type="hidden" name="Calificaciones[@index].Id" value="@calificacion.Id" />
+                                        </tr>
+
+                                        index++;
+                                    }
+                                }
+                                else
+                                {
+                                    <tr style="border: none;">
+                                        <td style="border: none; padding-top:16px;">Nota</td>
+                                        <td style="border: none;"><input type="number" value="" class="form-control" name="Calificaciones[0].Calificacion" required min="1" max="10" style="border: none; background-color: transparent; border-bottom: 2px solid rgba(0, 0, 0, 0.1); width: 50%;" /></td>
+                                        <input type="hidden" name="Calificaciones[0].Id" value="0" />
+                                    </tr>
+                                }
+                                </table>
+                        </td>
+                    </tr>             
+            </tbody>
+        </table>
     </div>
+        <button type="button" class="btn btn-primary btn-custom" onclick="confirmSave()">Guardar</button>
+        <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
+        <input type="hidden" id="calificacionesEliminadas" name="CalificacionesEliminadas" value="" />
+    </form>
 </body>
 </html>
+@section scripts{
+    <script>
+        function confirmSave(){
+            document.getElementById('form').submit();
+        }
+        function confirmDelete(id) {
+
+            if (id !== null) {
+
+                Swal.fire({
+                    title: "¿Estás seguro?",
+                    text: "¿Deseas eliminar esta calificacion? Recuerde Guardar para confirmar",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#ff6f61', // Color del botón de confirmación
+                    cancelButtonColor: '#6c757d',  // Color del botón de cancelar
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: "Cancelar",
+                    width: '400px',
+                    padding: '20px',
+                    background: '#f0f0f5',
+                    color: '#333',
+                    iconColor: '#ff6f61',
+                    customClass: {
+                        popup: 'modern-popup',
+                        title: 'modern-title',
+                        icon: 'modern-icon',
+                        confirmButton: 'modern-confirm-button',
+                        cancelButton: 'modern-cancel-button'
+                    },
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var row = document.getElementById("calificacion-" + id);
+                        if (row) {
+                            row.remove();
+                        }
+
+                        let eliminadas = document.getElementById('calificacionesEliminadas').value;
+                        eliminadas = eliminadas ? eliminadas.split(',') : [];
+                        eliminadas.push(id);
+                        document.getElementById('calificacionesEliminadas').value = eliminadas.join(',');
+                        updateInputNames();
+                    }
+                });
+
+            } else {
+                console.error("Error: calificacionId no está definido.");
+            }
+        }
+
+        function updateInputNames() {
+            var rows = document.querySelectorAll("#calificacionesTable tr");
+            rows.forEach((row, index) => {
+                var inputs = row.querySelectorAll("input");
+                inputs.forEach((input) => {
+                    if (input.type === 'number') {
+                        input.name = `Calificaciones[${index}].Calificacion`;
+                    } else if (input.type === 'hidden') {
+                        input.name = `Calificaciones[${index}].Id`;
+                    }
+                });
+            });
+        }
+
+        function atrasBoton() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('form').submit();
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}

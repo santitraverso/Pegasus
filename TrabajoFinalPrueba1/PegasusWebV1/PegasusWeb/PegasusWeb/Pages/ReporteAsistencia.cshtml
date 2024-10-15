@@ -1,0 +1,122 @@
+﻿@page
+@using Newtonsoft.Json;
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.ReporteAsistenciaModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4>Reporte Asistencia</h4>
+    <hr />
+
+
+    @if (Model.Alumnos != null && Model.Alumnos.Count > 0)
+    {
+        <h5>Asistencia para @Model.Fecha.ToShortDateString()</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Presente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Alumnos.Count; i++)
+                    {
+                        <tr>
+                            <td>@Model.Alumnos[i].Alumno.Apellido</td>
+                            <td>@Model.Alumnos[i].Alumno.Nombre</td>
+                            <td>@(Model.Alumnos[i].Presente ? "Si":"No")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        <button type="button" class="btn btn-primary btn-custom" onclick="generatePDF()">Imprimir PDF</button>
+    }
+    <form method="post" asp-page-handler="Atras" style="display: inline;" id="form2">
+        <input type="hidden" name="materia" value="@Model.Materia" />
+        <input type="hidden" name="fecha" value="@Model.Fecha" />
+        <input type="hidden" name="modulo" value="@Model.Modulo" />
+        <input type="hidden" name="curso" value="@Model.IdCurso" />
+        <button type="button" class="btn btn-primary btn-custom" asp-area="" style="margin:10px;" onclick="atras()">Atras</button>
+    </form>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        const Model = {
+            Alumnos: @Html.Raw(JsonConvert.SerializeObject(Model.Alumnos)),
+            Fecha: @Html.Raw(JsonConvert.SerializeObject(Model.Fecha.ToShortDateString()))
+            };
+    </script>
+</body>
+</html>
+
+@section scripts{
+    <script>
+
+        function atras() {
+            // Utiliza el ID del formulario para enviarlo
+            document.getElementById('form2').submit();
+        }
+
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Ancho de la página
+            const pageWidth = doc.internal.pageSize.getWidth();
+
+            // Títulos centrados
+            doc.setFontSize(20);
+            doc.text('Listado de Alumnos', pageWidth / 2, 10, { align: 'center' });
+            doc.setFontSize(14);
+            doc.text(`Asistencia para el ${Model.Fecha}`, pageWidth / 2, 25, { align: 'center' });
+
+            // Encabezados de la tabla
+            doc.setFont('Arial', 'bold');
+            let y = 40; // Aumenta la coordenada Y para crear más espacio
+            doc.text('Apellido', 10, y);
+            doc.text('Nombre', 50, y);
+            doc.text('Asistencia', 90, y);
+            doc.setFont('Arial', 'normal');
+
+            //Dibujar una línea debajo de los encabezados
+            y += 5;
+            doc.line(10, y, pageWidth - 10, y);
+
+            // Datos de alumnos
+            y += 5; // posición Y inicial
+            Model.Alumnos.forEach((alumno, index) => {
+                const estado = alumno.Presente ? "P" : "A";
+                // Asegurarse de que los presentes sean verdes
+                const color = alumno.Presente ? 'green' : 'red';
+                doc.setTextColor(color);
+
+                // Dibujar la línea divisoria (excepto en la primera fila)
+                if (index > 0) {
+                    doc.line(10, y - 5, doc.internal.pageSize.getWidth() - 10, y - 5);
+                }
+
+                // Datos del alumno
+                doc.text(alumno.Alumno.Apellido, 10, y);
+                doc.text(alumno.Alumno.Nombre, 50, y);
+                doc.text(estado, 90, y);
+                y += 10;
+            });
+
+            // Guardar el PDF
+            doc.save("ReporteAsistencia.pdf");
+        }
+    </script>
+}

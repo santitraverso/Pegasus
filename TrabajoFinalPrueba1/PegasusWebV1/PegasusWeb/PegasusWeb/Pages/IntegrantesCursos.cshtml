@@ -2,8 +2,6 @@
 @using PegasusWeb.Entities
 @model PegasusWeb.Pages.IntegrantesCursosModel
 @{
-    var isSaved = TempData["IsSaved"] != null && (bool)TempData["IsSaved"];
-    var errorMessage = TempData["ErrorMessage"] != null ? TempData["ErrorMessage"].ToString() : "";
 }
 
 
@@ -12,32 +10,30 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Integrantes</title>
 </head>
 <body>
-    <h4 class="centrado">Alumnos</h4>
+    <h4>Alumnos</h4>
+    <hr />
     <br />
     <div class="center-screen">
-        <input type="text" id="busqueda" placeholder="Buscar alumnos..." onkeyup="buscarAlumnos()">
+        <button class="search__button">
+            <div class="search__icon">
+                <svg version="1.1" xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                    <title>magnifying-glass</title>
+                    <path d="M17.545 15.467l-3.779-3.779c0.57-0.935 0.898-2.035 0.898-3.21 0-3.417-2.961-6.377-6.378-6.377s-6.186 2.769-6.186 6.186c0 3.416 2.961 6.377 6.377 6.377 1.137 0 2.2-0.309 3.115-0.844l3.799 3.801c0.372 0.371 0.975 0.371 1.346 0l0.943-0.943c0.371-0.371 0.236-0.84-0.135-1.211zM4.004 8.287c0-2.366 1.917-4.283 4.282-4.283s4.474 2.107 4.474 4.474c0 2.365-1.918 4.283-4.283 4.283s-4.473-2.109-4.473-4.474z"></path>
+                </svg>
+            </div>
+        </button>
+        <input type="text" class="search__input" id="busqueda" placeholder="Buscar usuarios..." onkeyup="buscarUsuarios()">
     </div>
+    <br />
 
-    <div id="customAlertSuccess" class="custom-alert" style="display: none;">
-        <div class="custom-alert-content">
-            <p>Guardado correctamente</p>
-            <button onclick="closeAlert()">Aceptar</button>
-        </div>
-    </div>
-
-    <div id="customAlertError" class="custom-alert" style="display: none;">
-        <div class="custom-alert-content error-content">
-            <p>@errorMessage</p>
-            <button onclick="closeErrorAlert()">Aceptar</button>
-        </div>
-    </div>
-    <form method="post">
+    <form method="post" id="form">
         <div class="container">
             <input type="hidden" name="curso" asp-for="IdCurso" />
-            <table id="tablaAlumnos" class="table">
+            <input type="hidden" id="booleano" name="atras" value="false">
+            <table id="tablaUsuarios" class="table">
                 <thead>
                     <tr>
                         <th>Seleccion</th>
@@ -50,28 +46,33 @@
                     {
                         var isChecked = Model.SelectedAlumnosIds.Contains((int)alumno.Id_Usuario);
                         <tr>
-                            <td><input type="checkbox" name="SelectedAlumnosIds" value="@alumno.Id_Usuario" @(isChecked ? "checked" : "") /></td>
+                            <td>
+                                <label class="container2">
+                                    <input type="checkbox" name="SelectedAlumnosIds" value="@alumno.Id_Usuario" @(isChecked ? "checked" : "") />
+                                    <div class="checkmark"></div>
+                                </label>
+                            </td>
                             <td>@alumno.Usuario.Apellido</td>
                             <td>@alumno.Usuario.Nombre</td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-primary Model.Curso.Id">Guardar</button>
+            <button type="button" onclick="confirmSave()" class="btn btn-primary btn-custom">Guardar</button>
+            <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
         </div>
     </form>
-
 </body>
 </html>
 
 
 @section scripts{
     <script>
-        function buscarAlumnos() {
+        function buscarUsuarios() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("busqueda");
             filter = input.value.toUpperCase();
-            table = document.getElementById("tablaAlumnos");
+            table = document.getElementById("tablaUsuarios");
             tr = table.getElementsByTagName("tr");
 
             for (i = 1; i < tr.length; i++) { // Comenzar en 1 para omitir la primera fila de títulos
@@ -92,29 +93,14 @@
             }
         }
 
-        window.onload = function () {
-            var isSaved  = '@isSaved'.toLowerCase();
-            
-            var errorMessage = '@errorMessage';
-
-            if (isSaved === 'true') {
-                document.getElementById('customAlertSuccess').style.display = 'block';
-            }
-
-            if (errorMessage.length > 0) {
-                document.getElementById('customAlertError').style.display = 'block';
-            }
-        };
-
-        function closeAlert() {
-            document.getElementById('customAlertSuccess').style.display = 'none';
-            window.location.href = '/Curso';
+        function confirmSave() {
+                document.getElementById('form').submit();
         }
 
-        function closeErrorAlert() {
-            document.getElementById('customAlertError').style.display = 'none';
-            window.location.href = '/Curso';
+        function atrasBoton() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('form').submit();
         }
-
+        
     </script>
 }

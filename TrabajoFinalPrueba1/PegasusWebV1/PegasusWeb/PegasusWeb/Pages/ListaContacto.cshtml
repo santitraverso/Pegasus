@@ -1,0 +1,48 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.ListaContactoModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Contacto</title>
+</head>
+<body>
+    <h4>Contactos</h4>
+    <hr />
+    <form method="post">
+        <input type="hidden" name="tipoContacto" value="1" id="tipoContacto" />
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="card col-4 card-custom card-title-center justify-content-center" onclick="submitForm(1)" style="cursor: pointer; transition: transform 0.2s ease;">
+                <h5 class="card-title">Institucion</h5>
+                <img src="~/img/escuela.png" class="card-img-top4" alt="Institución">
+            </div>
+            <div class="col-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="card col-4 card-custom card-title-center justify-content-center" onclick="submitForm(2)" style="cursor: pointer; transition: transform 0.2s ease;">
+                <h5 class="card-title">Docentes</h5>
+                <img src="~/img/docente.png" class="card-img-top4" alt="Docente">
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <input type="submit" id="submit" name="submit" style="display:none" />
+    </form>
+
+</body>
+</html>
+@section scripts{
+    <script>
+        function submitForm(valor) {
+            document.getElementById('tipoContacto').value = valor;
+            document.getElementById('submit').click();
+        }
+    </script>
+}

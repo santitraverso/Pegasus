@@ -16,36 +16,94 @@
 <body>
     <h4>@titulo</h4>
     <hr />
-    <form method="post">    
+    <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Curso.Id" />
+        <input type="hidden" id="booleano" name="atras" value="false">
         <table>
             <tr>
                 <td>Nombre del curso</td>
-                <td><input type="text" asp-for="Curso.Nombre_Curso" class="form-control" name="nombre"/></td>
+                <td><input type="text" asp-for="Curso.Nombre_Curso" placeholder="nombre..." class="inputMio3" name="nombre" id="nombre" required /></td>
             </tr>
-            <span class="text-danger" asp-validation-for="nombre"></span>
+            
             <tr>
                 <td>Grado</td>
-                <td><input type="number" asp-for="Curso.Grado" class="form-control" name="grado"/></td>
+                <td><input type="number" asp-for="Curso.Grado" placeholder="1.." class="inputMio3" name="grado" id="grado" required /></td>
             </tr>
-            <span class="text-danger" asp-validation-for="grado"></span>
+            
             <tr>
                 <td>Division</td>
-                <td><input type="text" asp-for="Curso.Division" class="form-control" name="division" /></td>
+                <td><input type="text" asp-for="Curso.Division" class="inputMio3" placeholder="A..." name="division" id="division" required maxlength="1" /></td>
             </tr>
-            <span class="text-danger" asp-validation-for="division"></span>
+            
             <tr>
                 <td>Turno</td>
-                <td><input type="text" asp-for="Curso.Turno" class="form-control" name="turno" /></td>
+                <td><input type="text" asp-for="Curso.Turno" class="inputMio3" name="turno" placeholder="tarde.." id="turno" required /></td>
             </tr>
-            <span class="text-danger" asp-validation-for="turno"></span>
+            
         </table>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <br />
+        <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
+        <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
     </form>
     <br />
     <br />
-    
-        <form method="post" asp-page-handler="AgregarAlumno" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <form method="post" asp-page-handler="AgregarAlumno" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">
+                    <h5>Alumnos</h5>
+                    <div class="container">
+                        <input type="hidden" name="curso" asp-for="Curso.Id" />
+                        <table id="tablaAlumnos" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Apellido</th>
+                                    <th>Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var alumno in Model.Alumnos)
+                                {
+                                    <tr>
+                                        <td>@alumno.Usuario.Apellido</td>
+                                        <td>@alumno.Usuario.Nombre</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary btn-custom"> @(Model.Alumnos != null && Model.Alumnos.Any() ? "Modificar Alumnos" : "Agregar Alumnos")</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <form method="post" asp-page-handler="AgregarMateria" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">
+                    <h5>Materias</h5>
+                    <div class="container">
+                        <input type="hidden" name="curso" asp-for="Curso.Id" />
+                        <table id="tablaAlumnos" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var materia in Model.Materias)
+                                {
+                                    <tr>
+                                        <td>@materia.Nombre</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary btn-custom"> @(Model.Materias != null && Model.Materias.Any() ? "Modificar Materias" : "Agregar Materias")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        @*<form method="post" asp-page-handler="AgregarAlumno" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">
             <h3>Alumnos</h3>
             <div class="container">
                 <input type="hidden" name="curso" asp-for="Curso.Id" />
@@ -66,9 +124,49 @@
                         }
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary Model.Curso.Id"> Agregar Alumnos</button>
+            <button type="submit" class="btn btn-primary btn-custom"> @(Model.Alumnos != null && Model.Alumnos.Any() ? "Modificar Alumnos" : "Agregar Alumnos")</button>
             </div>
-        </form>
-    
+        </form>*@
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
+
+@section scripts{
+    <script>
+        function validateForm() {
+            const nombre = document.querySelector('#nombre').value.trim();
+            const grado = document.querySelector('#grado').value.trim();
+            const division = document.querySelector('#division').value.trim();
+            const turno = document.querySelector('#turno').value.trim();
+
+            if (nombre === '' || grado === '' || division === '' || turno === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Por favor, completa todos los campos.',
+                    width: '350px',
+                    padding: '20px',
+                    customClass: {
+                        title: 'my-custom-title',
+                        confirmButton: "btn btn-danger",
+                    }
+                });
+                return false;
+            }
+            return true;
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault(); 
+            if (validateForm()) {
+                document.getElementById('form').submit();
+            }
+        }
+
+        function atrasBoton() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('form').submit();
+        }
+
+    </script>
+}

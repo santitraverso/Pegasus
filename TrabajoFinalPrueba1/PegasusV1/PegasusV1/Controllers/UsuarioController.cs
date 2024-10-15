@@ -14,14 +14,14 @@ namespace PegasusV1.Controllers
     {
         private readonly ILogger<UsuarioController> _logger;
         private readonly IService<Usuario> UsuarioService;
-        private readonly IService<Roles> RolesService;
+        private readonly IService<Perfiles> PerfilesService;
 
         public UsuarioController(ILogger<UsuarioController> logger, IService<Usuario> usuarioService,
-            IService<Roles> rolesService)
+            IService<Perfiles> perfilesService)
         {
             _logger = logger;
             UsuarioService = usuarioService;
-            RolesService = rolesService;
+            PerfilesService = perfilesService;
         }
 
         [HttpGet]
@@ -40,7 +40,7 @@ namespace PegasusV1.Controllers
                 {
                     if (user.Id_Perfil.HasValue)
                     {
-                        user.Rol = await RolesService.GetById(user.Id_Perfil.Value);
+                        user.Perfil = await PerfilesService.GetById(user.Id_Perfil.Value);
                     }
                 }
 
@@ -48,7 +48,17 @@ namespace PegasusV1.Controllers
             }
             else
             {
-                return await UsuarioService.GetForCombo();
+                List<Usuario> users = await UsuarioService.GetForCombo();
+
+                foreach (var user in users)
+                {
+                    if (user.Id_Perfil.HasValue)
+                    {
+                        user.Perfil = await PerfilesService.GetById(user.Id_Perfil.Value);
+                    }
+                }
+
+                return users;
             }
         }
 
@@ -62,7 +72,7 @@ namespace PegasusV1.Controllers
             {
                 if (user.Id_Perfil.HasValue)
                 {
-                    user.Rol = await RolesService.GetById(user.Id_Perfil.Value);
+                    user.Perfil = await PerfilesService.GetById(user.Id_Perfil.Value);
                 }
 
             }

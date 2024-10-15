@@ -26,7 +26,7 @@ namespace PegasusV1.DbDataContext
         public DbSet<IntegrantesCursos> IntegrantesCursos { get; set; }
         public DbSet<Calificaciones> Calificaciones { get; set; }
         public DbSet<Modulos> Modulos { get; set; }
-        public DbSet<Roles> Roles { get; set; }
+        public DbSet<Perfiles> Roles { get; set; }
         public DbSet<ContenidoMaterias> ContenidoMaterias { get; set; }
 
         public DataContext(IConfiguration configuration)

@@ -10,18 +10,25 @@ namespace PegasusWeb.Pages
     {
         static HttpClient client = new HttpClient();
         public List<Contactos> Contactos { get; set; }
-        
+
+        [TempData]
+        public int TipoContacto { get; set; }
+
+        [TempData]
+        public int IdContacto { get; set; }
+
+
         public async Task OnGetAsync()
         {
-            Contactos = await GetContactosAsync();
+            Contactos = await GetContactosAsync(TipoContacto);
         }
 
-        static async Task<List<Contactos>> GetContactosAsync()
+        static async Task<List<Contactos>> GetContactosAsync(int tipoContacto)
         {
             List<Contactos> getcontactos = new List<Contactos>();
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
-            HttpResponseMessage response = await client.GetAsync("http://localhost:7130/Contactos/GetContactosForCombo");
+            string queryParam = Uri.EscapeDataString($"x=>x.tipo_contacto=={tipoContacto}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Contactos/GetContactosForCombo?query={queryParam}");
             if (response.IsSuccessStatusCode)
             {
                 string contactosJson = await response.Content.ReadAsStringAsync();
@@ -32,6 +39,32 @@ namespace PegasusWeb.Pages
             }
 
             return getcontactos;
+        }
+
+        public async Task<IActionResult> OnPostAsync(int tipoContacto, bool editar, int contacto)
+        {
+            IdContacto = contacto;
+   
+            if (editar)
+            {
+                return RedirectToPage("CreateContacto");
+            }
+            else
+            {
+                TipoContacto = tipoContacto;
+                await EliminarContactoAsync(contacto);
+                return RedirectToPage("Contacto");
+            }
+        }
+
+        public async Task EliminarContactoAsync(int contacto)
+        {
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Contactos/DeleteContacto?id={contacto}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                this.ModelState.AddModelError("contacto", "Hubo un error inesperado al borrar el Contacto");
+            }
         }
     }
 }

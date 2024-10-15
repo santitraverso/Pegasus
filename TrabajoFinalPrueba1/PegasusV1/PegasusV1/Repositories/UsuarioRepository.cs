@@ -18,6 +18,8 @@ namespace PegasusV1.Repositories
         {
             var query = _dbContext.Usuarios.AsQueryable();
 
+            query = query.Include(x => x.Perfil);
+
             if (!string.IsNullOrEmpty(nombre))
             {
                 query = query.Where(x => x.Nombre.ToLower().Contains(nombre.ToLower()));
