@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Web;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace PegasusV1.Controllers
 {
@@ -15,16 +16,19 @@ namespace PegasusV1.Controllers
         private readonly ILogger<AsistenciaController> _logger;
         private readonly IService<Asistencia> AsistenciaService;
         private readonly IService<Materia> MateriaService;
+        private readonly IService<Curso> CursoService;
         private readonly IService<Usuario> UsuarioService;
 
         public AsistenciaController(ILogger<AsistenciaController> logger, 
             IService<Asistencia> asistenciaService,
             IService<Materia> materiaService,
+            IService<Curso> cursoService,
             IService<Usuario> usuarioService)
         {
             _logger = logger;
             AsistenciaService = asistenciaService;
             MateriaService = materiaService;
+            CursoService = cursoService;
             UsuarioService = usuarioService;
         }
 
@@ -61,6 +65,12 @@ namespace PegasusV1.Controllers
                 if (asistencia.Id_Alumno.HasValue)
                 {
                     asistencia.Alumno = await UsuarioService.GetById(asistencia.Id_Alumno.Value);
+                }
+
+
+                if (asistencia.Id_Curso.HasValue)
+                {
+                    asistencia.Curso = await CursoService.GetById(asistencia.Id_Curso.Value);
                 }
             }
 

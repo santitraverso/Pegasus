@@ -53,11 +53,6 @@ namespace PegasusV1.Controllers
                 {
                     cuaderno.Profesor = await UsuarioService.GetById(cuaderno.Id_Profesor.Value);
                 }
-
-                if (cuaderno.Id_Alumno.HasValue)
-                {
-                    cuaderno.Alumno = await UsuarioService.GetById(cuaderno.Id_Alumno.Value);
-                }
             }
 
             return cuaderno;

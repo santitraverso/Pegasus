@@ -2,8 +2,8 @@
 
 namespace PegasusV1.Entities
 {
-    [Table("INTEGRANTES_MATERIAS")]
-    public class IntegrantesMaterias
+    [Table("CURSO_MATERIA")]
+    public class CursoMateria
     {
         public int Id { get; set; }
 
@@ -11,10 +11,8 @@ namespace PegasusV1.Entities
         public Materia? Materia { get; set; }
         public int? Id_Materia { get; set; }
 
-        [ForeignKey("Id_Usuario")]
-        public Usuario? Usuario { get; set; }
-        public int? Id_Usuario { get; set; }
-
-
+        [ForeignKey("Id_Curso")]
+        public Curso? Curso { get; set; }
+        public int? Id_Curso { get; set; }
     }
 }

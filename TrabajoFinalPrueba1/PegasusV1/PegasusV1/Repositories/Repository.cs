@@ -125,14 +125,14 @@ namespace PegasusV1.Repositories
             }
         }
 
-        public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(Expression<Func<IntegrantesMaterias, bool>>? predicate = null)
+        public async Task<List<CursoMateria>> GetCursoMateriaForCombo(Expression<Func<CursoMateria, bool>>? predicate = null)
         {
             using (DataContext dbContext = new DataContext(_configuration))
             {
-                IQueryable<IntegrantesMaterias>? query = dbContext.Set<IntegrantesMaterias>().AsQueryable();
+                IQueryable<CursoMateria>? query = dbContext.Set<CursoMateria>().AsQueryable();
 
                 query = query.Include(x => x.Materia);
-                query = query.Include(x => x.Usuario);
+                query = query.Include(x => x.Curso);
 
                 if (predicate != null)
                 {
@@ -185,7 +185,6 @@ namespace PegasusV1.Repositories
             {
                 IQueryable<CuadernoComunicados>? query = dbContext.Set<CuadernoComunicados>().AsQueryable();
 
-                query = query.Include(x => x.Alumno);
                 query = query.Include(x => x.Profesor);
 
                 if (predicate != null)
@@ -214,6 +213,22 @@ namespace PegasusV1.Repositories
             }
         }
 
+        public async Task<List<Desempeno>> GetDesempenoForCombo(Expression<Func<Desempeno, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<Desempeno>? query = dbContext.Set<Desempeno>().AsQueryable();
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+
         public async Task<List<Hijo>> GetHijoForCombo(Expression<Func<Hijo, bool>>? predicate = null)
         {
             using (DataContext dbContext = new DataContext(_configuration))
@@ -239,6 +254,41 @@ namespace PegasusV1.Repositories
                 IQueryable<Pago>? query = dbContext.Set<Pago>().AsQueryable();
 
                 query = query.Include(x => x.Alumno);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<DesempenoAlumnos>> GetDesempenoAlumnosForCombo(Expression<Func<DesempenoAlumnos, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<DesempenoAlumnos>? query = dbContext.Set<DesempenoAlumnos>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<ComunicadoAlumnos>> GetComunicadoAlumnosForCombo(Expression<Func<ComunicadoAlumnos, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<ComunicadoAlumnos>? query = dbContext.Set<ComunicadoAlumnos>().AsQueryable();
+
+                query = query.Include(x => x.Alumno);
+                query = query.Include(x => x.Comunicado);
 
                 if (predicate != null)
                 {

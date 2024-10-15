@@ -59,9 +59,9 @@ namespace PegasusV1.Services
             await Repository.DeleteAll(entities);
         }
 
-        public async Task<List<IntegrantesMaterias>> GetIntegrantesMateriasForCombo(Expression<Func<IntegrantesMaterias, bool>>? predicate = null)
+        public async Task<List<CursoMateria>> GetCursoMateriaForCombo(Expression<Func<CursoMateria, bool>>? predicate = null)
         {
-            return await Repository.GetIntegrantesMateriasForCombo(predicate);
+            return await Repository.GetCursoMateriaForCombo(predicate);
         }
 
         public async Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null)
@@ -82,6 +82,21 @@ namespace PegasusV1.Services
         public async Task<List<Desempenio>> GetDesempenioForCombo(Expression<Func<Desempenio, bool>>? predicate = null)
         {
             return await Repository.GetDesempenioForCombo(predicate);
+        }
+        
+        public async Task<List<Desempeno>> GetDesempenoForCombo(Expression<Func<Desempeno, bool>>? predicate = null)
+        {
+            return await Repository.GetDesempenoForCombo(predicate);
+        }
+
+        public async Task<List<DesempenoAlumnos>> GetDesempenoAlumnosForCombo(Expression<Func<DesempenoAlumnos, bool>>? predicate = null)
+        {
+            return await Repository.GetDesempenoAlumnosForCombo(predicate);
+        }
+
+        public async Task<List<ComunicadoAlumnos>> GetComunicadoAlumnosForCombo(Expression<Func<ComunicadoAlumnos, bool>>? predicate = null)
+        {
+            return await Repository.GetComunicadoAlumnosForCombo(predicate);
         }
 
         public async Task<List<Hijo>> GetHijoForCombo(Expression<Func<Hijo, bool>>? predicate = null)
