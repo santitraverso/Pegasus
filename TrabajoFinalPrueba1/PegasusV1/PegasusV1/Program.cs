@@ -32,12 +32,11 @@ builder.Services.AddDbContext<DataContext>(options =>
 // CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
-    {
-        builder.WithOrigins("https://localhost:7063")
-               .AllowAnyMethod()
-               .AllowAnyHeader();
-    });
+    options.AddPolicy("AllowAll",
+        builder => builder.WithOrigins("https://localhost:7063") 
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials());
 });
 
 // Configuración de repositorios y servicios
@@ -46,35 +45,23 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-
-// Configuración de autenticación
+// Configura la autenticación de cookies y Google
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 })
 .AddCookie(options =>
 {
-    options.Cookie.Name = ".AspNetCore.Correlation";
-    options.Cookie.HttpOnly = true;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.Cookie.SameSite = SameSiteMode.None;
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
 })
 .AddGoogle(options =>
 {
     options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
     options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-    options.CallbackPath = "/Account/google/callback";
-})
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Authentication:Google:ClientSecret"])), 
-        ValidateIssuer = false,
-        ValidateAudience = false
-    };
+    options.CallbackPath = "/signin-google";
 });
 
 var app = builder.Build();
@@ -86,17 +73,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+app.UseHttpsRedirection();
 
 
-app.Use(async (context, next) =>
-{
-    context.Response.Headers.Add("Cross-Origin-Opener-Policy", "unsafe-none"); // Ajusta según necesites
-    context.Response.Headers.Add("Cross-Origin-Embedder-Policy", "unsafe-none"); // Ajusta según necesites
-    context.Response.Headers.Add("Content-Security-Policy", "frame-ancestors 'self' https://accounts.google.com");
-    await next();
-});
+
+//app.Use(async (context, next) =>
+//{
+//    context.Response.Headers.Add("Cross-Origin-Opener-Policy", "unsafe-none"); // Ajusta según necesites
+//    context.Response.Headers.Add("Cross-Origin-Embedder-Policy", "unsafe-none"); // Ajusta según necesites
+//    context.Response.Headers.Add("Content-Security-Policy", "frame-ancestors 'self' https://accounts.google.com");
+//    await next();
+//});
 
 app.UseAuthentication();
 app.UseAuthorization();
