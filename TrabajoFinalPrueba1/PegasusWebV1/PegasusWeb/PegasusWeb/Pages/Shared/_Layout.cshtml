@@ -53,6 +53,9 @@
                             <a class="nav-link text-dark" asp-route-modulo="Desempeno" asp-area="" asp-page="/ListaCursos">Desempeño</a>
                         </li>
                     </ul>
+                    <div id="userDisplay" class="navbar-text text-dark ms-3"></div>
+                    <button id="logoutBtn" class="btn btn-outline-danger ms-2" style="display: none;">Cerrar sesión</button>
+                    <button id="loginGoogleBtn" class="btn btn-outline-primary ms-2" style="display: block;">Iniciar sesión con Google</button>
                 </div>
             </div>
         </nav>
@@ -72,6 +75,84 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Función que llama al backend para iniciar el proceso de autenticación
+        document.getElementById('loginGoogleBtn').addEventListener('click', function () {
+            const returnUrl = 'https://localhost:7063';
+            const loginUrl = `https://localhost:7130/Account/Login?returnUrl=${encodeURIComponent(returnUrl)}`;
+            window.location.href = loginUrl;
+        });
+
+        // Función para obtener los parámetros de la URL
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const pairs = queryString.split("&");
+
+            pairs.forEach(pair => {
+                const [key, value] = pair.split("=");
+                params[decodeURIComponent(key)] = decodeURIComponent(value);
+            });
+
+            return params;
+        }
+
+        // Al cargar la página, obtener los datos del usuario
+        window.onload = function () {
+            const userData = getQueryParams();
+
+            // Guardar en sessionStorage si hay datos de usuario
+            if (userData.usuario) {
+                // Convierte la cadena JSON de vuelta a un objeto
+                const user = JSON.parse(userData.usuario);
+                sessionStorage.setItem('userEmail', user.email);
+                sessionStorage.setItem('userNombre', user.nombre);
+                sessionStorage.setItem('userApellido', user.apellido);
+                sessionStorage.setItem('userId', user.id);
+                sessionStorage.setItem('userPerfil', user.perfil);
+
+                // Reemplazar la URL sin los parámetros
+                history.replaceState(null, '', window.location.pathname);
+            }
+
+            // Mostrar el email del usuario
+            displayUser();
+            // Ocultar el botón de inicio de sesión si el usuario está logueado
+            toggleLoginButton();
+        };
+
+        // Función para mostrar el email del usuario en un elemento HTML
+        function displayUser() {
+            const userApellido = sessionStorage.getItem('userApellido');
+            const userNombre = sessionStorage.getItem('userNombre');
+            if (userApellido) {
+                document.getElementById('userDisplay').textContent = `Bienvenido, ${userNombre} ${userApellido}`;
+            }
+        }
+
+        // Función para ocultar el botón de inicio de sesión si hay un usuario logueado
+        function toggleLoginButton() {
+            const userEmail = sessionStorage.getItem('userEmail');
+            const loginButton = document.getElementById('loginGoogleBtn');
+            const logoutButton = document.getElementById('logoutBtn');
+            if (userEmail) {
+                loginButton.style.display = 'none'; // Oculta el botón
+                logoutButton.style.display = 'block'; // Muestra el botón
+            } else {
+                loginButton.style.display = 'block'; // Muestra el botón
+                logoutButton.style.display = 'none'; // Oculta el botón
+            }
+        }
+
+        // Agregar funcionalidad al botón de cerrar sesión
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            // Aquí puedes manejar la lógica de cierre de sesión
+            sessionStorage.clear(); // Limpiar sessionStorage
+            const returnUrl = 'https://localhost:7063';
+            const loginUrl = `https://localhost:7130/Account/Logout?returnUrl=${encodeURIComponent(returnUrl)}`;
+            window.location.href = loginUrl;
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using Newtonsoft.Json;
 
 namespace PegasusV1.Controllers
 {
@@ -50,11 +51,11 @@ namespace PegasusV1.Controllers
         //    var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
         //    return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         //}
-        [HttpPost("Logout")]
-        public async Task<IActionResult> Logout()
+        [HttpGet("Logout")]
+        public async Task<IActionResult> Logout(string returnUrl = "/")
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Home");
+            return Redirect($"{returnUrl}");
         }
 
         [HttpGet("ExternalLoginCallback")]
@@ -102,11 +103,16 @@ namespace PegasusV1.Controllers
             var userData = new
             {
                 email = email,
+                nombre = usuario?.Nombre,
+                apellido = usuario?.Apellido,
+                id = usuario?.Id,
                 perfil = usuario?.Perfil?.Nombre
             };
 
-            //return Ok(userData); // Devolver los datos al frontend
-            return Redirect($"{returnUrl}?email={userData.email}&perfil={userData.perfil}");
+            // Convierte el objeto a una cadena JSON
+            var userDataJson = JsonConvert.SerializeObject(userData);
+            // Devuelve la redirección con los datos como parámetro
+            return Redirect($"{returnUrl}?usuario={Uri.EscapeDataString(userDataJson)}");
         }
 
         //[AllowAnonymous]

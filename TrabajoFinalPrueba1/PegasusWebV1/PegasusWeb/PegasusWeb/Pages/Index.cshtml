@@ -9,9 +9,6 @@
     <p>Bienvenidos</p>
 </div>
 
-<h1>Login con Google</h1>
-<button id="loginGoogleBtn">Iniciar sesión con Google</button>
-<div id="userEmailDisplay"></div>
 
 <script>
 
@@ -32,57 +29,63 @@
     //    }
     //});
 
-    // Función para iniciar el proceso de autenticación al hacer clic en el botón de Google
-    document.getElementById('loginGoogleBtn').addEventListener('click', function () {
-        // Definir la URL de retorno
-        const returnUrl = 'https://localhost:7063';
-        // Construir la URL de inicio de sesión
-        const loginUrl = `https://localhost:7130/Account/Login?returnUrl=${encodeURIComponent(returnUrl)}`;
-        // Redirigir a la URL de inicio de sesión
-        window.location.href = loginUrl;
-    });
+    //// Función que llama al backend para iniciar el proceso de autenticación
+    //document.getElementById('loginGoogleBtn').addEventListener('click', async function () {
+    //    const returnUrl = 'https://localhost:7063';
+    //    const loginUrl = `https://localhost:7130/Account/Login?returnUrl=${encodeURIComponent(returnUrl)}`;
+    //    window.location.href = loginUrl;
+    //});
 
-    // Función para obtener parámetros de consulta de la URL
-    function getQueryParams() {
-        const params = {};
-        const queryString = window.location.search.substring(1);
-        const pairs = queryString.split("&");
+    //// Función para obtener los parámetros de la URL
+    //function getQueryParams() {
+    //    const params = {};
+    //    const queryString = window.location.search.substring(1);
+    //    const pairs = queryString.split("&");
 
-        pairs.forEach(pair => {
-            const [key, value] = pair.split("=");
-            params[decodeURIComponent(key)] = decodeURIComponent(value);
-        });
+    //    pairs.forEach(pair => {
+    //        const [key, value] = pair.split("=");
+    //        params[decodeURIComponent(key)] = decodeURIComponent(value);
+    //    });
 
-        return params;
-    }
+    //    return params;
+    //}
 
-    // Función para guardar los datos del usuario en sessionStorage
-    function storeUserData() {
-        const userData = getQueryParams();
+    //// Al cargar la página, obtener los datos del usuario
+    //window.onload = function () {
+    //    const userData = getQueryParams();
 
-        // Guardar en sessionStorage si hay datos de usuario
-        if (userData.email) {
-            sessionStorage.setItem('userEmail', userData.email);
-            sessionStorage.setItem('userPerfil', userData.perfil);
+    //    // Guardar en sessionStorage
+    //    if (userData.email) {
+    //        sessionStorage.setItem('userEmail', userData.email);
+    //        sessionStorage.setItem('userPerfil', userData.perfil);
+    //        console.log('Datos del usuario:', userData.email, userData.perfil);
 
-            console.log('Datos del usuario:', userData.email, userData.perfil);
+    //        // Reemplazar la URL sin los parámetros
+    //        history.replaceState(null, '', window.location.pathname);
+    //    }
 
-            // Reemplazar la URL sin los parámetros
-            history.replaceState(null, '', window.location.pathname);
-        }
-    }
+    //    // Mostrar el email del usuario
+    //    displayUserEmail();
+    //    // Ocultar el botón de inicio de sesión si el usuario está logueado
+    //    toggleLoginButton();
+    //};
 
-    // Función para mostrar el email del usuario en un elemento HTML
-    function displayUserEmail() {
-        const userEmail = sessionStorage.getItem('userEmail');
-        if (userEmail) {
-            document.getElementById('userEmailDisplay').textContent = `Bienvenido, ${userEmail}`;
-        }
-    }
+    //// Función para mostrar el email del usuario en un elemento HTML
+    //function displayUserEmail() {
+    //    const userEmail = sessionStorage.getItem('userEmail');
+    //    if (userEmail) {
+    //        document.getElementById('userEmailDisplay').textContent = `Bienvenido, ${userEmail}`;
+    //    }
+    //}
 
-    // Al cargar la página, almacenar los datos del usuario y mostrar el email
-    window.onload = function () {
-        storeUserData();
-        displayUserEmail();
-    };
+    //// Función para ocultar el botón de inicio de sesión si hay un usuario logueado
+    //function toggleLoginButton() {
+    //    const userEmail = sessionStorage.getItem('userEmail');
+    //    const loginButton = document.getElementById('loginGoogleBtn');
+    //    if (userEmail) {
+    //        loginButton.style.display = 'none'; // Oculta el botón
+    //    } else {
+    //        loginButton.style.display = 'block'; // Muestra el botón
+    //    }
+    //}
 </script>
