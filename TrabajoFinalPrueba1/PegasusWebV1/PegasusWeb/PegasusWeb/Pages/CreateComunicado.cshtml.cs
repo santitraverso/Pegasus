@@ -18,7 +18,6 @@ namespace PegasusWeb.Pages
 
         [BindProperty]
         public CuadernoComunicados Comunicado { get; set; }
-        public List<Usuario> Alumnos { get; set; } = new List<Usuario>();
 
         [TempData]
         public int IdComunicado { get; set; }
@@ -43,9 +42,9 @@ namespace PegasusWeb.Pages
 
                 Comunicado = await GetComunicadoCursoAsync(IdComunicado);
 
-                var alumnos = await GetAlumnosComunicadoAsync(IdComunicado);
+                var comunicadoAlumnos = await GetAlumnosComunicadoAsync(IdComunicado);
 
-                NombresConcatenados = string.Join(", ", alumnos.Select(a => a.Apellido + ' ' + a.Nombre));
+                NombresConcatenados = string.Join(", ", comunicadoAlumnos.Select(a => a.Alumno.Apellido + ' ' + a.Alumno.Nombre));
 
                 if (Comunicado == null)
                 {
@@ -84,19 +83,19 @@ namespace PegasusWeb.Pages
             return Page();
         }
 
-        private async Task<List<Usuario>> GetAlumnosComunicadoAsync(int idComunicado)
+        private async Task<List<ComunicadoAlumnos>> GetAlumnosComunicadoAsync(int idComunicado)
         {
-            List<Usuario> getusuarios = new List<Usuario>();
+            List<ComunicadoAlumnos> getusuarios = new List<ComunicadoAlumnos>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_comunicado == {idComunicado}");
-            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ComunicadoAlumnos/GetComunicadoAlumnosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ComunicadoAlumnos/GetComunicadoAlumnossForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
                 string usuariosJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(usuariosJson))
                 {
-                    getusuarios = JsonConvert.DeserializeObject<List<Usuario>>(usuariosJson);
+                    getusuarios = JsonConvert.DeserializeObject<List<ComunicadoAlumnos>>(usuariosJson);
                 }
             }
 

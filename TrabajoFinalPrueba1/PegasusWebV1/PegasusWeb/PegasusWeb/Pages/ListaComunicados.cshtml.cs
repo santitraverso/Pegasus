@@ -36,7 +36,15 @@ namespace PegasusWeb.Pages
 
             foreach (var id in idsAlumnos)
             {
-                var comunicadosAlumnos = await GetComunicadosAlumnosAsync(id);
+                var comunicadosAlumno = await GetComunicadosAlumnosAsync(id);
+
+                var comunicadosAlumnos = new List<ComunicadoAlumnos>();
+                //Necesito mostrar todos los usuarios que tiene el comunicado, independientemente del alumno seleccionado
+                foreach (var comunicado in comunicadosAlumno)
+                {
+                    var comuAlumnos = await GetAlumnosComunicadoAsync(comunicado.Id_Comunicado);
+                    comunicadosAlumnos.AddRange(comuAlumnos);
+                }
 
                 foreach (var comunicadoAlumno in comunicadosAlumnos)
                 {
@@ -57,6 +65,7 @@ namespace PegasusWeb.Pages
                 .Where(kv => kv.Value.FirstOrDefault()?.Comunicado?.Id_Profesor == IdProfesor)
                 .Select(kv => new ComunicadoViewModel
                 {
+                    Ids = string.Join(", ", kv.Value.Select(c => c.Id).Distinct()),
                     Id_Comunicado = kv.Key,
                     Descripcion = kv.Value.FirstOrDefault()?.Comunicado?.Descripcion,
                     AlumnosConcatenados = string.Join(", ", kv.Value.Select(c => c.Alumno.Apellido + ' ' + c.Alumno.Nombre).Distinct()),
@@ -64,6 +73,25 @@ namespace PegasusWeb.Pages
                 })
                 .OrderByDescending(c => c.Fecha)
                 .ToList();
+        }
+
+        private async Task<List<ComunicadoAlumnos>> GetAlumnosComunicadoAsync(int idComunicado)
+        {
+            List<ComunicadoAlumnos> getusuarios = new List<ComunicadoAlumnos>();
+
+            string queryParam = Uri.EscapeDataString($"x=>x.id_comunicado == {idComunicado}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ComunicadoAlumnos/GetComunicadoAlumnossForCombo?query={queryParam}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string usuariosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(usuariosJson))
+                {
+                    getusuarios = JsonConvert.DeserializeObject<List<ComunicadoAlumnos>>(usuariosJson);
+                }
+            }
+
+            return getusuarios;
         }
 
         static async Task<List<ComunicadoAlumnos>> GetComunicadosAlumnosAsync(int alumno)
@@ -93,10 +121,10 @@ namespace PegasusWeb.Pages
             return RedirectToPage("Cuaderno");
         }
 
-        public async Task<IActionResult> OnPostAsync(int comunicado, int curso, int profesor, bool editar, string modulo, string idsAlumnos)
+        public async Task<IActionResult> OnPostAsync(int comunicado, string ids, int curso, int profesor, bool editar, string modulo, string idsAlumnos)
         {
             IdComunicado = comunicado;
-            IdCurso = comunicado;
+            IdCurso = curso;
             IdProfesor = profesor;
             Modulo = modulo;
             IdsAlumnosJson = idsAlumnos;
@@ -107,15 +135,27 @@ namespace PegasusWeb.Pages
             }
             else
             {
+                string trimmedIds = ids.Trim('[', ']');
+                string[] idsArray = trimmedIds.Split(',');
+                List<int> idsCom = idsArray.Select(id => int.Parse(id)).ToList();
+
+                foreach (var id in idsCom)
+                {
+                    await EliminarComunicadoAlumnosAsync(id);
+                }
+
                 await EliminarComunicadoAsync(IdComunicado);
-                await EliminarComunicadoAlumnosAsync(IdComunicado);
-                return RedirectToPage("ListaComunicados");
+                if (this.ModelState.IsValid)
+                    return RedirectToPage("ListaComunicados");
+                else
+                    await OnGetAsync();
+                    return Page();
             }
         }
 
         public async Task EliminarComunicadoAsync(int comunicado)
         {
-            HttpResponseMessage response = await client.DeleteAsync($"https://localhost:7130/CuadernoComunicados/DeleteCuadernoComunicados?id={comunicado}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CuadernoComunicados/DeleteCuadernoComunicados?id={comunicado}");
 
             if (!response.IsSuccessStatusCode)
             {
