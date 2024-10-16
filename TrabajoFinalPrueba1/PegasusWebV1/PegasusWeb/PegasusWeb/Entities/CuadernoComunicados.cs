@@ -6,9 +6,6 @@ namespace PegasusWeb.Entities
     {
         public int Id { get; set; }        
 
-        public Usuario? Alumno { get; set; }
-        public int? Id_Alumno { get; set; }
-
         public Usuario? Profesor { get; set; }
         public int? Id_Profesor { get; set; }
 

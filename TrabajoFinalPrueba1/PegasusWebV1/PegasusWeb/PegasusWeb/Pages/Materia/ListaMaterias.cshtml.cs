@@ -9,7 +9,7 @@ namespace PegasusWeb.Pages.Materia
     public class ListaMateriasModel : PageModel
     {
         static HttpClient client = new HttpClient();
-        public List<Entities.Materia> Materias { get; set; } = new List<Entities.Materia> { };
+        public List<CursoMateria> Materias { get; set; } = new List<CursoMateria> { };
 
         [TempData]
         public int Materia { get; set; }
@@ -25,19 +25,19 @@ namespace PegasusWeb.Pages.Materia
             Materias = await GetMateriasAsync(IdCurso);
         }
 
-        static async Task<List<Entities.Materia>> GetMateriasAsync(int curso)
+        static async Task<List<CursoMateria>> GetMateriasAsync(int curso)
         {
-            List<Entities.Materia> getmaterias = new List<Entities.Materia>();
+            List<CursoMateria> getmaterias = new List<CursoMateria>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso == {curso}");
-            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CursoMateria/CursoMateriaForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
                 string materiasJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(materiasJson))
                 {
-                    getmaterias = JsonConvert.DeserializeObject<List<Entities.Materia>>(materiasJson);
+                    getmaterias = JsonConvert.DeserializeObject<List<CursoMateria>>(materiasJson);
                 }
             }
 

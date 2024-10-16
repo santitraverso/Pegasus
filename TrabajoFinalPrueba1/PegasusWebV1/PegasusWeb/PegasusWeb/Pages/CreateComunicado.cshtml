@@ -19,10 +19,10 @@
 
     <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Comunicado.Id" />
-        <input type="hidden" name="materia" asp-for="@Model.IdCurso" />
+        <input type="hidden" name="curso" asp-for="@Model.IdCurso" />
         <input type="hidden" name="profesor" asp-for="@Model.IdProfesor" />
         <input type="hidden" name="modulo" asp-for="@Model.Modulo" />
-        <input type="hidden" name="idsAlumnos" asp-for="@Model.IdsAlumnos" />
+        <input type="hidden" name="ids" asp-for="@Model.IdsAlumnosJson" />
         <input type="hidden" id="booleano" name="atras" value="false">
 
         <div class="form-group">
@@ -44,10 +44,9 @@
 @section scripts{
     <script>
         function validateForm() {
-            const titulo = document.querySelector('#titulo').value.trim();
             const descripcion = document.querySelector('#descripcion').value.trim();
 
-            if (titulo === '' || descripcion === '') {
+            if (descripcion === '') {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',

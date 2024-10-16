@@ -54,6 +54,8 @@ namespace PegasusV1.Controllers
                 if (intMat.Id_Curso.HasValue && intMat.Id_Materia.HasValue)
                 {
                     intMat.Curso = await CursoService.GetById(intMat.Id_Curso.Value);
+
+                    intMat.Materia = await MateriaService.GetById(intMat.Id_Materia.Value);
                 }
             }
 

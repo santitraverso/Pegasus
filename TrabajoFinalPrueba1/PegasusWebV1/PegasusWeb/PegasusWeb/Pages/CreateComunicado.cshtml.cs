@@ -31,7 +31,7 @@ namespace PegasusWeb.Pages
         public int IdProfesor { get; set; }
 
         [TempData]
-        public List<int> IdsAlumnos { get; set; }
+        public string IdsAlumnosJson { get; set; }
 
         [BindProperty]
         public string NombresConcatenados { get; set; }
@@ -58,7 +58,14 @@ namespace PegasusWeb.Pages
 
                 string nombresConcatenados = "";
 
-                foreach (var idAlumno in IdsAlumnos)
+                List<int> idsAlumnos = new List<int>();
+
+                if (!string.IsNullOrEmpty(IdsAlumnosJson))
+                {
+                    idsAlumnos = JsonConvert.DeserializeObject<List<int>>(IdsAlumnosJson);
+                }
+
+                foreach (var idAlumno in idsAlumnos)
                 {
                     Usuario usu = await GetUsuarioAsync(idAlumno);
 
@@ -133,13 +140,17 @@ namespace PegasusWeb.Pages
         }
 
 
-        public async Task<IActionResult> OnPostAsync(bool atras, int curso, int profesor, List<int> idsAlumnos, string descripcion, string modulo, int id)
+        public async Task<IActionResult> OnPostAsync(bool atras, int curso, int profesor, string ids, string descripcion, string modulo, int id)
         {
             IdCurso = curso;
             Modulo = modulo;
             IdComunicado = id;
             IdProfesor = profesor;
             bool nuevo = id == 0;
+
+            string trimmedIds = ids.Trim('[', ']');
+            string[] idsArray = trimmedIds.Split(',');
+            List<int> idsAlumnos = idsArray.Select(id => int.Parse(id)).ToList();
 
             if (atras)
             {
@@ -151,10 +162,19 @@ namespace PegasusWeb.Pages
                 {
                     this.ModelState.AddModelError("descripcion", "El campo Descripcion es requerido");
                 }
-               
+
+                ModelState.Remove(nameof(NombresConcatenados));
 
                 if (!ModelState.IsValid)
                 {
+                    // Recuperar los errores de ModelState
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+                    foreach (var error in errors)
+                    {
+                        // Aquí puedes ver cada error en la consola o logearlo
+                        Console.WriteLine(error.ErrorMessage);
+                    }
                     await OnGetAsync();
                     return Page();
                 }
@@ -196,6 +216,10 @@ namespace PegasusWeb.Pages
                     return Page();
                 }
 
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var comunicadoCreado = JsonConvert.DeserializeObject<dynamic>(responseContent);
+                id = comunicadoCreado.Id;
+
                 if (nuevo)
                 {
                     foreach (var idAlumno in idsAlumnos)
@@ -224,7 +248,7 @@ namespace PegasusWeb.Pages
                 
 
                 TempData["SuccessMessage"] = "El Comunicado se guardó correctamente.";
-                return RedirectToPage("Comunicado");
+                return RedirectToPage("Cuaderno");
             }
         }
     }

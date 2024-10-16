@@ -13,15 +13,18 @@ namespace PegasusV1.Controllers
     {
         private readonly ILogger<DesempenoAlumnosController> _logger;
         private readonly IService<DesempenoAlumnos> DesempenoAlumnosService;
+        private readonly IService<Desempeno> DesempenoService;
         private readonly IService<Usuario> UsuarioService;
 
         public DesempenoAlumnosController(ILogger<DesempenoAlumnosController> logger,
             IService<DesempenoAlumnos> desempenoAlumnosService,
-            IService<Usuario> usuarioService)
+            IService<Usuario> usuarioService,
+            IService<Desempeno> desempenoService)
         {
             _logger = logger;
             DesempenoAlumnosService = desempenoAlumnosService;
             UsuarioService = usuarioService;
+            DesempenoService = desempenoService;
         }
 
         [HttpGet]
@@ -36,10 +39,39 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<DesempenoAlumnos, bool>>)e;
             }
 
+            // Obtener lista de DesempenoAlumnos basado en el query
             List<DesempenoAlumnos> DesempenoAlumnoss = await DesempenoAlumnosService.GetDesempenoAlumnosForCombo(ex);
+
+            foreach (DesempenoAlumnos DesempenoAlumno in DesempenoAlumnoss)
+            {
+                if (DesempenoAlumno != null)
+                {
+                    // Obtener detalles del Alumno si tiene Id_Alumno
+                    if (DesempenoAlumno.Id_Alumno.HasValue)
+                    {
+                        DesempenoAlumno.Alumno = await UsuarioService.GetById(DesempenoAlumno.Id_Alumno.Value);
+                    }
+
+                    // Si tiene un promedio mayor a 0, obtener la descripción del Desempeno
+                    if (DesempenoAlumno.Promedio > 0)
+                    {
+                        var desempeno = await DesempenoService.GetDesempenoForCombo(d =>
+                            DesempenoAlumno.Promedio >= d.PromedioMin &&
+                            DesempenoAlumno.Promedio <= d.PromedioMax);
+
+                        // Asignar la descripción obtenida de la tabla Desempeno
+                        var desempenoResultado = desempeno.FirstOrDefault();
+                        if (desempenoResultado != null)
+                        {
+                            DesempenoAlumno.Desempeno = desempenoResultado;
+                        }
+                    }
+                }
+            }
 
             return DesempenoAlumnoss;
         }
+
 
         [HttpGet]
         [Route("GetById")]

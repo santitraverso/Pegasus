@@ -20,7 +20,7 @@ namespace PegasusWeb.Pages
         public List<int> SelectedAlumnosIds { get; set; } = new List<int>(); // IDs de los alumnos seleccionados en el formulario
 
         [TempData]
-        public List<int> IdsAlumnos { get; set; }
+        public string IdsAlumnosJson { get; set; }
         [TempData]
         public int IdComunicado { get; set; }
         [TempData]
@@ -63,9 +63,13 @@ namespace PegasusWeb.Pages
                 return RedirectToPage("ListaCursos");
 
             if (SelectedAlumnosIds.Count < 1)
-            this.ModelState.AddModelError("cuaderno", "Debe seleccionar alumnos");
-
-            IdsAlumnos = SelectedAlumnosIds;
+            {
+                this.ModelState.AddModelError("cuaderno", "Debe seleccionar alumnos");
+            }
+            else
+            {
+                IdsAlumnosJson = JsonConvert.SerializeObject(SelectedAlumnosIds);
+            }
 
             if (ver)
             {
