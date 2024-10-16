@@ -218,7 +218,7 @@ namespace PegasusWeb.Pages
 
                 var responseContent = await response.Content.ReadAsStringAsync();
                 var comunicadoCreado = JsonConvert.DeserializeObject<dynamic>(responseContent);
-                id = comunicadoCreado.Id;
+                id = comunicadoCreado.id;
 
                 if (nuevo)
                 {
