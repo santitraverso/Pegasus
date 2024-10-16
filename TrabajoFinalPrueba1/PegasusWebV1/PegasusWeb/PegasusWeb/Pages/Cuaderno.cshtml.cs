@@ -65,6 +65,8 @@ namespace PegasusWeb.Pages
             if (SelectedAlumnosIds.Count < 1)
             {
                 this.ModelState.AddModelError("cuaderno", "Debe seleccionar alumnos");
+                await OnGetAsync();
+                return Page();
             }
             else
             {

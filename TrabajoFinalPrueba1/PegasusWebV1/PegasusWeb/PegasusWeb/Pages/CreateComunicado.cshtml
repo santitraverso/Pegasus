@@ -16,7 +16,15 @@
 <body>
     <h4>@titulo</h4>
     <hr />
-
+    @if (ModelState.ContainsKey("comunicado"))
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ModelState["comunicado"].Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
     <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Comunicado.Id" />
         <input type="hidden" name="curso" asp-for="@Model.IdCurso" />
@@ -37,7 +45,6 @@
         <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
         <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
     </form>
-    
 </body>
 </html>
 
@@ -76,5 +83,4 @@
         }
 
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }

@@ -993,3 +993,16 @@ label {
 .actions-column img:hover {
     transform: scale(1.2); /* Efecto de agrandamiento en hover */
 }
+
+.card-header {
+    background-color: rgb(49, 131, 196); /* Color principal */
+    color: white; /* Texto en blanco */
+    text-align: left; /* Alineación a la izquierda */
+    padding: 12px 15px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de fuente */
+    border-bottom: 2px solid #ddd; /* Línea inferior */
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px; /* Bordes redondeados */
+    overflow: hidden;
+}
