@@ -13,7 +13,7 @@ namespace PegasusWeb.Pages
         public List<DesempenioAlumnos> Alumnos { get; set; } = new List<DesempenioAlumnos>();
 
         [TempData]
-        public int IdDesempeno { get; set; }
+        public int IdDesempenio { get; set; }
 
         [TempData]
         public int IdCurso { get; set; }
@@ -24,27 +24,36 @@ namespace PegasusWeb.Pages
         [BindProperty]
         public List<int> SelectedAlumnosIds { get; set; } = new List<int>();
 
+        [TempData]
+        public bool Ver { get; set; }
+
 
         public async Task OnGetAsync()
         {
+
             var integrantes = await GetIntegrantesCursosAsync(IdCurso);
 
-            foreach (var alumn in integrantes)
+            Alumnos = integrantes.Select(alumn => new DesempenioAlumnos
             {
-                DesempenioAlumnos desempeno = new DesempenioAlumnos();
-                desempeno.Alumno = alumn.Usuario;
-                desempeno.Id_Alumno = alumn.Id_Usuario;
+                Alumno = alumn.Usuario,
+                Id_Alumno = alumn.Id_Usuario
+            }).ToList();
 
-                Alumnos.Add(desempeno);
-            }
+            var desempenios = await GetDesempenoAlumnosAsync(IdCurso);
 
-            var desempenos = await GetDesempenoAlumnosAsync(IdCurso);
+            var desempenosIds = desempenios.Select(d => d.Id_Alumno).ToHashSet();
 
-            foreach (var alumn in integrantes)
+            SelectedAlumnosIds = integrantes
+                .Where(alumn => desempenosIds.Contains(alumn.Id_Usuario))
+                .Select(alumn => (int)alumn.Id_Usuario)
+                .ToList();
+
+            foreach (var alu in Alumnos)
             {
-                if (desempenos.Any(i => i.Id_Alumno == alumn.Id_Usuario))
+                var desempenio = desempenios.FirstOrDefault(d => d.Id_Alumno == alu.Id_Alumno);
+                if (desempenio != null)
                 {
-                    SelectedAlumnosIds.Add((int)alumn.Id_Usuario);
+                    alu.Id = desempenio.Id;
                 }
             }
         }
@@ -75,23 +84,23 @@ namespace PegasusWeb.Pages
             return RedirectToPage("ListaCursos");
         }
 
-        public async Task<IActionResult> OnPost(int desempeno, bool editar)
+        public async Task<IActionResult> OnPost(int desempenio, bool ver, int curso, string modulo)
         {
-            IdDesempeno = desempeno;
+            IdDesempenio = desempenio;
+            Ver = ver;
+            IdCurso = curso;
+            Modulo = modulo;
 
-            if (editar)
-            {
-                return RedirectToPage("CreateDesempeno");
-            }
-            else
-            {
-                await EliminarDesempenoAlumnoAsync(desempeno);
-                if (this.ModelState.IsValid)
-                    return RedirectToPage("Desempeno");
-                else
-                    await OnGetAsync();
-                return Page();
-            }
+            return RedirectToPage("CreateDesempenio");
+
+
+
+            //await EliminarDesempenoAlumnoAsync(desempeno);
+            //if (this.ModelState.IsValid)
+            //    return RedirectToPage("Desempeno");
+            //else
+            //    await OnGetAsync();
+            //return Page();
         }
 
         static async Task<List<DesempenioAlumnos>> GetDesempenoAlumnosAsync(int curso)

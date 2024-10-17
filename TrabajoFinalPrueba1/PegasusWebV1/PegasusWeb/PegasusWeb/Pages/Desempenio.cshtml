@@ -37,29 +37,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var desempeno in Model.Alumnos)
+                    @foreach (var desempenio in Model.Alumnos)
                     {
-                        var isChecked = Model.SelectedAlumnosIds.Contains((int)desempeno.Id_Alumno);
+                    var isChecked = Model.SelectedAlumnosIds.Contains((int)desempenio.Id_Alumno);
                     <tr>
                         <form method="post">
-                            <input type="hidden" name="desempeno" value="@desempeno.Id" />
-                            <input type="hidden" id="booleano-@desempeno.Id" name="editar" value="true">
-                            <td>@desempeno.Alumno.Apellido</td>
-                            <td>@desempeno.Alumno.Nombre</td>
+                            <input type="hidden" name="desempenio" value="@desempenio.Id" />
+                            <input type="hidden" id="booleano-@desempenio.Id" name="ver" value="false">
+                            <input type="hidden" name="curso" value="@Model.IdCurso" />
+                            <input type="hidden" name="modulo" value="@Model.Modulo" />
+                            <td>@desempenio.Alumno.Apellido</td>
+                            <td>@desempenio.Alumno.Nombre</td>
                             @if (isChecked)
                             {
                                 <td class="actions-column">
-                                    <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@desempeno.Id)" />
-                                    <img src="~/img/lupa.png" class="icon" alt="Ver" onclick="ver(@desempeno.Id)" />
+                                    <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@desempenio.Id)" />
+                                    <img src="~/img/lupa.png" class="icon" alt="Ver" onclick="verDesemp(@desempenio.Id)" />
                                 </td>
                             }
                             else
                             {
                                 <td class="actions-column">
-                                    <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="agregar(@desempeno.Id_Alumno)" />
+                                    <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="agregar(@desempenio.Id_Alumno)" />
                                 </td>
                             }
-                            <input type="submit" id="submit-@desempeno.Id" style="display:none" />
+                            <input type="submit" id="submit-@desempenio.Id" style="display:none" />
                         </form>
                     </tr>
                     }
@@ -136,7 +138,7 @@
             document.getElementById('submit-' + id).click();
         }
 
-        function ver(id) {
+        function verDesemp(id) {
             document.getElementById('booleano-' + id).value = false;
             submitForm(id);
         }
