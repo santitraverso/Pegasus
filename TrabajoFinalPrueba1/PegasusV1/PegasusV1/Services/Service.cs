@@ -78,20 +78,15 @@ namespace PegasusV1.Services
         {
             return await Repository.GetCuadernoComunicadosForCombo(predicate);
         }
-
-        public async Task<List<Desempenio>> GetDesempenioForCombo(Expression<Func<Desempenio, bool>>? predicate = null)
-        {
-            return await Repository.GetDesempenioForCombo(predicate);
-        }
         
-        public async Task<List<Desempeno>> GetDesempenoForCombo(Expression<Func<Desempeno, bool>>? predicate = null)
+        public async Task<List<Desempenio>> GetDesempenoForCombo(Expression<Func<Desempenio, bool>>? predicate = null)
         {
             return await Repository.GetDesempenoForCombo(predicate);
         }
 
-        public async Task<List<DesempenoAlumnos>> GetDesempenoAlumnosForCombo(Expression<Func<DesempenoAlumnos, bool>>? predicate = null)
+        public async Task<List<DesempenioAlumnos>> GetDesempenioAlumnosForCombo(Expression<Func<DesempenioAlumnos, bool>>? predicate = null)
         {
-            return await Repository.GetDesempenoAlumnosForCombo(predicate);
+            return await Repository.GetDesempenioAlumnosForCombo(predicate);
         }
 
         public async Task<List<ComunicadoAlumnos>> GetComunicadoAlumnosForCombo(Expression<Func<ComunicadoAlumnos, bool>>? predicate = null)

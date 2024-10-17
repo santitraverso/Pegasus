@@ -2,17 +2,12 @@
 
 namespace PegasusV1.Entities
 {
-    [Table("DESEMPEÑO")]
+    [Table("DESEMPENIO")]
     public class Desempenio
     {
         public int Id { get; set; }
-
-        [ForeignKey("Id_Alumno")]
-        public Usuario? Alumno  { get; set; }
-        public int? Id_Alumno { get; set; }
-
+        public decimal PromedioMin { get; set; } 
+        public decimal PromedioMax { get; set; }
         public string Descripcion { get; set; }
-
-        public DateTime? Fecha { get; set; }    
     }
 }

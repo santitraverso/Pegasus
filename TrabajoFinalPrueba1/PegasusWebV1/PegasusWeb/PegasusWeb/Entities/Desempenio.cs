@@ -2,7 +2,7 @@
 
 namespace PegasusWeb.Entities
 {
-    public class Desempeno
+    public class Desempenio
     {
         public int Id { get; set; }
         public decimal PromedioMin { get; set; }

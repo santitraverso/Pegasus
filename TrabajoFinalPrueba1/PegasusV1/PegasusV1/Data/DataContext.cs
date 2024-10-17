@@ -14,8 +14,7 @@ namespace PegasusV1.DbDataContext
         public DbSet<Asistencia> Asistencia { get; set; }
         public DbSet<Contactos> Contactos { get; set; }
         public DbSet<CuadernoComunicados> CuadernoComunicados { get; set; }
-        public DbSet<Desempenio> Desempenios { get; set; }
-        public DbSet<Desempeno> Desempenos { get; set; }
+        public DbSet<Desempenio> Desempenos { get; set; }
         public DbSet<Hijo> Hijos { get; set; }
         public DbSet<IntegrantesEventos> IntegrantesEventos { get; set; }
         public DbSet<CursoMateria> CursoMateria { get; set; }
@@ -29,7 +28,7 @@ namespace PegasusV1.DbDataContext
         public DbSet<Modulos> Modulos { get; set; }
         public DbSet<Perfiles> Roles { get; set; }
         public DbSet<ContenidoMaterias> ContenidoMaterias { get; set; }
-        public DbSet<DesempenoAlumnos> DesempenoAlumnos { get; set; }
+        public DbSet<DesempenioAlumnos> DesempenioAlumnos { get; set; }
         public DbSet<ComunicadoAlumnos> ComunicadoAlumnos { get; set; }
 
         public DataContext(IConfiguration configuration)

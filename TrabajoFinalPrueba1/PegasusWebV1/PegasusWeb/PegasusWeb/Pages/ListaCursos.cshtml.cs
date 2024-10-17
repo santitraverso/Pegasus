@@ -74,8 +74,8 @@ namespace PegasusWeb.Pages
             {
                 case "Cuaderno":
                     return RedirectToPage("Cuaderno");
-                case "Desempeno":
-                    return RedirectToPage("Desempeno");
+                case "Desempenio":
+                    return RedirectToPage("Desempenio");
                 default:
                     return RedirectToPage("Materia/ListaMaterias");
             }
