@@ -85,6 +85,21 @@ namespace PegasusV1.Controllers
                 {
                     DesempenioAlumnos.Alumno = await UsuarioService.GetById(DesempenioAlumnos.Id_Alumno.Value);
                 }
+
+                // Si tiene un promedio mayor a 0, obtener la descripción del Desempeno
+                if (DesempenioAlumnos.Promedio > 0)
+                {
+                    var desempeno = await DesempenioService.GetDesempenoForCombo(d =>
+                        DesempenioAlumnos.Promedio >= d.PromedioMin &&
+                        DesempenioAlumnos.Promedio <= d.PromedioMax);
+
+                    // Asignar la descripción obtenida de la tabla Desempeno
+                    var desempenoResultado = desempeno.FirstOrDefault();
+                    if (desempenoResultado != null)
+                    {
+                        DesempenioAlumnos.Desempenio = desempenoResultado;
+                    }
+                }
             }
 
             return DesempenioAlumnos;

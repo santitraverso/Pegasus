@@ -26,6 +26,8 @@ namespace PegasusWeb.Pages
 
         [TempData]
         public bool Ver { get; set; }
+        [TempData]
+        public int IdAlumno { get; set; }
 
 
         public async Task OnGetAsync()
@@ -84,23 +86,15 @@ namespace PegasusWeb.Pages
             return RedirectToPage("ListaCursos");
         }
 
-        public async Task<IActionResult> OnPost(int desempenio, bool ver, int curso, string modulo)
+        public async Task<IActionResult> OnPost(int desempenio, bool ver, int curso, string modulo, int alumno)
         {
             IdDesempenio = desempenio;
             Ver = ver;
             IdCurso = curso;
             Modulo = modulo;
+            IdAlumno = alumno;
 
             return RedirectToPage("CreateDesempenio");
-
-
-
-            //await EliminarDesempenoAlumnoAsync(desempeno);
-            //if (this.ModelState.IsValid)
-            //    return RedirectToPage("Desempeno");
-            //else
-            //    await OnGetAsync();
-            //return Page();
         }
 
         static async Task<List<DesempenioAlumnos>> GetDesempenoAlumnosAsync(int curso)
@@ -120,16 +114,6 @@ namespace PegasusWeb.Pages
             }
 
             return getusuarios;
-        }
-
-        public async Task EliminarDesempenoAlumnoAsync(int desempeno)
-        {
-            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/DesempenioAlumnos/DeleteDesempenioAlumnos?id={desempeno}");
-
-            if (!response.IsSuccessStatusCode)
-            {
-                this.ModelState.AddModelError("desempeno", "Hubo un error inesperado al borrar el Desempeño");
-            }
         }
     }
 }

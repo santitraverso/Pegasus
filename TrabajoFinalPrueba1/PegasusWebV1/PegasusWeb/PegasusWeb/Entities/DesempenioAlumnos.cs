@@ -8,6 +8,8 @@ namespace PegasusWeb.Entities
 
         public Usuario? Alumno { get; set; }
         public int? Id_Alumno { get; set; }
+        public int? Id_Curso { get; set; }
+        public Curso? Curso { get; set; }
         public decimal Asistencia { get; set; }
         public decimal Participacion { get; set; }
         public decimal Tareas { get; set; }

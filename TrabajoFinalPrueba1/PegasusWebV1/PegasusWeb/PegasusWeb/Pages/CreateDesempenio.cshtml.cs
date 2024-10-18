@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using System.Net.Http;
 using System.Dynamic;
 using System;
+using System.Globalization;
 
 namespace PegasusWeb.Pages
 {
@@ -26,19 +27,20 @@ namespace PegasusWeb.Pages
         public int IdCurso { get; set; }
         [TempData]
         public string Modulo { get; set; }
-        [TempData]
-        public int IdProfesor { get; set; }
 
         [TempData]
         public bool Ver { get; set; }
+        [TempData]
+        public int IdAlumno { get; set; }
 
+        [BindProperty]
+        public Usuario Alumno { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
             if (IdDesempenio > 0)
             {
-
-                //Desempenio = await GetDesempenioCursoAsync(IdDesempenio);
+                Desempenio = await GetDesempenioCursoAsync(IdDesempenio);
 
                 if (Desempenio == null)
                 {
@@ -50,22 +52,23 @@ namespace PegasusWeb.Pages
                 Desempenio = new DesempenioAlumnos { Id = 0 };
             }
 
+            Alumno = await GetUsuarioAsync(IdAlumno);
+
             return Page();
         }
 
-        private async Task<List<DesempenioAlumnos>> GetDesempenioCursoAsync(int idDesempenio)
+        private async Task<DesempenioAlumnos> GetDesempenioCursoAsync(int idDesempenio)
         {
-            List<DesempenioAlumnos> getusuarios = new List<DesempenioAlumnos>();
+            DesempenioAlumnos getusuarios = new DesempenioAlumnos();
 
-            string queryParam = Uri.EscapeDataString($"x=>x.id_comunicado == {idDesempenio}");
-            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ComunicadoAlumnos/GetComunicadoAlumnossForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/DesempenioAlumnos/GetById?id={idDesempenio}");
 
             if (response.IsSuccessStatusCode)
             {
                 string usuariosJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(usuariosJson))
                 {
-                    getusuarios = JsonConvert.DeserializeObject<List<DesempenioAlumnos>>(usuariosJson);
+                    getusuarios = JsonConvert.DeserializeObject<DesempenioAlumnos>(usuariosJson);
                 }
             }
 
@@ -109,113 +112,117 @@ namespace PegasusWeb.Pages
         }
 
 
-        public async Task<IActionResult> OnPostAsync(bool atras, int curso, int profesor, string ids, string descripcion, string modulo, int id)
+        public async Task<IActionResult> OnPostAsync(bool atras, int curso, bool ver, string modulo, int id, string asistencia, string participacion, string calificaciones, string tareas, int alumno)
         {
             IdCurso = curso;
             Modulo = modulo;
             IdDesempenio = id;
-            IdProfesor = profesor;
-            bool nuevo = id == 0;
-
-            string trimmedIds = ids.Trim('[', ']');
-            string[] idsArray = trimmedIds.Split(',');
-            List<int> idsAlumnos = idsArray.Select(id => int.Parse(id)).ToList();
+            Ver = ver;
+            decimal.TryParse(asistencia, NumberStyles.Any, CultureInfo.InvariantCulture, out var asistenciaDecimal);
+            decimal.TryParse(participacion, NumberStyles.Any, CultureInfo.InvariantCulture, out var participacionDecimal);
+            decimal.TryParse(calificaciones, NumberStyles.Any, CultureInfo.InvariantCulture, out var calificacionesDecimal);
+            decimal.TryParse(tareas, NumberStyles.Any, CultureInfo.InvariantCulture, out var tareasDecimal);
 
             if (atras)
             {
-                return RedirectToPage("Cuaderno");
+                return RedirectToPage("Desempenio");
             }
             else
             {
-                if (string.IsNullOrEmpty(descripcion))
+                if(ver)
                 {
-                    this.ModelState.AddModelError("descripcion", "El campo Descripcion es requerido");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    // Recuperar los errores de ModelState
-                    var errors = ModelState.Values.SelectMany(v => v.Errors);
-
-                    foreach (var error in errors)
-                    {
-                        // Aquí puedes ver cada error en la consola o logearlo
-                        Console.WriteLine(error.ErrorMessage);
-                    }
-                    await OnGetAsync();
+                    await EliminarDesempenioAlumnoAsync(id);
+                    if (this.ModelState.IsValid)
+                        return RedirectToPage("Desempenio");
+                    else
+                        await OnGetAsync();
                     return Page();
-                }
-
-                dynamic comunicadoData = new ExpandoObject();
-                comunicadoData.Id_Profesor = profesor;
-                comunicadoData.Descripcion = descripcion;
-                comunicadoData.Fecha = DateTime.Now;
-
-                if (id > 0)
-                {
-                    comunicadoData.Id = id;
-                }
-
-                // Convertir el objeto dinámico a JSON
-                var jsonContent = JsonConvert.SerializeObject(comunicadoData);
-                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-                // Hacer la llamada HTTP (PUT si actualiza, POST si crea)
-                HttpResponseMessage response;
-                if (id > 0)
-                {
-                    response = await client.PutAsync("https://localhost:7130/CuadernoComunicados/UpdateCuadernoComunicados", content);
                 }
                 else
                 {
-                    response = await client.PostAsync("https://localhost:7130/CuadernoComunicados/CreateCuadernoComunicados", content);
-                }
-
-                // Manejar errores de la respuesta HTTP
-                if (!response.IsSuccessStatusCode)
-                {
-                    var errorResponse = await response.Content.ReadAsStringAsync();
-                    ModelState.AddModelError("comunicado", id > 0
-                        ? "Hubo un error inesperado al actualizar el Comunicado: " + errorResponse
-                        : "Hubo un error inesperado al crear el Comunicado: " + errorResponse);
-
-                    await OnGetAsync();
-                    return Page();
-                }
-
-                var responseContent = await response.Content.ReadAsStringAsync();
-                var comunicadoCreado = JsonConvert.DeserializeObject<dynamic>(responseContent);
-                id = comunicadoCreado.id;
-
-                if (nuevo)
-                {
-                    foreach (var idAlumno in idsAlumnos)
+                    if (asistenciaDecimal < 1 || participacionDecimal < 1 || calificacionesDecimal < 1 || tareasDecimal < 1)
                     {
-                        dynamic comunicadoAlumnoData = new ExpandoObject();
-                        comunicadoAlumnoData.Id_Comunicado = id;
-                        comunicadoAlumnoData.Id_Alumno = idAlumno;
-
-                        // Convertir el objeto dinámico a JSON
-                        var jsonContentAl = JsonConvert.SerializeObject(comunicadoAlumnoData);
-                        var contentAl = new StringContent(jsonContentAl, Encoding.UTF8, "application/json");
-
-                        HttpResponseMessage responseAl = await client.PostAsync("https://localhost:7130/ComunicadoAlumnos/CreateComunicadoAlumnos", contentAl);
-                        
-
-                        // Manejar errores de la respuesta HTTP
-                        if (!responseAl.IsSuccessStatusCode)
-                        {
-                            var errorResponse = await response.Content.ReadAsStringAsync();
-                            ModelState.AddModelError("comunicado", "Hubo un error inesperado al crear la relacion Comunicado y Alumno: " + errorResponse);
-                            await OnGetAsync();
-                            return Page();
-                        }
+                        this.ModelState.AddModelError("desempenio", "Todos los campos deben tener un valor.");
                     }
-                }
-                
 
-                TempData["SuccessMessage"] = "El Comunicado se guardó correctamente.";
-                return RedirectToPage("Cuaderno");
+                    if (asistenciaDecimal > 10 || participacionDecimal > 10 || calificacionesDecimal > 10 || tareasDecimal > 10)
+                    {
+                        this.ModelState.AddModelError("desempenio", "Los campos no pueden tener un valor mayor a 10.");
+                    }
+
+                    if (!ModelState.IsValid)
+                    {
+                        foreach (var state in ModelState)
+                        {
+                            string fieldName = state.Key; // Nombre del campo que falló
+                            var fieldErrors = state.Value.Errors; // Lista de errores asociados al campo
+
+                            foreach (var error in fieldErrors)
+                            {
+                                Console.WriteLine($"Error en el campo '{fieldName}': {error.ErrorMessage}");
+                            }
+                        }
+                        await OnGetAsync();
+                        return Page();
+                    }
+
+                    decimal promedio = Math.Round((asistenciaDecimal + participacionDecimal + calificacionesDecimal + tareasDecimal) / 4, 2);
+
+                    dynamic desempenioData = new ExpandoObject();
+                    desempenioData.Id_Alumno = alumno;
+                    desempenioData.Participacion = participacionDecimal;
+                    desempenioData.Asistencia = asistenciaDecimal;
+                    desempenioData.Tareas = tareasDecimal;
+                    desempenioData.Calificaciones = calificacionesDecimal;
+                    desempenioData.Promedio = promedio;
+                    desempenioData.Id_Curso = curso;
+
+
+                    if (id > 0)
+                    {
+                        desempenioData.Id = id;
+                    }
+
+                    // Convertir el objeto dinámico a JSON
+                    var jsonContent = JsonConvert.SerializeObject(desempenioData);
+                    var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                    // Hacer la llamada HTTP (PUT si actualiza, POST si crea)
+                    HttpResponseMessage response;
+                    if (id > 0)
+                    {
+                        response = await client.PutAsync("https://localhost:7130/DesempenioAlumnos/UpdateDesempenioAlumnos", content);
+                    }
+                    else
+                    {
+                        response = await client.PostAsync("https://localhost:7130/DesempenioAlumnos/CreateDesempenioAlumnos", content);
+                    }
+
+                    // Manejar errores de la respuesta HTTP
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var errorResponse = await response.Content.ReadAsStringAsync();
+                        ModelState.AddModelError("desempenio", id > 0
+                            ? "Hubo un error inesperado al actualizar el Desempenio: " + errorResponse
+                            : "Hubo un error inesperado al crear el Desempenio: " + errorResponse);
+
+                        await OnGetAsync();
+                        return Page();
+                    }
+
+                    TempData["SuccessMessage"] = "El Desempenio se guardó correctamente.";
+                    return RedirectToPage("Desempenio");
+                }
+            }
+        }
+
+        public async Task EliminarDesempenioAlumnoAsync(int desempenio)
+        {
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/DesempenioAlumnos/DeleteDesempenioAlumnos?id={desempenio}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                this.ModelState.AddModelError("desempeno", "Hubo un error inesperado al borrar el Desempeño");
             }
         }
     }

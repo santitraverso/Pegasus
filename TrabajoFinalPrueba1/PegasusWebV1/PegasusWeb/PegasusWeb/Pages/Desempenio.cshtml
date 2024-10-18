@@ -46,6 +46,7 @@
                             <input type="hidden" id="booleano-@desempenio.Id" name="ver" value="false">
                             <input type="hidden" name="curso" value="@Model.IdCurso" />
                             <input type="hidden" name="modulo" value="@Model.Modulo" />
+                            <input type="hidden" name="alumno" value="@desempenio.Id_Alumno" />
                             <td>@desempenio.Alumno.Apellido</td>
                             <td>@desempenio.Alumno.Nombre</td>
                             @if (isChecked)
@@ -58,7 +59,7 @@
                             else
                             {
                                 <td class="actions-column">
-                                    <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="agregar(@desempenio.Id_Alumno)" />
+                                    <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="submitForm(@desempenio.Id)" />
                                 </td>
                             }
                             <input type="submit" id="submit-@desempenio.Id" style="display:none" />
@@ -139,7 +140,7 @@
         }
 
         function verDesemp(id) {
-            document.getElementById('booleano-' + id).value = false;
+            document.getElementById('booleano-' + id).value = true;
             submitForm(id);
         }
 
