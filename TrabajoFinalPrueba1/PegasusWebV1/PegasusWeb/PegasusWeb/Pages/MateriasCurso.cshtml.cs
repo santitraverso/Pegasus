@@ -12,12 +12,12 @@ namespace PegasusWeb.Pages
         static HttpClient client = new HttpClient();
         public List<Entities.Materia> Materias { get; set; } = new List<Entities.Materia>();
         [BindProperty]
-        public List<Entities.Materia> MateriasCurso { get; set; } = new List<Entities.Materia>();
+        public List<CursoMateria> MateriasCurso { get; set; } = new List<CursoMateria>();
         [TempData]
         public int IdCurso { get; set; }
 
         [BindProperty]
-        public List<int> SelectedMateriasIds { get; set; } = new List<int>(); // 
+        public List<int> SelectedMateriasIds { get; set; } = new List<int>();
 
 
         public async Task OnGetAsync()
@@ -29,7 +29,7 @@ namespace PegasusWeb.Pages
 
             foreach (var mat in Materias)
             {
-                if (MateriasCurso.Any(i => i.Id == mat.Id))
+                if (MateriasCurso.Any(i => i.Id_Materia == mat.Id))
                 {
                     SelectedMateriasIds.Add((int)mat.Id);
                 }
@@ -40,7 +40,6 @@ namespace PegasusWeb.Pages
         {
             List<Entities.Materia> getMaterias = new List<Entities.Materia>();
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Contactos/GetContactosForCombo");
             HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Materia/GetMateriasForCombo");
             if (response.IsSuccessStatusCode)
             {
@@ -54,9 +53,9 @@ namespace PegasusWeb.Pages
             return getMaterias;
         }
 
-        private async Task<List<Entities.Materia>> GetMateriasCursoAsync(int curso)
+        private async Task<List<CursoMateria>> GetMateriasCursoAsync(int curso)
         {
-            List<Entities.Materia> getMaterias = new List<Entities.Materia>();
+            List<CursoMateria> getMaterias = new List<CursoMateria>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
             HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
@@ -66,7 +65,7 @@ namespace PegasusWeb.Pages
                 string materiasJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(materiasJson))
                 {
-                    getMaterias = JsonConvert.DeserializeObject<List<Entities.Materia>>(materiasJson);
+                    getMaterias = JsonConvert.DeserializeObject<List<CursoMateria>>(materiasJson);
                 }
             }
 
