@@ -6,7 +6,7 @@ namespace PegasusWeb.Entities
     {
         public int Id { get; set; }
         public string Modulo { get; set; }
-        public int? Id_Perfil { get; set; }
-        public Perfiles Perfil { get; set; }
+        public string? Parametro { get; set; }
+        public string Page { get; set; }
     }
 }

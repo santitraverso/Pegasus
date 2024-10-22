@@ -21,6 +21,14 @@ builder.Services.AddAuthentication(options =>
     options.CallbackPath = "/auth/callback"; // Este es solo para redirigir dentro del app, no se debe usar en Google
 });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Ajusta el tiempo de expiración de la sesión según lo necesites
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,31 +40,19 @@ if (!app.Environment.IsDevelopment())
 }
 
 
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-// Maneja la autenticación en la ruta principal
-app.MapGet("/auth/callback", async context =>
-{
-    var result = await context.AuthenticateAsync();
-    if (result.Succeeded)
-    {
-        // Aquí puedes redirigir al usuario a la página de inicio o guardar la sesión
-        context.Response.Redirect("/"); // Cambia a la ruta principal de tu frontend
-    }
-    else
-    {
-        // Maneja errores
-        context.Response.StatusCode = 500;
-    }
-});
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseRouting();
 
 app.MapRazorPages();
+
+//app.MapGet("/", async context =>
+//{
+//    context.Response.Redirect("/Home");
+//    await Task.CompletedTask; // Completar la tarea asincrónica.
+//});
 
 app.Run();

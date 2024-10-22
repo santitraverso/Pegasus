@@ -106,7 +106,8 @@ namespace PegasusV1.Controllers
                 nombre = usuario?.Nombre,
                 apellido = usuario?.Apellido,
                 id = usuario?.Id,
-                perfil = usuario?.Perfil?.Nombre
+                perfil = usuario?.Perfil?.Nombre,
+                id_perfil = usuario?.Perfil?.Id
             };
 
             // Convierte el objeto a una cadena JSON
