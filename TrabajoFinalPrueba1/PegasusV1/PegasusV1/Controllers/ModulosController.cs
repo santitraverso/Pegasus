@@ -14,15 +14,12 @@ namespace PegasusV1.Controllers
     {
         private readonly ILogger<ModulosController> _logger;
         private readonly IService<Modulos> ModulosService;
-        private readonly IService<Perfiles> RolesService;
 
         public ModulosController(ILogger<ModulosController> logger,
-            IService<Modulos> modulosService,
-            IService<Perfiles> rolesService)
+            IService<Modulos> modulosService)
         {
             _logger = logger;
             ModulosService = modulosService;
-            RolesService = rolesService;
         }
 
         [HttpGet]
@@ -46,21 +43,7 @@ namespace PegasusV1.Controllers
         [Route("GetById")]
         public async Task<Modulos?> GetById(int id)
         {
-            Modulos Modulos = await ModulosService.GetById(id);
-
-
-            if (Modulos != null)
-            {
-                if (Modulos.Id_Perfil.HasValue)
-                {
-                    Modulos.Perfil = await RolesService.GetById(Modulos.Id_Perfil.Value);
-                }
-
-            }
-
-
-
-            return Modulos;
+            return await ModulosService.GetById(id);
         }
 
         [HttpPost]

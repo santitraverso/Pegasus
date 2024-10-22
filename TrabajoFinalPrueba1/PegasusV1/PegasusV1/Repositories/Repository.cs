@@ -408,6 +408,21 @@ namespace PegasusV1.Repositories
             }
         }
 
+        public async Task<List<ModulosPerfiles>> GetModulosPerfilesForCombo(Expression<Func<ModulosPerfiles, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<ModulosPerfiles>? query = dbContext.Set<ModulosPerfiles>().AsQueryable();
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
         public async Task<List<Perfiles>> GetPerfilesForCombo(Expression<Func<Perfiles, bool>>? predicate = null)
         {
             using (DataContext dbContext = new DataContext(_configuration))

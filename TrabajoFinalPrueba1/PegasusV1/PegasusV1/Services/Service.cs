@@ -133,6 +133,11 @@ namespace PegasusV1.Services
             return await Repository.GetModulosForCombo(predicate);
         }
 
+        public async Task<List<ModulosPerfiles>> GetModulosPerfilesForCombo(Expression<Func<ModulosPerfiles, bool>>? predicate = null)
+        {
+            return await Repository.GetModulosPerfilesForCombo(predicate);
+        }
+
         public async Task<List<Perfiles>> GetPerfilesForCombo(Expression<Func<Perfiles, bool>>? predicate = null)
         {
             return await Repository.GetPerfilesForCombo(predicate);
