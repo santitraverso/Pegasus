@@ -28,14 +28,14 @@
     <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Comunicado.Id" />
         <input type="hidden" name="curso" asp-for="@Model.IdCurso" />
-        <input type="hidden" name="profesor" asp-for="@Model.IdProfesor" />
+        <input type="hidden" name="usuario" asp-for="@Model.IdUsuario" />
         <input type="hidden" name="modulo" asp-for="@Model.Modulo" />
         <input type="hidden" name="ids" asp-for="@Model.IdsAlumnosJson" />
         <input type="hidden" id="booleano" name="atras" value="false">
 
         <div class="form-group">
             <label for="titulo" class="text-center" required>Alumnos</label>
-            <input type="text" value="@Model.NombresConcatenados" class="inputMio" name="nombresAlumnos" id="nombresAlumnos" readonly />
+            <input type="text" value="@Model.NombresConcatenados" class="inputMio2" name="nombresAlumnos" id="nombresAlumnos" readonly />
         </div>
         <div class="form-group">
             <label for="descripcion" class="text-center">Descripción</label>

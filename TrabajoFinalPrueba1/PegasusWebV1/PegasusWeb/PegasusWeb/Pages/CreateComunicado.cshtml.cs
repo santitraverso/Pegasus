@@ -27,7 +27,7 @@ namespace PegasusWeb.Pages
         [TempData]
         public string Modulo { get; set; }
         [TempData]
-        public int IdProfesor { get; set; }
+        public int IdUsuario { get; set; }
 
         [TempData]
         public string IdsAlumnosJson { get; set; }
@@ -139,12 +139,12 @@ namespace PegasusWeb.Pages
         }
 
 
-        public async Task<IActionResult> OnPostAsync(bool atras, int curso, int profesor, string ids, string descripcion, string modulo, int id)
+        public async Task<IActionResult> OnPostAsync(bool atras, int curso, int usuario, string ids, string descripcion, string modulo, int id)
         {
             IdCurso = curso;
             Modulo = modulo;
             IdComunicado = id;
-            IdProfesor = profesor;
+            IdUsuario = usuario;
             bool nuevo = id == 0;
 
             string trimmedIds = ids.Trim('[', ']');
@@ -179,7 +179,8 @@ namespace PegasusWeb.Pages
                 }
 
                 dynamic comunicadoData = new ExpandoObject();
-                comunicadoData.Id_Profesor = profesor;
+                comunicadoData.Id_Usuario = usuario;
+                comunicadoData.Id_Curso = curso;
                 comunicadoData.Descripcion = descripcion;
                 comunicadoData.Fecha = DateTime.Now;
 

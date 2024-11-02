@@ -44,13 +44,7 @@ namespace PegasusV1.Controllers
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         }
-        //[HttpGet("Login")]
-        //public IActionResult Login()
-        //{
-        //    var redirectUrl = Url.Action("ExternalLoginCallback", "Account");
-        //    var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
-        //    return Challenge(properties, GoogleDefaults.AuthenticationScheme);
-        //}
+
         [HttpGet("Logout")]
         public async Task<IActionResult> Logout(string returnUrl = "/")
         {

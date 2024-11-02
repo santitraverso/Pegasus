@@ -15,6 +15,8 @@
                     <div class="card card-custom card-title-center justify-content-center" style="cursor: pointer;" onclick="submitForm(@modulo.Modulo.Id)">
                         <input type="hidden" name="page" value="@modulo.Modulo.Page" />
                         <input type="hidden" name="parametro" value="@modulo.Modulo.Parametro" />
+                        <input type="hidden" name="usuario" value="@Model.IdUsuario" />
+                        <input type="hidden" name="perfil" value="@Model.IdPerfil" />
                         <h5 class="card-title card-title-center">@modulo.Modulo.Modulo</h5>
                         <img src="~/img/@($"{modulo.Modulo.Modulo}.png")" class="card-img-top2" alt="" style=" margin: 0 auto;">
                     </div>

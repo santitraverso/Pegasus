@@ -30,11 +30,21 @@ namespace PegasusWeb.Pages
                 // Guardar IdPerfil en la sesión
                 if (UsuarioData != null && UsuarioData.ContainsKey("id_perfil"))
                 {
-                    if (int.TryParse(UsuarioData["id_perfil"].ToString(), out int perfilValue) && perfilValue > 0)
+                    if (int.TryParse(UsuarioData["id_perfil"].ToString(), out int idPerfilValue) && idPerfilValue > 0)
                     {
-                        IdPerfil = perfilValue;
+                        IdPerfil = idPerfilValue;
                         HttpContext.Session.SetInt32("IdPerfil", IdPerfil);
                         Modulos = await GetModulosPerfilAsync(IdPerfil);
+                    }
+                }
+
+                // Guardar Perfil en la sesión
+                if (UsuarioData != null && UsuarioData.ContainsKey("perfil"))
+                {
+                    if (!string.IsNullOrEmpty(UsuarioData["perfil"]?.ToString()))
+                    {
+                        string perfil = UsuarioData["perfil"].ToString();
+                        HttpContext.Session.SetString("Perfil", perfil);
                     }
                 }
 
@@ -57,7 +67,6 @@ namespace PegasusWeb.Pages
                     Modulos = await GetModulosPerfilAsync(IdPerfil);
                 }
 
-                // Recuperar IdUsuario de la sesión
                 IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
             }
         }

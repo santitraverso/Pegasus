@@ -14,14 +14,17 @@ namespace PegasusV1.Controllers
         private readonly ILogger<CuadernoComunicadosController> _logger;
         private readonly IService<CuadernoComunicados> CuadernoComunicadosService;
         private readonly IService<Usuario> UsuarioService;
+        private readonly IService<Curso> CursoService;
 
         public CuadernoComunicadosController(ILogger<CuadernoComunicadosController> logger,
             IService<CuadernoComunicados> cuadernoComunicadosService,
-            IService<Usuario> usuarioService)
+            IService<Usuario> usuarioService,
+            IService<Curso> cursoService)
         {
             _logger = logger;
             CuadernoComunicadosService = cuadernoComunicadosService;
             UsuarioService = usuarioService;
+            CursoService = cursoService;
         }
 
         [HttpGet]
@@ -49,9 +52,14 @@ namespace PegasusV1.Controllers
 
             if(cuaderno != null)
             {
-                if (cuaderno.Id_Profesor.HasValue)
+                if (cuaderno.Id_Usuario.HasValue)
                 {
-                    cuaderno.Profesor = await UsuarioService.GetById(cuaderno.Id_Profesor.Value);
+                    cuaderno.Usuario = await UsuarioService.GetById(cuaderno.Id_Usuario.Value);
+                }
+
+                if (cuaderno.Id_Curso.HasValue)
+                {
+                    cuaderno.Curso = await CursoService.GetById(cuaderno.Id_Curso.Value);
                 }
             }
 

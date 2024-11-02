@@ -185,7 +185,8 @@ namespace PegasusV1.Repositories
             {
                 IQueryable<CuadernoComunicados>? query = dbContext.Set<CuadernoComunicados>().AsQueryable();
 
-                query = query.Include(x => x.Profesor);
+                query = query.Include(x => x.Usuario);
+                query = query.Include(x => x.Curso);
 
                 if (predicate != null)
                 {

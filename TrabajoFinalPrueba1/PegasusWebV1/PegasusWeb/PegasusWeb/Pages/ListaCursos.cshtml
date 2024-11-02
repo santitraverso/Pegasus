@@ -21,7 +21,9 @@
                 <form method="post" id="form-@curso.Curso.Id">
                     <div class="card card-custom card-title-center justify-content-center" style="cursor: pointer;" onclick="submitForm(@curso.Curso.Id)">
                         <input type="hidden" name="curso" value="@curso.Curso.Id" />
+                        <input type="hidden" name="usuario" value="@Model.IdUsuario" />
                         <input type="hidden" name="modulo" value="@Model.Modulo" />
+                        <input type="hidden" name="perfil" value="@Model.IdPerfil" />
                         <h5 class="card-title card-title-center" style="margin-bottom:0px;">@curso.Curso.Nombre_Curso</h5>
                         <p class="card-title card-title-center" style="margin-bottom:0px;">@curso.Curso.Grado @curso.Curso.Division @curso.Curso.Turno</p>
                         <img src="~/img/Cursos.png" class="card-img-top2" alt="" style=" margin: 0 auto;">

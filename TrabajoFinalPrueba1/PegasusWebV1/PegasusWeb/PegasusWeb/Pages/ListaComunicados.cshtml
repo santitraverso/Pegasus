@@ -29,7 +29,7 @@
                 <div class="col-md-4 mb-4 justify-content-center">
                     <form method="post">
                         <input type="hidden" name="comunicado" value="@comunicado.Id_Comunicado" />
-                        <input type="hidden" name="profesor" value="@Model.IdProfesor" />
+                        <input type="hidden" name="usuario" value="@Model.IdUsuario" />
                         <input type="hidden" name="modulo" value="@Model.Modulo" />
                         <input type="hidden" name="curso" value="@Model.IdCurso" />
                         <input type="hidden" name="idsAlumnos" value="@Model.IdsAlumnosJson" />
@@ -59,7 +59,7 @@
     <form method="post" asp-page-handler="Atras" style="display: inline;" id="form2">
         <input type="hidden" name="curso" value="@Model.IdCurso" />
         <input type="hidden" name="modulo" value="@Model.Modulo" />
-        <input type="hidden" name="profesor" value="@Model.IdProfesor" />
+        <input type="hidden" name="usuario" value="@Model.IdUsuario" />
         <button type="button" class="btn btn-primary btn-custom" asp-area="" style="margin:10px;" onclick="atras()">Atras</button>
     </form>
 

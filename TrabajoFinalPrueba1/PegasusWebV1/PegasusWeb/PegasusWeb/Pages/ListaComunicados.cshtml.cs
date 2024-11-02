@@ -20,7 +20,7 @@ namespace PegasusWeb.Pages
         [TempData]
         public string Modulo { get; set; }
         [TempData]
-        public int IdProfesor { get; set; }
+        public int IdUsuario { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -62,7 +62,7 @@ namespace PegasusWeb.Pages
             }
 
             ComunicadosConAlumnos = comunicadosDict
-                .Where(kv => kv.Value.FirstOrDefault()?.Comunicado?.Id_Profesor == IdProfesor)
+                .Where(kv => kv.Value.FirstOrDefault()?.Comunicado?.Id_Curso == IdCurso)
                 .Select(kv => new ComunicadoViewModel
                 {
                     Ids = string.Join(", ", kv.Value.Select(c => c.Id).Distinct()),
@@ -113,19 +113,19 @@ namespace PegasusWeb.Pages
             return getComunicados;
         }
 
-        public IActionResult OnPostAtras(int curso, string modulo, int profesor)
+        public IActionResult OnPostAtras(int curso, string modulo, int usuario)
         {
             IdCurso = curso;
             Modulo = modulo;
-            IdProfesor = profesor;
+            IdUsuario = usuario;
             return RedirectToPage("Cuaderno");
         }
 
-        public async Task<IActionResult> OnPostAsync(int comunicado, string ids, int curso, int profesor, bool editar, string modulo, string idsAlumnos)
+        public async Task<IActionResult> OnPostAsync(int comunicado, string ids, int curso, int usuario, bool editar, string modulo, string idsAlumnos)
         {
             IdComunicado = comunicado;
             IdCurso = curso;
-            IdProfesor = profesor;
+            IdUsuario = usuario;
             Modulo = modulo;
             IdsAlumnosJson = idsAlumnos;
 

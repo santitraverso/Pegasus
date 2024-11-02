@@ -17,17 +17,17 @@ namespace PegasusWeb.Pages
         [TempData]
         public string Modulo { get; set; }
 
-        public async Task OnGetAsync(string modulo)
+        [TempData]
+        public int IdUsuario { get; set; }
+
+        [TempData]
+        public int IdPerfil { get; set; }
+
+        public async Task OnGetAsync()
         {
-            if(!string.IsNullOrEmpty(modulo))
-                Modulo = modulo;
-
-            bool conUsuario = false;
-            int idUsuario = 1;
-
-            if(conUsuario)
+            if(IdPerfil == 2 || IdPerfil == 4)
             {
-                Cursos = await GetCursosAsync(idUsuario);
+                Cursos = await GetCursosAsync(IdUsuario);
             }
             else
             {
@@ -65,10 +65,12 @@ namespace PegasusWeb.Pages
             return getcursos;
         }
 
-        public IActionResult OnPost(int curso, string modulo)
+        public IActionResult OnPost(int curso, string modulo, int usuario, int perfil)
         {
             IdCurso = curso;
             Modulo = modulo;
+            IdUsuario = usuario;
+            IdPerfil = perfil;
 
             switch (modulo)
             {

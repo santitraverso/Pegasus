@@ -24,11 +24,10 @@ namespace PegasusWeb.Pages
         [TempData]
         public int IdComunicado { get; set; }
         [TempData]
-        public int IdProfesor { get; set; }
+        public int IdUsuario { get; set; }
 
         public async Task OnGetAsync()
         {
-            IdProfesor = 3;
             IntegrantesCurso = await GetIntegrantesCursosAsync(IdCurso);
         }
 
@@ -52,12 +51,12 @@ namespace PegasusWeb.Pages
             return getalumnos;
         }
 
-        public async Task<IActionResult?> OnPost(int curso, bool ver, string modulo, bool atras, int comunicado, int profesor)
+        public async Task<IActionResult?> OnPost(int curso, bool ver, string modulo, bool atras, int comunicado, int usuario)
         {
             IdCurso = curso;
             Modulo = modulo;
             IdComunicado = comunicado;
-            IdProfesor = profesor;
+            IdUsuario = usuario;
 
             if (atras)
                 return RedirectToPage("ListaCursos");
