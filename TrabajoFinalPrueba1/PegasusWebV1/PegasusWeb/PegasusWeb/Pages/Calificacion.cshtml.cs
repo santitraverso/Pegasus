@@ -26,8 +26,22 @@ namespace PegasusWeb.Pages
 
         public async Task OnGetAsync()
         {
+            var alumnos = new List<IntegrantesCursos>();
+            var idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+            var idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
 
-            var alumnos = await GetIntegrantesCursosAsync(IdCurso);
+            if (idPerfil == 2)
+            {
+                alumnos = await GetIntegrantesCursosAsync(IdCurso, idUsuario);
+            }
+            else if (idPerfil == 4)
+            {
+                alumnos = await GetIntegrantesCursosAsync(IdCurso, HttpContext.Session.GetInt32("IdHijo") ?? idUsuario);
+            }
+            else
+            {
+                alumnos = await GetIntegrantesCursosAsync(IdCurso);
+            }
 
             // Crea una lista para almacenar las tareas
             var tasks = alumnos.Select(async alumno =>
@@ -74,12 +88,16 @@ namespace PegasusWeb.Pages
             return RedirectToPage("ReporteCalificaciones");
         }
 
-        public static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso)
+        public static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso, int usuario = 0)
         {
             List<IntegrantesCursos> getalumnos = new List<IntegrantesCursos>();
+            string queryParam;
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
-            string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+            if (usuario != 0)
+                queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso} && x.id_usuario=={usuario}");
+            else
+                queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+
             HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)

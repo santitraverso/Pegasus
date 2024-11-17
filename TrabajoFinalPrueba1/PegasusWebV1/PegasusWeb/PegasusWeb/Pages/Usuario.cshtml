@@ -31,6 +31,39 @@
         <a class="btn btn-primary btn-custom" asp-page="/CreateUsuario" style="margin:10px;">Crear Usuario</a>
         <br />
         <br />
+        @if(Model.IdPerfil == 4)
+        {
+            <form method="post" asp-page-handler="SeleccionarHijo">
+                <table id="tablaUsuarios" class="table">
+                    <thead>
+                        <tr>
+                            <th>Selección</th>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var hijo in Model.Usuarios)
+                        {
+                            <tr>
+                                <td>
+                                    <label class="container2">
+                                        <input type="radio" name="hijo" value="@hijo.Id" @(Model.IdHijo == hijo.Id ? "checked" : "") />
+                                        <div class="checkmark"></div>
+                                    </label>
+                                </td>
+                                <td>@hijo.Apellido</td>
+                                <td>@hijo.Nombre</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <input type="hidden" name="editar" value="true" />
+                <input type="submit" value="Guardar selección" class="btn btn-primary btn-custom" />
+            </form>
+        }
+        else
+        {
             <table id="tablaUsuarios" class="table">
                 <thead>
                     <tr>
@@ -44,11 +77,10 @@
                 <tbody>
                     @foreach (var usuario in Model.Usuarios)
                     {
-
-                    <tr>
-                        <form method="post">
-                            <input type="hidden" name="usuario" value="@usuario.Id" />
-                            <input type="hidden" id="booleano-@usuario.Id" name="editar" value="true">
+                        <tr>
+                            <form method="post">
+                                <input type="hidden" name="usuario" value="@usuario.Id" />
+                                <input type="hidden" id="booleano-@usuario.Id" name="editar" value="true">
                             <td>@usuario.Apellido</td>
                             <td>@usuario.Nombre</td>
                             <td>@usuario.Perfil.Nombre</td>
@@ -57,12 +89,13 @@
                                 <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@usuario.Id)" />
                                 <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@usuario.Id)" />
                             </td>
-                            <input type="submit" id="submit-@usuario.Id" style="display:none" />                  
-                        </form>
-                    </tr>
+                            <input type="submit" id="submit-@usuario.Id" style="display:none" />
+                            </form>
+                        </tr>
                     }
                 </tbody>
             </table>
+        }
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

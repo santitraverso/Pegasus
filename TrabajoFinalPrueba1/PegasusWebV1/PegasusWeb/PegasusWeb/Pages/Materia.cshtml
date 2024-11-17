@@ -34,8 +34,16 @@
                         <input type="hidden" name="materia" value="@materia.Id" />
                         <img src="~/img/Materias.png" class="card-img-top2" alt="">
                         <br>
-                        <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@materia.Id)" style="padding-bottom: 5px;" />
-                        <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@materia.Id)" style="padding-bottom: 5px;" />
+                        <br>
+                        @if(Model.IdPerfil == 4 || Model.IdPerfil == 2)
+                        {
+                            <img src="~/img/lupa.png" class="edit-image" alt="Editar" onclick="submitForm(@materia.Id)" style="padding-bottom: 5px;" />
+                        }
+                        else
+                        {
+                            <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@materia.Id)" style="padding-bottom: 5px;" />
+                            <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@materia.Id)" style="padding-bottom: 5px;" />
+                        }
                         <input type="submit" id="submit-@materia.Id" style="display:none" />
                         <input type="hidden" id="booleano-@materia.Id" name="editar" value="true">
                     </form>

@@ -55,6 +55,12 @@ namespace PegasusWeb.Pages
                     {
                         IdUsuario = idValue;
                         HttpContext.Session.SetInt32("IdUsuario", IdUsuario);
+
+                        if (IdPerfil == 4)
+                        {
+                            var hijo = await GetHijosAsync(IdUsuario);
+                            HttpContext.Session.SetInt32("IdHijo", hijo != null ? hijo.Id: 0);
+                        }
                     }
                 }
             }
@@ -88,6 +94,25 @@ namespace PegasusWeb.Pages
             }
 
             return getmodulos;
+        }
+
+        public static async Task<Hijo> GetHijosAsync(int padre)
+        {
+            Hijo gethijo = new Hijo();
+
+            string queryParam = Uri.EscapeDataString($"x=>x.id_padre=={padre}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Hijo/GetHijosForCombo?query={queryParam}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string hijosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(hijosJson))
+                {
+                    gethijo = JsonConvert.DeserializeObject<List<Hijo>>(hijosJson).FirstOrDefault();
+                }
+            }
+
+            return gethijo;
         }
 
         public async Task<IActionResult> OnPostAsync(int perfil, int usuario, string page, string parametro)

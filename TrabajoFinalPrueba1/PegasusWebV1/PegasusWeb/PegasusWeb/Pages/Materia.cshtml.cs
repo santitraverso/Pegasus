@@ -13,9 +13,17 @@ namespace PegasusWeb.Pages
 
         [TempData]
         public int IdMateria { get; set; }
+        [TempData]
+        public int IdPerfil { get; set; }
+
+        [TempData]
+        public int IdUsuario { get; set; }
 
         public async Task OnGetAsync()
         {
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+            IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+
             Materias = await GetMateriasAsync();
         }
 

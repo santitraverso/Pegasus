@@ -25,9 +25,19 @@ namespace PegasusWeb.Pages
 
         public async Task OnGetAsync()
         {
-            if(IdPerfil == 2 || IdPerfil == 4)
+            if (IdPerfil == 0)
+            {
+                IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+                IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            }
+
+            if (IdPerfil == 2)
             {
                 Cursos = await GetCursosAsync(IdUsuario);
+            }
+            else if (IdPerfil == 4)
+            {
+                Cursos = await GetCursosAsync(HttpContext.Session.GetInt32("IdHijo") ?? IdUsuario);
             }
             else
             {

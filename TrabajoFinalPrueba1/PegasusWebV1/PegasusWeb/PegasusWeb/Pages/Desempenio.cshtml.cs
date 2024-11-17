@@ -32,8 +32,22 @@ namespace PegasusWeb.Pages
 
         public async Task OnGetAsync()
         {
+            var integrantes = new List<IntegrantesCursos>();
+            var idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+            var idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
 
-            var integrantes = await GetIntegrantesCursosAsync(IdCurso);
+            if (idPerfil == 2)
+            {
+                integrantes = await GetIntegrantesCursosAsync(IdCurso, idUsuario);
+            }
+            else if (idPerfil == 4)
+            {
+                integrantes = await GetIntegrantesCursosAsync(IdCurso, HttpContext.Session.GetInt32("IdHijo") ?? idUsuario);
+            }
+            else
+            {
+                integrantes = await GetIntegrantesCursosAsync(IdCurso);
+            }
 
             Alumnos = integrantes.Select(alumn => new DesempenioAlumnos
             {
@@ -60,11 +74,16 @@ namespace PegasusWeb.Pages
             }
         }
 
-        public static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso)
+        public static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso, int usuario = 0)
         {
             List<IntegrantesCursos> getalumnos = new List<IntegrantesCursos>();
+            string queryParam;
 
-            string queryParam = Uri.EscapeDataString($"x=>x.id_curso == {curso}");
+            if (usuario != 0)
+                queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso} && x.id_usuario=={usuario}");
+            else
+                queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+
             HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
