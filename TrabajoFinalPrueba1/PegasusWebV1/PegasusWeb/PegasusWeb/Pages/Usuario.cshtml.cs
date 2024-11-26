@@ -27,13 +27,12 @@ namespace PegasusWeb.Pages
             if(IdPerfil == 0)
             {
                 IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
-                IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
             }
 
             if (IdPerfil == 4)
             {
                 IdHijo = HttpContext.Session.GetInt32("IdHijo") ?? 0;
-                var hijos = await GetHijosAsync(IdUsuario);
+                var hijos = await GetHijosAsync(HttpContext.Session.GetInt32("IdUsuario") ?? 0);
                 Usuarios = hijos.Select(h => h.HijoUsuario).ToList();
             }
             else
