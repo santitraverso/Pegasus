@@ -23,6 +23,8 @@ namespace PegasusV1.Interfaces
 
         Task<List<CursoMateria>> GetCursoMateriaForCombo(Expression<Func<CursoMateria, bool>>? predicate = null);
 
+        Task<List<DocenteMateria>> GetDocenteMateriaForCombo(Expression<Func<DocenteMateria, bool>>? predicate = null);
+
         Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null);
 
         Task<List<Asistencia>> GetAsistenciasForCombo(Expression<Func<Asistencia, bool>>? predicate = null);

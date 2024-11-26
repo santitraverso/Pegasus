@@ -64,6 +64,11 @@ namespace PegasusV1.Services
             return await Repository.GetCursoMateriaForCombo(predicate);
         }
 
+        public async Task<List<DocenteMateria>> GetDocenteMateriaForCombo(Expression<Func<DocenteMateria, bool>>? predicate = null)
+        {
+            return await Repository.GetDocenteMateriaForCombo(predicate);
+        }
+
         public async Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null)
         {
             return await Repository.GetIntegrantesEventosForCombo(predicate);

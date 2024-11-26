@@ -13,9 +13,12 @@ namespace PegasusWeb.Pages
 
         [TempData]
         public int IdCurso { get; set; }
+        [TempData]
+        public int IdPerfil { get; set; }
 
         public async Task OnGetAsync()
         {
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
             Cursos = await GetCursosAsync();
         }
 

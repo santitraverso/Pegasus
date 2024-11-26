@@ -49,18 +49,30 @@
                             <input type="hidden" name="alumno" value="@desempenio.Id_Alumno" />
                             <td>@desempenio.Alumno.Apellido</td>
                             <td>@desempenio.Alumno.Nombre</td>
-                            @if (isChecked)
+                            @if (Model.IdPerfil == 2 || Model.IdPerfil == 4)
                             {
+                                @if (isChecked)
+                                {
+                                <td class="actions-column">
+                                    <img src="~/img/lupa.png" class="icon" alt="Ver" onclick="verDesemp(@desempenio.Id)" />
+                                </td>
+                                }
+                            }
+                            else
+                            {
+                                @if (isChecked)
+                                {
                                 <td class="actions-column">
                                     <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@desempenio.Id)" />
                                     <img src="~/img/lupa.png" class="icon" alt="Ver" onclick="verDesemp(@desempenio.Id)" />
                                 </td>
-                            }
-                            else
-                            {
+                                }
+                                else
+                                {
                                 <td class="actions-column">
                                     <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="submitForm(@desempenio.Id)" />
                                 </td>
+                                }
                             }
                             <input type="submit" id="submit-@desempenio.Id" style="display:none" />
                         </form>

@@ -31,21 +31,41 @@ namespace PegasusWeb.Pages
                 IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
             }
 
-            if (IdPerfil == 2)
+            switch (IdPerfil)
             {
-                Cursos = await GetCursosAsync(IdUsuario);
-            }
-            else if (IdPerfil == 4)
-            {
-                Cursos = await GetCursosAsync(HttpContext.Session.GetInt32("IdHijo") ?? IdUsuario);
-            }
-            else
-            {
-                var cursos = await GetCursosAsync();
+                //Alumno
+                case 2:
+                    Cursos = await GetCursosAsync(IdUsuario);
+                    break;
+                //Docente
+                case 3:
+                    var cursosDocente = await GetCursosDocenteAsync(IdUsuario);
+                    Cursos = cursosDocente
+                        .GroupBy(curso => curso.Id_Curso)
+                        .Select(group => group.First())
+                        .Select(curso => new IntegrantesCursos
+                        {
+                            Usuario = curso.Docente,
+                            Id_Usuario = curso.Id_Docente,
+                            Curso = curso.Curso,
+                            Id_Curso = curso.Id_Curso,
+                        })
+                        .ToList();
+                    break;
+                //Padre
+                case 4:
+                    Cursos = await GetCursosAsync(HttpContext.Session.GetInt32("IdHijo") ?? IdUsuario);
+                    break;
 
-                Cursos = cursos.GroupBy(ic => ic.Id_Curso).Select(g => g.First()).OrderBy(c => c.Id_Curso).ToList();
+                default:
+                    var cursos = await GetCursosAsync();
+                    Cursos = cursos
+                        .GroupBy(ic => ic.Id_Curso)
+                        .Select(g => g.First())
+                        .OrderBy(c => c.Id_Curso)
+                        .ToList();
+                    break;
             }
-            
         }
 
         static async Task<List<IntegrantesCursos>> GetCursosAsync(int usuario = 0)
@@ -69,6 +89,25 @@ namespace PegasusWeb.Pages
                 if (!string.IsNullOrEmpty(cursosJson))
                 {
                     getcursos = JsonConvert.DeserializeObject<List<IntegrantesCursos>>(cursosJson);
+                }
+            }
+
+            return getcursos;
+        }
+
+        public static async Task<List<DocenteMateria>> GetCursosDocenteAsync(int docente)
+        {
+            List<DocenteMateria> getcursos = new List<DocenteMateria>();
+            string queryParam = Uri.EscapeDataString($"x=>x.id_docente=={docente}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/DocenteMateria/GetDocenteMateriaForCombo?query={queryParam}");
+            
+
+            if (response.IsSuccessStatusCode)
+            {
+                string cursosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(cursosJson))
+                {
+                    getcursos = JsonConvert.DeserializeObject<List<DocenteMateria>>(cursosJson);
                 }
             }
 

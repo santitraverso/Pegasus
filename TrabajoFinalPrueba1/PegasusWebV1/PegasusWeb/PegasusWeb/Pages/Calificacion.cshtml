@@ -68,11 +68,14 @@
                                     </div>
                                 </td>
                                 <td class="actions-column">
+                                    @if (Model.IdPerfil != 2 && Model.IdPerfil != 4)
+                                    {
                                         @if (alumno.Usuario.Calificaciones.Any())
                                         {
                                         <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@alumno.Id_Usuario)" style="padding-bottom: 5px; width:28px; height:30px;" />
                                         }
-                                    <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="agregar(@alumno.Id_Usuario)" />
+                                        <img src="~/img/nuevo.png" class="nuevo-icon" alt="Agregar" onclick="agregar(@alumno.Id_Usuario)" />
+                                    }
                                 </td>
                             </form>
                         </tr>

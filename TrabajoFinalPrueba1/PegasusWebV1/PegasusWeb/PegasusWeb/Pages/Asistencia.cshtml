@@ -84,7 +84,10 @@
                     }
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-primary btn-custom">Guardar Asistencia</button>
+            @if (Model.IdPerfil != 2 && Model.IdPerfil != 4)
+            {
+                <button type="submit" class="btn btn-primary btn-custom">Guardar Asistencia</button>
+            }
             <button type="button" class="btn btn-primary btn-custom" onclick="reportAsis()">Reporte Asistencias</button>
         </form>
     }

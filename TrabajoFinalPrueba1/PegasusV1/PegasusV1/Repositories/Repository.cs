@@ -143,6 +143,25 @@ namespace PegasusV1.Repositories
             }
         }
 
+        public async Task<List<DocenteMateria>> GetDocenteMateriaForCombo(Expression<Func<DocenteMateria, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<DocenteMateria>? query = dbContext.Set<DocenteMateria>().AsQueryable();
+
+                query = query.Include(x => x.Materia);
+                query = query.Include(x => x.Curso);
+                query = query.Include(x => x.Docente);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
         public async Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null)
         {
             using (DataContext dbContext = new DataContext(_configuration))

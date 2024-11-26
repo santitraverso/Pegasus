@@ -58,7 +58,10 @@
                 <textarea asp-for="Desempenio.Desempenio.Descripcion" id="descripcion" name="descripcion" rows="3" cols="30" maxlength="200" placeholder="Máximo 200 caracteres" readonly></textarea>
             </div>
         }
-        <button type="submit" class="btn btn-primary btn-custom">@(Model.Ver ? "Borrar" : "Guardar")</button>
+        @if (Model.IdPerfil != 2 && Model.IdPerfil != 4)
+        {
+            <button type="submit" class="btn btn-primary btn-custom">@(Model.Ver ? "Borrar" : "Guardar")</button>
+        }
         <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

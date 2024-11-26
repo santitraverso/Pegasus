@@ -28,19 +28,21 @@ namespace PegasusWeb.Pages
         public bool Ver { get; set; }
         [TempData]
         public int IdAlumno { get; set; }
+        [TempData]
+        public int IdPerfil { get; set; }
 
 
         public async Task OnGetAsync()
         {
             var integrantes = new List<IntegrantesCursos>();
-            var idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
             var idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
 
-            if (idPerfil == 2)
+            if (IdPerfil == 2)
             {
                 integrantes = await GetIntegrantesCursosAsync(IdCurso, idUsuario);
             }
-            else if (idPerfil == 4)
+            else if (IdPerfil == 4)
             {
                 integrantes = await GetIntegrantesCursosAsync(IdCurso, HttpContext.Session.GetInt32("IdHijo") ?? idUsuario);
             }

@@ -28,8 +28,13 @@ namespace PegasusWeb.Pages
         [BindProperty]
         public List<int> SelectedAlumnosIds { get; set; } = new List<int>(); // IDs de los alumnos seleccionados en el formulario
 
+        [TempData]
+        public int IdPerfil { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
             if (IdCurso > 0)
             {
                 Curso = await GetCursoAsync(IdCurso);

@@ -69,7 +69,10 @@
                     }
                 </tbody>
             </table>
-            <button type="button" onclick="comunicar()" class="btn btn-primary btn-custom">Comunicar</button>
+            @if (Model.IdPerfil != 2 && Model.IdPerfil != 4)
+            {
+                <button type="button" onclick="comunicar()" class="btn btn-primary btn-custom">Comunicar</button>
+            }
             <button type="button" class="btn btn-primary btn-custom" onclick="verBoton()">Ver Comunicados</button>
             <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
         </div>

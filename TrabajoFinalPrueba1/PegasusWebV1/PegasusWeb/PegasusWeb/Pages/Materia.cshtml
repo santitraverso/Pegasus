@@ -14,7 +14,10 @@
 <body>
     <h4>Materias</h4>
     <hr />
-    <a class="btn btn-primary btn-custom" asp-page="/Materia/CreateMateria" style="margin:10px;">Crear Materia</a>
+    @if (Model.IdPerfil != 2 && Model.IdPerfil != 3 && Model.IdPerfil != 4)
+    {
+       <a class="btn btn-primary btn-custom" asp-page="/Materia/CreateMateria" style="margin:10px;">Crear Materia</a>
+    }
     @if (ModelState.ContainsKey("materia"))
     {
     <div class="alert alert-danger">
@@ -35,7 +38,7 @@
                         <img src="~/img/Materias.png" class="card-img-top2" alt="">
                         <br>
                         <br>
-                        @if(Model.IdPerfil == 4 || Model.IdPerfil == 2)
+                        @if (Model.IdPerfil == 2 || Model.IdPerfil == 3 || Model.IdPerfil == 4)
                         {
                             <img src="~/img/lupa.png" class="edit-image" alt="Editar" onclick="submitForm(@materia.Id)" style="padding-bottom: 5px;" />
                         }

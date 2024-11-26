@@ -21,9 +21,13 @@ namespace PegasusWeb.Pages
         public string Modulo { get; set; }
         [TempData]
         public int IdUsuario { get; set; }
+        [TempData]
+        public int IdPerfil { get; set; }
 
         public async Task OnGetAsync()
         {
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
             // Deserializar el JSON de los IDs de los alumnos
             List<int> idsAlumnos = new List<int>();
             if (!string.IsNullOrEmpty(IdsAlumnosJson))
@@ -57,6 +61,23 @@ namespace PegasusWeb.Pages
                     {
                         // Si no está en el diccionario, lo agregamos con el primer alumno asociado
                         comunicadosDict[comunicadoAlumno.Id_Comunicado] = new List<ComunicadoAlumnos> { comunicadoAlumno };
+                    }
+                }
+            }
+
+            // Si es alumno o padre se quita los otros alumnos que fueron comunicados
+            if (IdPerfil == 2 || IdPerfil == 4)
+            {
+                foreach (var key in comunicadosDict.Keys.ToList())
+                {
+                    comunicadosDict[key] = comunicadosDict[key]
+                        .Where(c => c.Id_Alumno == IdUsuario)
+                        .ToList();
+
+                    // Eliminar comunicados sin alumnos válidos después del filtro
+                    if (!comunicadosDict[key].Any())
+                    {
+                        comunicadosDict.Remove(key);
                     }
                 }
             }

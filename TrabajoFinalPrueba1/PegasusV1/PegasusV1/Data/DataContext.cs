@@ -18,6 +18,7 @@ namespace PegasusV1.DbDataContext
         public DbSet<Hijo> Hijos { get; set; }
         public DbSet<IntegrantesEventos> IntegrantesEventos { get; set; }
         public DbSet<CursoMateria> CursoMateria { get; set; }
+        public DbSet<DocenteMateria> DocenteMateria { get; set; }
         public DbSet<Pago> Pago { get; set; }
         public DbSet<Tarea> Tarea { get; set; }
         public DbSet<CalificacionMateria> CalificacionMateria { get; set; }
