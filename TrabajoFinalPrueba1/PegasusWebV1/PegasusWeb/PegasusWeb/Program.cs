@@ -24,7 +24,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Ajusta el tiempo de expiración de la sesión según lo necesites
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Ajusta el tiempo de expiración de la sesión
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
@@ -48,11 +48,5 @@ app.UseAuthorization();
 app.UseRouting();
 
 app.MapRazorPages();
-
-//app.MapGet("/", async context =>
-//{
-//    context.Response.Redirect("/Home");
-//    await Task.CompletedTask; // Completar la tarea asincrónica.
-//});
 
 app.Run();

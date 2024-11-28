@@ -26,52 +26,6 @@
                 <button id="loginGoogleBtn" class="btn btn-outline-primary ms-2" style="display: block;">Login</button>
             </div>
         </nav>
-@*        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">PegasusWeb</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-route-modulo="Calificacion" asp-page="/ListaCursos">Calificaciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Evento">Eventos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/ListaContacto">Contactos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Curso">Cursos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Materia">Materias</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Usuario">Usuarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-route-modulo="Asistencia" asp-area="" asp-page="/ListaCursos">Asistencia</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-route-modulo="Cuaderno" asp-area="" asp-page="/ListaCursos">Cuaderno</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-route-modulo="Desempenio" asp-area="" asp-page="/ListaCursos">Desempeño</a>
-                        </li>
-                    </ul>
-                    <div id="userDisplay" class="navbar-text text-dark ms-3"></div>
-                    <button id="logoutBtn" class="btn btn-outline-danger ms-2" style="display: none;">Cerrar sesión</button>
-                    <button id="loginGoogleBtn" class="btn btn-outline-primary ms-2" style="display: block;">Login</button>
-                </div>
-            </div>
-        </nav>*@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -88,6 +42,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://apis.google.com/js/api:client.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Función que llama al backend para iniciar el proceso de autenticación
@@ -157,6 +112,127 @@
                 homeLink.href = "/Home";
             }
         });
+
+
+        //document.addEventListener("DOMContentLoaded", function () {
+        //    // Cargar y configurar el cliente de Google API
+        //    gapi.load('auth2', function () {
+        //        gapi.auth2.init({
+        //            client_id: '579011975819-tsmscfrfs7p4ai2n72rm5g9isvfqtubo.apps.googleusercontent.com'  // Reemplaza con tu Client ID
+        //        });
+        //    });
+
+        //    // Función para iniciar sesión con Google
+        //    const loginButton = document.getElementById('loginGoogleBtn');
+
+        //    if (loginButton) {
+        //        loginButton.addEventListener('click', function () {
+        //            const googleAuth = gapi.auth2.getAuthInstance();
+
+        //            // Iniciar sesión con Google
+        //            googleAuth.signIn().then(function (googleUser) {
+        //                // Obtener el ID token de Google
+        //                const idToken = googleUser.getAuthResponse().id_token;
+        //                console.log('Token de Google: ', idToken);
+
+        //                // Llamar a la función para autenticar al usuario en el backend
+        //                loginWithToken(idToken);
+        //            });
+        //        });
+        //    }
+
+        //    // Función para enviar el token al backend
+        //    function loginWithToken(token) {
+        //        const returnUrl = 'https://localhost:7063/Home';  // Página a la que redirigir después de iniciar sesión
+
+        //        // Realizar la petición al backend para autenticar al usuario
+        //        fetch('https://localhost:7130/Account/Login', {
+        //            method: 'POST',
+        //            headers: {
+        //                'Content-Type': 'application/json'
+        //            },
+        //            body: JSON.stringify({ token: token, returnUrl: returnUrl })
+        //        })
+        //            .then(response => response.json())
+        //            .then(data => {
+        //                if (data.usuario) {
+        //                    // Si la autenticación es exitosa, guardar los datos del usuario en sessionStorage
+        //                    const userData = JSON.parse(data.usuario);
+
+        //                    sessionStorage.setItem('userEmail', userData.email);
+        //                    sessionStorage.setItem('userNombre', userData.nombre);
+        //                    sessionStorage.setItem('userApellido', userData.apellido);
+        //                    sessionStorage.setItem('userToken', userData.token);  // Almacenar el JWT
+
+        //                    // Redirigir al usuario a la página de inicio
+        //                    window.location.href = returnUrl;
+        //                } else {
+        //                    alert('Error en la autenticación');
+        //                }
+        //            })
+        //            .catch(error => {
+        //                console.error('Error en la autenticación:', error);
+        //                alert('Ocurrió un error. Intenta nuevamente.');
+        //            });
+        //    }
+
+        //    // Mostrar el email del usuario en la página
+        //    displayUser();
+
+        //    // Ocultar el botón de inicio de sesión si el usuario está logueado
+        //    toggleLoginButton();
+
+        //    // Función para mostrar el email del usuario
+        //    function displayUser() {
+        //        const userApellido = sessionStorage.getItem('userApellido');
+        //        const userNombre = sessionStorage.getItem('userNombre');
+        //        const userDisplayElement = document.getElementById('userDisplay');
+
+        //        if (userDisplayElement && userApellido) {
+        //            userDisplayElement.textContent = `Bienvenido, ${userNombre} ${userApellido}`;
+        //        }
+        //    }
+
+        //    // Función para ocultar el botón de inicio de sesión si hay un usuario logueado
+        //    function toggleLoginButton() {
+        //        const userEmail = sessionStorage.getItem('userEmail');
+        //        const loginButton = document.getElementById('loginGoogleBtn');
+        //        const logoutButton = document.getElementById('logoutBtn');
+
+        //        // Verificar que los botones existan antes de intentar acceder a sus estilos
+        //        if (loginButton && logoutButton) {
+        //            if (userEmail) {
+        //                loginButton.style.display = 'none'; // Oculta el botón
+        //                logoutButton.style.display = 'block'; // Muestra el botón
+        //            } else {
+        //                loginButton.style.display = 'block'; // Muestra el botón
+        //                logoutButton.style.display = 'none'; // Oculta el botón
+        //            }
+        //        }
+        //    }
+
+        //    // Agregar funcionalidad al botón de cerrar sesión
+        //    const logoutButton = document.getElementById('logoutBtn');
+        //    if (logoutButton) {
+        //        logoutButton.addEventListener('click', function () {
+        //            sessionStorage.clear(); // Limpiar sessionStorage
+        //            const returnUrl = 'https://localhost:7063';
+        //            const loginUrl = `https://localhost:7130/Account/Logout?returnUrl=${encodeURIComponent(returnUrl)}`;
+        //            window.location.href = loginUrl;
+        //            window.location.href = returnUrl;
+        //        });
+        //    }
+
+        //    // Cambiar el enlace de la página de inicio según si el usuario está logueado
+        //    const homeLink = document.getElementById('navbar-home-link');
+        //    const userApellido = sessionStorage.getItem('userApellido');
+
+        //    homeLink.href = "/Index"; // Valor por defecto
+
+        //    if (userApellido) {
+        //        homeLink.href = "/Home"; // Si el usuario está logueado, redirigir a Home
+        //    }
+        //});
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
