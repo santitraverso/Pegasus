@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Dynamic;
 
 namespace PegasusWeb.Pages
 {
@@ -27,6 +28,16 @@ namespace PegasusWeb.Pages
 
         public List<SelectListItem> PerfilesRelacionados { get; set; } = new List<SelectListItem> { };
 
+        [BindProperty]
+        public List<CursoMateriaPair> CursoMateriaPairs { get; set; } = new List<CursoMateriaPair>();
+
+        public List<SelectListItem> CursosDisponibles { get; set; } = new List<SelectListItem> { };
+
+        public List<SelectListItem> MateriasDisponibles { get; set; } = new List<SelectListItem> { };
+
+        [BindProperty]
+        public string CursoMateriaPairsJson { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
             await CargarPerfilesAsync();
@@ -42,13 +53,49 @@ namespace PegasusWeb.Pages
                 }
 
                 PerfilSeleccionadoId = (int)Usuario.Id_Perfil;
+
+                if (PerfilSeleccionadoId == 3)
+                {
+                    var cursoMateria = await CargarDocenteMateriaAsync(IdUsuario);
+
+                    var cursoMat = cursoMateria.Select(curso => new CursoMateriaPair
+                    {
+                        CursoId = curso.Id_Curso,
+                        MateriaId = curso.Id_Materia
+                    });
+
+                    CursoMateriaPairs.AddRange(cursoMat);
+                }
+                
             }
             else
             {
                 Usuario = new Usuario { Id = 0 };
             }
 
+            await CargarCursosAsync();
+            await CargarMateriasAsync();
+
             return Page();
+        }
+
+        public static async Task<List<DocenteMateria>> CargarDocenteMateriaAsync(int docente)
+        {
+            List<DocenteMateria> getcursos = new List<DocenteMateria>();
+            string queryParam = Uri.EscapeDataString($"x=>x.id_docente=={docente}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/DocenteMateria/GetDocenteMateriaForCombo?query={queryParam}");
+
+
+            if (response.IsSuccessStatusCode)
+            {
+                string cursosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(cursosJson))
+                {
+                    getcursos = JsonConvert.DeserializeObject<List<DocenteMateria>>(cursosJson);
+                }
+            }
+
+            return getcursos;
         }
 
         static async Task<Usuario> GetUsuarioAsync(int usuario)
@@ -103,8 +150,60 @@ namespace PegasusWeb.Pages
             return getperfiles;
         }
 
+        static async Task<List<Curso>> GetCursosAsync()
+        {
+            List<Curso> cursos = new List<Curso>();
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Curso/GetCursosForCombo");
+            if (response.IsSuccessStatusCode)
+            {
+                string cursosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(cursosJson))
+                {
+                    cursos = JsonConvert.DeserializeObject<List<Curso>>(cursosJson);
+                }
+            }
+            return cursos;
+        }
 
-        public async Task<IActionResult> OnPostAsync(bool activo, string nombre, string apellido, string mail, int id)
+        static async Task<List<Entities.Materia>> GetMateriasAsync()
+        {
+            List<Entities.Materia> materias = new List<Entities.Materia>();
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7130/Materia/GetMateriasForCombo");
+            if (response.IsSuccessStatusCode)
+            {
+                string materiasJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(materiasJson))
+                {
+                    materias = JsonConvert.DeserializeObject<List<Entities.Materia>>(materiasJson);
+                }
+            }
+            return materias;
+        }
+
+        private async Task CargarCursosAsync()
+        {
+            var cursos = await GetCursosAsync();
+
+            CursosDisponibles = cursos.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Nombre_Curso
+            }).ToList();
+        }
+
+        private async Task CargarMateriasAsync()
+        {
+            var materias = await GetMateriasAsync();
+
+            MateriasDisponibles = materias.Select(m => new SelectListItem
+            {
+                Value = m.Id.ToString(),
+                Text = m.Nombre
+            }).ToList();
+        }
+
+
+        public async Task<IActionResult> OnPostAsync(bool activo, string nombre, string apellido, string mail, int id, string CursoMateriaPairsJson)
         {
             int idPerfilSeleccionado = PerfilSeleccionadoId;
 
@@ -124,6 +223,11 @@ namespace PegasusWeb.Pages
             if (string.IsNullOrEmpty(mail))
             {
                 this.ModelState.AddModelError("mail", "El campo Mail es requerido");
+            }
+
+            if (idPerfilSeleccionado == 3 && string.IsNullOrEmpty(CursoMateriaPairsJson))
+            {
+                this.ModelState.AddModelError("perfil", "El campo Curso y Materia es requerido para un docente");
             }
 
             // Retornar si el modelo no es válido
@@ -166,8 +270,81 @@ namespace PegasusWeb.Pages
                 await OnGetAsync();
                 return Page();
             }
+
+            //Borro las posibles relaciones que tenga en Docente Materia
+            if(id > 0)
+            {
+                await BorrarCursosMateriasAsync(id);
+            }
+
+            //Me fijo si es un docente para crear la relación con el curso y la materia 
+            if (idPerfilSeleccionado == 3)
+            {
+                var cursoMateriaPairs = JsonConvert.DeserializeObject<List<CursoMateriaPair>>(CursoMateriaPairsJson);
+
+                if (id == 0)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var usuarioCreado = JsonConvert.DeserializeObject<dynamic>(responseContent);
+                    id = usuarioCreado.id;
+                }
+
+                foreach (var pair in cursoMateriaPairs)
+                {
+                    dynamic docenteMateriaData = new ExpandoObject();
+                    docenteMateriaData.Id_Docente = id;
+                    docenteMateriaData.Id_Materia = pair.MateriaId;
+                    docenteMateriaData.Id_Curso = pair.CursoId;
+
+                    // Convertir el objeto dinámico a JSON
+                    var jsonContentAl = JsonConvert.SerializeObject(docenteMateriaData);
+                    var contentAl = new StringContent(jsonContentAl, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage responseAl = await client.PostAsync("https://localhost:7130/DocenteMateria/CreateDocenteMateria", contentAl);
+
+                    // Manejar errores de la respuesta HTTP
+                    if (!responseAl.IsSuccessStatusCode)
+                    {
+                        var errorResponse = await response.Content.ReadAsStringAsync();
+                        ModelState.AddModelError("docente", "Hubo un error inesperado al crear la relacion Docente y Materia: " + errorResponse);
+                        await OnGetAsync();
+                        return Page();
+                    }
+                }
+            }
+            
+
             TempData["SuccessMessage"] = "El Usuario se guardó correctamente.";
             return RedirectToPage("Usuario");
+        }
+
+        public async Task BorrarCursosMateriasAsync(int docente)
+        {
+            List<DocenteMateria> docenteMaterias = new List<DocenteMateria>();
+
+            string queryParam = Uri.EscapeDataString($"x=>x.id_docente=={docente}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/DocenteMateria/GetDocenteMateriaForCombo?query={queryParam}");
+
+
+            if (response.IsSuccessStatusCode)
+            {
+                string cursosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(cursosJson))
+                {
+                    docenteMaterias = JsonConvert.DeserializeObject<List<DocenteMateria>>(cursosJson);
+                }
+            }
+
+            foreach (var docenteMateria in docenteMaterias)
+            {
+                HttpResponseMessage response2 = await client.GetAsync($"https://localhost:7130/DocenteMateria/DeleteDocenteMateria?id={docenteMateria.Id}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    ModelState.AddModelError("docente", "Hubo un error inesperado al borrar la relacion Docente y Materia: " + errorResponse);
+                }
+            }
         }
     }
 }

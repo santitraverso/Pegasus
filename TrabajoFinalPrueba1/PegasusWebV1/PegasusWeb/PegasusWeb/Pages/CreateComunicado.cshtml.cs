@@ -18,7 +18,6 @@ namespace PegasusWeb.Pages
 
         [BindProperty]
         public CuadernoComunicados Comunicado { get; set; }
-        public List<Usuario> Alumnos { get; set; } = new List<Usuario>();
 
         [TempData]
         public int IdComunicado { get; set; }
@@ -28,10 +27,10 @@ namespace PegasusWeb.Pages
         [TempData]
         public string Modulo { get; set; }
         [TempData]
-        public int IdProfesor { get; set; }
+        public int IdUsuario { get; set; }
 
         [TempData]
-        public List<int> IdsAlumnos { get; set; }
+        public string IdsAlumnosJson { get; set; }
 
         [BindProperty]
         public string NombresConcatenados { get; set; }
@@ -43,9 +42,9 @@ namespace PegasusWeb.Pages
 
                 Comunicado = await GetComunicadoCursoAsync(IdComunicado);
 
-                var alumnos = await GetAlumnosComunicadoAsync(IdComunicado);
+                var comunicadoAlumnos = await GetAlumnosComunicadoAsync(IdComunicado);
 
-                NombresConcatenados = string.Join(", ", alumnos.Select(a => a.Apellido + ' ' + a.Nombre));
+                NombresConcatenados = string.Join(", ", comunicadoAlumnos.Select(a => a.Alumno.Apellido + ' ' + a.Alumno.Nombre));
 
                 if (Comunicado == null)
                 {
@@ -58,7 +57,14 @@ namespace PegasusWeb.Pages
 
                 string nombresConcatenados = "";
 
-                foreach (var idAlumno in IdsAlumnos)
+                List<int> idsAlumnos = new List<int>();
+
+                if (!string.IsNullOrEmpty(IdsAlumnosJson))
+                {
+                    idsAlumnos = JsonConvert.DeserializeObject<List<int>>(IdsAlumnosJson);
+                }
+
+                foreach (var idAlumno in idsAlumnos)
                 {
                     Usuario usu = await GetUsuarioAsync(idAlumno);
 
@@ -77,19 +83,19 @@ namespace PegasusWeb.Pages
             return Page();
         }
 
-        private async Task<List<Usuario>> GetAlumnosComunicadoAsync(int idComunicado)
+        private async Task<List<ComunicadoAlumnos>> GetAlumnosComunicadoAsync(int idComunicado)
         {
-            List<Usuario> getusuarios = new List<Usuario>();
+            List<ComunicadoAlumnos> getusuarios = new List<ComunicadoAlumnos>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_comunicado == {idComunicado}");
-            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ComunicadoAlumnos/GetComunicadoAlumnosForCombo?query={queryParam}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/ComunicadoAlumnos/GetComunicadoAlumnossForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
             {
                 string usuariosJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(usuariosJson))
                 {
-                    getusuarios = JsonConvert.DeserializeObject<List<Usuario>>(usuariosJson);
+                    getusuarios = JsonConvert.DeserializeObject<List<ComunicadoAlumnos>>(usuariosJson);
                 }
             }
 
@@ -133,13 +139,17 @@ namespace PegasusWeb.Pages
         }
 
 
-        public async Task<IActionResult> OnPostAsync(bool atras, int curso, int profesor, List<int> idsAlumnos, string descripcion, string modulo, int id)
+        public async Task<IActionResult> OnPostAsync(bool atras, int curso, int usuario, string ids, string descripcion, string modulo, int id)
         {
             IdCurso = curso;
             Modulo = modulo;
             IdComunicado = id;
-            IdProfesor = profesor;
+            IdUsuario = usuario;
             bool nuevo = id == 0;
+
+            string trimmedIds = ids.Trim('[', ']');
+            string[] idsArray = trimmedIds.Split(',');
+            List<int> idsAlumnos = idsArray.Select(id => int.Parse(id)).ToList();
 
             if (atras)
             {
@@ -151,16 +161,26 @@ namespace PegasusWeb.Pages
                 {
                     this.ModelState.AddModelError("descripcion", "El campo Descripcion es requerido");
                 }
-               
+
+                ModelState.Remove(nameof(NombresConcatenados));
 
                 if (!ModelState.IsValid)
                 {
+                    // Recuperar los errores de ModelState
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+                    foreach (var error in errors)
+                    {
+                        // Aquí puedes ver cada error en la consola o logearlo
+                        Console.WriteLine(error.ErrorMessage);
+                    }
                     await OnGetAsync();
                     return Page();
                 }
 
                 dynamic comunicadoData = new ExpandoObject();
-                comunicadoData.Id_Profesor = profesor;
+                comunicadoData.Id_Usuario = usuario;
+                comunicadoData.Id_Curso = curso;
                 comunicadoData.Descripcion = descripcion;
                 comunicadoData.Fecha = DateTime.Now;
 
@@ -196,6 +216,10 @@ namespace PegasusWeb.Pages
                     return Page();
                 }
 
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var comunicadoCreado = JsonConvert.DeserializeObject<dynamic>(responseContent);
+                id = comunicadoCreado.id;
+
                 if (nuevo)
                 {
                     foreach (var idAlumno in idsAlumnos)
@@ -224,7 +248,7 @@ namespace PegasusWeb.Pages
                 
 
                 TempData["SuccessMessage"] = "El Comunicado se guardó correctamente.";
-                return RedirectToPage("Comunicado");
+                return RedirectToPage("Cuaderno");
             }
         }
     }

@@ -14,7 +14,10 @@
 <body>
     <h4>Eventos</h4>
     <hr />
-    <a class="btn btn-primary btn-custom" asp-page="/CreateEvento" style="margin:10px;">Crear Evento</a>
+    @if (Model.IdPerfil != 2 && Model.IdPerfil != 3 && Model.IdPerfil != 4)
+    {
+        <a class="btn btn-primary btn-custom" asp-page="/CreateEvento" style="margin:10px;">Crear Evento</a>
+    }
 
     <div class="row">
         @foreach (Evento evento in Model.Eventos)
@@ -29,8 +32,11 @@
                         <img src="~/img/escuela.png" class="card-img-top2" alt="">
                         <br>
                         <br>
-                        <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@evento.Id)" style="padding-bottom: 5px;" />
-                        <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@evento.Id)" style="padding-bottom: 5px;" />
+                        @if (Model.IdPerfil != 2 && Model.IdPerfil != 3 && Model.IdPerfil != 4)
+                        {
+                            <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@evento.Id)" style="padding-bottom: 5px;" />
+                            <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@evento.Id)" style="padding-bottom: 5px;" />
+                        }
                         <input type="submit" id="submit-@evento.Id" style="display:none" />
                         <input type="hidden" id="booleano-@evento.Id" name="editar" value="true">
                     </form>

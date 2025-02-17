@@ -21,21 +21,33 @@ namespace PegasusWeb.Pages
         public int IdCurso { get; set; }
         [TempData]
         public string Modulo { get; set; }
+        [TempData]
+        public int IdPerfil { get; set; }
+
+        [TempData]
+        public int IdUsuario { get; set; }
 
         public async Task OnGetAsync()
         {
-             Alumnos = await GetAsistenciaAsync(Materia, Fecha);
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+            IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+
+            var alumnos = await GetAsistenciaAsync(Materia, Fecha, IdCurso);
+
+            if (IdPerfil == 2)
+                Alumnos = alumnos.Where(alu => alu.Id_Alumno == IdUsuario).ToList();
+            else if (IdPerfil == 4)
+                Alumnos = alumnos.Where(alu => alu.Id_Alumno == HttpContext.Session.GetInt32("IdHijo")).ToList();
+            else
+                Alumnos = alumnos;
         }
 
-        static async Task<List<Asistencia>> GetAsistenciaAsync(int materia, DateTime fecha)
+
+        static async Task<List<Asistencia>> GetAsistenciaAsync(int materia, DateTime fecha, int curso)
         {
             List<Asistencia> getalumnos = new List<Asistencia>();
 
-            //string fechaString = fecha.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
-            //var fecha2 = new DateTime(2024, 9, 24);
-
-            //string queryParam = Uri.EscapeDataString($"x=>x.id_Materia=={materia} && x.Fecha.Value.Date == new DateTime({fecha2.Year}, {fecha2.Month}, {fecha2.Day}).Date");
-            string queryParam = Uri.EscapeDataString($"x=>x.id_Materia=={materia}");
+            string queryParam = Uri.EscapeDataString($"x=>x.id_Materia=={materia} && x.id_curso=={curso}");
             HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Asistencia/GetAsistenciasForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)

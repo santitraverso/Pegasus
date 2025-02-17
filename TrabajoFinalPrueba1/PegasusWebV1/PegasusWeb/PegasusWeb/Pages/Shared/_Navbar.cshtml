@@ -1,0 +1,134 @@
+﻿
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.NavbarModel
+@{
+    // Si el IdPerfil no está disponible, muestra solo el botón de login
+    var isLoggedIn = Model.IdPerfil > 0;
+}
+
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+        <a class="navbar-brand" asp-area="" asp-page="/Index">PegasusWeb</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                @if (isLoggedIn)
+                {
+                    @foreach (var modulo in Model.Modulos)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" @if (modulo.Modulo.Parametro != null)
+                            {
+                                <text>asp-route-modulo="@modulo.Modulo.Parametro"</text>
+                            } asp-page=@modulo.Modulo.Page>@modulo.Modulo.Modulo</a>
+                        </li>
+                    }
+                }
+            </ul>
+            <div class="ms-auto">
+                <div id="userDisplay" class="navbar-text text-dark ms-3"></div>
+                <button id="logoutBtn" class="btn btn-outline-danger ms-2" style="display: none;">Cerrar sesión</button>
+                <button id="loginGoogleBtn" class="btn btn-outline-primary ms-2" style="display: block;">Login</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+@*<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Función que llama al backend para iniciar el proceso de autenticación
+        const loginButton = document.getElementById('loginGoogleBtn');
+        if (loginButton) {
+            loginButton.addEventListener('click', function () {
+                const returnUrl = 'https://localhost:7063';
+                const loginUrl = `https://localhost:7130/Account/Login?returnUrl=${encodeURIComponent(returnUrl)}`;
+                window.location.href = loginUrl;
+            });
+        }
+
+        // Función para obtener los parámetros de la URL
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const pairs = queryString.split("&");
+
+            pairs.forEach(pair => {
+                const [key, value] = pair.split("=");
+                params[decodeURIComponent(key)] = decodeURIComponent(value);
+            });
+
+            return params;
+        }
+
+        // Al cargar la página, obtener los datos del usuario
+        const userData = getQueryParams();
+
+        // Guardar en sessionStorage si hay datos de usuario
+        if (userData.usuario) {
+            const user = JSON.parse(userData.usuario);
+            sessionStorage.setItem('userEmail', user.email);
+            sessionStorage.setItem('userNombre', user.nombre);
+            sessionStorage.setItem('userApellido', user.apellido);
+            sessionStorage.setItem('userId', user.id);
+            sessionStorage.setItem('userPerfil', user.perfil);
+            sessionStorage.setItem('userIdPerfil', user.id_perfil);
+
+            // Reemplazar la URL sin los parámetros
+            history.replaceState(null, '', window.location.pathname);
+
+            location.reload();
+        }
+
+        // Mostrar el email del usuario
+        displayUser();
+        // Ocultar el botón de inicio de sesión si el usuario está logueado
+        toggleLoginButton();
+
+        // Función para mostrar el email del usuario en un elemento HTML
+        function displayUser() {
+            const userApellido = sessionStorage.getItem('userApellido');
+            const userNombre = sessionStorage.getItem('userNombre');
+            const userDisplayElement = document.getElementById('userDisplay');
+
+            if (userDisplayElement && userApellido) {
+                userDisplayElement.textContent = `Bienvenido, ${userNombre} ${userApellido}`;
+            }
+        }
+
+        // Función para ocultar el botón de inicio de sesión si hay un usuario logueado
+        function toggleLoginButton() {
+            const userEmail = sessionStorage.getItem('userEmail');
+            const loginButton = document.getElementById('loginGoogleBtn');
+            const logoutButton = document.getElementById('logoutBtn');
+
+            // Verificar que los botones existan antes de intentar acceder a sus estilos
+            if (loginButton && logoutButton) {
+                if (userEmail) {
+                    loginButton.style.display = 'none'; // Oculta el botón
+                    logoutButton.style.display = 'block'; // Muestra el botón
+                } else {
+                    loginButton.style.display = 'block'; // Muestra el botón
+                    logoutButton.style.display = 'none'; // Oculta el botón
+                }
+            }
+        }
+
+        // Agregar funcionalidad al botón de cerrar sesión
+        const logoutButton = document.getElementById('logoutBtn');
+        if (logoutButton) {
+            logoutButton.addEventListener('click', function () {
+                sessionStorage.clear(); // Limpiar sessionStorage
+                const returnUrl = 'https://localhost:7063';
+                const loginUrl = `https://localhost:7130/Account/Logout?returnUrl=${encodeURIComponent(returnUrl)}`;
+                window.location.href = loginUrl;
+                location.reload();
+            });
+        }
+
+        
+    });
+</script>*@

@@ -23,15 +23,16 @@ namespace PegasusV1.Interfaces
 
         Task<List<CursoMateria>> GetCursoMateriaForCombo(Expression<Func<CursoMateria, bool>>? predicate = null);
 
+        Task<List<DocenteMateria>> GetDocenteMateriaForCombo(Expression<Func<DocenteMateria, bool>>? predicate = null);
+
         Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null);
 
         Task<List<Asistencia>> GetAsistenciasForCombo(Expression<Func<Asistencia, bool>>? predicate = null);
 
         Task<List<CuadernoComunicados>> GetCuadernoComunicadosForCombo(Expression<Func<CuadernoComunicados, bool>>? predicate = null);
 
-        Task<List<Desempenio>> GetDesempenioForCombo(Expression<Func<Desempenio, bool>>? predicate = null);
 
-        Task<List<Desempeno>> GetDesempenoForCombo(Expression<Func<Desempeno, bool>>? predicate = null);
+        Task<List<Desempenio>> GetDesempenoForCombo(Expression<Func<Desempenio, bool>>? predicate = null);
 
         Task<List<Hijo>> GetHijoForCombo(Expression<Func<Hijo, bool>>? predicate = null);
 
@@ -47,10 +48,11 @@ namespace PegasusV1.Interfaces
         Task<List<Calificaciones>> GetCalificacionesForCombo(Expression<Func<Calificaciones, bool>>? predicate = null);
 
         Task<List<Modulos>> GetModulosForCombo(Expression<Func<Modulos, bool>>? predicate = null);
+        Task<List<ModulosPerfiles>> GetModulosPerfilesForCombo(Expression<Func<ModulosPerfiles, bool>>? predicate = null);
 
         Task<List<Perfiles>> GetPerfilesForCombo(Expression<Func<Perfiles, bool>>? predicate = null);
 
-        Task<List<DesempenoAlumnos>> GetDesempenoAlumnosForCombo(Expression<Func<DesempenoAlumnos, bool>>? predicate = null);
+        Task<List<DesempenioAlumnos>> GetDesempenioAlumnosForCombo(Expression<Func<DesempenioAlumnos, bool>>? predicate = null);
 
         Task<List<ComunicadoAlumnos>> GetComunicadoAlumnosForCombo(Expression<Func<ComunicadoAlumnos, bool>>? predicate = null);
         

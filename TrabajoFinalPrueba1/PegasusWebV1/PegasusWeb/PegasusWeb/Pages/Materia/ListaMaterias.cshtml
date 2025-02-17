@@ -15,18 +15,18 @@
     <h4>Materias</h4>
     <hr />
     <div class="row">
-        @foreach (PegasusWeb.Entities.Materia materia in Model.Materias)
+        @foreach (CursoMateria materia in Model.Materias)
         {
             <div class="col-md-3 justify-content-center">
-                <form method="post" id="form-@materia.Id">
-                    <div class="card card-custom card-title-center justify-content-center" style="cursor: pointer;" onclick="submitForm(@materia.Id)">
-                        <input type="hidden" name="materia" value="@materia.Id" />
+                <form method="post" id="form-@materia.Id_Materia">
+                    <div class="card card-custom card-title-center justify-content-center" style="cursor: pointer;" onclick="submitForm(@materia.Id_Materia)">
+                        <input type="hidden" name="materia" value="@materia.Id_Materia" />
                         <input type="hidden" name="modulo" value="@Model.Modulo" />
-                        <input type="hidden" name="curso" value="@Model.IdCurso" />
-                        <h5 class="card-title card-title-center">@materia.Nombre</h5>
-                        <img src="~/img/libros.png" class="card-img-top2" alt="" style=" margin: 0 auto;">
+                        <input type="hidden" name="curso" value="@materia.Id_Curso" />
+                        <h5 class="card-title card-title-center">@materia.Materia.Nombre</h5>
+                        <img src="~/img/Materias.png" class="card-img-top2" alt="" style=" margin: 0 auto;">
                     </div>
-                    <input type="submit" id="submit-@materia.Id" name="submit" style="display:none" />
+                    <input type="submit" id="submit-@materia.Id_Materia" name="submit" style="display:none" />
                 </form>
             </div>
         }

@@ -38,9 +38,12 @@ namespace PegasusWeb.Pages
         public int CursoSeleccionadoId { get; set; }
 
         public List<SelectListItem> CursosRelacionados { get; set; } = new List<SelectListItem> { };
+        [TempData]
+        public int IdPerfil { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
 
             //await CargarCursosAsync();
 

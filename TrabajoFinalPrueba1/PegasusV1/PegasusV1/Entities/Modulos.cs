@@ -7,8 +7,9 @@ namespace PegasusV1.Entities
     {
         public int Id { get; set; }
         public string Modulo { get; set; }
-        public int? Id_Perfil { get; set; }
-        [ForeignKey("Id_Perfil")]
-        public Perfiles Perfil { get; set; }
+
+        public string? Parametro { get; set; }
+
+        public string Page { get; set; }
     }
 }

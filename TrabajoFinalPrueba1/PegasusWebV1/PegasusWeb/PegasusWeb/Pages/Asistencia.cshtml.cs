@@ -26,10 +26,19 @@ namespace PegasusWeb.Pages
         [TempData]
         public string Modulo { get; set; }
 
+        [TempData]
+        public int IdPerfil { get; set; }
+
+        [TempData]
+        public int IdUsuario { get; set; }
+
         public async Task OnGetAsync()
         {
             if (Fecha != DateTime.MinValue)
                 FechaAsistencia = Fecha;
+
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+            IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
 
             // Verificar si hay asistencia para el día actual
             if (!await ExisteAsistenciaParaFecha(Materia, FechaAsistencia, IdCurso))
@@ -40,16 +49,25 @@ namespace PegasusWeb.Pages
             else
             {
                 // Si ya hay asistencia, cargar los alumnos con su asistencia
-                Alumnos = await GetAsistenciaAsync(Materia, FechaAsistencia, IdCurso);
+                var alumnos = await GetAsistenciaAsync(Materia, FechaAsistencia, IdCurso);
+
+                if (IdPerfil == 2)
+                    Alumnos = alumnos.Where(alu => alu.Id_Alumno == IdUsuario).ToList();
+                else if (IdPerfil == 4)
+                    Alumnos = alumnos.Where(alu => alu.Id_Alumno == HttpContext.Session.GetInt32("IdHijo")).ToList();
+                else
+                    Alumnos = alumnos;
             }
         }
 
-        public async Task<IActionResult> OnPost(DateTime fecha, int materia, int curso, string modulo)
+        public async Task<IActionResult> OnPost(DateTime fecha, int materia, int curso, string modulo, int perfil, int usuario)
         {
             FechaAsistencia = fecha;
             Materia = materia;
             IdCurso = curso;
             Modulo = modulo;
+            IdPerfil = perfil;
+            IdUsuario = usuario;
 
             if (!await ExisteAsistenciaParaFecha(materia, FechaAsistencia, IdCurso))
             {
@@ -57,8 +75,15 @@ namespace PegasusWeb.Pages
             }
             else
             {
-                // Cargar asistencia para la fecha seleccionada
-                Alumnos = await GetAsistenciaAsync(materia, fecha, IdCurso);
+                // Si ya hay asistencia, cargar los alumnos con su asistencia
+                var alumnos = await GetAsistenciaAsync(materia, fecha, IdCurso);
+
+                if (IdPerfil == 2)
+                    Alumnos = alumnos.Where(alu => alu.Id_Alumno == IdUsuario).ToList();
+                else if (IdPerfil == 4)
+                    Alumnos = alumnos.Where(alu => alu.Id_Alumno == HttpContext.Session.GetInt32("IdHijo")).ToList();
+                else
+                    Alumnos = alumnos;
             }
             
             return Page();
@@ -74,18 +99,27 @@ namespace PegasusWeb.Pages
         public async Task<bool> ExisteAsistenciaParaFecha(int materia, DateTime fecha, int curso)
         {
             // Cargar asistencia para la fecha seleccionada
-            Alumnos = await GetAsistenciaAsync(materia, fecha, curso);
+            var alumnos = await GetAsistenciaAsync(materia, fecha, curso);
 
-            return Alumnos.Count() > 0;
+            if (IdPerfil == 2)
+                return alumnos.Any(alu => alu.Id_Alumno == IdUsuario);
+            else if(IdPerfil == 4)
+                return alumnos.Any(alu => alu.Id_Alumno == HttpContext.Session.GetInt32("IdHijo"));
+            else
+                return alumnos.Count() > 0;
         }
 
 
-        public static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso)
+        public static async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso, int usuario = 0)
         {
             List<IntegrantesCursos> getalumnos = new List<IntegrantesCursos>();
+            string queryParam;
 
-            //HttpResponseMessage response = await client.GetAsync("https://pegasus.azure-api.net/v1/Materia/GetMateriasForCombo");
-            string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+            if (usuario != 0)
+                queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso} && x.id_usuario=={usuario}");
+            else
+                queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+
             HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
             if (response.IsSuccessStatusCode)
@@ -104,7 +138,20 @@ namespace PegasusWeb.Pages
         {
             // Traigo todos los usuarios que son alumnos
             //var todos = await GetUsuariosMateriaAsync(materia);
-            var todos = await GetIntegrantesCursosAsync(IdCurso);
+            var todos = new List<IntegrantesCursos>();
+
+            if (IdPerfil == 2)
+            {
+                todos = await GetIntegrantesCursosAsync(IdCurso, IdUsuario);
+            }
+            else if (IdPerfil == 4)
+            {
+                todos = await GetIntegrantesCursosAsync(IdCurso, HttpContext.Session.GetInt32("IdHijo") ?? IdUsuario);
+            }
+            else
+            {
+                todos = await GetIntegrantesCursosAsync(IdCurso);
+            }
 
             foreach (var alumn in todos)
             {

@@ -23,6 +23,8 @@
             <input type="hidden" name="materia" value="@Model.Materia" />
             <input type="hidden" name="modulo" value="@Model.Modulo" />
             <input type="hidden" name="curso" value="@Model.IdCurso" />
+            <input type="hidden" name="perfil" value="@Model.IdPerfil" />
+            <input type="hidden" name="usuario" value="@Model.IdUsuario" />
         </div>
         <button type="submit" class="btn btn-primary btn-custom">Cargar Asistencia</button>
     </form>
@@ -63,6 +65,7 @@
                             <input type="hidden" name="Alumnos[@i].Id_Alumno" value="@Model.Alumnos[i].Id_Alumno" />
                             <input type="hidden" name="Alumnos[@i].Id_Materia" value="@Model.Alumnos[i].Id_Materia" />
                             <input type="hidden" name="Alumnos[@i].Fecha" value="@Model.FechaAsistencia" />
+                            <input type="hidden" name="Alumnos[@i].Id_Curso" value="@Model.IdCurso" />
                             <input type="hidden" name="fecha" value="@Model.FechaAsistencia" />
                             <input type="hidden" name="materia" value="@Model.Alumnos[i].Id_Materia" />
                             <input type="hidden" id="booleano" name="reporte" value="false">
@@ -73,7 +76,7 @@
                             <td>
                                 <div class="switch2-toggle">
                                     <input type="checkbox" id="checkbox-@i" name="Alumnos[@i].Presente" value="true"
-                                    @(Model.Alumnos[i].Presente ? "checked" : "") onchange="updateHiddenInput(@i, this.checked)" />
+                                    @(Model.Alumnos[i].Presente ? "checked" : "") onchange="updateHiddenInput(@i, this.checked)" @(Model.IdPerfil == 2 || Model.IdPerfil == 4 ? "disabled" : "") />
                                     <label for="checkbox-@i"></label>
                                 </div>
                                 <input type="hidden" name="Alumnos[@i].Presente" value="false" id="hidden-@i" />
@@ -82,7 +85,10 @@
                     }
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-primary btn-custom">Guardar Asistencia</button>
+            @if (Model.IdPerfil != 2 && Model.IdPerfil != 4)
+            {
+                <button type="submit" class="btn btn-primary btn-custom">Guardar Asistencia</button>
+            }
             <button type="button" class="btn btn-primary btn-custom" onclick="reportAsis()">Reporte Asistencias</button>
         </form>
     }

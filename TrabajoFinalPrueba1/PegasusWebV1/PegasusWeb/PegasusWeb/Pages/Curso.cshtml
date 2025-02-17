@@ -14,7 +14,10 @@
 <body>
     <h4>Cursos</h4>
     <hr />
-    <a class="btn btn-primary btn-custom" asp-page="/CreateCurso" style="margin:10px;">Crear Curso</a>
+    @if (Model.IdPerfil != 3)
+    {
+        <a class="btn btn-primary btn-custom" asp-page="/CreateCurso" style="margin:10px;">Crear Curso</a>
+    }
     @if (ModelState.ContainsKey("curso"))
     {
         <div class="alert alert-danger">
@@ -33,11 +36,18 @@
                     <p class="card-title card-title-center" style="margin-bottom:0px;">@curso.Grado @curso.Division @curso.Turno</p>
                     <form method="post">
                         <input type="hidden" name="curso" value="@curso.Id" />
-                        <img src="~/img/curso.png" class="card-img-top3" alt="">
+                        <img src="~/img/Cursos.png" class="card-img-top3" alt="">
                         <br>
                         <br>
-                        <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@curso.Id)" style="padding-bottom: 5px;" />
-                        <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@curso.Id)" style="padding-bottom: 5px;" />
+                        @if (Model.IdPerfil == 3)
+                        {
+                            <img src="~/img/lupa.png" class="edit-image" alt="Editar" onclick="submitForm(@curso.Id)" style="padding-bottom: 5px;" />
+                        }
+                        else
+                        {
+                            <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@curso.Id)" style="padding-bottom: 5px;" />
+                            <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@curso.Id)" style="padding-bottom: 5px;" />
+                        }
                         <input type="submit" id="submit-@curso.Id" style="display:none" />
                         <input type="hidden" id="booleano-@curso.Id" name="editar" value="true">
                     </form>

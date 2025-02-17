@@ -19,7 +19,7 @@
     <title>Materias</title>
 </head>
 <body>
-    <h4>@titulo</h4>
+    <h4>@(Model.IdPerfil == 4 || Model.IdPerfil == 4 ? "Datos de la Materia": titulo)</h4>
     <hr />
     <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Materia.Id" />
@@ -29,18 +29,12 @@
                 <td>Nombre de la materia</td>
                 <td><input type="text" asp-for="Materia.Nombre" class="inputMio3" name="nombre" id="nombre" /></td>
             </tr>
-            @*<tr>
-                <td>Seleccionar Curso</td>
-                <td>
-                    <select asp-for="CursoSeleccionadoId" asp-items="Model.CursosRelacionados" class="inputMio3" id="cursoSeleccionadoId">
-                        <option value="">-- Seleccionar un curso --</option>
-                    </select>
-                </td>
-            </tr>
-            <span class="text-danger" asp-validation-for="CursoSeleccionadoId"></span>*@
         </table>
         <br />
-        <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
+        @if (Model.IdPerfil != 2 && Model.IdPerfil != 3 && Model.IdPerfil != 4)
+        {
+            <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
+        }        
         <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
 
     </form>
@@ -69,7 +63,10 @@
                 index++;
             }
             <br />
-            <button type="submit" class="btn btn-primary btn-custom"> Modificar Contenidos</button>
+            @if (Model.IdPerfil != 2 && Model.IdPerfil != 3 && Model.IdPerfil != 4)
+            {
+                <button type="submit" class="btn btn-primary btn-custom"> Modificar Contenidos</button>
+            }
         </div>
     </form>
 

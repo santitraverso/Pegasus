@@ -7,9 +7,13 @@ namespace PegasusV1.Entities
     {
         public int Id { get; set; }        
 
-        [ForeignKey("Id_Profesor")]
-        public Usuario? Profesor { get; set; }
-        public int? Id_Profesor { get; set; }
+        [ForeignKey("Id_Usuario")]
+        public Usuario? Usuario { get; set; }
+        public int? Id_Usuario { get; set; }
+
+        [ForeignKey("Id_Curso")]
+        public Curso? Curso { get; set; }
+        public int? Id_Curso { get; set; }
 
         public string Descripcion  { get; set; }
 

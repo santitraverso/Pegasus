@@ -15,7 +15,10 @@
     <h4>Contactos</h4>
     <hr />
     <div class="container">
-        <a class="btn btn-primary btn-custom" asp-page="/CreateContacto" asp-route-tipoContacto="@Model.TipoContacto" style="margin:10px;">Crear Contacto</a>
+        @if (Model.IdPerfil != 2 && Model.IdPerfil != 4)
+        {
+            <a class="btn btn-primary btn-custom" asp-page="/CreateContacto" asp-route-tipoContacto="@Model.TipoContacto" style="margin:10px;">Crear Contacto</a>
+        }
         <a class="btn btn-primary btn-custom" asp-page="/ListaContacto" style="margin:10px;">Atras</a>
         <br />
         <br />
@@ -38,15 +41,18 @@
                             <input type="hidden" name="contacto" value="@contacto.Id" />
                             <input type="hidden" id="booleano-@contacto.Id" name="editar" value="true">
                             <input type="hidden" name="tipoContacto" value="@Model.TipoContacto">
-                        <td>@contacto.Nombre</td>
-                        <td>@contacto.Mail</td>
-                        <td>@contacto.Telefono</td>
-                        <td>@(contacto.Tipo_Contacto == 1 ? "Institucional" : "Docente")</td>
-                        <td class="actions-column">
-                            <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@contacto.Id)" />
-                            <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@contacto.Id)" />
-                        </td>
-                        <input type="submit" id="submit-@contacto.Id" style="display:none" />
+                            <td>@contacto.Nombre</td>
+                            <td>@contacto.Mail</td>
+                            <td>@contacto.Telefono</td>
+                            <td>@(contacto.Tipo_Contacto == 1 ? "Institucional" : "Docente")</td>
+                            <td class="actions-column">
+                            @if (Model.IdPerfil != 2 && Model.IdPerfil != 4)
+                                {
+                                    <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@contacto.Id)" />
+                                    <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@contacto.Id)" />
+                                }
+                            </td>
+                            <input type="submit" id="submit-@contacto.Id" style="display:none" />
                         </form>
                     </tr>
                 }

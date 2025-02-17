@@ -1,0 +1,153 @@
+﻿@page
+@using PegasusWeb.Entities
+@using System.Globalization;
+@model PegasusWeb.Pages.CreateDesempenioModel
+@{
+    var titulo = "Ver Desempeño";
+    var esLectura = Model.Ver;
+    if (!esLectura)
+    {
+        var esEdicion = Model.Desempenio.Id > 0;
+        titulo = esEdicion ? "Editar Desempeño" : "Cargar Nuevo Desempeño";
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Desempeño</title>
+</head>
+<body>
+    <h4>@titulo</h4>
+    <hr />
+    @if (ModelState.ContainsKey("desempenio"))
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ModelState["desempenio"].Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+    <form method="post" onsubmit="handleSubmit(event)" id="form">
+        <input type="hidden" name="id" asp-for="Desempenio.Id" />
+        <input type="hidden" name="curso" asp-for="@Model.IdCurso" />
+        <input type="hidden" name="modulo" asp-for="@Model.Modulo" />
+        <input type="hidden" id="botonAtras" name="atras" value="false">
+        <input type="hidden" name="alumno" asp-for="@Model.IdAlumno" />
+        <input type="hidden" name="ver" asp-for="@Model.Ver" id="booleano" />
+
+        <div class="form-group">
+            <h5>@Model.Alumno.Nombre  @Model.Alumno.Apellido</h5>
+            <br />
+            <label for="asistencia" class="text-center">Asistencia</label>
+            <input type="number" step="0.01" value="@Model.Desempenio.Asistencia.ToString(CultureInfo.InvariantCulture)" class="inputMio" name="asistencia" id="asistencia" @(Model.Ver ? "readonly" : "") required min="1" max="10" />
+            <label for="participacion" class="text-center">Participacion</label>
+            <input type="number" step="0.01" value="@Model.Desempenio.Participacion.ToString(CultureInfo.InvariantCulture)" class="inputMio" name="participacion" id="participacion" @(Model.Ver ? "readonly" : "") required min="1" max="10"  />
+            <label for="calificaciones" class="text-center">Calificaciones</label>
+            <input type="number" step="0.01" value="@Model.Desempenio.Calificaciones.ToString(CultureInfo.InvariantCulture)" class="inputMio" name="calificaciones" id="calificaciones" @(Model.Ver ? "readonly" : "") required min="1" max="10" />
+            <label for="tareas" class="text-center">Tareas</label>
+            <input type="number" step="0.01" value="@Model.Desempenio.Tareas.ToString(CultureInfo.InvariantCulture)" class="inputMio" name="tareas" id="tareas" @(Model.Ver ? "readonly" : "") required min="1" max="10" />
+        </div>
+        @if (Model.Ver)
+        {
+            <div class="form-group">
+                <label for="descripcion" class="text-center">Descripción</label>
+                <textarea asp-for="Desempenio.Desempenio.Descripcion" id="descripcion" name="descripcion" rows="3" cols="30" maxlength="200" placeholder="Máximo 200 caracteres" readonly></textarea>
+            </div>
+        }
+        @if (Model.IdPerfil != 2 && Model.IdPerfil != 4)
+        {
+            <button type="submit" class="btn btn-primary btn-custom">@(Model.Ver ? "Borrar" : "Guardar")</button>
+        }
+        <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        function validateForm() {
+            const asistencia = document.querySelector('#asistencia').value.trim();
+            const participacion = document.querySelector('#participacion').value.trim();
+            const calificaciones = document.querySelector('#calificaciones').value.trim();
+            const tareas = document.querySelector('#tareas').value.trim();
+
+            if (parseFloat(asistencia) === 0 || parseFloat(participacion) === 0 || parseFloat(calificaciones) === 0 || parseFloat(tareas) === 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Por favor, todos los campos deben tener un valor mayor a 0.',
+                    width: '350px',
+                    padding: '20px',
+                    customClass: {
+                        title: 'my-custom-title',
+                        confirmButton: "btn btn-danger",
+                    }
+                });
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateDelete() {
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Deseas eliminar este Desempeño?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#ff6f61', // Color del botón de confirmación
+                cancelButtonColor: '#6c757d',  // Color del botón de cancelar
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: "Cancelar",
+                width: '400px',
+                padding: '20px',
+                background: '#f0f0f5',
+                color: '#333',
+                iconColor: '#ff6f61',
+                customClass: {
+                    popup: 'modern-popup',
+                    title: 'modern-title',
+                    icon: 'modern-icon',
+                    confirmButton: 'modern-confirm-button',
+                    cancelButton: 'modern-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form').submit();
+                }
+            });
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            var eliminar = document.getElementById('booleano').value;
+
+            if (eliminar === "True") {
+                validateDelete();
+            }
+            else{
+                if (validateForm()) {
+                    document.getElementById('form').submit();
+                }
+            }
+            
+        }
+
+        function atrasBoton() {
+            document.getElementById('botonAtras').value = true;
+            document.getElementById('form').submit();
+        }
+
+    </script>
+}

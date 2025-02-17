@@ -14,7 +14,7 @@
     <title>Cursos</title>
 </head>
 <body>
-    <h4>@titulo</h4>
+    <h4>@(Model.IdPerfil == 3 ? "Datos del Curso" : titulo)</h4>
     <hr />
     <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Curso.Id" />
@@ -42,7 +42,10 @@
             
         </table>
         <br />
-        <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
+        @if (Model.IdPerfil != 3)
+        {
+            <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
+        }
         <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
     </form>
     <br />
@@ -72,35 +75,40 @@
                                 }
                             </tbody>
                         </table>
-                        <button type="submit" class="btn btn-primary btn-custom"> @(Model.Alumnos != null && Model.Alumnos.Any() ? "Modificar Alumnos" : "Agregar Alumnos")</button>
+                        @if (Model.IdPerfil != 3)
+                        {
+                            <button type="submit" class="btn btn-primary btn-custom"> @(Model.Alumnos != null && Model.Alumnos.Any() ? "Modificar Alumnos" : "Agregar Alumnos")</button>
+                        }
                     </div>
                 </form>
             </div>
-
-            <div class="col-md-6">
-                <form method="post" asp-page-handler="AgregarMateria" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">
-                    <h5>Materias</h5>
-                    <div class="container">
-                        <input type="hidden" name="curso" asp-for="Curso.Id" />
-                        <table id="tablaAlumnos" class="table">
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var materia in Model.Materias)
-                                {
+            @if (Model.IdPerfil != 3)
+            {
+                <div class="col-md-6">
+                    <form method="post" asp-page-handler="AgregarMateria" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">
+                        <h5>Materias</h5>
+                        <div class="container">
+                            <input type="hidden" name="curso" asp-for="Curso.Id" />
+                            <table id="tablaAlumnos" class="table">
+                                <thead>
                                     <tr>
-                                        <td>@materia.Nombre</td>
+                                        <th>Nombre</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <button type="submit" class="btn btn-primary btn-custom"> @(Model.Materias != null && Model.Materias.Any() ? "Modificar Materias" : "Agregar Materias")</button>
-                    </div>
-                </form>
-            </div>
+                                </thead>
+                                <tbody>
+                                    @foreach (var materia in Model.Materias)
+                                    {
+                                        <tr>
+                                            <td>@materia.Materia.Nombre</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <button type="submit" class="btn btn-primary btn-custom"> @(Model.Materias != null && Model.Materias.Any() ? "Modificar Materias" : "Agregar Materias")</button>
+                        </div>
+                    </form>
+                </div>
+            }
         </div>
     </div>
         @*<form method="post" asp-page-handler="AgregarAlumno" style="@(Model.Curso.Id <= 0 ? "display:none;" : "")">

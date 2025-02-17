@@ -1,0 +1,110 @@
+﻿@page
+@model HomeModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<body>
+    <h4>Secciones</h4>
+    <hr />
+    <div class="row">
+        @foreach (var modulo in Model.Modulos)
+        {
+            <div class="col-md-3 justify-content-center">
+                <form method="post" id="form-@modulo.Modulo.Id">
+                    <div class="card card-custom card-title-center justify-content-center" style="cursor: pointer;" onclick="submitForm(@modulo.Modulo.Id)">
+                        <input type="hidden" name="page" value="@modulo.Modulo.Page" />
+                        <input type="hidden" name="parametro" value="@modulo.Modulo.Parametro" />
+                        <input type="hidden" name="usuario" value="@Model.IdUsuario" />
+                        <input type="hidden" name="perfil" value="@Model.IdPerfil" />
+                        <h5 class="card-title card-title-center">@modulo.Modulo.Modulo</h5>
+                        <img src="~/img/@($"{modulo.Modulo.Modulo}.png")" class="card-img-top2" alt="" style=" margin: 0 auto;">
+                    </div>
+                    <input type="submit" id="submit-@modulo.Modulo.Id" name="submit" style="display:none" />
+                </form>
+            </div>
+        }
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+</body>
+@section scripts{
+    <script>
+        function submitForm(seccionId) {
+            document.getElementById('submit-' + seccionId).click();
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+        
+            // Función para obtener los parámetros de la URL
+            function getQueryParams() {
+                const params = {};
+                const queryString = window.location.search.substring(1);
+                const pairs = queryString.split("&");
+
+                pairs.forEach(pair => {
+                    const [key, value] = pair.split("=");
+                    params[decodeURIComponent(key)] = decodeURIComponent(value);
+                });
+
+                return params;
+            }
+
+            // Al cargar la página, obtener los datos del usuario
+            const userData = getQueryParams();
+
+            // Guardar en sessionStorage si hay datos de usuario
+            if (userData.usuario) {
+                const user = JSON.parse(userData.usuario);
+                sessionStorage.setItem('userEmail', user.email);
+                sessionStorage.setItem('userNombre', user.nombre);
+                sessionStorage.setItem('userApellido', user.apellido);
+                sessionStorage.setItem('userId', user.id);
+
+                history.replaceState(null, '', window.location.pathname);
+            }
+
+            displayUser();
+
+            toggleLoginButton();
+
+            const homeLink = document.getElementById('navbar-home-link');
+            const userApellido = sessionStorage.getItem('userApellido');
+
+            homeLink.href = "/Index";
+
+            if (userApellido) {
+                homeLink.href = "/Home";
+            }
+
+        });
+
+        function displayUser() {
+            const userApellido = sessionStorage.getItem('userApellido');
+            const userNombre = sessionStorage.getItem('userNombre');
+            const userDisplayElement = document.getElementById('userDisplay');
+
+            if (userDisplayElement && userApellido) {
+                userDisplayElement.textContent = `Bienvenido, ${userNombre} ${userApellido}`;
+            }
+        }
+
+        // Función para ocultar el botón de inicio de sesión si hay un usuario logueado
+        function toggleLoginButton() {
+            const userEmail = sessionStorage.getItem('userEmail');
+            const loginButton = document.getElementById('loginGoogleBtn');
+            const logoutButton = document.getElementById('logoutBtn');
+
+            // Verificar que los botones existan antes de intentar acceder a sus estilos
+            if (loginButton && logoutButton) {
+                if (userEmail) {
+                    loginButton.style.display = 'none'; // Oculta el botón
+                    logoutButton.style.display = 'block'; // Muestra el botón
+                } else {
+                    loginButton.style.display = 'block'; // Muestra el botón
+                    logoutButton.style.display = 'none'; // Oculta el botón
+                }
+            }
+        }
+        
+    </script>
+}

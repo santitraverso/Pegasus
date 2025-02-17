@@ -17,25 +17,53 @@ namespace PegasusWeb.Pages
         [TempData]
         public string Modulo { get; set; }
 
-        public async Task OnGetAsync(string modulo)
+        [TempData]
+        public int IdUsuario { get; set; }
+
+        [TempData]
+        public int IdPerfil { get; set; }
+
+        public async Task OnGetAsync()
         {
-            if(!string.IsNullOrEmpty(modulo))
-                Modulo = modulo;
 
-            bool conUsuario = false;
-            int idUsuario = 1;
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+            IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
 
-            if(conUsuario)
+            switch (IdPerfil)
             {
-                Cursos = await GetCursosAsync(idUsuario);
-            }
-            else
-            {
-                var cursos = await GetCursosAsync();
+                //Alumno
+                case 2:
+                    Cursos = await GetCursosAsync(IdUsuario);
+                    break;
+                //Docente
+                case 3:
+                    var cursosDocente = await GetCursosDocenteAsync(IdUsuario);
+                    Cursos = cursosDocente
+                        .GroupBy(curso => curso.Id_Curso)
+                        .Select(group => group.First())
+                        .Select(curso => new IntegrantesCursos
+                        {
+                            Usuario = curso.Docente,
+                            Id_Usuario = curso.Id_Docente,
+                            Curso = curso.Curso,
+                            Id_Curso = curso.Id_Curso,
+                        })
+                        .ToList();
+                    break;
+                //Padre
+                case 4:
+                    Cursos = await GetCursosAsync(HttpContext.Session.GetInt32("IdHijo") ?? IdUsuario);
+                    break;
 
-                Cursos = cursos.GroupBy(ic => ic.Id_Curso).Select(g => g.First()).OrderBy(c => c.Id_Curso).ToList();
+                default:
+                    var cursos = await GetCursosAsync();
+                    Cursos = cursos
+                        .GroupBy(ic => ic.Id_Curso)
+                        .Select(g => g.First())
+                        .OrderBy(c => c.Id_Curso)
+                        .ToList();
+                    break;
             }
-            
         }
 
         static async Task<List<IntegrantesCursos>> GetCursosAsync(int usuario = 0)
@@ -65,17 +93,38 @@ namespace PegasusWeb.Pages
             return getcursos;
         }
 
-        public IActionResult OnPost(int curso, string modulo)
+        public static async Task<List<DocenteMateria>> GetCursosDocenteAsync(int docente)
+        {
+            List<DocenteMateria> getcursos = new List<DocenteMateria>();
+            string queryParam = Uri.EscapeDataString($"x=>x.id_docente=={docente}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/DocenteMateria/GetDocenteMateriaForCombo?query={queryParam}");
+            
+
+            if (response.IsSuccessStatusCode)
+            {
+                string cursosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(cursosJson))
+                {
+                    getcursos = JsonConvert.DeserializeObject<List<DocenteMateria>>(cursosJson);
+                }
+            }
+
+            return getcursos;
+        }
+
+        public IActionResult OnPost(int curso, string modulo, int usuario, int perfil)
         {
             IdCurso = curso;
             Modulo = modulo;
+            IdUsuario = usuario;
+            IdPerfil = perfil;
 
             switch (modulo)
             {
                 case "Cuaderno":
                     return RedirectToPage("Cuaderno");
-                case "Desempeno":
-                    return RedirectToPage("Desempeno");
+                case "Desempenio":
+                    return RedirectToPage("Desempenio");
                 default:
                     return RedirectToPage("Materia/ListaMaterias");
             }

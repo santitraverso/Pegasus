@@ -143,6 +143,25 @@ namespace PegasusV1.Repositories
             }
         }
 
+        public async Task<List<DocenteMateria>> GetDocenteMateriaForCombo(Expression<Func<DocenteMateria, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<DocenteMateria>? query = dbContext.Set<DocenteMateria>().AsQueryable();
+
+                query = query.Include(x => x.Materia);
+                query = query.Include(x => x.Curso);
+                query = query.Include(x => x.Docente);
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
         public async Task<List<IntegrantesEventos>> GetIntegrantesEventosForCombo(Expression<Func<IntegrantesEventos, bool>>? predicate = null)
         {
             using (DataContext dbContext = new DataContext(_configuration))
@@ -185,7 +204,8 @@ namespace PegasusV1.Repositories
             {
                 IQueryable<CuadernoComunicados>? query = dbContext.Set<CuadernoComunicados>().AsQueryable();
 
-                query = query.Include(x => x.Profesor);
+                query = query.Include(x => x.Usuario);
+                query = query.Include(x => x.Curso);
 
                 if (predicate != null)
                 {
@@ -196,28 +216,11 @@ namespace PegasusV1.Repositories
             }
         }
 
-        public async Task<List<Desempenio>> GetDesempenioForCombo(Expression<Func<Desempenio, bool>>? predicate = null)
+        public async Task<List<Desempenio>> GetDesempenoForCombo(Expression<Func<Desempenio, bool>>? predicate = null)
         {
             using (DataContext dbContext = new DataContext(_configuration))
             {
                 IQueryable<Desempenio>? query = dbContext.Set<Desempenio>().AsQueryable();
-
-                query = query.Include(x => x.Alumno);
-
-                if (predicate != null)
-                {
-                    query = query.Where(predicate);
-                }
-
-                return await query.ToListAsync();
-            }
-        }
-
-        public async Task<List<Desempeno>> GetDesempenoForCombo(Expression<Func<Desempeno, bool>>? predicate = null)
-        {
-            using (DataContext dbContext = new DataContext(_configuration))
-            {
-                IQueryable<Desempeno>? query = dbContext.Set<Desempeno>().AsQueryable();
 
                 if (predicate != null)
                 {
@@ -264,11 +267,11 @@ namespace PegasusV1.Repositories
             }
         }
 
-        public async Task<List<DesempenoAlumnos>> GetDesempenoAlumnosForCombo(Expression<Func<DesempenoAlumnos, bool>>? predicate = null)
+        public async Task<List<DesempenioAlumnos>> GetDesempenioAlumnosForCombo(Expression<Func<DesempenioAlumnos, bool>>? predicate = null)
         {
             using (DataContext dbContext = new DataContext(_configuration))
             {
-                IQueryable<DesempenoAlumnos>? query = dbContext.Set<DesempenoAlumnos>().AsQueryable();
+                IQueryable<DesempenioAlumnos>? query = dbContext.Set<DesempenioAlumnos>().AsQueryable();
 
                 query = query.Include(x => x.Alumno);
 
@@ -415,6 +418,21 @@ namespace PegasusV1.Repositories
             using (DataContext dbContext = new DataContext(_configuration))
             {
                 IQueryable<Modulos>? query = dbContext.Set<Modulos>().AsQueryable();
+
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+
+                return await query.ToListAsync();
+            }
+        }
+
+        public async Task<List<ModulosPerfiles>> GetModulosPerfilesForCombo(Expression<Func<ModulosPerfiles, bool>>? predicate = null)
+        {
+            using (DataContext dbContext = new DataContext(_configuration))
+            {
+                IQueryable<ModulosPerfiles>? query = dbContext.Set<ModulosPerfiles>().AsQueryable();
 
                 if (predicate != null)
                 {

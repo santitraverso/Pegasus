@@ -23,48 +23,62 @@ namespace PegasusWeb.Pages
         public int IdCurso { get; set; }
 
         public List<IntegrantesCursos> Alumnos { get; set; } = new List<IntegrantesCursos>();
-        public List<Entities.Materia> Materias { get; set; } = new List<Entities.Materia>();
+        public List<CursoMateria> Materias { get; set; } = new List<CursoMateria>();
 
         [BindProperty]
         public List<int> SelectedAlumnosIds { get; set; } = new List<int>(); // IDs de los alumnos seleccionados en el formulario
 
+        [TempData]
+        public int IdPerfil { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
             if (IdCurso > 0)
             {
-                // Es una edición, se carga el curso existente
-                HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Curso/GetById?id={IdCurso}");
+                Curso = await GetCursoAsync(IdCurso);
 
-                if (response.IsSuccessStatusCode)
+                if(Curso != null)
                 {
-                    string cursoJson = await response.Content.ReadAsStringAsync();
-                    if (!string.IsNullOrEmpty(cursoJson))
-                    {
-                        Curso = JsonConvert.DeserializeObject<Curso>(cursoJson);
+                    Alumnos = await GetIntegrantesCursosAsync(IdCurso);
 
-                        Alumnos = await GetIntegrantesCursosAsync(IdCurso);
-
-                        Materias = await GetMateriasCursoAsync(IdCurso);
-                    }
+                    Materias = await GetMateriasCursoAsync(IdCurso);
                 }
-
-                if (Curso == null)
+                else
                 {
                     return NotFound();
                 }
             }
             else
             {
-                // Es una carga nueva
                 Curso = new Curso { Id = 0 };
             }
 
             return Page();
         }
 
-        private async Task<List<Entities.Materia>> GetMateriasCursoAsync(int curso)
+        public static async Task<Curso> GetCursoAsync(int curso)
         {
-            List<Entities.Materia> getMaterias = new List<Entities.Materia>();
+            Curso getCurso = new Curso();
+
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/Curso/GetById?id={curso}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string cursoJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(cursoJson))
+                {
+                    getCurso = JsonConvert.DeserializeObject<Curso>(cursoJson);
+                }
+            }
+
+            return getCurso;
+        }
+
+        private async Task<List<CursoMateria>> GetMateriasCursoAsync(int curso)
+        {
+            List<CursoMateria> getMaterias = new List<CursoMateria>();
 
             string queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
             HttpResponseMessage response = await client.GetAsync($"https://localhost:7130/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
@@ -74,7 +88,7 @@ namespace PegasusWeb.Pages
                 string materiasJson = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrEmpty(materiasJson))
                 {
-                    getMaterias = JsonConvert.DeserializeObject<List<Entities.Materia>>(materiasJson);
+                    getMaterias = JsonConvert.DeserializeObject<List<CursoMateria>>(materiasJson);
                 }
             }
 

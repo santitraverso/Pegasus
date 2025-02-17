@@ -28,12 +28,21 @@
         <input type="text" class="search__input" id="busqueda" placeholder="Buscar usuarios..." onkeyup="buscarUsuarios()">
     </div>
     <br />
-
+    @if (ModelState.ContainsKey("cuaderno"))
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ModelState["cuaderno"].Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
     <form method="post" id="form">
         <div class="container">
             <input type="hidden" name="curso" asp-for="IdCurso" />
             <input type="hidden" name="modulo" asp-for="Modulo" />
-            <input type="hidden" name="profesor" asp-for="IdProfesor" />
+            <input type="hidden" name="usuario" asp-for="IdUsuario" />
+            <input type="hidden" name="comunicado" asp-for="IdComunicado" />
             <input type="hidden" id="booleano" name="ver" value="false">
             <input type="hidden" id="atras" name="atras" value="false">
             <table id="tablaUsuarios" class="table">
@@ -60,11 +69,45 @@
                     }
                 </tbody>
             </table>
-            <button type="button" onclick="comunicar()" class="btn btn-primary btn-custom">Comunicar</button>
+            @if (Model.IdPerfil != 2 && Model.IdPerfil != 4)
+            {
+                <button type="button" onclick="comunicar()" class="btn btn-primary btn-custom">Comunicar</button>
+            }
             <button type="button" class="btn btn-primary btn-custom" onclick="verBoton()">Ver Comunicados</button>
             <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
         </div>
     </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: "success",
+                    title: "Guardado",
+                    showConfirmButton: false,
+                    width: '350px',
+                    padding: '20px',
+                    timer: 1500,
+                    background: '#fefefe',  // Fondo claro
+                    iconColor: '#00d1b2',    // Color del ícono
+                    color: '#333',           // Color del texto
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
+                    customClass: {
+                        popup: 'custom-popup',   // Personaliza el estilo del contenedor
+                        title: 'custom-title',   // Personaliza el estilo del título
+                        icon: 'custom-icon'      // Personaliza el estilo del ícono
+                    }
+                });
+            </text>
+        }
+    </script>
 </body>
 </html>
 

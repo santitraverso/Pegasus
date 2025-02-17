@@ -441,7 +441,7 @@ label {
 }
 
 .inputMio {
-    width: 30%;
+    width: 25%;
     font-family: 'Tahoma', sans-serif;
     font-size: 14px;
     background-color: #ffffff;
@@ -449,6 +449,8 @@ label {
     border-radius: 6px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .inputMio:focus {
@@ -517,14 +519,16 @@ label {
 }
 
 .inputMio2 {
-    width: 30%;
+    width: 50%;
     font-family: 'Tahoma', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     background-color: #ffffff;
     border: none;
     border-radius: 6px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .inputMio2:focus {
@@ -539,7 +543,7 @@ label {
 .inputMio3 {
     width: 100%;
     font-family: 'Tahoma', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     background-color: #ffffff;
     border: none;
     border-radius: 6px;
@@ -992,4 +996,17 @@ label {
 /* Efecto hover para las imágenes */
 .actions-column img:hover {
     transform: scale(1.2); /* Efecto de agrandamiento en hover */
+}
+
+.card-header {
+    background-color: rgb(49, 131, 196); /* Color principal */
+    color: white; /* Texto en blanco */
+    text-align: left; /* Alineación a la izquierda */
+    padding: 12px 15px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de fuente */
+    border-bottom: 2px solid #ddd; /* Línea inferior */
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px; /* Bordes redondeados */
+    overflow: hidden;
 }

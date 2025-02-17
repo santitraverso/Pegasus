@@ -13,20 +13,17 @@ namespace PegasusV1.Controllers
     {
         private readonly ILogger<DesempenioController> _logger;
         private readonly IService<Desempenio> DesempenioService;
-        private readonly IService<Usuario> UsuarioService;
 
         public DesempenioController(ILogger<DesempenioController> logger,
-            IService<Desempenio> desempenioService,
-            IService<Usuario> usuarioService)
+            IService<Desempenio> desempenioService)
         {
             _logger = logger;
             DesempenioService = desempenioService;
-            UsuarioService = usuarioService;
         }
 
         [HttpGet]
-        [Route("GetDesempeniosForCombo")]
-        public async Task<List<Desempenio>> GetDesempeniosForCombo(string? query = null)
+        [Route("GetDesempenosForCombo")]
+        public async Task<List<Desempenio>> GetDesempenosForCombo(string? query = null)
         {
             Expression<Func<Desempenio, bool>> ex = null;
             if (!string.IsNullOrEmpty(query))
@@ -36,70 +33,62 @@ namespace PegasusV1.Controllers
                 ex = (Expression<Func<Desempenio, bool>>)e;
             }
 
-            List<Desempenio> desempenios = await DesempenioService.GetDesempenioForCombo(ex);
+            List<Desempenio> Desempenos = await DesempenioService.GetDesempenoForCombo(ex);
 
-            return desempenios;
+            return Desempenos;
         }
 
         [HttpGet]
         [Route("GetById")]
         public async Task<Desempenio?> GetById(int id)
         {
-            Desempenio desempenio = await DesempenioService.GetById(id);
+            Desempenio Desempeno = await DesempenioService.GetById(id);
 
-            if (desempenio != null)
-            {
-                if (desempenio.Id_Alumno.HasValue)
-                {
-                    desempenio.Alumno = await UsuarioService.GetById(desempenio.Id_Alumno.Value);
-                }
-            }
-
-            return desempenio;
+            return Desempeno;
         }
 
         [HttpPost]
-        [Route("CreateDesempenio")]
-        public async Task<Desempenio> CreateDesempenio(Desempenio desempenio)
+        [Route("CreateDesempeno")]
+        public async Task<Desempenio> CreateDesempeno(Desempenio Desempeno)
         {
-            return await DesempenioService.Create(desempenio);
+            return await DesempenioService.Create(Desempeno);
         }
 
         [HttpPut]
-        [Route("UpdateDesempenio")]
-        public async Task<Desempenio> UpdateDesempenio(Desempenio desempenio)
+        [Route("UpdateDesempeno")]
+        public async Task<Desempenio> UpdateDesempeno(Desempenio Desempeno)
         {
-            return await DesempenioService.Update(desempenio);
+            return await DesempenioService.Update(Desempeno);
         }
 
         [HttpGet]
-        [Route("DeleteDesempenio")]
-        public async Task DeleteDesempenio(int id)
+        [Route("DeleteDesempeno")]
+        public async Task DeleteDesempeno(int id)
         {
-            Desempenio? desempenio = await DesempenioService.GetById(id);
-            if(desempenio != null)
-                await DesempenioService.Delete(desempenio);
+            Desempenio? Desempeno = await DesempenioService.GetById(id);
+            if (Desempeno != null)
+                await DesempenioService.Delete(Desempeno);
         }
 
         [HttpPut]
-        [Route("CreateAllDesempenio")]
-        public async Task<List<Desempenio>> CreateAllDesempenio(List<Desempenio> desempenios)
+        [Route("CreateAllDesempeno")]
+        public async Task<List<Desempenio>> CreateAllDesempeno(List<Desempenio> Desempenos)
         {
-            return await DesempenioService.CreateAll(desempenios);
+            return await DesempenioService.CreateAll(Desempenos);
         }
 
         [HttpPut]
-        [Route("UpdateAllDesempenio")]
-        public async Task<List<Desempenio>> UpdateAllDesempenio(List<Desempenio> desempenios)
+        [Route("UpdateAllDesempeno")]
+        public async Task<List<Desempenio>> UpdateAllDesempeno(List<Desempenio> Desempenos)
         {
-            return await DesempenioService.UpdateAll(desempenios);
+            return await DesempenioService.UpdateAll(Desempenos);
         }
 
         [HttpGet]
-        [Route("DeleteAllDesempenio")]
-        public async Task DeleteAllDesempenio(List<Desempenio> desempenios)
+        [Route("DeleteAllDesempeno")]
+        public async Task DeleteAllDesempeno(List<Desempenio> Desempenos)
         {
-            await DesempenioService.DeleteAll(desempenios);
+            await DesempenioService.DeleteAll(Desempenos);
         }
     }
 }

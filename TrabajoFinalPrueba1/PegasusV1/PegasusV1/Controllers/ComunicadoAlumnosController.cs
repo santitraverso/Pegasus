@@ -41,6 +41,22 @@ namespace PegasusV1.Controllers
 
             List<ComunicadoAlumnos> ComunicadoAlumnoss = await ComunicadoAlumnosService.GetComunicadoAlumnosForCombo(ex);
 
+            foreach (ComunicadoAlumnos ComunicadoAlumnos in ComunicadoAlumnoss)
+            {
+                if (ComunicadoAlumnos != null)
+                {
+                    if (ComunicadoAlumnos.Id_Alumno.HasValue)
+                    {
+                        ComunicadoAlumnos.Alumno = await UsuarioService.GetById(ComunicadoAlumnos.Id_Alumno.Value);
+                    }
+
+                    if (ComunicadoAlumnos.Id_Comunicado.HasValue)
+                    {
+                        ComunicadoAlumnos.Comunicado = await CuadernoComunicadosService.GetById(ComunicadoAlumnos.Id_Comunicado.Value);
+                    }
+                }
+            }
+
             return ComunicadoAlumnoss;
         }
 

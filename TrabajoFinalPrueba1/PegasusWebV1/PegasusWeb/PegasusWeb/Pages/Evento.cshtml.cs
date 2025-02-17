@@ -13,10 +13,13 @@ namespace PegasusWeb.Pages
 
         [TempData]
         public int IdEvento { get; set; }
+        [TempData]
+        public int IdPerfil { get; set; }
 
 
         public async Task OnGetAsync()
         {
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
             var eventos = await GetEventosAsync();
             Eventos = eventos.OrderByDescending(e=> e.Fecha).ToList();
         }

@@ -1,0 +1,149 @@
+﻿@page
+@using PegasusWeb.Entities
+@model ListaComunicadosModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4>Comunicados</h4>
+    <hr />
+    @if (ModelState.ContainsKey("comunicado"))
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ModelState["comunicado"].Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+        <div class="container">
+            @foreach (var comunicado in Model.ComunicadosConAlumnos)
+            {
+                <div class="col-md-4 mb-4 justify-content-center">
+                    <form method="post">
+                        <input type="hidden" name="comunicado" value="@comunicado.Id_Comunicado" />
+                        <input type="hidden" name="usuario" value="@Model.IdUsuario" />
+                        <input type="hidden" name="modulo" value="@Model.Modulo" />
+                        <input type="hidden" name="curso" value="@Model.IdCurso" />
+                        <input type="hidden" name="idsAlumnos" value="@Model.IdsAlumnosJson" />
+                        <input type="hidden" name="ids" value="@comunicado.Ids" />
+                        <div class="card " style="width: 800px;">
+                            <div class="card-header  text-white">
+                                <strong>Alumnos:</strong> @comunicado.AlumnosConcatenados
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-text">@comunicado.Descripcion</h6>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center text-muted">
+                            <span><strong>Fecha:</strong> @comunicado.Fecha?.ToString("dd/MM/yyyy")</span>
+                            @if (Model.IdPerfil != 2 && Model.IdPerfil != 4)
+                            {
+                                <div>
+                                    <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@comunicado.Id_Comunicado)" style="cursor: pointer; padding-left: 5px;" />
+                                    <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@comunicado.Id_Comunicado)" style="cursor: pointer; padding-left: 5px;" />
+                                </div>
+                            }
+                            </div>
+                            <input type="submit" id="submit-@comunicado.Id_Comunicado" style="display:none" />
+                            <input type="hidden" id="booleano-@comunicado.Id_Comunicado" name="editar" value="true">
+                        </div>
+                    </form>
+                </div>
+
+            }
+        </div>
+    <form method="post" asp-page-handler="Atras" style="display: inline;" id="form2">
+        <input type="hidden" name="curso" value="@Model.IdCurso" />
+        <input type="hidden" name="modulo" value="@Model.Modulo" />
+        <input type="hidden" name="usuario" value="@Model.IdUsuario" />
+        <button type="button" class="btn btn-primary btn-custom" asp-area="" style="margin:10px;" onclick="atras()">Atras</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: "success",
+                    title: "Guardado",
+                    showConfirmButton: false,
+                    width: '350px',
+                    padding: '20px',
+                    timer: 1500,
+                    background: '#fefefe',  // Fondo claro
+                    iconColor: '#00d1b2',    // Color del ícono
+                    color: '#333',           // Color del texto
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
+                    customClass: {
+                        popup: 'custom-popup',   // Personaliza el estilo del contenedor
+                        title: 'custom-title',   // Personaliza el estilo del título
+                        icon: 'custom-icon'      // Personaliza el estilo del ícono
+                    }
+                });
+            </text>
+        }
+    </script>
+</body>
+</html>
+@section scripts{
+    <script>
+
+        function submitForm(id) {
+            document.getElementById('submit-' + id).click();
+        }
+
+        function atras() {
+            document.getElementById('form2').submit();
+        }
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Deseas eliminar este comunicado?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#ff6f61', // Color del botón de confirmación
+                cancelButtonColor: '#6c757d',  // Color del botón de cancelar
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: "Cancelar",
+                width: '400px',
+                padding: '20px',
+                background: '#f0f0f5',
+                color: '#333',
+                iconColor: '#ff6f61',
+                customClass: {
+                    popup: 'modern-popup',
+                    title: 'modern-title',
+                    icon: 'modern-icon',
+                    confirmButton: 'modern-confirm-button',
+                    cancelButton: 'modern-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('booleano-' + id).value = false;
+                    submitForm(id);
+                }
+            });
+        }
+    </script>
+}
