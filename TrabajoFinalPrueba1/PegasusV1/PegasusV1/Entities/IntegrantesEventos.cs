@@ -14,7 +14,8 @@ namespace PegasusV1.Entities
         [ForeignKey("Id_Usuario")]
         public Usuario? Usuario { get; set; }
         public int? Id_Usuario { get; set; }
-
+        public bool Leido { get; set; }
+        public bool Confirmado { get; set; }
 
     }
 }
