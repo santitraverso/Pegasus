@@ -1,0 +1,145 @@
+﻿@page
+@using PegasusWeb.Entities
+@model ListaContenidosModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4>Contenido</h4>
+    <hr />
+    <div class="row">
+        @{
+            var index = 1;
+        }
+        @foreach (var contenido in Model.Contenidos)
+        {
+            <form method="post">
+                <div class="button-container">
+                    <div class="button-row" style="width:550px;">
+                        <button type="button" class="toggle-button" data-target="content-@contenido.Id" onclick="toggleContent(@contenido.Id)">
+                            <span> Unidad @(index): @contenido.Titulo </span>
+                            <span class="symbol-button" id="symbol-@contenido.Id">+</span>
+                        </button>
+                        <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@contenido.Id)" style="padding-bottom: 5px;" />
+                        <img src="~/img/eliminar.png" class="icon delete-image" alt="Eliminar" onclick="confirmDelete(@contenido.Id)" style="padding-bottom: 5px;" />
+                        <input type="submit" id="submit-@contenido.Id" style="display:none" />
+                        <input type="hidden" name="contenido" value="@contenido.Id" />
+                        <input type="hidden" id="booleano-@contenido.Id" name="editar" value="true">
+                        <input type="hidden" name="materia" value="@Model.IdMateria" />
+                    </div>
+                    <div id="content-@contenido.Id" class="content">
+                        <p>@contenido.Descripcion</p>
+                    </div>
+                </div>
+            </form>
+            index++;
+        }
+    </div>
+    <br />
+    <form method="post" asp-page-handler="AgregarContenido">
+        <input type="hidden" name="materia" value="@Model.IdMateria" />
+        <input type="hidden" id="booleano" name="atras" value="false">
+        <button type="submit" class="btn btn-primary btn-custom" id="contenido"> Crear Contenido</button>
+        <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: "success",
+                    title: "Guardado",
+                    showConfirmButton: false,
+                    width: '350px',
+                    padding: '20px',
+                    timer: 1500,
+                    background: '#fefefe',  // Fondo claro
+                    iconColor: '#00d1b2',    // Color del ícono
+                    color: '#333',           // Color del texto
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
+                    customClass: {
+                        popup: 'custom-popup',   // Personaliza el estilo del contenedor
+                        title: 'custom-title',   // Personaliza el estilo del título
+                        icon: 'custom-icon'      // Personaliza el estilo del ícono
+                    }
+                });
+            </text>
+        }
+    </script>
+</body>
+</html>
+@section scripts{
+    <script>
+        function toggleContent(id) {
+            var content = document.getElementById('content-' + id);
+            var symbol = document.getElementById('symbol-' + id);
+
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                symbol.textContent = '+';
+            } else {
+                content.style.display = 'block';
+                symbol.textContent = '-';
+            }
+        }
+
+        function submitForm(id) {
+            document.getElementById('submit-' + id).click();
+        }
+
+        function atrasBoton() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('contenido').click();
+        }
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Deseas eliminar este contenido?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#ff6f61', // Color del botón de confirmación
+                cancelButtonColor: '#6c757d',  // Color del botón de cancelar
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: "Cancelar",
+                width: '400px',
+                padding: '20px',
+                background: '#f0f0f5',
+                color: '#333',
+                iconColor: '#ff6f61',
+                customClass: {
+                    popup: 'modern-popup',
+                    title: 'modern-title',
+                    icon: 'modern-icon',
+                    confirmButton: 'modern-confirm-button',
+                    cancelButton: 'modern-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('booleano-' + id).value = false;
+                    submitForm(id);
+                }
+            });
+        }
+    </script>
+}

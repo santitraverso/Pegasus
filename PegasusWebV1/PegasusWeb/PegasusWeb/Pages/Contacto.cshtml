@@ -1,0 +1,130 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.ContactoModel
+@{
+    ViewData["Title"] = "Contactos";
+}
+
+<h4>Contactos</h4>
+<hr />
+<div class="container">
+    @if (Model.IdPerfil != (int)TipoPerfil.Alumno && Model.IdPerfil != (int)TipoPerfil.Padre)
+    {
+        <a class="btn btn-primary btn-custom" asp-page="/CreateContacto" asp-route-tipoContacto="@Model.TipoContacto" style="margin:10px;">Crear Contacto</a>
+    }
+    <a class="btn btn-primary btn-custom" asp-page="/ListaContacto" style="margin:10px;">Atras</a>
+    <br />
+    <br />
+    <div class="table-responsive">
+        <table id="tablaUsuarios" class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Mail</th>
+                    <th>Telefono</th>
+                    <th>Tipo de Contacto</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var contacto in Model.Contactos)
+                {
+                    <tr>
+                        <form method="post">
+                            <input type="hidden" name="contacto" value="@contacto.Id" />
+                            <input type="hidden" id="booleano-@contacto.Id" name="editar" value="true">
+                            <input type="hidden" name="tipoContacto" value="@Model.TipoContacto">
+                        <td>@contacto.Nombre</td>
+                        <td>@contacto.Mail</td>
+                        <td>@contacto.Telefono</td>
+                        <td>@(contacto.Tipo_Contacto == 1 ? "Institucional" : "Docente")</td>
+                        <td class="actions-column">
+                                @if (Model.IdPerfil != (int)TipoPerfil.Alumno && Model.IdPerfil != (int)TipoPerfil.Padre)
+                                {
+                                <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@contacto.Id)" />
+                                <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@contacto.Id)" />
+                                }
+                        </td>
+                        <input type="submit" id="submit-@contacto.Id" style="display:none" />
+                        </form>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <text>
+            Swal.fire({
+                icon: "success",
+                title: "Guardado",
+                showConfirmButton: false,
+                width: '350px',
+                padding: '20px',
+                timer: 1500,
+                background: '#fefefe',
+                iconColor: '#00d1b2',
+                color: '#333',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                customClass: {
+                    popup: 'custom-popup',
+                    title: 'custom-title',
+                    icon: 'custom-icon'
+                }
+            });
+        </text>
+    }
+</script>
+
+@section scripts{
+    <script>
+            function submitForm(id) {
+                document.getElementById('submit-' + id).click();
+            }
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Deseas eliminar este contacto?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#ff6f61',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: "Cancelar",
+                width: '400px',
+                padding: '20px',
+                background: '#f0f0f5',
+                color: '#333',
+                iconColor: '#ff6f61',
+                customClass: {
+                    popup: 'modern-popup',
+                    title: 'modern-title',
+                    icon: 'modern-icon',
+                    confirmButton: 'modern-confirm-button',
+                    cancelButton: 'modern-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('booleano-' + id).value = false;
+                    submitForm(id);
+                }
+            });
+        }
+    </script>
+}

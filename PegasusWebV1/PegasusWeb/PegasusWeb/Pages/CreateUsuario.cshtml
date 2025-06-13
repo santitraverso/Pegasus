@@ -1,0 +1,245 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.CreateUsuarioModel
+@{
+    var esEdicion = Model.Usuario.Id > 0;
+    var titulo = esEdicion ? "Editar Usuario" : "Cargar Nuevo Usuario";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Usuarios</title>
+</head>
+<body>
+    <h4>@titulo</h4>
+    <hr />
+
+    <div class="form-container">
+        <form method="post" onsubmit="handleSubmit(event)" id="form">
+            <input type="hidden" name="id" asp-for="Usuario.Id" />
+            <input type="hidden" name="CursoMateriaPairsJson" id="CursoMateriaPairsJson" />
+            <table style="width:500px;">
+                <tr>
+                    <td>Apellido</td>
+                    <td><input type="text" asp-for="Usuario.Apellido" class="inputMio3" name="apellido" id="apellido" required /></td>
+                </tr>
+
+                <tr>
+                    <td>Nombre</td>
+                    <td><input type="text" asp-for="Usuario.Nombre" class="inputMio3" name="nombre" id="nombre" required /></td>
+                </tr>
+
+                <tr>
+                    <td>Activo</td>
+                    <td>
+                        <label class="container2">
+                            <input type="checkbox" asp-for="Usuario.Activo" name="activo" id="activo" />
+                            <div class="checkmark"></div>
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Mail</td>
+                    <td><input type="email" asp-for="Usuario.Mail" class="inputMio3" name="mail" id="mail" required /></td>
+                </tr>
+                <tr>
+                    <td>Perfil</td>
+                    <td>
+                        <select asp-for="PerfilSeleccionadoId" asp-items="Model.PerfilesRelacionados" class="form-control selectMio" id="perfilSeleccionadoId" onchange="toggleCursoMateriaFields()">
+                            <option value="">-- Seleccionar un perfil --</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div id="cursoMateriaSection" style="display: none; margin-top: 20px;">
+                            <h4>Cursos y Materias</h4>
+                            <table id="cursoMateriaContainer" style="width: 100%;">
+                                @for (int i = 0; i < Model.CursoMateriaPairs.Count; i++)
+                                {
+                                    <tr data-index="@i" id="row-@i">
+                                        <td>
+                                            <label>Curso</label>
+                                            <select asp-for="CursoMateriaPairs[i].CursoId" asp-items="Model.CursosDisponibles" class="form-control selectMio"></select>
+                                        </td>
+                                        <td>
+                                            <label>Materia</label>
+                                            <select asp-for="CursoMateriaPairs[i].MateriaId" asp-items="Model.MateriasDisponibles" class="form-control selectMio"></select>
+                                        </td>
+                                        <td>
+                                            <img src="~/img/eliminar.png" class="icon" alt="Eliminar"
+                                                 style="cursor: pointer; margin-top: 25px; margin-left: 15px;"
+                                                 onclick="deleteRow(@i)" />
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                            <button type="button" class="btn btn-secondary btn-custom" onclick="addCursoMateria()">Agregar Curso y Materia</button>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+            <br />
+            <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
+            <a class="btn btn-primary btn-custom" asp-page="/Usuario" style="margin:10px;">Atras</a>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        function validateForm() {
+            const apellido = document.querySelector('#apellido').value.trim();
+            const nombre = document.querySelector('#nombre').value.trim();
+            const mail = document.querySelector('#mail').value.trim();
+            const perfilSeleccionadoId = document.querySelector('#perfilSeleccionadoId').value.trim();
+
+            if (apellido === '' || nombre === '' || mail === '' || perfilSeleccionadoId === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Por favor, completa todos los campos.',
+                    width: '350px',
+                    padding: '20px',
+                    customClass: {
+                        title: 'my-custom-title',
+                        confirmButton: "btn btn-danger",
+                    }
+                });
+                return false;
+            }
+
+            if (perfilSeleccionadoId === '3') {
+                const cursoMateriaPairs = JSON.parse(document.getElementById('CursoMateriaPairsJson').value);
+
+                const isValid = cursoMateriaPairs.some(pair => pair.CursoId && pair.MateriaId);
+
+                if (!isValid) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Debes seleccionar al menos un curso y una materia.',
+                        width: '350px',
+                        padding: '20px',
+                        customClass: {
+                            title: 'my-custom-title',
+                            confirmButton: "btn btn-danger",
+                        }
+                    });
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            updateCursoMateriaJson();
+            if (validateForm()) {
+                document.getElementById('form').submit(); 
+            }
+        }
+
+        function toggleCursoMateriaFields() {
+            const perfil = document.getElementById('perfilSeleccionadoId').value;
+            const section = document.getElementById('cursoMateriaSection');
+            const container = document.getElementById('cursoMateriaContainer');
+
+            if (perfil === '3') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+                container.innerHTML = ''
+            }
+        }
+
+        let cursoMateriaIndex = @Model.CursoMateriaPairs.Count;
+
+        function addCursoMateria() {
+            const container = document.getElementById('cursoMateriaContainer');
+            const newRow = document.createElement('tr');
+            newRow.setAttribute('data-index', cursoMateriaIndex);
+            newRow.setAttribute('id', `row-${cursoMateriaIndex}`);
+
+            newRow.innerHTML = `
+                <td>
+                    <label>Curso</label>
+                    <select name="CursoMateriaPairs[${cursoMateriaIndex}].CursoId" class="form-control selectMio">
+        @foreach (var curso in Model.CursosDisponibles)
+        {
+                                <option value="@curso.Value">@curso.Text</option>
+        }
+                    </select>
+                </td>
+                <td>
+                    <label>Materia</label>
+                    <select name="CursoMateriaPairs[${cursoMateriaIndex}].MateriaId" class="form-control selectMio">
+        @foreach (var materia in Model.MateriasDisponibles)
+        {
+                                <option value="@materia.Value">@materia.Text</option>
+        }
+                    </select>
+                </td>
+                <td>
+                    <img src="/img/eliminar.png" class="icon" alt="Eliminar"
+                                 style="cursor: pointer; margin-top: 25px; margin-left: 15px;"
+                         onclick="deleteRow(${cursoMateriaIndex})" />
+                </td>
+            `;
+
+            container.appendChild(newRow);
+
+            cursoMateriaIndex++;
+
+            const inputHidden = document.getElementById('hiddenCursoMateriaPairs');
+            if (inputHidden) {
+                let pairs = JSON.parse(inputHidden.value);
+                pairs.push({ CursoId: null, MateriaId: null });
+                inputHidden.value = JSON.stringify(pairs);
+            }
+        }
+
+        function deleteRow(index) {
+            const row = document.getElementById(`row-${index}`);
+            if (row) {
+                row.remove();
+            }
+        }
+
+        function updateCursoMateriaJson() {
+            const rows = document.querySelectorAll("#cursoMateriaContainer tr");
+            const pairs = [];
+
+            rows.forEach((row) => {
+                // Obtener el índice actual de la fila desde el atributo data-index
+                const rowIndex = row.getAttribute('data-index');
+
+                const cursoSelect = row.querySelector(`select[name='CursoMateriaPairs[${rowIndex}].CursoId']`);
+                const materiaSelect = row.querySelector(`select[name='CursoMateriaPairs[${rowIndex}].MateriaId']`);
+
+                // Verificar que ambos elementos existan antes de acceder a sus valores
+                if (cursoSelect && materiaSelect) {
+                    pairs.push({
+                        CursoId: cursoSelect.value,
+                        MateriaId: materiaSelect.value
+                    });
+                }
+            });
+
+            document.getElementById('CursoMateriaPairsJson').value = JSON.stringify(pairs);
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', toggleCursoMateriaFields);
+
+    </script>
+}

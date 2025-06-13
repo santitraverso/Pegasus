@@ -1,0 +1,129 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using PegasusWeb.Entities;
+using System.Text;
+using System.Text.Json.Serialization;
+
+namespace PegasusWeb.Pages
+{
+    public class CuadernoModel : PageModel
+    {
+        private readonly HttpClient _client;
+        private readonly string _apiBaseUrl;
+
+        public CuadernoModel(HttpClient httpClient, IOptions<ApiSettings> apiSettings)
+        {
+            _client = httpClient;
+            _apiBaseUrl = apiSettings.Value.BaseUrl;
+        }
+
+        public List<IntegrantesCursos> IntegrantesCurso { get; set; } = new List<IntegrantesCursos>();
+        [TempData]
+        public int IdCurso { get; set; }
+        [TempData]
+        public string? Modulo { get; set; }
+
+        [BindProperty]
+        public List<int> SelectedAlumnosIds { get; set; } = new List<int>(); // IDs de los alumnos seleccionados en el formulario
+
+        [TempData]
+        public string? IdsAlumnosJson { get; set; }
+        [TempData]
+        public int IdComunicado { get; set; }
+        [TempData]
+        public int IdUsuario { get; set; }
+        [TempData]
+        public int IdPerfil { get; set; }
+
+        public async Task OnGetAsync()
+        {
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+            IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+
+            if (IdPerfil == (int)TipoPerfil.Alumno)
+            {
+                IntegrantesCurso = await GetIntegrantesCursosAsync(IdCurso, IdUsuario);
+            }
+            else if (IdPerfil == (int)TipoPerfil.Padre)
+            {
+                IdUsuario = HttpContext.Session.GetInt32("IdHijo") ?? 0;
+                IntegrantesCurso = await GetIntegrantesCursosAsync(IdCurso, IdUsuario);
+            }
+            else
+            {
+                IntegrantesCurso = await GetIntegrantesCursosAsync(IdCurso);
+            }
+        }
+
+        public async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int curso, int usuario = 0)
+        {
+            List<IntegrantesCursos> getalumnos = new List<IntegrantesCursos>();
+            string queryParam;
+
+            if (usuario != 0)
+                queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso} && x.id_usuario=={usuario}");
+            else
+                queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiBaseUrl}/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+
+            // Añadir el token JWT al encabezado
+            string token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                request.Headers.Add("Authorization", $"Bearer {token}");
+            }
+
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string alumnosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(alumnosJson))
+                {
+                    getalumnos = JsonConvert.DeserializeObject<List<IntegrantesCursos>>(alumnosJson);
+                }
+            }
+
+            return getalumnos;
+        }
+
+        public async Task<IActionResult?> OnPost(int curso, bool ver, string modulo, bool atras, int comunicado, int usuario)
+        {
+            IdCurso = curso;
+            Modulo = modulo;
+            IdComunicado = comunicado;
+            IdUsuario = usuario;
+
+            if (atras)
+                return RedirectToPage("ListaCursos");
+
+            if (SelectedAlumnosIds.Count < 1)
+            {
+                this.ModelState.AddModelError("cuaderno", "Debe seleccionar alumnos");
+                await OnGetAsync();
+                return Page();
+            }
+            else
+            {
+                IdsAlumnosJson = JsonConvert.SerializeObject(SelectedAlumnosIds);
+            }
+
+            if (ver)
+            {
+                return RedirectToPage("ListaComunicados");
+            }
+            else
+            {
+                return RedirectToPage("CreateComunicado");
+            }
+          
+           
+            
+        }
+
+        
+    }
+}

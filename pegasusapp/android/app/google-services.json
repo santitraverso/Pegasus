@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "173127890311",
+    "project_id": "apppegasus-40442",
+    "storage_bucket": "apppegasus-40442.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173127890311:android:ae6f1bc0e92be86c6f4f22",
+        "android_client_info": {
+          "package_name": "com.pegasusapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "173127890311-3r3ggve49q4ttdjcr1r8vdrsvmvr831v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pegasusapp",
+            "certificate_hash": "22a5d1fea7add4ca80b89e46d47514bbe01a697f"
+          }
+        },
+        {
+          "client_id": "173127890311-qt9g2he90bvducq13psij627e9lidg6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTchRenpAb9CUiZhR2_0et_KxJ2OiGoKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "173127890311-qt9g2he90bvducq13psij627e9lidg6j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

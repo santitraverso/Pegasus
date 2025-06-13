@@ -1,0 +1,103 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.ConfirmacionesEventoModel
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Confirmaciones de Evento</title>
+</head>
+<body>
+    <h4>Confirmaciones Evento</h4>
+    <hr />
+    <br />
+    <h5>Evento: @Model.Evento?.Nombre</h5>
+    <p><strong>Fecha:</strong> @Model.Evento?.Fecha.ToShortDateString()</p>
+    @if (Model.Integrantes.Count > 0)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Confirmados (@Model.Integrantes.Count(c => c.Confirmado))</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.Integrantes.Any(c => c.Confirmado))
+                        {
+                            <ul class="list-group">
+                                @foreach (var confirmacion in Model.Integrantes.Where(c => c.Confirmado))
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong>@confirmacion?.Usuario?.Nombre @confirmacion?.Usuario?.Apellido</strong><br />
+                                            <small>@confirmacion?.Usuario?.Mail</small>
+                                        </div>
+                                        <span class="@(confirmacion.Leido ? "badge-leido" : "badge-no-leido")">
+                                            @(confirmacion.Leido ? "Leído" : "No leído")
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-muted">Aún no hay confirmaciones.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-warning text-white">
+                        <h5 class="mb-0">Sin Confirmar (@Model.Integrantes.Count(c => !c.Confirmado))</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.Integrantes.Any(c => !c.Confirmado))
+                        {
+                            <ul class="list-group">
+                                @foreach (var confirmacion in Model.Integrantes.Where(c => !c.Confirmado))
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong>@confirmacion?.Usuario?.Nombre @confirmacion?.Usuario?.Apellido</strong><br />
+                                            <small>@confirmacion?.Usuario?.Mail</small>
+                                        </div>
+                                        <span class="@(confirmacion.Leido ? "badge-leido" : "badge-no-leido")">
+                                            @(confirmacion.Leido ? "Leído" : "No leído")
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-muted">Todos los usuarios han confirmado.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Sin confirmaciones</p>
+    }
+    <form method="post" onsubmit="handleSubmit(event)" id="form">
+        <input type="hidden" name="evento" asp-for="@Model.Evento.Id" />
+        <input type="hidden" name="usuario" value="@Model.IdUsuario" />
+        <input type="hidden" name="perfil" value="@Model.IdPerfil" />
+        <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
+    </form>
+</body>
+</html>
+@section scripts{
+    <script>
+        function atrasBoton() {
+            document.getElementById('form').submit();
+        }
+    </script>
+}

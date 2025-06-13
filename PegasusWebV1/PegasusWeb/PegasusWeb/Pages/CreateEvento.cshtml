@@ -1,0 +1,124 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.RazorPages;
+@using Newtonsoft.Json;
+@using PegasusWeb.Entities;
+@using System.Text;
+@model PegasusWeb.Pages.CreateEventoModel
+@{
+    var esEdicion = Model.Evento.Id > 0;
+    var titulo = esEdicion ? "Editar Evento" : "Cargar Nuevo Evento";
+    var valorSeleccionado = (int)Model.Evento.TipoDestinatario;
+
+    var opciones = new[]
+    {
+        new { Value = 1, Text = "Solo Alumnos" },
+        new { Value = 2, Text = "Solo Padres" },
+        new { Value = 3, Text = "Alumnos y Padres" }
+    };
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Eventos</title>
+</head>
+<body>
+    <h4>@titulo</h4>
+    <hr />
+    <form method="post" onsubmit="handleSubmit(event)" id="form">
+        <input type="hidden" name="id" asp-for="Evento.Id" />
+        <table>
+            <tr>
+                <td>Nombre del Evento</td>
+                <td><input type="text" asp-for="Evento.Nombre" placeholder="nombre..." class="inputMio3" name="nombre" id="nombre" required /></td>
+            </tr>
+
+            <tr>
+                <td>Fecha del Evento</td>
+                <td><input type="date" class="form-control modern-date-input" asp-for="Evento.Fecha" name="fecha" id="fecha" required style="margin:10px;" /></td>
+            </tr>
+            <tr>
+                <td>Requiere Confirmación</td>
+                <td><input type="checkbox" asp-for="Evento.RequiereConfirmacion" name="requiereConfirmacion" id="requiereConfirmacion" style="margin:10px;" /></td>
+            </tr>
+            <tr>
+                <td>Destinatarios</td>
+                <td>
+                    <select name="tipoDestinatario" id="tipoDestinatario" class="select-destinatarios" required>
+                        @foreach (var opcion in opciones)
+                        {
+                            @if (opcion.Value == valorSeleccionado)
+                            {
+                                <option value="@opcion.Value" selected>@opcion.Text</option>
+                            }
+                            else
+                            {
+                                <option value="@opcion.Value">@opcion.Text</option>
+                            }
+                        }
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <label>Descripcion</label>
+        <br />
+        <textarea asp-for="Evento.Descripcion" id="descripcion" name="descripcion" rows="3" cols="20" maxlength="200" placeholder="Máximo 200 caracteres" required class="textarea-responsive-70"></textarea>
+        <br />
+        <br />
+        <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
+        <a class="btn btn-primary btn-custom" asp-page="/Evento" style="margin:10px;">Atras</a>
+    </form>
+    <!-- Modal de carga -->
+    <div id="loadingModal" class="modal-loading" style="display: none;">
+        <div class="modal-loading-content">
+            <h3>⏳</h3>
+            <p class="loading-dots">Guardando evento y enviando correos</p>
+        </div>
+    </div>
+    <br />
+    <br />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        function validateForm() {
+            const nombre = document.querySelector('#nombre').value.trim();
+            const descripcion = document.querySelector('#descripcion').value.trim();
+            const fecha = document.querySelector('#fecha').value.trim();
+
+            if (nombre === '' || descripcion === '' || fecha === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Por favor, completa todos los campos.',
+                    width: '350px',
+                    padding: '20px',
+                    customClass: {
+                        title: 'my-custom-title',
+                        confirmButton: "btn btn-danger",
+                    }
+                });
+                return false;
+            }
+            return true;
+        }
+
+        function showLoading() {
+            document.getElementById('loadingModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            if (validateForm()) {
+                showLoading();
+                document.getElementById('form').submit();
+            }
+        }
+    </script>
+}

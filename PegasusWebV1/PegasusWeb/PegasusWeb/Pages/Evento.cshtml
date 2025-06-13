@@ -1,0 +1,165 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.EventoModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4>Eventos</h4>
+    <hr />
+  <div class="container">
+    @if (Model.IdPerfil != (int)TipoPerfil.Alumno && Model.IdPerfil != (int)TipoPerfil.Docente && Model.IdPerfil != (int)TipoPerfil.Padre)
+    {
+        <a class="btn btn-primary btn-custom" asp-page="/CreateEvento" style="margin:0px;">Crear Evento</a>
+    }
+    @if (ModelState.ContainsKey("evento"))
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ModelState["evento"].Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+
+    <div class="row">
+        @foreach (Evento evento in Model.Eventos)
+        {
+            <div class="col-md-4 justify-content-center" style="padding: 25px;">
+                <div class="card card5-custom card2-title-center justify-content-center">
+                    <h4 class="card-title card-title-center" style="margin-bottom:0px;">@(evento.Fecha.ToShortDateString())</h4>
+                    <h5 class="card-title card-title-center" style="margin-bottom:0px;">@evento.Nombre</h5>
+                    <p class="card-title card-title-center" style="margin-bottom:0px;">@evento.Descripcion</p>
+
+                    @if (evento.RequiereConfirmacion)
+                    {
+                        <p class="card-title card-title-center" style="margin-bottom:0px; color: orange;">
+                            <strong>Requiere Confirmación</strong>
+                        </p>
+                    }
+
+                    <form method="post">
+                        <input type="hidden" name="evento" value="@evento.Id" />
+                        <input type="hidden" name="usuario" value="@Model.IdUsuario" />
+                        <input type="hidden" name="perfil" value="@Model.IdPerfil" />
+
+                        <img src="~/img/escuela.png" class="card-img-top4" alt="" id="miImagen">
+                        @if (Model.IdPerfil != (int)TipoPerfil.Alumno && Model.IdPerfil != (int)TipoPerfil.Docente && Model.IdPerfil != (int)TipoPerfil.Padre)
+                        {
+                            <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@evento.Id)" style="padding-bottom: 5px;" />
+                            <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@evento.Id)" style="padding-bottom: 5px;padding-left: 6px;" />
+                            @if (evento.RequiereConfirmacion)
+                            {
+                                <img src="~/img/asistenciaCheck.png" class="icon5" alt="ver asistencia" onclick="verAsistencia(@evento.Id)" style="padding-bottom: 5px;padding-left: 6px;" />
+                            }
+                        }
+                        else if ((Model.IdPerfil == (int)TipoPerfil.Alumno || Model.IdPerfil == (int)TipoPerfil.Padre) && evento.RequiereConfirmacion)
+                        {
+                            <img src="~/img/asistenciaCheck.png" class="icon5" alt="confirmar asistencia" onclick="confirmAsistencia(@evento.Id)" style="padding-bottom: 5px;padding-left: 6px;" />
+                        }
+                        <input type="submit" id="submit-@evento.Id" style="display:none" />
+                        <input type="hidden" id="booleano-@evento.Id" name="editar" value="true">
+                        <input type="hidden" id="confirmar-@evento.Id" name="confirmar" value="false">
+                        <input type="hidden" id="asistencia-@evento.Id" name="asistencia" value="false">
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+  
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: "success",
+                    title: "Guardado",
+                    showConfirmButton: false,
+                    width: '350px',
+                    padding: '20px',
+                    timer: 1500,
+                    background: '#fefefe',
+                    iconColor: '#00d1b2',  
+                    color: '#333',           
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
+                    customClass: {
+                        popup: 'custom-popup',   
+                        title: 'custom-title', 
+                        icon: 'custom-icon'   
+                    }
+                });
+            </text>
+        }
+    </script>
+</body>
+</html>
+
+@section scripts{
+    <script>
+            function submitForm(id) {
+                document.getElementById('submit-' + id).click();
+            }
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Deseas eliminar este evento?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#ff6f61', 
+                cancelButtonColor: '#6c757d', 
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: "Cancelar",
+                width: '400px',
+                padding: '20px',
+                background: '#f0f0f5',
+                color: '#333',
+                iconColor: '#ff6f61',
+                customClass: {
+                    popup: 'modern-popup',
+                    title: 'modern-title',
+                    icon: 'modern-icon',
+                    confirmButton: 'modern-confirm-button',
+                    cancelButton: 'modern-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('booleano-' + id).value = false;
+                    submitForm(id);
+                }
+            });
+        }
+
+        function confirmAsistencia(id) {
+            document.getElementById('confirmar-' + id).value = true;
+            submitForm(id);
+        }
+
+        function verAsistencia(id) {
+            document.getElementById('asistencia-' + id).value = true;
+            submitForm(id);
+        }
+    </script>
+}

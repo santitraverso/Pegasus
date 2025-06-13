@@ -1,0 +1,104 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.MateriasCursoModel
+@{
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Materias Curso</title>
+</head>
+<body>
+    <h4>Materias</h4>
+    <hr />
+    <br />
+    <div class="center-screen">
+        <button class="search__button">
+            <div class="search__icon">
+                <svg version="1.1" xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                    <title>magnifying-glass</title>
+                    <path d="M17.545 15.467l-3.779-3.779c0.57-0.935 0.898-2.035 0.898-3.21 0-3.417-2.961-6.377-6.378-6.377s-6.186 2.769-6.186 6.186c0 3.416 2.961 6.377 6.377 6.377 1.137 0 2.2-0.309 3.115-0.844l3.799 3.801c0.372 0.371 0.975 0.371 1.346 0l0.943-0.943c0.371-0.371 0.236-0.84-0.135-1.211zM4.004 8.287c0-2.366 1.917-4.283 4.282-4.283s4.474 2.107 4.474 4.474c0 2.365-1.918 4.283-4.283 4.283s-4.473-2.109-4.473-4.474z"></path>
+                </svg>
+            </div>
+        </button>
+        <input type="text" class="search__input" id="busqueda" placeholder="Buscar materias..." onkeyup="buscarUsuarios()">
+    </div>
+    <br />
+
+    <form method="post" id="form">
+        <div class="container">
+            <input type="hidden" name="curso" asp-for="IdCurso" />
+            <input type="hidden" id="booleano" name="atras" value="false">
+            <table id="tablaUsuarios" class="table">
+                <thead>
+                    <tr>
+                        <th>Seleccion</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var materia in Model.Materias)
+                    {
+                        var isChecked = Model.SelectedMateriasIds.Contains((int)materia.Id);
+                        <tr>
+                            <td>
+                                <label class="container2">
+                                    <input type="checkbox" name="SelectedMateriasIds" value="@materia.Id" @(isChecked ? "checked" : "") />
+                                    <div class="checkmark"></div>
+                                </label>
+                            </td>
+                            <td>@materia.Nombre</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button type="button" onclick="confirmSave()" class="btn btn-primary btn-custom">Guardar</button>
+            <button type="button" class="btn btn-primary btn-custom" onclick="atrasBoton()">Atras</button>
+        </div>
+    </form>
+</body>
+</html>
+
+
+@section scripts{
+    <script>
+        function buscarUsuarios() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("busqueda");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tablaUsuarios");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) { // Comenzar en 1 para omitir la primera fila de títulos
+                // Comprobar si algún valor de las columnas nombre o apellido coincide con el filtro
+                var match = false;
+                for (j = 0; j < 2; j++) { // Iterar sobre las columnas 0 (nombre) y 1 (apellido)
+                    td = tr[i].getElementsByTagName("td")[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            match = true;
+                            break; // Salir del bucle si se encuentra una coincidencia en alguna columna
+                        }
+                    }
+                }
+                // Mostrar u ocultar la fila en función de si se encontró una coincidencia
+                tr[i].style.display = match ? "" : "none";
+            }
+        }
+
+        function confirmSave() {
+                document.getElementById('form').submit();
+        }
+
+        function atrasBoton() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('form').submit();
+        }
+        
+    </script>
+}

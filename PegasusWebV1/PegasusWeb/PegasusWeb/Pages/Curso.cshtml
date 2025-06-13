@@ -1,0 +1,137 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.CursoModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4>Cursos</h4>
+    <hr />
+    @if (Model.IdPerfil != 3)
+    {
+        <a class="btn btn-primary btn-custom" asp-page="/CreateCurso" style="margin:10px;">Crear Curso</a>
+    }
+    @if (ModelState.ContainsKey("curso"))
+    {
+        <div class="alert alert-danger">  
+            @foreach (var error in ModelState["curso"].Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+    <div class="row">
+        @foreach (Curso curso in Model.Cursos)
+        {
+            <div class="col-md-3 justify-content-center">
+                <div class="card card-custom card-title-center justify-content-center">
+                    <h5 class="card-title card-title-center" style="margin-bottom:0px;">@curso.Nombre_Curso</h5>
+                    <p class="card-title card-title-center" style="margin-bottom:0px;">@curso.Grado @curso.Division @curso.Turno</p>
+                    <form method="post">
+                        <input type="hidden" name="curso" value="@curso.Id" />
+                        <img src="~/img/Cursos.png" class="card-img-top3" alt="">
+                        <br>
+                        <br>
+                        @if (Model.IdPerfil == 3)
+                        {
+                            <img src="~/img/lupa.png" class="edit-image" alt="Editar" onclick="submitForm(@curso.Id)" style="padding-bottom: 5px;" />
+                        }
+                        else
+                        {
+                            <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@curso.Id)" style="padding-bottom: 5px;" />
+                            <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@curso.Id)" style="padding-bottom: 5px;" />
+                        }
+                        <input type="submit" id="submit-@curso.Id" style="display:none" />
+                        <input type="hidden" id="booleano-@curso.Id" name="editar" value="true">
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- Scripts -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Verifica si TempData tiene un mensaje de éxito
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: "success",
+                    title: "Guardado",
+                    showConfirmButton: false,
+                    width: '350px',
+                    padding: '20px',
+                    timer: 1500,
+                    background: '#fefefe', 
+                    iconColor: '#00d1b2', 
+                    color: '#333', 
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    },
+                    customClass: {
+                        popup: 'custom-popup',  
+                        title: 'custom-title',  
+                        icon: 'custom-icon'   
+                    }
+                });
+            </text>
+        }
+    </script>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        function submitForm(id) {
+            document.getElementById('submit-' + id).click();
+        }
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Deseas eliminar este curso?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#ff6f61', 
+                cancelButtonColor: '#6c757d', 
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: "Cancelar",
+                width: '400px',
+                padding: '20px',
+                background: '#f0f0f5',
+                color: '#333',
+                iconColor: '#ff6f61',
+                customClass: {
+                    popup: 'modern-popup',
+                    title: 'modern-title',
+                    icon: 'modern-icon',
+                    confirmButton: 'modern-confirm-button',
+                    cancelButton: 'modern-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('booleano-' + id).value = false;
+                    submitForm(id);
+                }
+            });
+        }
+    </script>
+}

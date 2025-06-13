@@ -1,0 +1,151 @@
+﻿@using Microsoft.Extensions.Options;
+@using PegasusWeb.Entities;
+@inject IOptions<ApiSettings> ApiSettings
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PegasusWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PegasusWeb.styles.css" asp-append-version="true" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .page-content {
+            flex: 1 0 auto;
+            padding-bottom: 50px;
+        }
+
+        .site-footer {
+            flex-shrink: 0;
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            width: 100%;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a id="navbar-home-link" class="navbar-brand" href="">
+                    <img src="~/img/pegasus.png" class="icon-navbar" />
+                    <span class="brand-text">Pegasus</span>
+                </a>
+                <div id="userDisplay" class="navbar-text text-dark user-display-center"></div>
+                <button id="logoutBtn" class="btn btn-outline-danger" style="display: none;">Cerrar sesión</button>
+                <button id="loginGoogleBtn" class="btn btn-outline-primary" style="display: block;">Login</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-content">
+        <div class="container">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <footer class="site-footer text-center">
+        <div class="container">
+            <span>© 2025 Pegasus - Sistema de Gestión Escolar</span>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <script>
+        // Configuración global de la aplicación
+        window.appConfig = {
+            apiBaseUrl: '@ApiSettings.Value.BaseUrl',
+            isProduction: '@(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development")',
+            currentUrl: '@Context.Request.Scheme://@Context.Request.Host'
+        };
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Función que llama al backend para iniciar el proceso de autenticación
+            const loginButton = document.getElementById('loginGoogleBtn');
+            if (loginButton) {
+                loginButton.addEventListener('click', function () {
+                    const returnUrl = `${window.appConfig.currentUrl}/Home`;
+                    const loginUrl = `${window.appConfig.apiBaseUrl}/Account/Login?returnUrl=${encodeURIComponent(returnUrl)}`;
+                    window.location.href = loginUrl;
+                });
+            }
+
+            // Mostrar el email del usuario
+            displayUser();
+            // Ocultar el botón de inicio de sesión si el usuario está logueado
+            toggleLoginButton();
+
+            // email del usuario en un elemento HTML
+            function displayUser() {
+                const userApellido = sessionStorage.getItem('userApellido');
+                const userNombre = sessionStorage.getItem('userNombre');
+                const userDisplayElement = document.getElementById('userDisplay');
+
+                if (userDisplayElement && userApellido) {
+                    userDisplayElement.textContent = `Bienvenido, ${userNombre} ${userApellido}`;
+                }
+            }
+
+            // ocultar el botón de inicio de sesión si hay un usuario logueado
+            function toggleLoginButton() {
+                const userEmail = sessionStorage.getItem('userEmail');
+                const loginButton = document.getElementById('loginGoogleBtn');
+                const logoutButton = document.getElementById('logoutBtn');
+
+                // Verificar que los botones existan antes de intentar acceder a sus estilos
+                if (loginButton && logoutButton) {
+                    if (userEmail) {
+                        loginButton.style.display = 'none';
+                        logoutButton.style.display = 'block';
+                    } else {
+                        loginButton.style.display = 'block';
+                        logoutButton.style.display = 'none';
+                    }
+                }
+            }
+
+            const logoutButton = document.getElementById('logoutBtn');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function () {
+                    sessionStorage.clear();
+                    const returnUrl = window.appConfig.currentUrl;
+                    const loginUrl = `${window.appConfig.apiBaseUrl}/Account/Logout?returnUrl=${encodeURIComponent(returnUrl)}`;
+                    window.location.href = loginUrl;
+                    window.location.href = returnUrl;
+                });
+            }
+
+            const homeLink = document.getElementById('navbar-home-link');
+            const userApellido = sessionStorage.getItem('userApellido');
+
+            homeLink.href = "/Index";
+
+            if (userApellido) {
+                homeLink.href = "/Home";
+            }
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

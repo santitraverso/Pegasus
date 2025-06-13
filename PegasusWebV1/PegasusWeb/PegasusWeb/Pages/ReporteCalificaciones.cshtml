@@ -1,0 +1,154 @@
+﻿@page
+@using Newtonsoft.Json;
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.ReporteCalificacionesModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h4>Reporte Calificaciones</h4>
+    <hr />
+
+
+    @if (Model.Alumnos != null && Model.Alumnos.Count > 0 && Model.Alumnos.Any(a => a.Usuario.Calificaciones.Count > 0))
+    {
+        <h5>@Model.Nombre</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Calificaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var alumno in Model.Alumnos)
+                {
+                    <tr class="alumno-row">
+                        <td class="apellido">@alumno.Usuario.Apellido</td>
+                        <td class="nombre">@alumno.Usuario.Nombre</td>
+
+                        <td style="width:15%;">
+                            <div class="flex-container">
+                                <ul class="calificaciones-lista">
+                                        @{
+                                            var index = 0;
+                                        }
+                                        @foreach (var calificacion in alumno.Usuario.Calificaciones)
+                                        {
+                                        <li><strong>Nota @(index + 1)</strong>: @calificacion.Calificacion</li>
+                                            index++;
+                                        }
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        <button type="button" class="btn btn-primary btn-custom" onclick="generatePDF()">Imprimir PDF</button>
+    }
+    <form method="post" asp-page-handler="Atras" style="display: inline;" id="form2">
+        <input type="hidden" name="materia" value="@Model.Materia" />
+        <input type="hidden" name="modulo" value="@Model.Modulo" />
+        <input type="hidden" name="curso" value="@Model.IdCurso" />
+        <button type="button" class="btn btn-primary btn-custom" asp-area="" style="margin:10px;" onclick="atras()">Atras</button>
+    </form>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        const Model = {
+            Alumnos: @Html.Raw(JsonConvert.SerializeObject(Model.Alumnos)),
+            Nombre: @Html.Raw(JsonConvert.SerializeObject(Model.Nombre))
+            };
+    </script>
+</body>
+</html>
+
+@section scripts{
+    <script>
+
+        function atras() {
+            // Utiliza el ID del formulario para enviarlo
+            document.getElementById('form2').submit();
+        }
+
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Ancho de la página
+            const pageWidth = doc.internal.pageSize.getWidth();
+
+            // Títulos centrados
+            doc.setFontSize(20);
+            doc.text('Listado de Alumnos', pageWidth / 2, 10, { align: 'center' });
+            doc.setFontSize(14);
+            doc.text(`Calificaciones de ${Model.Nombre}`, pageWidth / 2, 25, { align: 'center' });
+
+            // Encabezados de la tabla
+            doc.setFont('Arial', 'bold');
+            let y = 40;
+            doc.text('Apellido', 10, y);
+            doc.text('Nombre', 50, y);
+            doc.text('Calificaciones', 90, y);
+            doc.setFont('Arial', 'normal');
+
+            // Dibujar una línea debajo de los encabezados
+            y += 5;
+            doc.line(10, y, pageWidth - 10, y);
+
+            // Datos de alumnos
+            y += 5; // Posición Y inicial
+            Model.Alumnos.forEach((alumno, index) => {
+                // Dibujar la línea divisoria (excepto en la primera fila)
+                if (index > 0) {
+                    doc.line(10, y - 5, pageWidth - 10, y - 5);
+                }
+
+                // Apellido y Nombre
+                doc.text(alumno.Usuario.Apellido, 10, y);
+                doc.text(alumno.Usuario.Nombre, 50, y);
+
+                // Calificaciones
+                let calificacionesY = y;
+                alumno.Usuario.Calificaciones.forEach((calificacion, idx) => {
+                    // Escribir "Nota" en negro
+                    doc.setTextColor(0, 0, 0);
+                    doc.text(`Nota ${idx + 1}:`, 90, calificacionesY);
+
+                    // Cambiar el color de la calificación según su valor
+                    if (calificacion.Calificacion > 5) {
+                        doc.setTextColor(0, 128, 0); // Verde
+                    } else {
+                        doc.setTextColor(255, 0, 0); // Rojo
+                    }
+
+                    // Escribir solo la calificación en color
+                    doc.text(`${calificacion.Calificacion}`, 120, calificacionesY); // Ajusta la posición X para que quede alineado
+
+                    calificacionesY += 10; // Ajustar la posición para la siguiente nota
+                });
+
+                // Restablecer el color a negro para el siguiente alumno
+                doc.setTextColor(0, 0, 0);
+
+                // Aumentar Y para el siguiente alumno
+                y = calificacionesY + 5;
+            });
+
+            // Guardar el PDF
+            doc.save("ReporteCalificaciones.pdf");
+        }
+    </script>
+}

@@ -1,0 +1,154 @@
+﻿@page
+@using PegasusWeb.Entities
+@model PegasusWeb.Pages.AsistenciaModel
+@{
+    ViewData["Title"] = "Asistencia";
+}
+
+<h4>Asistencia</h4>
+<hr />
+
+<form method="post" style="display: inline;">
+    <div class="form-group date-input-container" style="width:25%; min-width: 200px;">
+        <label for="fechaAsistencia">Seleccionar fecha</label>
+        <input type="date" class="form-control modern-date-input" asp-for="FechaAsistencia" name="fecha" id="fechaAsistencia" required />
+        <input type="hidden" name="materia" value="@Model.Materia" />
+        <input type="hidden" name="modulo" value="@Model.Modulo" />
+        <input type="hidden" name="curso" value="@Model.IdCurso" />
+        <input type="hidden" name="perfil" value="@Model.IdPerfil" />
+        <input type="hidden" name="usuario" value="@Model.IdUsuario" />
+    </div>
+    <button type="submit" class="btn btn-primary btn-custom">Cargar Asistencia</button>
+</form>
+<form method="post" asp-page-handler="Atras" style="display: inline;" id="form2">
+    <input type="hidden" name="curso" value="@Model.IdCurso" />
+    <input type="hidden" name="modulo" value="@Model.Modulo" />
+    <button type="button" class="btn btn-primary btn-custom" asp-area="" style="margin:10px;" onclick="atras()">Atras</button>
+</form>
+<br />
+<br />
+@if (ModelState.ContainsKey("asistencia"))
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ModelState["asistencia"].Errors)
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+@if (Model.Alumnos != null && Model.Alumnos.Count > 0)
+{
+    <h5>Asistencia para @Model.FechaAsistencia.ToShortDateString()</h5>
+    <br />
+    <form method="post" asp-page-handler="GuardarAsistencia" id="formAsistencia">
+        <div class="table-responsive">
+            <table class="table" id="tablaUsuarios">
+                <thead>
+                    <tr>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Presente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Alumnos.Count; i++)
+                    {
+                        <tr>
+                            <input type="hidden" name="Alumnos[@i].Id" value="@Model.Alumnos[i].Id" />
+                            <input type="hidden" name="Alumnos[@i].Id_Alumno" value="@Model.Alumnos[i].Id_Alumno" />
+                            <input type="hidden" name="Alumnos[@i].Id_Materia" value="@Model.Alumnos[i].Id_Materia" />
+                            <input type="hidden" name="Alumnos[@i].Fecha" value="@Model.FechaAsistencia" />
+                            <input type="hidden" name="Alumnos[@i].Id_Curso" value="@Model.IdCurso" />
+                            <input type="hidden" name="fecha" value="@Model.FechaAsistencia" />
+                            <input type="hidden" name="materia" value="@Model.Alumnos[i].Id_Materia" />
+                            <input type="hidden" id="booleano" name="reporte" value="false">
+                            <input type="hidden" name="modulo" value="@Model.Modulo" />
+                            <input type="hidden" name="curso" value="@Model.IdCurso" />
+                            <td>@Model.Alumnos[i].Alumno.Apellido</td>
+                            <td>@Model.Alumnos[i].Alumno.Nombre</td>
+                            <td>
+                                <div class="switch2-toggle">
+                                    <input type="checkbox" id="checkbox-@i" name="Alumnos[@i].Presente" value="true"
+                                    @(Model.Alumnos[i].Presente ? "checked" : "") onchange="updateHiddenInput(@i, this.checked)" @(Model.IdPerfil == 2 || Model.IdPerfil == 4 ? "disabled" : "") />
+                                    <label for="checkbox-@i"></label>
+                                </div>
+                                <input type="hidden" name="Alumnos[@i].Presente" value="false" id="hidden-@i" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @if (Model.IdPerfil != (int)TipoPerfil.Alumno && Model.IdPerfil != (int)TipoPerfil.Padre)
+        {
+            <button type="submit" class="btn btn-primary btn-custom">Guardar Asistencia</button>
+        }
+        <button type="button" class="btn btn-primary btn-custom" onclick="reportAsis()">Reporte Asistencias</button>
+    </form>
+}
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Verifica si TempData tiene un mensaje de éxito
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <text>
+            Swal.fire({
+                icon: "success",
+                title: "Guardado",
+                showConfirmButton: false,
+                width: '350px',
+                padding: '20px',
+                timer: 1500,
+                background: '#fefefe',
+                iconColor: '#00d1b2',
+                color: '#333',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                customClass: {
+                    popup: 'custom-popup',
+                    title: 'custom-title',
+                    icon: 'custom-icon'
+                }
+            });
+        </text>
+    }
+</script>
+
+@section scripts{
+    <script>
+            function updateHiddenInput(index, isChecked) {
+                var hiddenInput = document.getElementById('hidden-' + index);
+
+                if (isChecked) {
+                    // Si el checkbox está marcado, eliminamos el input hidden
+                    if (hiddenInput) {
+                        hiddenInput.remove();
+                    }
+                } else {
+                    // Si el checkbox está desmarcado, volvemos a crear el input hidden
+                    if (!hiddenInput) {
+                        var input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = "Alumnos[" + index + "].Presente";
+                        input.value = "false";
+                        input.id = "hidden-" + index;
+                        document.body.appendChild(input);
+                    }
+                }
+            }
+
+        function reportAsis() {
+            document.getElementById('booleano').value = true;
+            document.getElementById('formAsistencia').submit();
+        }
+
+        function atras() {
+            document.getElementById('form2').submit();
+        }
+    </script>
+}
