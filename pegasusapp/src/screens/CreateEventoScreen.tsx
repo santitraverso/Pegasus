@@ -146,6 +146,9 @@ const CreateEventoScreen: React.FC = () => {
         {/* Buscador */}
 
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+          <View style={styles.header}>
+              <Text style={styles.headerTitle}>{isEditing ? "Editar Evento" : "Crear Evento"}</Text>
+          </View>
           <View style={styles.form}>
             {/* Nombre del Evento */}
             <View style={styles.inputGroup}>
@@ -400,6 +403,17 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "600",
+  },
+  header: {
+    padding: 16,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#E0E0E0",
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#333",
   },
 })
 

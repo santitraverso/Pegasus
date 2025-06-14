@@ -202,18 +202,6 @@ const CreateContactoScreen: React.FC = () => {
                         />
                       </View>
                         )}
-        
-                      <View style={styles.inputGroup}>
-                        <Text style={styles.label}>Email *</Text>
-                        <TextInput
-                          style={styles.input}
-                          value={formData.mail || ""}
-                          onChangeText={(text) => setFormData({ ...formData, mail: text })}
-                          placeholder="Ingrese el email"
-                          keyboardType="email-address"
-                          autoCapitalize="none"
-                        />
-                      </View>
 
                       <View style={styles.inputGroup}>
                         <Text style={styles.label}>Email *</Text>

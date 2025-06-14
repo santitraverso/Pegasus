@@ -8,7 +8,7 @@
 <h4>Contactos</h4>
 <hr />
 <div class="container">
-    @if (Model.IdPerfil == (int)TipoPerfil.Admin && Model.IdPerfil == (int)TipoPerfil.Preceptor)
+    @if (Model.IdPerfil == (int)TipoPerfil.Admin || Model.IdPerfil == (int)TipoPerfil.Preceptor)
     {
         <a class="btn btn-primary btn-custom" asp-page="/CreateContacto" asp-route-tipoContacto="@Model.TipoContacto" style="margin:10px;">Crear Contacto</a>
     }
@@ -39,7 +39,7 @@
                         <td>@contacto.Telefono</td>
                         <td>@(contacto.Tipo_Contacto == 1 ? "Institucional" : "Docente")</td>
                         <td class="actions-column">
-                                @if (Model.IdPerfil == (int)TipoPerfil.Admin && Model.IdPerfil == (int)TipoPerfil.Preceptor)
+                                @if (Model.IdPerfil == (int)TipoPerfil.Admin || Model.IdPerfil == (int)TipoPerfil.Preceptor)
                                 {
                                 <img src="~/img/lapiz.png" class="edit-image" alt="Editar" onclick="submitForm(@contacto.Id)" />
                                 <img src="~/img/eliminar.png" class="icon" alt="Eliminar" onclick="confirmDelete(@contacto.Id)" />
