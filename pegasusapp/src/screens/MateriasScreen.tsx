@@ -29,7 +29,7 @@ const cardWidth = (screenWidth - 48) / 2
 
 const MateriasScreen: React.FC = () => {
   const navigation = useNavigation<MateriasScreenNavigationProp>()
-  const { userData } = useUser()
+  const { userData, hijoSeleccionado } = useUser()
 
   const [materias, setMaterias] = useState<Materia[]>([])
   const [filteredMaterias, setFilteredMaterias] = useState<Materia[]>([])
@@ -41,7 +41,6 @@ const MateriasScreen: React.FC = () => {
   // Determinar permisos según el perfil del usuario
   const userProfile = userData?.id_perfil || 0
   const canCreate = userProfile !== 2 && userProfile !== 3 && userProfile !== 4
-  const canEditDelete = userProfile !== 2 && userProfile !== 3 && userProfile !== 4
   const isViewOnly = userProfile === 2 || userProfile === 3 || userProfile === 4
 
   // Recargar datos cuando la pantalla recibe foco
@@ -70,13 +69,173 @@ const MateriasScreen: React.FC = () => {
     try {
       setLoading(true)
       setError(null)
-      const materiasData = await getMateriasAsync()
+
+      let materiasData: Materia[] = []
+
+      // Filtrar según el perfil del usuario
+      switch (userProfile) {
+        case 2: // Alumno
+          materiasData = await getMateriasAlumnoAsync(userData?.id || 0)
+          break
+
+        case 3: // Docente
+          materiasData = await getMateriasDocenteAsync(userData?.id || 0)
+          break
+
+        case 4: // Padre
+          // Para padres usar el ID del hijo
+          const hijoId = hijoSeleccionado?.hijoUsuario?.id || userData?.id || 0
+          materiasData = await getMateriasAlumnoAsync(hijoId)
+          break
+
+        case 1: // Admin
+        case 5: // Preceptor
+        default:
+          materiasData = await getMateriasAsync()
+          break
+      }
+
       setMaterias(materiasData)
       setFilteredMaterias(materiasData)
     } catch (error: any) {
       setError(error.message || "Error al cargar las materias")
     } finally {
       setLoading(false)
+    }
+  }
+
+  // Función para obtener materias de alumnos (también usada para padres)
+  const getMateriasAlumnoAsync = async (alumnoId: number): Promise<Materia[]> => {
+    try {
+      // Obtener cursos del alumno
+      const integrantesCursos = await getIntegrantesCursosAsync(alumnoId)
+
+      const idsCursos = integrantesCursos
+        .filter((ic) => ic.id_Curso)
+        .map((ic) => ic.id_Curso!)
+        .filter((id, index, array) => array.indexOf(id) === index) // Eliminar duplicados
+
+      if (idsCursos.length === 0) {
+        return []
+      }
+
+      // Obtener IDs de materias por cursos
+      const idsMaterias = await getIdsMateriasPorCursosAsync(idsCursos)
+
+      if (idsMaterias.length === 0) {
+        return []
+      }
+
+      // Obtener todas las materias y filtrar
+      const todasMaterias = await getMateriasAsync()
+      return todasMaterias.filter((m) => idsMaterias.includes(m.id!))
+    } catch (error) {
+      console.error("Error al obtener materias del alumno:", error)
+      return []
+    }
+  }
+
+  // Función para obtener materias de docentes
+  const getMateriasDocenteAsync = async (docenteId: number): Promise<Materia[]> => {
+    try {
+      // Obtener materias que dicta el docente
+      const docenteMaterias = await getDocenteMateriasAsync(docenteId)
+      
+      const idsMaterias = docenteMaterias
+        .filter((dm) => dm.id_Materia)
+        .map((dm) => dm.id_Materia!)
+        .filter((id, index, array) => array.indexOf(id) === index) // Eliminar duplicados
+
+      if (idsMaterias.length === 0) {
+        return []
+      }
+
+      // Obtener todas las materias y filtrar
+      const todasMaterias = await getMateriasAsync()
+      return todasMaterias.filter((m) => idsMaterias.includes(m.id!))
+    } catch (error) {
+      console.error("Error al obtener materias del docente:", error)
+      return []
+    }
+  }
+
+  // Función para obtener IDs de materias por cursos
+  const getIdsMateriasPorCursosAsync = async (idsCursos: number[]): Promise<number[]> => {
+    try {
+      const cursosIds = idsCursos.join(",")
+      const queryParam = encodeURIComponent(`x => ${cursosIds}.Contains(x.id_curso.Value)`)
+
+      const response = await fetch(`${CONFIG.API_BASE_URL}/CursoMateria/GetCursoMateriaForCombo?query=${queryParam}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error(`Error al obtener materias por cursos: ${response.statusText}`)
+      }
+
+      const cursosMaterias = await response.json()
+      return cursosMaterias
+        .filter((cm: any) => cm.id_Materia)
+        .map((cm: any) => cm.id_Materia)
+        .filter((id: number, index: number, array: number[]) => array.indexOf(id) === index)
+    } catch (error) {
+      console.error("Error al obtener IDs de materias por cursos:", error)
+      return []
+    }
+  }
+
+  // Función para obtener materias del docente
+  const getDocenteMateriasAsync = async (docenteId: number): Promise<any[]> => {
+    try {
+      const queryParam = encodeURIComponent(`x=>x.id_docente==${docenteId}`)
+
+      const response = await fetch(
+        `${CONFIG.API_BASE_URL}/DocenteMateria/GetDocenteMateriaForCombo?query=${queryParam}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      )
+
+      if (!response.ok) {
+        throw new Error(`Error al obtener materias del docente: ${response.statusText}`)
+      }
+
+      return await response.json()
+    } catch (error) {
+      console.error("Error al obtener materias del docente:", error)
+      return []
+    }
+  }
+
+  // Función para obtener integrantes de cursos
+  const getIntegrantesCursosAsync = async (usuarioId: number): Promise<any[]> => {
+    try {
+      const queryParam = encodeURIComponent(`x=>x.id_usuario==${usuarioId}`)
+
+      const response = await fetch(
+        `${CONFIG.API_BASE_URL}/IntegrantesCursos/GetIntegrantesCursosForCombo?query=${queryParam}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      )
+
+      if (!response.ok) {
+        throw new Error(`Error al obtener integrantes de cursos: ${response.statusText}`)
+      }
+
+      return await response.json()
+    } catch (error) {
+      console.error("Error al obtener integrantes de cursos:", error)
+      return []
     }
   }
 

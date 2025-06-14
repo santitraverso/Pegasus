@@ -34,43 +34,176 @@ namespace PegasusWeb.Pages
             IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
             IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
 
-            Materias = await GetMateriasAsync();
+            try
+            {
+                switch (IdPerfil)
+                {
+                    case (int)TipoPerfil.Alumno:
+                        Materias = await GetMateriasAlumnoAsync(IdUsuario);
+                        break;
+
+                    case (int)TipoPerfil.Docente:
+                        Materias = await GetMateriasDocenteAsync(IdUsuario);
+                        break;
+
+                    case (int)TipoPerfil.Padre:
+                        Materias = await GetMateriasAlumnoAsync(HttpContext.Session.GetInt32("IdHijo") ?? IdUsuario);
+                        break;
+
+                    case (int)TipoPerfil.Admin:
+                    case (int)TipoPerfil.Preceptor:
+                    default:
+                        Materias = await GetMateriasAsync();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Error al cargar las materias");
+                Materias = new List<Entities.Materia>();
+            }
+        }
+
+        private async Task<List<Entities.Materia>> GetMateriasAlumnoAsync(int alumnoId)
+        {
+            // Obtener cursos del alumno
+            var integrantesCursos = await GetIntegrantesCursosAsync(alumnoId);
+
+            var idsCursos = integrantesCursos
+                .Where(ic => ic.Id_Curso.HasValue)
+                .Select(ic => ic.Id_Curso.Value)
+                .Distinct()
+                .ToList();
+
+            if (!idsCursos.Any())
+            {
+                return new List<Entities.Materia>();
+            }
+
+            var idsMaterias = await GetIdsMateriasPorCursosAsync(idsCursos);
+
+            if (!idsMaterias.Any())
+            {
+                return new List<Entities.Materia>();
+            }
+
+            // Filtrar materias
+            var todasMaterias = await GetMateriasAsync();
+            return todasMaterias.Where(m => idsMaterias.Contains((int)m.Id)).ToList();
+        }
+
+        private async Task<List<Entities.Materia>> GetMateriasDocenteAsync(int docenteId)
+        {
+            // Obtener materias que dicta el docente
+            var docenteMaterias = await GetDocenteMateriasAsync(docenteId);
+
+            var idsMaterias = docenteMaterias
+                .Where(dm => dm.Id_Materia.HasValue)
+                .Select(dm => dm.Id_Materia.Value)
+                .Distinct()
+                .ToList();
+
+            if (!idsMaterias.Any())
+            {
+                return new List<Entities.Materia>();
+            }
+
+            var todasMaterias = await GetMateriasAsync();
+            return todasMaterias.Where(m => idsMaterias.Contains((int)m.Id)).ToList();
         }
 
 
-        //public async Task<IActionResult> OnPostAsync(int materia, bool editar)
-        //{
-        //    IdMateria = materia;
-   
-        //    if (editar)
-        //    {
-        //        return RedirectToPage("Materia/CreateMateria");
-        //    }
-        //    else
-        //    {
-        //        var tieneAsistencias = await TieneAsistenciasMateria(materia);
+        private async Task<List<int>> GetIdsMateriasPorCursosAsync(List<int> idsCursos)
+        {
+            var idsMaterias = new List<int>();
 
-        //        if (tieneAsistencias)
-        //        {
-        //            ModelState.AddModelError("materia", "No se puede eliminar la materia. Primero elimine las asistencias asociadas.");
-        //            await OnGetAsync();
-        //            return Page();
-        //        }
+            string cursosIds = string.Join(",", idsCursos);
+            string queryParam = Uri.EscapeDataString($"x => {cursosIds}.Contains(x.id_curso.Value)");
 
-        //        var curso = await GetCursosMateriaAsync(materia);
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                $"{_apiBaseUrl}/CursoMateria/GetCursoMateriaForCombo?query={queryParam}");
 
-        //        if (curso.Count > 0)
-        //        {
-        //            ModelState.AddModelError("materia", "No se puede eliminar la materia. Primero elimine la asociación con el curso desde cursos.");
-        //            await OnGetAsync();
-        //            return Page();
-        //        }
+            string token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                request.Headers.Add("Authorization", $"Bearer {token}");
+            }
 
-        //        await EliminarMateriaAsync(materia);
-        //        Materias = await GetMateriasAsync();
-        //        return RedirectToPage("Materia");
-        //    }
-        //}
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string materiasJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(materiasJson))
+                {
+                    var cursosMaterias = JsonConvert.DeserializeObject<List<CursoMateria>>(materiasJson);
+                    idsMaterias = cursosMaterias
+                        .Where(cm => cm.Id_Materia.HasValue)
+                        .Select(cm => cm.Id_Materia.Value)
+                        .Distinct()
+                        .ToList();
+                }
+            }
+
+            return idsMaterias;
+        }
+
+        private async Task<List<DocenteMateria>> GetDocenteMateriasAsync(int docenteId)
+        {
+            List<DocenteMateria> docenteMaterias = new List<DocenteMateria>();
+            string queryParam = Uri.EscapeDataString($"x=>x.id_docente=={docenteId}");
+
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                $"{_apiBaseUrl}/DocenteMateria/GetDocenteMateriaForCombo?query={queryParam}");
+
+            string token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                request.Headers.Add("Authorization", $"Bearer {token}");
+            }
+
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string docenteMateriasJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(docenteMateriasJson))
+                {
+                    docenteMaterias = JsonConvert.DeserializeObject<List<DocenteMateria>>(docenteMateriasJson);
+                }
+            }
+
+            return docenteMaterias;
+        }
+
+        public async Task<List<IntegrantesCursos>> GetIntegrantesCursosAsync(int usuario)
+        {
+            List<IntegrantesCursos> getalumnos = new List<IntegrantesCursos>();
+            string queryParam = Uri.EscapeDataString($"x=>x.id_usuario=={usuario}");
+
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiBaseUrl}/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+
+            // Añadir el token JWT al encabezado
+            string token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                request.Headers.Add("Authorization", $"Bearer {token}");
+            }
+
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string alumnosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(alumnosJson))
+                {
+                    getalumnos = JsonConvert.DeserializeObject<List<IntegrantesCursos>>(alumnosJson);
+                }
+            }
+
+            return getalumnos;
+        }
+
 
         private async Task<bool> TieneAsistenciasMateria(int materia)
         {

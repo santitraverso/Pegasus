@@ -115,7 +115,7 @@ namespace PegasusV1.Security
 
         private static Expression ParseExpression(string expression, ParameterExpression parameter)
         {
-            // Manejar OR (||) - tiene menor precedencia
+            // Manejar OR (||)
             if (expression.Contains("||"))
             {
                 var orParts = SplitByOperator(expression, "||");
@@ -126,7 +126,7 @@ namespace PegasusV1.Security
                 }
             }
 
-            // Manejar AND (&&) - tiene mayor precedencia
+            // Manejar AND (&&)
             if (expression.Contains("&&"))
             {
                 var andParts = SplitByOperator(expression, "&&");
@@ -137,8 +137,91 @@ namespace PegasusV1.Security
                 }
             }
 
+            if (IsContainsExpression(expression))
+            {
+                return ParseContainsExpression(expression, parameter);
+            }
+
             // Parsear comparación simple
             return ParseComparison(expression, parameter);
+        }
+
+        private static bool IsContainsExpression(string expression)
+        {
+            // Patrón corregido para manejar tanto un número como múltiples números
+            var pattern = @"^([0-9]+(?:\s*,\s*[0-9]+)*)\.Contains(?:\$\$([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*)\$\$\$|\(([^)]+)\))$";
+            var match = Regex.Match(expression.Trim(), pattern);
+
+            Console.WriteLine($"IsContainsExpression - Expression: '{expression}', Match: {match.Success}");
+
+            return match.Success;
+        }
+
+        private static Expression ParseContainsExpression(string expression, ParameterExpression parameter)
+        {
+            // Patrón para capturar números y propiedad
+            var pattern = @"^([0-9]+(?:\s*,\s*[0-9]+)*)\.Contains(?:\$\$([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*)\$\$\$|\(([^)]+)\))$";
+            var match = Regex.Match(expression.Trim(), pattern);
+
+            if (!match.Success)
+            {
+                throw new SecurityException($"Expresión Contains no válida: {expression}");
+            }
+
+            var numbersStr = match.Groups[1].Value;
+            var propertyPath = !string.IsNullOrEmpty(match.Groups[2].Value)
+            ? match.Groups[2].Value
+            : match.Groups[3].Value;
+
+            // Validar que solo contenga números y comas
+            if (!Regex.IsMatch(numbersStr, @"^[0-9\s,]+$"))
+            {
+                throw new SecurityException($"Lista de números no válida en Contains: {numbersStr}");
+            }
+
+            // Parsear números
+            var numbers = numbersStr.Split(',')
+                .Select(n => n.Trim())
+                .Where(n => !string.IsNullOrEmpty(n))
+                .Select(int.Parse)
+                .ToList();
+
+            // Validar límite de números
+            if (numbers.Count > 100)
+            {
+                throw new SecurityException("Demasiados elementos en la lista Contains (máximo 100)");
+            }
+
+            // Crear expresión de propiedad
+            var propertyExpression = CreatePropertyExpression(propertyPath, parameter);
+
+            // Crear lista constante
+            var listExpression = Expression.Constant(numbers);
+
+            // Crear método Contains
+            var containsMethod = typeof(List<int>).GetMethod("Contains", new[] { typeof(int) });
+            if (containsMethod == null)
+            {
+                throw new SecurityException("No se pudo encontrar el método Contains");
+            }
+
+            Expression valueExpression = propertyExpression;
+            if (propertyExpression.Type != typeof(int))
+            {
+                // Si es nullable, obtener el valor
+                if (propertyExpression.Type == typeof(int?))
+                {
+                    valueExpression = Expression.Property(propertyExpression, "Value");
+                }
+                else
+                {
+                    // Intentar convertir al tipo correcto
+                    valueExpression = Expression.Convert(propertyExpression, typeof(int));
+                }
+            }
+
+            // Crear expresión Contains
+            return Expression.Call(listExpression, containsMethod, valueExpression);
         }
 
         private static List<string> SplitByOperator(string expression, string operatorStr)

@@ -19,7 +19,7 @@
     <title>Materias</title>
 </head>
 <body>
-    <h4>@(Model.IdPerfil == (int)TipoPerfil.Alumno || Model.IdPerfil == (int)TipoPerfil.Padre ? "Datos de la Materia" : titulo)</h4>
+    <h4>@(Model.IdPerfil == (int)TipoPerfil.Alumno || Model.IdPerfil == (int)TipoPerfil.Padre || Model.IdPerfil == (int)TipoPerfil.Docente ? "Datos de la Materia" : titulo)</h4>
     <hr />
     <form method="post" onsubmit="handleSubmit(event)" id="form">
         <input type="hidden" name="id" asp-for="Materia.Id" />
