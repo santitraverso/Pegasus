@@ -65,9 +65,17 @@ const CursosScreen: React.FC = () => {
     try {
       setLoading(true)
       setError(null)
-      const cursosData = await getCursosAsync()
-      setCursos(cursosData)
-      setFilteredCursos(cursosData)
+      if (userData?.id_perfil === 3) {
+        // Es docente - obtener solo sus cursos asignados
+        const cursosDocente = await getCursosDocenteAsync()
+        setCursos(cursosDocente)
+        setFilteredCursos(cursosDocente)
+      } else {
+        // Admin, preceptor u otros - obtener todos los cursos
+        const cursosData = await getCursosAsync()
+        setCursos(cursosData)
+        setFilteredCursos(cursosData)
+      }
     } catch (error: any) {
       setError(error.message || "Error al cargar los cursos")
     } finally {
@@ -89,6 +97,46 @@ const CursosScreen: React.FC = () => {
     }
 
     return await response.json()
+  }
+
+  const getCursosDocenteAsync = async (): Promise<Curso[]> => {
+    if (!userData?.id) {
+      throw new Error("No hay datos de usuario disponibles")
+    }
+
+    // Obtener las materias del docente
+    const queryParam = encodeURIComponent(`x=>x.id_docente==${userData.id}`)
+    const response = await fetch(
+      `${CONFIG.API_BASE_URL}/DocenteMateria/GetDocenteMateriaForCombo?query=${queryParam}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    )
+
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`)
+    }
+
+    const docenteMaterias = await response.json()
+
+    if (!docenteMaterias || docenteMaterias.length === 0) {
+      return [] // El docente no tiene materias asignadas
+    }
+
+    const cursosIds = [...new Set(docenteMaterias.filter((dm: any) => dm.curso?.id).map((dm: any) => dm.curso.id))]
+
+    if (cursosIds.length === 0) {
+      return []
+    }
+
+    // Obtener todos los cursos del docente
+    const todosLosCursos = await getCursosAsync()
+    const cursosDelDocente = todosLosCursos.filter((curso) => curso.id && cursosIds.includes(curso.id))
+
+    return cursosDelDocente
   }
 
   const handleCrearCurso = () => {

@@ -152,27 +152,27 @@ namespace PegasusV1.Controllers
                 if (request == null || string.IsNullOrEmpty(request.GoogleToken))
                 {
                     _logger.LogWarning("Intento de login sin token de Google");
-                    return BadRequest("Token de Google requerido");
+                    return BadRequest(new { message = "Token de Google requerido", errorCode = "MISSING_TOKEN" });
                 }
 
                 // Validar el email
                 if (string.IsNullOrEmpty(request.Email) || !IsValidEmail(request.Email))
                 {
                     _logger.LogWarning("Intento de login con email inválido: {Email}", request.Email);
-                    return BadRequest("Email inválido");
+                    return BadRequest(new { message = "Email inválido", errorCode = "INVALID_EMAIL" });
                 }
 
                 var googleUser = await ValidateGoogleToken(request.GoogleToken);
                 if (googleUser == null)
                 {
-                    return Unauthorized("Token de Google inválido");
+                    return Unauthorized(new { message = "Token de Google inválido", errorCode = "INVALID_GOOGLE_TOKEN" });
                 }
 
                 if (!string.Equals(googleUser.Email, request.Email, StringComparison.OrdinalIgnoreCase))
                 {
                     _logger.LogWarning("El email del token ({TokenEmail}) no coincide con el email solicitado ({RequestEmail})",
                         googleUser.Email, request.Email);
-                    return BadRequest("El email del token no coincide con el email solicitado");
+                    return BadRequest(new { message = "El email del token no coincide con el email solicitado", errorCode = "EMAIL_MISMATCH" });
                 }
 
                 // Usar el método seguro para obtener el usuario
@@ -180,7 +180,14 @@ namespace PegasusV1.Controllers
 
                 if (usuario == null)
                 {
-                    return NotFound("Usuario no encontrado. Póngase en contacto con la institución.");
+                    return NotFound(new { message = "Usuario no encontrado. Póngase en contacto con la institución.", errorCode = "USER_NOT_FOUND" });
+                }
+
+                // Verificar si el usuario está activo
+                if (usuario.Activo != true)
+                {
+                    _logger.LogWarning("Usuario inactivo intentó hacer login: {Email}", request.Email);
+                    return Forbid(new { message = "Usuario inactivo. Contacte al administrador.", errorCode = "USER_INACTIVE" }.ToString());
                 }
 
                 if (usuario.Id_Perfil.HasValue)
@@ -213,7 +220,7 @@ namespace PegasusV1.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error en loginApp");
-                return StatusCode(500, "Error interno del servidor");
+                return StatusCode(500, new { message = "Error interno del servidor", errorCode = "INTERNAL_ERROR" });
             }
         }
 

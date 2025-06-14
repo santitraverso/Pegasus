@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   safeButtonContainer: {
     paddingHorizontal: 20,
     paddingVertical: 15,
-    paddingBottom: 40, // Espacio extra para botones del sistema
+    paddingBottom: 40,
     backgroundColor: "#fff",
     borderTopWidth: 1,
     borderTopColor: "#e0e0e0",

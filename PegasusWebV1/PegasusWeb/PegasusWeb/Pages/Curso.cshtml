@@ -14,7 +14,7 @@
 <body>
     <h4>Cursos</h4>
     <hr />
-    @if (Model.IdPerfil != 3)
+    @if (Model.IdPerfil != (int)TipoPerfil.Docente)
     {
         <a class="btn btn-primary btn-custom" asp-page="/CreateCurso" style="margin:10px;">Crear Curso</a>
     }

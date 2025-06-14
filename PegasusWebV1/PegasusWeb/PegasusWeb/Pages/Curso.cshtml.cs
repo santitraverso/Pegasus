@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using PegasusWeb.Entities;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -26,11 +27,40 @@ namespace PegasusWeb.Pages
         public int IdCurso { get; set; }
         [TempData]
         public int IdPerfil { get; set; }
+        [TempData]
+        public int IdUsuario { get; set; }
 
         public async Task OnGetAsync()
         {
             IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
-            Cursos = await GetCursosAsync();
+            IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+
+            if (IdPerfil == (int)TipoPerfil.Docente)
+            {
+                // Obtener las materias asignadas al docente
+                var cursosDocente = await GetCursosDocenteAsync(IdUsuario);
+
+                // Extraer los IDs de cursos únicos de las materias del docente
+                var idsCursosDocente = cursosDocente
+                    .Where(dm => dm.Id_Curso.HasValue)
+                    .Select(dm => dm.Id_Curso.Value)
+                    .Distinct()
+                    .ToList();
+
+                if (idsCursosDocente.Any())
+                {
+                    // Obtener todos los cursos del docente
+                    var todosCursos = await GetCursosAsync();
+                    Cursos = todosCursos.Where(c => idsCursosDocente.Contains((int)c.Id)).ToList();
+                }
+                else
+                {
+                    // Si el docente no tiene cursos asignados, mostrar lista vacía
+                    Cursos = new List<Curso>();
+                }
+            }
+            else
+                Cursos = await GetCursosAsync();
         }
 
         private async Task<bool> TieneIntegrantesCurso(int curso)
@@ -87,6 +117,34 @@ namespace PegasusWeb.Pages
             }
 
             return getmaterias.Count > 0;
+        }
+
+        public async Task<List<DocenteMateria>> GetCursosDocenteAsync(int docente)
+        {
+            List<DocenteMateria> getcursos = new List<DocenteMateria>();
+            string queryParam = Uri.EscapeDataString($"x=>x.id_docente=={docente}");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiBaseUrl}/DocenteMateria/GetDocenteMateriaForCombo?query={queryParam}");
+
+            // Añadir el token JWT al encabezado
+            string token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                request.Headers.Add("Authorization", $"Bearer {token}");
+            }
+
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+
+            if (response.IsSuccessStatusCode)
+            {
+                string cursosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(cursosJson))
+                {
+                    getcursos = JsonConvert.DeserializeObject<List<DocenteMateria>>(cursosJson);
+                }
+            }
+
+            return getcursos;
         }
 
 

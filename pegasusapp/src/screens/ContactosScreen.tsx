@@ -24,7 +24,7 @@ const ContactosScreen: React.FC = () => {
   const [contactos, setContactos] = useState<Contactos[]>([])
   const [loading, setLoading] = useState(true)
 
-  const puedeEditar = userData?.id_perfil !== 2 && userData?.id_perfil !== 4
+  const puedeEditar = userData?.id_perfil == 1 || userData?.id_perfil == 5
   const [searchText, setSearchText] = useState("")
   const [filteredCursos, setFilteredContactos] = useState<Contactos[]>([])
   

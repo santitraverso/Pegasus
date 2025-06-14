@@ -82,14 +82,25 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       let errorMessage = "Error al cargar datos del usuario"
 
       if (error.errorCode === "USER_NOT_FOUND") {
-        errorMessage = "Usuario no encontrado. Contacte al administrador."
+        errorMessage = "Usuario no encontrado. Póngase en contacto con la institución."
       } else if (error.errorCode === "USER_INACTIVE") {
         errorMessage = "Usuario inactivo. Contacte al administrador."
       } else if (error.errorCode === "NO_PROFILE_ASSIGNED") {
         errorMessage = "Usuario sin perfil asignado. Contacte al administrador."
+      } else if (error.errorCode === "INVALID_GOOGLE_TOKEN") {
+        errorMessage = "Error de autenticación con Google. Intenta nuevamente."
+      } else if (error.errorCode === "EMAIL_MISMATCH") {
+        errorMessage = "El email de Google no coincide. Verifica tu cuenta."
+      } else if (error.errorCode === "INVALID_EMAIL") {
+        errorMessage = "El formato del email no es válido."
+      } else if (error.errorCode === "MISSING_TOKEN") {
+        errorMessage = "Error de autenticación. Intenta nuevamente."
+      } else if (error.errorCode === "INTERNAL_ERROR") {
+        errorMessage = "Error interno del servidor. Intenta más tarde."
       } else if (error.message) {
         errorMessage = error.message
       }
+      
 
       setError(errorMessage)
       setUserData(null)
