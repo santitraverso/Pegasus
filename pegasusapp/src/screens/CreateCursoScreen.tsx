@@ -35,7 +35,7 @@ const CreateCursoScreen: React.FC = () => {
   const [curso, setCurso] = useState<Curso>({
     id: 0,
     nombre_Curso: "",
-    grado: 1,
+    grado: null,
     division: "",
     turno: "",
   })

@@ -11,15 +11,18 @@ namespace PegasusV1.Controllers
     {
         private readonly IService<Perfiles> _perfilesService;
         private readonly IService<DocenteMateria> _docenteMateriaService;
+        private readonly IService<Hijo> _hijoService;
 
         public UsuarioController(
             IService<Usuario> usuarioService,
             IService<Perfiles> perfilesService,
-            IService<DocenteMateria> docenteMateriaService)
+            IService<DocenteMateria> docenteMateriaService,
+            IService<Hijo> hijoService)
             : base(usuarioService)
         {
             _perfilesService = perfilesService;
             _docenteMateriaService = docenteMateriaService;
+            _hijoService = hijoService;
         }
 
         [HttpGet]
@@ -124,6 +127,18 @@ namespace PegasusV1.Controllers
                         foreach (var relacion in relaciones)
                         {
                             await _docenteMateriaService.Delete(relacion);
+                        }
+                    }
+
+                    //Verificar si es un padre para borrar relacion con hijos
+                    if (usuario.Id_Perfil == 4)
+                    {
+                        var relaciones = await _hijoService.GetHijoForCombo(h => h.Id_Padre == id);
+
+                        // Eliminar cada relación
+                        foreach (var relacion in relaciones)
+                        {
+                            await _hijoService.Delete(relacion);
                         }
                     }
 

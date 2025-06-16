@@ -17,7 +17,7 @@
     <h4>@titulo</h4>
     <hr />
 
-    <div class="form-container">
+    <div class="form-container ">
         <form method="post" onsubmit="handleSubmit(event)" id="form">
             <input type="hidden" name="id" asp-for="Usuario.Id" />
             <input type="hidden" name="CursoMateriaPairsJson" id="CursoMateriaPairsJson" />
@@ -49,12 +49,13 @@
                 <tr>
                     <td>Perfil</td>
                     <td>
-                        <select asp-for="PerfilSeleccionadoId" asp-items="Model.PerfilesRelacionados" class="form-control selectMio" id="perfilSeleccionadoId" onchange="toggleCursoMateriaFields()">
+                        <select asp-for="PerfilSeleccionadoId" asp-items="Model.PerfilesRelacionados" class="form-control selectMio" id="perfilSeleccionadoId" onchange="toggleFields()">
                             <option value="">-- Seleccionar un perfil --</option>
                         </select>
                     </td>
                 </tr>
 
+                <!-- SECCIÓN PARA DOCENTES -->
                 <tr>
                     <td colspan="2">
                         <div id="cursoMateriaSection" style="display: none; margin-top: 20px;">
@@ -84,6 +85,59 @@
                     </td>
                 </tr>
 
+                <!-- SECCIÓN PARA PADRES -->
+                <tr>
+                    <td colspan="2">
+                        <div id="hijosSection" style="display: none; margin-top: 20px;">
+                            <h4>Seleccionar Hijos</h4>
+
+                            <!-- Barra de búsqueda -->
+                            <div class="center-screen" style="margin-bottom: 15px;">
+                                <button class="search__button" type="button">
+                                    <div class="search__icon">
+                                        <svg version="1.1" xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                            <title>magnifying-glass</title>
+                                            <path d="M17.545 15.467l-3.779-3.779c0.57-0.935 0.898-2.035 0.898-3.21 0-3.417-2.961-6.377-6.378-6.377s-6.186 2.769-6.186 6.186c0 3.416 2.961 6.377 6.377 6.377 1.137 0 2.2-0.309 3.115-0.844l3.799 3.801c0.372 0.371 0.975 0.371 1.346 0l0.943-0.943c0.371-0.371 0.236-0.84-0.135-1.211zM4.004 8.287c0-2.366 1.917-4.283 4.282-4.283s4.474 2.107 4.474 4.474c0 2.365-1.918 4.283-4.283 4.283s-4.473-2.109-4.473-4.474z"></path>
+                                        </svg>
+                                    </div>
+                                </button>
+                                <input type="text" class="search__input" style="width: 350px; padding: 8px 12px;" id="busquedaHijos" placeholder="Buscar hijos..." onkeyup="buscarHijos()">
+                            </div>
+
+                            <!-- Tabla de hijos -->
+                            <table id="tablaHijos" class="table" style="max-height: 300px; overflow-y: auto;">
+                                <thead>
+                                    <tr>
+                                        <th>Selección</th>
+                                        <th>Apellido</th>
+                                        <th>Nombre</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var hijo in Model.HijosDisponibles)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <label class="container2">
+                                                    <input type="checkbox"
+                                                           name="HijosSeleccionados"
+                                                           value="@hijo.Id"
+                                                    @(Model.HijosSeleccionados.Contains((int)hijo.Id) ? "checked" : "") />
+                                                    <div class="checkmark"></div>
+                                                </label>
+                                            </td>
+                                            <td>@hijo.Apellido</td>
+                                            <td>@hijo.Nombre</td>
+                                            <td>@hijo.Mail</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
             </table>
             <br />
             <button type="submit" class="btn btn-primary btn-custom">Guardar</button>
@@ -92,6 +146,105 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.innerWidth <= 768) {
+
+                document.documentElement.style.setProperty('width', '100vw', 'important');
+                document.documentElement.style.setProperty('max-width', '100vw', 'important');
+                document.documentElement.style.setProperty('overflow-x', 'hidden', 'important');
+
+                document.body.style.setProperty('width', '100vw', 'important');
+                document.body.style.setProperty('max-width', '100vw', 'important');
+                document.body.style.setProperty('overflow-x', 'hidden', 'important');
+
+                const navbar = document.querySelector('nav.navbar');
+                if (navbar) {
+                    navbar.style.setProperty('width', '100vw', 'important');
+                    navbar.style.setProperty('max-width', '100vw', 'important');
+                    navbar.style.setProperty('margin-left', 'calc(-50vw + 50%)', 'important');
+                    navbar.style.setProperty('margin-right', 'calc(-50vw + 50%)', 'important');
+
+                    const navContainer = navbar.querySelector('.container');
+                    if (navContainer) {
+                        navContainer.style.setProperty('max-width', '100%', 'important');
+                        navContainer.style.setProperty('width', '100%', 'important');
+                        navContainer.style.setProperty('padding-left', '10px', 'important');
+                        navContainer.style.setProperty('padding-right', '10px', 'important');
+                    }
+                }
+
+                const footer = document.querySelector('footer');
+                if (footer) {
+                    footer.style.setProperty('width', '100vw', 'important');
+                    footer.style.setProperty('max-width', '100vw', 'important');
+                    footer.style.setProperty('margin-left', 'calc(-50vw + 50%)', 'important');
+                    footer.style.setProperty('margin-right', 'calc(-50vw + 50%)', 'important');
+
+                    const footerContainer = footer.querySelector('.container');
+                    if (footerContainer) {
+                        footerContainer.style.setProperty('max-width', '100%', 'important');
+                        footerContainer.style.setProperty('width', '100%', 'important');
+                        footerContainer.style.setProperty('padding-left', '10px', 'important');
+                        footerContainer.style.setProperty('padding-right', '10px', 'important');
+                    }
+                }
+
+                const titulo = document.querySelector('h4');
+                if (titulo) {
+                    titulo.style.setProperty('width', '100vw', 'important');
+                    titulo.style.setProperty('max-width', '100vw', 'important');
+                    titulo.style.setProperty('margin-left', 'calc(-50vw + 50%)', 'important');
+                    titulo.style.setProperty('margin-right', 'calc(-50vw + 50%)', 'important');
+                    titulo.style.setProperty('text-align', 'center', 'important');
+                    titulo.style.setProperty('padding-left', '10px', 'important');
+                    titulo.style.setProperty('padding-right', '10px', 'important');
+                }
+
+                const main = document.querySelector('main');
+                if (main) {
+                    main.style.setProperty('width', '95vw', 'important');
+                    main.style.setProperty('max-width', '95vw', 'important');
+                    main.style.setProperty('margin', '0 auto', 'important');
+                    main.style.setProperty('padding', '0 5px', 'important');
+                    main.style.setProperty('box-sizing', 'border-box', 'important');
+                }
+
+                const mainContainers = document.querySelectorAll('main .container, .form-container');
+                mainContainers.forEach(container => {
+                    container.style.setProperty('width', '100%', 'important');
+                    container.style.setProperty('max-width', '100%', 'important');
+                    container.style.setProperty('margin', '0 auto', 'important');
+                    container.style.setProperty('padding', '0 5px', 'important');
+                    container.style.setProperty('box-sizing', 'border-box', 'important');
+                });
+
+                const forms = document.querySelectorAll('form, table, .table');
+                forms.forEach(form => {
+                    form.style.setProperty('width', '100%', 'important');
+                    form.style.setProperty('max-width', '100%', 'important');
+                    form.style.setProperty('box-sizing', 'border-box', 'important');
+                });
+
+                const inputs = document.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    input.style.setProperty('max-width', '100%', 'important');
+                    input.style.setProperty('box-sizing', 'border-box', 'important');
+                });
+
+                console.log('Fix refinado aplicado');
+                console.log('Document width:', document.documentElement.offsetWidth);
+                console.log('Main width:', main ? main.offsetWidth : 'No encontrado');
+                console.log('Viewport width:', window.innerWidth);
+            }
+        });
+    </script>
+
+
+
+
+
 </body>
 </html>
 
@@ -118,9 +271,9 @@
                 return false;
             }
 
+            // Validación para docentes
             if (perfilSeleccionadoId === '3') {
                 const cursoMateriaPairs = JSON.parse(document.getElementById('CursoMateriaPairsJson').value);
-
                 const isValid = cursoMateriaPairs.some(pair => pair.CursoId && pair.MateriaId);
 
                 if (!isValid) {
@@ -138,6 +291,27 @@
                     return false;
                 }
             }
+
+            //Para padres
+            if (perfilSeleccionadoId === '4') {
+                const hijosSeleccionados = document.querySelectorAll('input[name="HijosSeleccionados"]:checked');
+
+                if (hijosSeleccionados.length === 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Debes seleccionar al menos un hijo.',
+                        width: '350px',
+                        padding: '20px',
+                        customClass: {
+                            title: 'my-custom-title',
+                            confirmButton: "btn btn-danger",
+                        }
+                    });
+                    return false;
+                }
+            }
+
             return true;
         }
 
@@ -145,20 +319,51 @@
             event.preventDefault();
             updateCursoMateriaJson();
             if (validateForm()) {
-                document.getElementById('form').submit(); 
+                document.getElementById('form').submit();
             }
         }
 
-        function toggleCursoMateriaFields() {
+        //Para manejar tanto docentes como padres
+        function toggleFields() {
             const perfil = document.getElementById('perfilSeleccionadoId').value;
-            const section = document.getElementById('cursoMateriaSection');
-            const container = document.getElementById('cursoMateriaContainer');
+            const cursoMateriaSection = document.getElementById('cursoMateriaSection');
+            const hijosSection = document.getElementById('hijosSection');
+            const cursoMateriaContainer = document.getElementById('cursoMateriaContainer');
 
-            if (perfil === '3') {
-                section.style.display = 'block';
+            // Ocultar ambas secciones por defecto
+            cursoMateriaSection.style.display = 'none';
+            hijosSection.style.display = 'none';
+
+            if (perfil === '3') { // Docente
+                cursoMateriaSection.style.display = 'block';
+            } else if (perfil === '4') { // Padre (ajusta el ID según tu base de datos)
+                hijosSection.style.display = 'block';
             } else {
-                section.style.display = 'none';
-                container.innerHTML = ''
+                cursoMateriaContainer.innerHTML = '';
+            }
+        }
+
+        //Búsqueda de hijos
+        function buscarHijos() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("busquedaHijos");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tablaHijos");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                var match = false;
+                for (j = 1; j < 4; j++) { // Buscar en apellido, nombre y email
+                    td = tr[i].getElementsByTagName("td")[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            match = true;
+                            break;
+                        }
+                    }
+                }
+                tr[i].style.display = match ? "" : "none";
             }
         }
 
@@ -171,41 +376,33 @@
             newRow.setAttribute('id', `row-${cursoMateriaIndex}`);
 
             newRow.innerHTML = `
-                <td>
-                    <label>Curso</label>
-                    <select name="CursoMateriaPairs[${cursoMateriaIndex}].CursoId" class="form-control selectMio">
+                        <td>
+                            <label>Curso</label>
+                            <select name="CursoMateriaPairs[${cursoMateriaIndex}].CursoId" class="form-control selectMio">
         @foreach (var curso in Model.CursosDisponibles)
         {
-                                <option value="@curso.Value">@curso.Text</option>
+                                            <option value="@curso.Value">@curso.Text</option>
         }
-                    </select>
-                </td>
-                <td>
-                    <label>Materia</label>
-                    <select name="CursoMateriaPairs[${cursoMateriaIndex}].MateriaId" class="form-control selectMio">
+                            </select>
+                        </td>
+                        <td>
+                            <label>Materia</label>
+                            <select name="CursoMateriaPairs[${cursoMateriaIndex}].MateriaId" class="form-control selectMio">
         @foreach (var materia in Model.MateriasDisponibles)
         {
-                                <option value="@materia.Value">@materia.Text</option>
+                                            <option value="@materia.Value">@materia.Text</option>
         }
-                    </select>
-                </td>
-                <td>
-                    <img src="/img/eliminar.png" class="icon" alt="Eliminar"
-                                 style="cursor: pointer; margin-top: 25px; margin-left: 15px;"
-                         onclick="deleteRow(${cursoMateriaIndex})" />
-                </td>
-            `;
+                            </select>
+                        </td>
+                        <td>
+                            <img src="/img/eliminar.png" class="icon" alt="Eliminar"
+                                         style="cursor: pointer; margin-top: 25px; margin-left: 15px;"
+                                 onclick="deleteRow(${cursoMateriaIndex})" />
+                        </td>
+                    `;
 
             container.appendChild(newRow);
-
             cursoMateriaIndex++;
-
-            const inputHidden = document.getElementById('hiddenCursoMateriaPairs');
-            if (inputHidden) {
-                let pairs = JSON.parse(inputHidden.value);
-                pairs.push({ CursoId: null, MateriaId: null });
-                inputHidden.value = JSON.stringify(pairs);
-            }
         }
 
         function deleteRow(index) {
@@ -220,13 +417,10 @@
             const pairs = [];
 
             rows.forEach((row) => {
-                // Obtener el índice actual de la fila desde el atributo data-index
                 const rowIndex = row.getAttribute('data-index');
-
                 const cursoSelect = row.querySelector(`select[name='CursoMateriaPairs[${rowIndex}].CursoId']`);
                 const materiaSelect = row.querySelector(`select[name='CursoMateriaPairs[${rowIndex}].MateriaId']`);
 
-                // Verificar que ambos elementos existan antes de acceder a sus valores
                 if (cursoSelect && materiaSelect) {
                     pairs.push({
                         CursoId: cursoSelect.value,
@@ -239,7 +433,6 @@
         }
 
         // Inicialización
-        document.addEventListener('DOMContentLoaded', toggleCursoMateriaFields);
-
+        document.addEventListener('DOMContentLoaded', toggleFields);
     </script>
 }

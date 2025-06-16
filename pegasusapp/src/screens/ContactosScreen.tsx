@@ -95,7 +95,12 @@ const ContactosScreen: React.FC = () => {
 
   const deleteContacto = async (contactoId: number) => {
     try {
-      const response = await fetch(`${CONFIG.API_BASE_URL}/Contactos/DeleteContacto?id=${contactoId}`)
+      const response = await fetch(
+        `${CONFIG.API_BASE_URL}/Contactos/DeleteContacto/${contactoId}`,
+        {
+          method: "DELETE",
+        },
+      )
 
       if (response.ok) {
         Alert.alert("Éxito", "Contacto eliminado correctamente")

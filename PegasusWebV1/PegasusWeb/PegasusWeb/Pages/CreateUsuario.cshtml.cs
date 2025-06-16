@@ -44,6 +44,11 @@ namespace PegasusWeb.Pages
         public List<SelectListItem> MateriasDisponibles { get; set; } = new List<SelectListItem> { };
 
         [BindProperty]
+        public List<int> HijosSeleccionados { get; set; } = new List<int>();
+
+        public List<Usuario> HijosDisponibles { get; set; } = new List<Usuario>();
+
+        [BindProperty]
         public string? CursoMateriaPairsJson { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
@@ -74,7 +79,12 @@ namespace PegasusWeb.Pages
 
                     CursoMateriaPairs.AddRange(cursoMat);
                 }
-                
+
+                if (PerfilSeleccionadoId == (int)TipoPerfil.Padre)
+                {
+                    HijosSeleccionados = await CargarHijosPadreAsync(IdUsuario);
+                }
+
             }
             else
             {
@@ -83,8 +93,67 @@ namespace PegasusWeb.Pages
 
             await CargarCursosAsync();
             await CargarMateriasAsync();
+            await CargarHijosAsync();
 
             return Page();
+        }
+
+        public async Task<List<int>> CargarHijosPadreAsync(int padreId)
+        {
+            List<int> hijosIds = new List<int>();
+            string queryParam = Uri.EscapeDataString($"x=>x.id_padre=={padreId}");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiBaseUrl}/Hijo/GetHijosForCombo?query={queryParam}");
+
+            string token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                request.Headers.Add("Authorization", $"Bearer {token}");
+            }
+
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string hijosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(hijosJson))
+                {
+                    var hijos = JsonConvert.DeserializeObject<List<Hijo>>(hijosJson);
+                    hijosIds = hijos.Where(h => h.Id_Hijo.HasValue).Select(h => h.Id_Hijo.Value).ToList();
+                }
+            }
+
+            return hijosIds;
+        }
+
+        private async Task CargarHijosAsync()
+        {
+            var hijos = await GetHijosAsync();
+            HijosDisponibles = hijos;
+        }
+
+        async Task<List<Usuario>> GetHijosAsync()
+        {
+            List<Usuario> hijos = new List<Usuario>();
+            string queryParam = Uri.EscapeDataString($"x=>x.id_perfil=={(int)TipoPerfil.Alumno}");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiBaseUrl}/Usuario/GetUsuariosForCombo?query={queryParam}");
+
+            string token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                request.Headers.Add("Authorization", $"Bearer {token}");
+            }
+
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string hijosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(hijosJson))
+                {
+                    hijos = JsonConvert.DeserializeObject<List<Usuario>>(hijosJson);
+                }
+            }
+            return hijos;
         }
 
         public async Task<List<DocenteMateria>> CargarDocenteMateriaAsync(int docente)
@@ -299,6 +368,11 @@ namespace PegasusWeb.Pages
                 this.ModelState.AddModelError("perfil", "El campo Curso y Materia es requerido para un docente");
             }
 
+            if (idPerfilSeleccionado == (int)TipoPerfil.Padre && (HijosSeleccionados == null || !HijosSeleccionados.Any()))
+            {
+                this.ModelState.AddModelError("hijos", "Debe seleccionar al menos un hijo");
+            }
+
             // Retornar si el modelo no es válido
             if (!ModelState.IsValid)
             {
@@ -366,10 +440,11 @@ namespace PegasusWeb.Pages
                 id = usuarioCreado.id;
             }
 
-            // Borro las posibles relaciones que tenga en Docente Materia si es una actualización
+            // Borro las posibles relaciones existentes
             if (id > 0)
             {
                 await BorrarCursosMateriasAsync(id);
+                await BorrarRelacionesPadreHijoAsync(id);
             }
 
             // Me fijo si es un docente para crear la relación con el curso y la materia 
@@ -413,6 +488,42 @@ namespace PegasusWeb.Pages
                         await OnGetAsync();
                         return Page();
                     }
+                }
+            }
+
+            //Para padres
+            if (idPerfilSeleccionado == (int)TipoPerfil.Padre && HijosSeleccionados != null && HijosSeleccionados.Any())
+            {
+                var hijosRelaciones = new List<dynamic>();
+
+                foreach (var hijoId in HijosSeleccionados)
+                {
+                    dynamic hijoData = new ExpandoObject();
+                    hijoData.Id_Padre = id;
+                    hijoData.Id_Hijo = hijoId;
+
+                    hijosRelaciones.Add(hijoData);
+                }
+
+                var jsonContentHijos = JsonConvert.SerializeObject(hijosRelaciones);
+                var contentHijos = new StringContent(jsonContentHijos, Encoding.UTF8, "application/json");
+
+                var requestHijos = new HttpRequestMessage(HttpMethod.Post, $"{_apiBaseUrl}/Hijo/CreateAllHijos");
+                requestHijos.Content = contentHijos;
+
+                if (!string.IsNullOrEmpty(token))
+                {
+                    requestHijos.Headers.Add("Authorization", $"Bearer {token}");
+                }
+
+                var responseHijos = await _client.SendAsync(requestHijos);
+
+                if (!responseHijos.IsSuccessStatusCode)
+                {
+                    var errorResponse = await responseHijos.Content.ReadAsStringAsync();
+                    ModelState.AddModelError("hijos", "Hubo un error inesperado al crear las relaciones Padre-Hijo: " + errorResponse);
+                    await OnGetAsync();
+                    return Page();
                 }
             }
 
@@ -462,6 +573,50 @@ namespace PegasusWeb.Pages
             catch (Exception ex)
             {
                 Console.WriteLine($"Error eliminando relaciones docente-materia: {ex.Message}");
+            }
+        }
+
+        private async Task BorrarRelacionesPadreHijoAsync(int padreId)
+        {
+            try
+            {
+                string token = HttpContext.Session.GetString("JwtToken");
+
+                string queryParam = Uri.EscapeDataString($"x=>x.id_padre=={padreId}");
+                var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiBaseUrl}/Hijo/GetHijosForCombo?query={queryParam}");
+
+                if (!string.IsNullOrEmpty(token))
+                {
+                    request.Headers.Add("Authorization", $"Bearer {token}");
+                }
+
+                HttpResponseMessage response = await _client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var relaciones = JsonConvert.DeserializeObject<List<Hijo>>(json);
+
+                    if (relaciones != null && relaciones.Any())
+                    {
+                        var jsonContent = JsonConvert.SerializeObject(relaciones);
+                        var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                        var deleteRequest = new HttpRequestMessage(HttpMethod.Delete, $"{_apiBaseUrl}/Hijo/DeleteAllHijos");
+                        deleteRequest.Content = content;
+
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            deleteRequest.Headers.Add("Authorization", $"Bearer {token}");
+                        }
+
+                        await _client.SendAsync(deleteRequest);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error eliminando relaciones padre-hijo: {ex.Message}");
             }
         }
     }

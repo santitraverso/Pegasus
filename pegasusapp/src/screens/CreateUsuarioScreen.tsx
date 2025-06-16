@@ -1,3 +1,5 @@
+"use client"
+
 import type React from "react"
 import { useState, useEffect } from "react"
 import {
@@ -24,6 +26,7 @@ import type { Curso } from "../models/curso"
 import type { Materia } from "../models/materia"
 import type { DocenteMateria } from "../models/docenteMateria"
 import type { CursoMateriaPair } from "../models/cursoMateriaPair"
+import type { Hijo } from "../models/hijo"
 import { CONFIG } from "../services/config"
 import { useUser } from "../context/UserContext"
 
@@ -45,6 +48,13 @@ const CreateUsuarioScreen: React.FC = () => {
   const [cursos, setCursos] = useState<Curso[]>([])
   const [materias, setMaterias] = useState<Materia[]>([])
   const [cursoMateriaPairs, setCursoMateriaPairs] = useState<CursoMateriaPair[]>([])
+
+  // Estados para manejo de hijos
+  const [hijosDisponibles, setHijosDisponibles] = useState<Usuario[]>([])
+  const [hijosSeleccionados, setHijosSeleccionados] = useState<number[]>([])
+  const [searchHijos, setSearchHijos] = useState("")
+  const [filteredHijos, setFilteredHijos] = useState<Usuario[]>([])
+
   const { userData } = useUser()
   const isAdmin = userData?.id_perfil === 1
 
@@ -54,16 +64,30 @@ const CreateUsuarioScreen: React.FC = () => {
 
   const isEditing = !!usuarioId
   const isDocente = usuario.id_Perfil === 3
+  const isPadre = usuario.id_Perfil === 4 // Asumiendo que 4 es el ID del perfil Padre
 
   // Cargar datos iniciales
   useEffect(() => {
     loadInitialData()
   }, [usuarioId])
 
+  // Filtrar hijos cuando cambia la búsqueda
+  useEffect(() => {
+    if (searchHijos.trim() === "") {
+      setFilteredHijos(hijosDisponibles)
+    } else {
+      const filtered = hijosDisponibles.filter((hijo) => {
+        const nombreCompleto = `${hijo.apellido} ${hijo.nombre} ${hijo.mail}`.toLowerCase()
+        return nombreCompleto.includes(searchHijos.toLowerCase())
+      })
+      setFilteredHijos(filtered)
+    }
+  }, [searchHijos, hijosDisponibles])
+
   const loadInitialData = async () => {
     try {
       setLoading(true)
-      await Promise.all([loadPerfiles(), loadCursos(), loadMaterias()])
+      await Promise.all([loadPerfiles(), loadCursos(), loadMaterias(), loadHijosDisponibles()])
 
       if (isEditing) {
         await loadUsuario()
@@ -120,6 +144,21 @@ const CreateUsuarioScreen: React.FC = () => {
     }
   }
 
+  // Cargar hijos disponibles (usuarios con perfil Alumno)
+  const loadHijosDisponibles = async () => {
+    try {
+      const queryParam = encodeURIComponent(`x=>x.id_perfil==2`) // Asumiendo que 2 es el ID del perfil Alumno
+      const response = await fetch(`${CONFIG.API_BASE_URL}/Usuario/GetUsuariosForCombo?query=${queryParam}`)
+      if (response.ok) {
+        const data = await response.json()
+        setHijosDisponibles(data)
+        setFilteredHijos(data)
+      }
+    } catch (error) {
+      console.error("Error loading hijos disponibles:", error)
+    }
+  }
+
   // Cargar usuario para edición
   const loadUsuario = async () => {
     try {
@@ -131,6 +170,11 @@ const CreateUsuarioScreen: React.FC = () => {
         // Si es docente, cargar sus cursos y materias
         if (data.id_Perfil === 3) {
           await loadDocenteMaterias(usuarioId!)
+        }
+
+        // Si es padre, cargar sus hijos
+        if (data.id_Perfil === 4) {
+          await loadHijosPadre(usuarioId!)
         }
       }
     } catch (error) {
@@ -156,6 +200,32 @@ const CreateUsuarioScreen: React.FC = () => {
     } catch (error) {
       console.error("Error loading docente materias:", error)
     }
+  }
+
+  // Cargar hijos del padre
+  const loadHijosPadre = async (padreId: number) => {
+    try {
+      const queryParam = encodeURIComponent(`x=>x.id_padre==${padreId}`)
+      const response = await fetch(`${CONFIG.API_BASE_URL}/Hijo/GetHijosForCombo?query=${queryParam}`)
+      if (response.ok) {
+        const data: Hijo[] = await response.json()
+        const hijosIds = data.filter((hijo) => hijo.id_Hijo).map((hijo) => hijo.id_Hijo!)
+        setHijosSeleccionados(hijosIds)
+      }
+    } catch (error) {
+      console.error("Error loading hijos padre:", error)
+    }
+  }
+
+  // Manejar selección/deselección de hijos
+  const toggleHijoSelection = (hijoId: number) => {
+    setHijosSeleccionados((prev) => {
+      if (prev.includes(hijoId)) {
+        return prev.filter((id) => id !== hijoId)
+      } else {
+        return [...prev, hijoId]
+      }
+    })
   }
 
   // Validar formulario
@@ -186,6 +256,11 @@ const CreateUsuarioScreen: React.FC = () => {
         Alert.alert("Error", "Todos los pares curso-materia deben estar completos")
         return false
       }
+    }
+    // Validación para padres
+    if (isPadre && hijosSeleccionados.length === 0) {
+      Alert.alert("Error", "Debe seleccionar al menos un hijo")
+      return false
     }
 
     return true
@@ -233,6 +308,11 @@ const CreateUsuarioScreen: React.FC = () => {
         await handleDocenteMaterias(usuarioId)
       }
 
+      // Si es padre, manejar relaciones padre-hijo
+      if (isPadre && usuarioId) {
+        await handlePadreHijos(usuarioId)
+      }
+
       Alert.alert("Éxito", "Usuario guardado correctamente", [
         {
           text: "OK",
@@ -256,7 +336,7 @@ const CreateUsuarioScreen: React.FC = () => {
       }
 
       if (cursoMateriaPairs.length > 0) {
-        const docenteMateriasData = cursoMateriaPairs.map(pair => ({
+        const docenteMateriasData = cursoMateriaPairs.map((pair) => ({
           Id_Docente: docenteId,
           Id_Materia: pair.materiaId,
           Id_Curso: pair.cursoId,
@@ -280,6 +360,38 @@ const CreateUsuarioScreen: React.FC = () => {
     }
   }
 
+  // Manejar relaciones padre-hijo
+  const handlePadreHijos = async (padreId: number) => {
+    try {
+      // Primero eliminar relaciones existentes si es edición
+      if (isEditing) {
+        await deleteExistingPadreHijos(padreId)
+      }
+
+      if (hijosSeleccionados.length > 0) {
+        const padreHijosData = hijosSeleccionados.map((hijoId) => ({
+          Id_Padre: padreId,
+          Id_Hijo: hijoId,
+        }))
+
+        const response = await fetch(`${CONFIG.API_BASE_URL}/Hijo/CreateAllHijos`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(padreHijosData),
+        })
+
+        if (!response.ok) {
+          const errorResponse = await response.text()
+          throw new Error(`Error al crear relaciones padre-hijo: ${errorResponse}`)
+        }
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
   // Eliminar relaciones docente-materia existentes
   const deleteExistingDocenteMaterias = async (docenteId: number) => {
     try {
@@ -292,7 +404,7 @@ const CreateUsuarioScreen: React.FC = () => {
         const existingRelations: DocenteMateria[] = await response.json()
 
         if (existingRelations.length > 0) {
-          const relacionesEliminar = existingRelations.map(relation => ({ Id: relation.id }))
+          const relacionesEliminar = existingRelations.map((relation) => ({ Id: relation.id }))
 
           const deleteResponse = await fetch(`${CONFIG.API_BASE_URL}/DocenteMateria/DeleteAllDocenteMateria`, {
             method: "DELETE",
@@ -314,6 +426,38 @@ const CreateUsuarioScreen: React.FC = () => {
     }
   }
 
+  // Eliminar relaciones padre-hijo existentes
+  const deleteExistingPadreHijos = async (padreId: number) => {
+    try {
+      const queryParam = encodeURIComponent(`x=>x.id_padre==${padreId}`)
+      const response = await fetch(`${CONFIG.API_BASE_URL}/Hijo/GetHijosForCombo?query=${queryParam}`)
+
+      if (response.ok) {
+        const existingRelations: Hijo[] = await response.json()
+
+        if (existingRelations.length > 0) {
+          const relacionesEliminar = existingRelations.map((relation) => ({ Id: relation.id }))
+
+          const deleteResponse = await fetch(`${CONFIG.API_BASE_URL}/Hijo/DeleteAllHijos`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(relacionesEliminar),
+          })
+
+          if (!deleteResponse.ok) {
+            const errorResponse = await deleteResponse.text()
+            throw new Error(`Error al eliminar relaciones padre-hijo existentes: ${errorResponse}`)
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error deleting existing padre hijos:", error)
+      throw error
+    }
+  }
+
   // Agregar par curso-materia
   const addCursoMateriaPair = () => {
     setCursoMateriaPairs([...cursoMateriaPairs, { cursoId: null, materiaId: null }])
@@ -331,6 +475,29 @@ const CreateUsuarioScreen: React.FC = () => {
     newPairs[index] = { ...newPairs[index], [field]: value }
     setCursoMateriaPairs(newPairs)
   }
+
+  // Renderizar item de hijo - CAMBIADO: Ya no es para FlatList
+  const renderHijoItem = (item: Usuario, index: number) => (
+    <TouchableOpacity
+      key={item.id?.toString() || index.toString()}
+      style={styles.hijoItem}
+      onPress={() => toggleHijoSelection(item.id!)}
+    >
+      <View style={styles.hijoCheckbox}>
+        <Icon
+          name={hijosSeleccionados.includes(item.id!) ? "check-box" : "check-box-outline-blank"}
+          size={24}
+          color={hijosSeleccionados.includes(item.id!) ? "#4285F4" : "#666"}
+        />
+      </View>
+      <View style={styles.hijoInfo}>
+        <Text style={styles.hijoNombre}>
+          {item.apellido}, {item.nombre}
+        </Text>
+        <Text style={styles.hijoEmail}>{item.mail}</Text>
+      </View>
+    </TouchableOpacity>
+  )
 
   if (loading) {
     return (
@@ -394,6 +561,9 @@ const CreateUsuarioScreen: React.FC = () => {
                       setUsuario({ ...usuario, id_Perfil: value })
                       if (value !== 3) {
                         setCursoMateriaPairs([])
+                      }
+                      if (value !== 4) {
+                        setHijosSeleccionados([])
                       }
                     }}
                     style={styles.picker}
@@ -469,13 +639,51 @@ const CreateUsuarioScreen: React.FC = () => {
                   ))}
                 </View>
               )}
+
+              {/* Sección para padres - ARREGLADA: Sin FlatList */}
+              {isPadre && (
+                <View style={styles.padreSection}>
+                  <View style={styles.sectionHeader}>
+                    <Text style={styles.sectionTitle}>Seleccionar Hijos</Text>
+                    <Text style={styles.selectedCount}>
+                      {hijosSeleccionados.length} seleccionado{hijosSeleccionados.length !== 1 ? "s" : ""}
+                    </Text>
+                  </View>
+
+                  <View style={styles.searchContainer}>
+                    <Icon name="search" size={20} color="#666" style={styles.searchIcon} />
+                    <TextInput
+                      style={styles.searchInput}
+                      placeholder="Buscar hijos..."
+                      value={searchHijos}
+                      onChangeText={setSearchHijos}
+                    />
+                  </View>
+
+                  <View style={styles.hijosListContainer}>
+                    <ScrollView
+                      style={styles.hijosScrollView}
+                      showsVerticalScrollIndicator={true}
+                      nestedScrollEnabled={true}
+                    >
+                      {filteredHijos.length > 0 ? (
+                        filteredHijos.map((item, index) => renderHijoItem(item, index))
+                      ) : (
+                        <View style={styles.emptyContainer}>
+                          <Text style={styles.emptyText}>
+                            {searchHijos ? "No se encontraron hijos" : "No hay hijos disponibles"}
+                          </Text>
+                        </View>
+                      )}
+                    </ScrollView>
+                  </View>
+                </View>
+              )}
             </View>
           </View>
         </ScrollView>
 
         <View style={styles.floatingFooter}>
-          
-
           <TouchableOpacity
             style={[styles.saveButton, saving && styles.disabledButton]}
             onPress={handleSave}
@@ -583,6 +791,10 @@ const styles = StyleSheet.create({
   docenteSection: {
     marginTop: 16,
   },
+  // Estilos para la sección de padres
+  padreSection: {
+    marginTop: 16,
+  },
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -593,6 +805,71 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
+  },
+  selectedCount: {
+    fontSize: 14,
+    color: "#4285F4",
+    fontWeight: "600",
+  },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F8F9FA",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+  },
+  searchIcon: {
+    marginRight: 8,
+  },
+  searchInput: {
+    flex: 1,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: "#333",
+  },
+  hijosListContainer: {
+    height: 250, // Fixed height instead of maxHeight
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+    borderRadius: 8,
+    backgroundColor: "#FFFFFF",
+    overflow: "hidden", // Ensure content doesn't overflow
+  },
+  hijoItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#F0F0F0",
+  },
+  hijoCheckbox: {
+    marginRight: 12,
+  },
+  hijoInfo: {
+    flex: 1,
+  },
+  hijoNombre: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+    marginBottom: 2,
+  },
+  hijoEmail: {
+    fontSize: 14,
+    color: "#666",
+  },
+  emptyContainer: {
+    padding: 20,
+    alignItems: "center",
+  },
+  emptyText: {
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
   },
   addButton: {
     flexDirection: "row",
@@ -649,22 +926,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginLeft: 8,
   },
-  cancelButton: {
-    backgroundColor: "#FFFFFF",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#E0E0E0",
-  },
-  cancelButtonText: {
-    color: "#666",
-    fontSize: 16,
-    fontWeight: "600",
-    marginLeft: 8,
-  },
   backButton: {
     flex: 1,
     backgroundColor: "#6c757d",
@@ -687,6 +948,9 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingBottom: 80,
+  },
+  hijosScrollView: {
+    flex: 1,
   },
   floatingFooter: {
     position: "absolute",

@@ -114,7 +114,7 @@ namespace PegasusV1.Controllers
         }
 
         [HttpPost]
-        [Route("CreateAllHijo")]
+        [Route("CreateAllHijos")]
         public async Task<ActionResult<List<Hijo>>> CreateAllHijo([FromBody] List<Hijo> hijos)
         {
             try
@@ -129,7 +129,7 @@ namespace PegasusV1.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateAllHijo")]
+        [Route("UpdateAllHijos")]
         public async Task<ActionResult<List<Hijo>>> UpdateAllHijo([FromBody] List<Hijo> hijos)
         {
             try
@@ -144,7 +144,7 @@ namespace PegasusV1.Controllers
         }
 
         [HttpDelete]
-        [Route("DeleteAllHijo")]
+        [Route("DeleteAllHijos")]
         public async Task<ActionResult> DeleteAllHijo([FromBody] List<Hijo> hijos)
         {
             try
