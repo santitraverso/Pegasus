@@ -31,10 +31,19 @@ const forceSignOut = async () => {
   try {
     const app = getApp()
     const auth = getAuth(app)
-    await firebaseSignOut(auth)
-    await GoogleSignin.revokeAccess()
-    await GoogleSignin.signOut()
-    // Limpiar cache de datos de usuario
+    const currentUser = auth.currentUser
+
+    if (currentUser) {
+      await firebaseSignOut(auth)
+    }
+
+    try {
+      await GoogleSignin.revokeAccess()
+      await GoogleSignin.signOut()
+    } catch (googleError) {
+      // Ignorar errores de Google si no hay usuario
+    }
+
     clearUserDataCache()
   } catch (signOutError) {
     console.error("❌ AuthService: Error cerrando sesión tras fallo:", signOutError)
@@ -46,13 +55,14 @@ export const signInWithGoogle = async () => {
     // Limpiar error anterior
     clearLastAuthError()
 
-    // 1. Verificar Google Play Services
+    console.log("🔍 Verificando Google Play Services...")
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true })
 
-    // 2. Hacer sign in con Google
+    console.log("🔑 Iniciando sesión con Google...")
     const signInResult = await GoogleSignin.signIn()
+    console.log("✅ Google Sign-In exitoso para:", signInResult.data?.user?.email)
 
-    // 3. Obtener tokens
+    console.log("🎫 Obteniendo tokens...")
     const tokens = await GoogleSignin.getTokens()
     const { idToken } = tokens
 
@@ -60,7 +70,7 @@ export const signInWithGoogle = async () => {
       throw new Error("No se pudo obtener el ID token de Google")
     }
 
-    // 4. Autenticación con Firebase 
+    console.log("🔥 Autenticando con Firebase...")
     const app = getApp()
     const auth = getAuth(app)
     const googleCredential = GoogleAuthProvider.credential(idToken)
@@ -72,9 +82,10 @@ export const signInWithGoogle = async () => {
       throw new Error("No se pudo obtener el email del usuario de Firebase")
     }
 
-    // 5. Validar usuario en el backend CON el token de Google
+    console.log("✅ Firebase autenticación exitosa para:", userEmail)
 
     try {
+      console.log("🌐 Validando usuario con el backend...")
       const userData = await getUserData(userEmail, idToken)
 
       return {
@@ -82,8 +93,6 @@ export const signInWithGoogle = async () => {
         userData: userData,
       }
     } catch (backendError: any) {
-      // Si hay error del backend, guardar el error y cerrar sesión
-
       let errorMessage = "Error desconocido al validar usuario"
 
       if (backendError.errorCode === "USER_NOT_FOUND") {
@@ -99,13 +108,12 @@ export const signInWithGoogle = async () => {
       }
 
       lastAuthError = errorMessage
-
       await forceSignOut()
       throw backendError
     }
   } catch (error: any) {
+    console.error("❌ Error en signInWithGoogle:", error)
 
-    // Si no es un error del backend, manejar otros tipos de errores
     if (!lastAuthError) {
       let errorMessage = "Error desconocido al iniciar sesión"
 
@@ -125,21 +133,8 @@ export const signInWithGoogle = async () => {
 
 export const signOut = async () => {
   try {
-
-    // Limpiar error guardado
     clearLastAuthError()
-
-    // Revocar acceso de Google
-    await GoogleSignin.revokeAccess()
-
-    // Cerrar sesión en Firebase usando la nueva API modular
-    const app = getApp()
-    const auth = getAuth(app)
-    await firebaseSignOut(auth)
-
-    // Limpiar cache de datos de usuario
-    clearUserDataCache()
-
+    await forceSignOut()
   } catch (error) {
     throw error
   }
@@ -151,7 +146,6 @@ export const getCurrentUser = () => {
   return auth.currentUser
 }
 
-// Exportar función para suscribirse a cambios de autenticación
 export const subscribeToAuthChanges = (callback: (user: any) => void) => {
   const app = getApp()
   const auth = getAuth(app)
