@@ -74,7 +74,7 @@ namespace PegasusWeb.Pages
                         if (IdPerfil == (int)TipoPerfil.Padre)
                         {
                             var hijo = await GetHijosAsync(IdUsuario);
-                            HttpContext.Session.SetInt32("IdHijo", hijo != null ? hijo.Id: 0);
+                            HttpContext.Session.SetInt32("IdHijo", hijo != null ? (int)hijo.Id_Hijo: 0);
                         }
                     }
                 }
