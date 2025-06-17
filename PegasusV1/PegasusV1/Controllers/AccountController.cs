@@ -100,7 +100,9 @@ namespace PegasusV1.Controllers
 
                 if (usuario == null)
                 {
-                    return Redirect($"{returnUrl.Replace("Home", "Error")}?message=Usuario no encontrado. Póngase en contacto con la institución.");
+                    var mensaje = "Usuario no encontrado. Póngase en contacto con la institución.";
+                    var mensajeCodificado = Uri.EscapeDataString(mensaje);
+                    return Redirect($"{returnUrl.Replace("Home", "Error")}?message={mensajeCodificado}");
                 }
 
                 if (usuario.Id_Perfil.HasValue)
