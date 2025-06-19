@@ -17,6 +17,8 @@ const EventosScreen: React.FC = () => {
   const { userData } = useUser()
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   const [searchText, setSearchText] = useState("")
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
 
   const loadEventos = async () => {
     try {
@@ -26,7 +28,11 @@ const EventosScreen: React.FC = () => {
       if (userData?.id_perfil) {
         const eventosData = await eventoService.getEventos(userData.id_perfil)
         // Ordenar por fecha descendente
-        const eventosOrdenados = eventosData.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
+        const eventosOrdenados = eventosData.filter(evento => {
+                                  const fechaEvento = new Date(evento.fecha);
+                                  fechaEvento.setHours(0, 0, 0, 0);
+                                  return fechaEvento >= hoy;
+                                }).sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
         setEventos(eventosOrdenados)
       }
     } catch (err) {

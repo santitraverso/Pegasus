@@ -7,9 +7,12 @@ import type { AppModule } from "../services/userService"
 import { useNavigation } from "@react-navigation/native"
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import type { RootStackParamList } from "../navigation/AppNavigator"
+import { IntegrantesCursos } from "../models/integrantesCursos"
+import { CONFIG } from "../services/config"
+import { Hijo } from "../models/hijo"
 
 const HomeScreen: React.FC = () => {
-  const { userData, loading, error, refreshUserData, clearError } = useUser()
+  const { userData, hijoSeleccionado, loading, error, refreshUserData, clearError } = useUser()
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
   // Función para renderizar el icono del módulo
@@ -17,13 +20,63 @@ const HomeScreen: React.FC = () => {
     return <Icon name={iconName} size={32} color="#4285F4" />
   }
 
-  const handleModulePress = (module: AppModule) => {
+  const handleModulePress = async (module: AppModule) => {
 
     // Navegación del atributo page del módulo
     try {
       const cleanPage = module.page.startsWith("/") ? module.page.substring(1) : module.page
       // Convertir el page a una ruta válida del navegador
       const routeName = cleanPage as keyof RootStackParamList
+
+      if (userData?.id_perfil === 2 || userData?.id_perfil === 4) {
+        switch (module.parametro) {
+          case "Calificacion":
+          case "Asistencia":
+            try {
+              // Obtener el curso del alumno/padre
+              const curso = await getCursoForUser()
+              if (curso) {
+                navigation.navigate("ListaMaterias", {
+                  cursoId: curso.id_Curso || 0,
+                  cursoNombre: curso.curso?.nombre_Curso || `${curso.curso?.grado}° ${curso.curso?.division}`,
+                  modulo: module.parametro,
+                })
+                return
+              }
+            } catch (error) {
+              console.error("Error al obtener curso:", error)
+            }
+            break
+          case "Cuaderno":
+            try {
+              const curso = await getCursoForUser()
+              if (curso) {
+                navigation.navigate("Cuaderno", {
+                  cursoId: curso.id_Curso || 0,
+                  cursoNombre: curso.curso?.nombre_Curso || `${curso.curso?.grado}° ${curso.curso?.division}`,
+                })
+                return
+              }
+            } catch (error) {
+              console.error("Error al obtener curso:", error)
+            }
+            break
+          case "Desempenio":
+            try {
+              const curso = await getCursoForUser()
+              if (curso) {
+                navigation.navigate("Desempenio", {
+                  cursoId: curso.id_Curso || 0,
+                  cursoNombre: curso.curso?.nombre_Curso || `${curso.curso?.grado}° ${curso.curso?.division}`,
+                })
+                return
+              }
+            } catch (error) {
+              console.error("Error al obtener curso:", error)
+            }
+            break
+        }
+      }
 
       // Verificar si la ruta existe en nuestro navegador
       if (routeName === "ListaCursos") {
@@ -51,6 +104,49 @@ const HomeScreen: React.FC = () => {
   const handleRetry = async () => {
     clearError()
     await refreshUserData()
+  }
+
+  const getCursoForUser = async (): Promise<IntegrantesCursos | null> => {
+    try {
+      if (!userData) return null
+
+      let usuarioId = userData.id
+
+      // Si es padre, usar el ID del hijo seleccionado
+      if (userData.id_perfil === 4 && hijoSeleccionado) {
+        usuarioId = hijoSeleccionado.hijoUsuario?.id || userData.id
+      }
+
+      const cursos = await getCursosAsync(usuarioId)
+      return cursos.length > 0 ? cursos[0] : null
+    } catch (error) {
+      console.error("Error al obtener curso del usuario:", error)
+      return null
+    }
+  }
+
+  // Función para obtener los cursos de un usuario
+  const getCursosAsync = async (usuarioId: number): Promise<IntegrantesCursos[]> => {
+    try {
+      const queryParam = encodeURIComponent(`x=>x.id_usuario==${usuarioId}`)
+      const url = `${CONFIG.API_BASE_URL}/IntegrantesCursos/GetIntegrantesCursosForCombo?query=${queryParam}`
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`)
+      }
+
+      const data: IntegrantesCursos[] = await response.json()
+      return data || []
+    } catch (error) {
+      throw error
+    }
   }
 
   const renderModuleItem = ({ item, index }: { item: AppModule; index: number }) => {

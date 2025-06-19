@@ -18,7 +18,7 @@ type ListaMateriasScreenNavigationProp = NativeStackNavigationProp<RootStackPara
 const ListaMateriasScreen: React.FC = () => {
   const route = useRoute<ListaMateriasScreenRouteProp>()
   const navigation = useNavigation<ListaMateriasScreenNavigationProp>()
-  const { userData } = useUser()
+  const { userData, hijoSeleccionado } = useUser()
   const { cursoId, cursoNombre, modulo } = route.params
 
   const [materias, setMaterias] = useState<CursoMateria[]>([])
@@ -38,10 +38,21 @@ const ListaMateriasScreen: React.FC = () => {
         throw new Error("No hay datos de usuario disponibles")
       }
 
+      let actualCursoId = cursoId
+
+      // Si cursoId es 0, significa que viene de un perfil alumno/padre y necesitamos obtener su curso
+      if (cursoId === 0) {
+        const cursoData = await getCursoForUser()
+        if (!cursoData) {
+          throw new Error("No se pudo obtener el curso del usuario")
+        }
+        actualCursoId = cursoData.id
+      }
+
       let materiasResult: CursoMateria[] = []
       if (userData.id_perfil === 3) {
         // Docente - obtener solo las materias que enseña en este curso
-        const materiasDocente = await getMateriasDocenteAsync(userData.id, cursoId)
+        const materiasDocente = await getMateriasDocenteAsync(userData.id, actualCursoId)
         // Agrupar por Id_Materia y convertir a CursoMateria
         const materiasUnicas = materiasDocente.reduce((acc, current) => {
           const materiaId = current.id_Materia
@@ -59,15 +70,57 @@ const ListaMateriasScreen: React.FC = () => {
         }))
       } else {
         // Otros perfiles - obtener todas las materias del curso
-        materiasResult = await getMateriasAsync(cursoId)
+        materiasResult = await getMateriasAsync(actualCursoId)
       }
       setMaterias(materiasResult)
-      
-
     } catch (error: any) {
       setError(error.message || "Error al cargar las materias")
     } finally {
       setLoading(false)
+    }
+  }
+
+  // Función para obtener el curso del usuario (alumno o padre)
+  const getCursoForUser = async () => {
+    try {
+      if (!userData) return null
+
+      let usuarioId = userData.id
+
+      // Si es padre, usar el ID del hijo seleccionado
+      if (userData.id_perfil === 4 && hijoSeleccionado?.hijoUsuario?.id) {
+        usuarioId = hijoSeleccionado?.hijoUsuario?.id
+      }
+
+      const cursos = await getCursosAsync(usuarioId)
+      return cursos.length > 0 ? cursos[0] : null
+    } catch (error) {
+      console.error("Error al obtener curso del usuario:", error)
+      return null
+    }
+  }
+
+  // Función para obtener los cursos de un usuario
+  const getCursosAsync = async (usuarioId: number) => {
+    try {
+      const queryParam = encodeURIComponent(`x=>x.id_usuario==${usuarioId}`)
+      const url = `${CONFIG.API_BASE_URL}/IntegrantesCursos/GetIntegrantesCursosForCombo?query=${queryParam}`
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      return data || []
+    } catch (error) {
+      throw error
     }
   }
 

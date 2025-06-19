@@ -68,21 +68,32 @@ const DesempenioScreen: React.FC = () => {
 
       let integrantesCursos: IntegrantesCursos[] = []
       // Obtener alumnos según el perfil
-      switch (userData.id_perfil) {
-        case 2: // Alumno
-          integrantesCursos = await getIntegrantesCursosAsync(cursoId, userData.id)
-          break
-        case 4: // Padre
-          if (hijoSeleccionado?.hijoUsuario?.id) {
-            integrantesCursos = await getIntegrantesCursosAsync(cursoId, hijoSeleccionado.hijoUsuario.id)
+      let cursoIdToUse = cursoId
+
+      // Para alumnos y padres, obtener automáticamente el curso
+      if (userData.id_perfil === 2) {
+        // Alumno
+        const cursosAlumno = await getCursosAsync(userData.id)
+        if (cursosAlumno.length > 0) {
+          cursoIdToUse = cursosAlumno[0].id_Curso || 0
+        }
+        integrantesCursos = await getIntegrantesCursosAsync(cursoIdToUse, userData.id)
+      } else if (userData.id_perfil === 4) {
+        // Padre
+        if (hijoSeleccionado?.hijoUsuario?.id) {
+          const cursosPadre = await getCursosAsync(hijoSeleccionado.hijoUsuario.id)
+          if (cursosPadre.length > 0) {
+            cursoIdToUse = cursosPadre[0].id_Curso || 0
           }
-          break
-        default: // Administrador/Docente
-          integrantesCursos = await getIntegrantesCursosAsync(cursoId)
-          break
+          integrantesCursos = await getIntegrantesCursosAsync(cursoIdToUse, hijoSeleccionado.hijoUsuario.id)
+        }
+      } else {
+        // Administrador/Docente
+        integrantesCursos = await getIntegrantesCursosAsync(cursoIdToUse)
       }
+
       // Obtener desempeños existentes
-      const desempeniosExistentes = await getDesempenioAlumnosAsync(cursoId)
+      const desempeniosExistentes = await getDesempenioAlumnosAsync(cursoIdToUse)
       // Mapear alumnos con información de desempeño
       const alumnosConDesempenio: AlumnoDesempenio[] = integrantesCursos.map((integrante) => {
         const desempenio = desempeniosExistentes.find((d) => d.id_Alumno === integrante.id_Usuario)
@@ -105,6 +116,29 @@ const DesempenioScreen: React.FC = () => {
       setError(error.message || "Error al cargar los datos")
     } finally {
       setLoading(false)
+    }
+  }
+
+  const getCursosAsync = async (usuario: number): Promise<IntegrantesCursos[]> => {
+    try {
+      const queryParam = encodeURIComponent(`x=>x.id_usuario==${usuario}`)
+      const url = `${CONFIG.API_BASE_URL}/IntegrantesCursos/GetIntegrantesCursosForCombo?query=${queryParam}`
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`)
+      }
+
+      const data: IntegrantesCursos[] = await response.json()
+      return data || []
+    } catch (error) {
+      throw error
     }
   }
 
@@ -188,7 +222,10 @@ const DesempenioScreen: React.FC = () => {
   }
 
   const handleVolver = () => {
-    navigation.navigate("ListaCursos", { parametro: "Desempenio" })
+    if(userData?.id_perfil == 2 || userData?.id_perfil == 4)
+      navigation.navigate("Home")
+    else
+      navigation.navigate("ListaCursos", { parametro: "Desempenio" })
   }
 
   const renderAlumnoItem = ({ item }: { item: AlumnoDesempenio }) => (

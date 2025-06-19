@@ -35,7 +35,7 @@ namespace PegasusWeb.Pages
             IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
             IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
             var eventos = await GetEventosAsync(IdPerfil);
-            Eventos = eventos.OrderByDescending(e=> e.Fecha).ToList();
+            Eventos = eventos.Where(e => e.Fecha >= DateTime.Today).OrderByDescending(e=> e.Fecha).ToList();
         }
 
         public async Task<List<Evento>> GetEventosAsync(long idPerfil)
