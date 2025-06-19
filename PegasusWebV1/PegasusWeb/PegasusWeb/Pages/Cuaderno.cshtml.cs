@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using PegasusWeb.Entities;
+using System.Diagnostics.Eventing.Reader;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -44,12 +45,14 @@ namespace PegasusWeb.Pages
 
             if (IdPerfil == (int)TipoPerfil.Alumno)
             {
-                IntegrantesCurso = await GetIntegrantesCursosAsync(IdCurso, IdUsuario);
+                IntegrantesCurso = await GetIntegrantesCursosAsync(0, IdUsuario);
+                IdCurso = (int)IntegrantesCurso.FirstOrDefault().Id_Curso;
             }
             else if (IdPerfil == (int)TipoPerfil.Padre)
             {
                 IdUsuario = HttpContext.Session.GetInt32("IdHijo") ?? 0;
-                IntegrantesCurso = await GetIntegrantesCursosAsync(IdCurso, IdUsuario);
+                IntegrantesCurso = await GetIntegrantesCursosAsync(0, IdUsuario);
+                IdCurso = (int)IntegrantesCurso.FirstOrDefault().Id_Curso;
             }
             else
             {
@@ -62,10 +65,10 @@ namespace PegasusWeb.Pages
             List<IntegrantesCursos> getalumnos = new List<IntegrantesCursos>();
             string queryParam;
 
-            if (usuario != 0)
-                queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso} && x.id_usuario=={usuario}");
-            else
+            if (curso != 0)
                 queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+            else 
+                queryParam = Uri.EscapeDataString($"x=>x.id_usuario=={usuario}");
 
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiBaseUrl}/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
@@ -90,15 +93,24 @@ namespace PegasusWeb.Pages
             return getalumnos;
         }
 
-        public async Task<IActionResult?> OnPost(int curso, bool ver, string modulo, bool atras, int comunicado, int usuario)
+        public async Task<IActionResult?> OnPost(int curso, bool ver, string modulo, bool atras, int comunicado, int usuario, int perfil)
         {
             IdCurso = curso;
             Modulo = modulo;
             IdComunicado = comunicado;
             IdUsuario = usuario;
+            IdPerfil = perfil;
 
             if (atras)
-                return RedirectToPage("ListaCursos");
+            {
+                if(IdPerfil == (int)TipoPerfil.Alumno || IdPerfil == (int)TipoPerfil.Padre)
+                {
+                    return RedirectToPage("Home");
+                }
+                else
+                    return RedirectToPage("ListaCursos");
+            }
+                
 
             if (SelectedAlumnosIds.Count < 1)
             {

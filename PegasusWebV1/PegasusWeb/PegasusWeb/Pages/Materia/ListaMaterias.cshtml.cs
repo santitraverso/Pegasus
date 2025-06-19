@@ -57,6 +57,17 @@ namespace PegasusWeb.Pages.Materia
             }
             else
             {
+                if (IdPerfil == (int)TipoPerfil.Alumno)
+                {
+                    var curso = await GetCursosAsync(IdUsuario);
+                    IdCurso = curso != null && curso.Count > 0 ? (int)curso.FirstOrDefault()?.Id_Curso : 0;
+                }
+                else if (IdPerfil == (int)TipoPerfil.Padre)
+                {
+                    var curso = await GetCursosAsync(HttpContext.Session.GetInt32("IdHijo") ?? IdUsuario);
+                    IdCurso = curso != null && curso.Count > 0 ? (int)curso.FirstOrDefault().Id_Curso : 0;
+                }
+
                 Materias = await GetMateriasAsync(IdCurso);
             }
         }
@@ -111,6 +122,35 @@ namespace PegasusWeb.Pages.Materia
                 if (!string.IsNullOrEmpty(cursosJson))
                 {
                     getcursos = JsonConvert.DeserializeObject<List<DocenteMateria>>(cursosJson);
+                }
+            }
+
+            return getcursos;
+        }
+
+        public async Task<List<IntegrantesCursos>> GetCursosAsync(int usuario)
+        {
+            List<IntegrantesCursos> getcursos = new List<IntegrantesCursos>();
+            HttpResponseMessage response;
+
+            string queryParam = Uri.EscapeDataString($"x=>x.id_usuario=={usuario}");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiBaseUrl}/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
+
+            // Añadir el token JWT al encabezado
+            string token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                request.Headers.Add("Authorization", $"Bearer {token}");
+            }
+
+            response = await _client.SendAsync(request);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                string cursosJson = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(cursosJson))
+                {
+                    getcursos = JsonConvert.DeserializeObject<List<IntegrantesCursos>>(cursosJson);
                 }
             }
 

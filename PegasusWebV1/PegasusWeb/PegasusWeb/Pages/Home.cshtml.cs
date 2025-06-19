@@ -160,7 +160,23 @@ namespace PegasusWeb.Pages
                 Modulo = parametro;
             }
 
+
+            if (IdPerfil == (int)TipoPerfil.Alumno || IdPerfil == (int)TipoPerfil.Padre)
+            {
+                switch (Modulo)
+                {
+                    case "Calificacion":
+                    case "Asistencia":
+                        return RedirectToPage("Materia/ListaMaterias");
+                    case "Cuaderno":
+                        return RedirectToPage("Cuaderno");
+                    case "Desempenio":
+                        return RedirectToPage("Desempenio");
+                }
+            }
+
             return RedirectToPage(page);
+
         }
     }
 }

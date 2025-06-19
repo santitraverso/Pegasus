@@ -84,6 +84,7 @@
     <form method="post" asp-page-handler="Atras" style="display: inline;" id="form2">
         <input type="hidden" name="curso" value="@Model.IdCurso" />
         <input type="hidden" name="modulo" value="@Model.Modulo" />
+        <input type="hidden" name="perfil" value="@Model.IdPerfil" />
         <button type="button" class="btn btn-primary btn-custom" asp-area="" style="margin:10px;" onclick="atras()">Atras</button>
     </form>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

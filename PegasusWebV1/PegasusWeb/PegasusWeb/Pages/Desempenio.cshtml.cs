@@ -48,11 +48,13 @@ namespace PegasusWeb.Pages
 
             if (IdPerfil == (int)TipoPerfil.Alumno)
             {
-                integrantes = await GetIntegrantesCursosAsync(IdCurso, idUsuario);
+                integrantes = await GetIntegrantesCursosAsync(0, idUsuario);
+                IdCurso = (int)integrantes.FirstOrDefault().Id_Curso;
             }
             else if (IdPerfil == (int)TipoPerfil.Padre)
             {
-                integrantes = await GetIntegrantesCursosAsync(IdCurso, HttpContext.Session.GetInt32("IdHijo") ?? idUsuario);
+                integrantes = await GetIntegrantesCursosAsync(0, HttpContext.Session.GetInt32("IdHijo") ?? idUsuario);
+                IdCurso = (int)integrantes.FirstOrDefault().Id_Curso;
             }
             else
             {
@@ -89,10 +91,10 @@ namespace PegasusWeb.Pages
             List<IntegrantesCursos> getalumnos = new List<IntegrantesCursos>();
             string queryParam;
 
-            if (usuario != 0)
-                queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso} && x.id_usuario=={usuario}");
-            else
+            if (curso != 0)
                 queryParam = Uri.EscapeDataString($"x=>x.id_curso=={curso}");
+            else
+                queryParam = Uri.EscapeDataString($"x=>x.id_usuario=={usuario}");
 
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiBaseUrl}/IntegrantesCursos/GetIntegrantesCursosForCombo?query={queryParam}");
 
@@ -117,11 +119,18 @@ namespace PegasusWeb.Pages
             return getalumnos;
         }
 
-        public IActionResult OnPostAtras(int curso, string modulo)
+        public IActionResult OnPostAtras(int curso, string modulo, int perfil)
         {
             IdCurso = curso;
             Modulo = modulo;
-            return RedirectToPage("ListaCursos");
+            IdPerfil = perfil;
+            if (IdPerfil == (int)TipoPerfil.Alumno || IdPerfil == (int)TipoPerfil.Padre)
+            {
+                return RedirectToPage("Home");
+            }
+            else
+                return RedirectToPage("ListaCursos");
+
         }
 
         public async Task<IActionResult> OnPost(int desempenio, bool ver, int curso, string modulo, int alumno)
