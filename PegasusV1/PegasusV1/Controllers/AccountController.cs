@@ -105,6 +105,14 @@ namespace PegasusV1.Controllers
                     return Redirect($"{returnUrl.Replace("Home", "Error")}?message={mensajeCodificado}");
                 }
 
+                if (usuario.Activo != true)
+                {
+                    var mensaje = "Usuario inactivo. Contacte al administrador.";
+                    var mensajeCodificado = Uri.EscapeDataString(mensaje);
+                    return Redirect($"{returnUrl.Replace("Home", "Error")}?message={mensajeCodificado}");
+
+                }
+
                 if (usuario.Id_Perfil.HasValue)
                 {
                     usuario.Perfil = await _perfilesService.GetById(usuario.Id_Perfil.Value);

@@ -105,6 +105,26 @@
                 });
                 return false;
             }
+
+            const hoy = new Date();
+            hoy.setHours(0, 0, 0, 0); // Elimina la hora para comparar solo fechas
+
+            const fechaIngresada = new Date(fecha);
+            if (fechaIngresada < hoy) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Fecha inválida',
+                    text: 'La fecha no puede ser menor al día de hoy.',
+                    width: '350px',
+                    padding: '20px',
+                    customClass: {
+                        title: 'my-custom-title',
+                        confirmButton: "btn btn-danger",
+                    }
+                });
+                return false;
+            }
+
             return true;
         }
 
