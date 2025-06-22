@@ -1,0 +1,3893 @@
+[
+  {
+    "ContainingType": "PegasusV1.Controllers.AccountController",
+    "Method": "ExternalLoginCallback",
+    "RelativePath": "Account/ExternalLoginCallback",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "returnUrl",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.AccountController",
+    "Method": "Login",
+    "RelativePath": "Account/Login",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "returnUrl",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.AccountController",
+    "Method": "LoginApp",
+    "RelativePath": "Account/loginApp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PegasusV1.Request.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.AccountController",
+    "Method": "Logout",
+    "RelativePath": "Account/Logout",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "returnUrl",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.AsistenciaController",
+    "Method": "CreateAllAsistencia",
+    "RelativePath": "Asistencia/CreateAllAsistencia",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "asistencias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Asistencia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Asistencia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.AsistenciaController",
+    "Method": "CreateAsistencia",
+    "RelativePath": "Asistencia/CreateAsistencia",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "asistencia",
+        "Type": "PegasusV1.Entities.Asistencia",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Asistencia",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.AsistenciaController",
+    "Method": "DeleteAllAsistencia",
+    "RelativePath": "Asistencia/DeleteAllAsistencia",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "asistencias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Asistencia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.AsistenciaController",
+    "Method": "DeleteAsistencia",
+    "RelativePath": "Asistencia/DeleteAsistencia/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.AsistenciaController",
+    "Method": "GetAsistenciasForCombo",
+    "RelativePath": "Asistencia/GetAsistenciasForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Asistencia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.AsistenciaController",
+    "Method": "GetById",
+    "RelativePath": "Asistencia/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Asistencia",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.AsistenciaController",
+    "Method": "UpdateAllAsistencia",
+    "RelativePath": "Asistencia/UpdateAllAsistencia",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "asistencias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Asistencia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Asistencia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.AsistenciaController",
+    "Method": "UpdateAsistencia",
+    "RelativePath": "Asistencia/UpdateAsistencia",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "asistencia",
+        "Type": "PegasusV1.Entities.Asistencia",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Asistencia",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CalificacionesController",
+    "Method": "CreateAllCalificaciones",
+    "RelativePath": "Calificaciones/CreateAllCalificaciones",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Calificaciones",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Calificaciones, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Calificaciones, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CalificacionesController",
+    "Method": "CreateCalificaciones",
+    "RelativePath": "Calificaciones/CreateCalificaciones",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Calificaciones",
+        "Type": "PegasusV1.Entities.Calificaciones",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Calificaciones",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CalificacionesController",
+    "Method": "DeleteAllCalificaciones",
+    "RelativePath": "Calificaciones/DeleteAllCalificaciones",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "calificaciones",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Calificaciones, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CalificacionesController",
+    "Method": "DeleteCalificaciones",
+    "RelativePath": "Calificaciones/DeleteCalificaciones/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CalificacionesController",
+    "Method": "GetById",
+    "RelativePath": "Calificaciones/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Calificaciones",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CalificacionesController",
+    "Method": "GetCalificacionesForCombo",
+    "RelativePath": "Calificaciones/GetCalificacionesForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Calificaciones, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CalificacionesController",
+    "Method": "UpdateAllCalificaciones",
+    "RelativePath": "Calificaciones/UpdateAllCalificaciones",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Calificaciones",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Calificaciones, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Calificaciones, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CalificacionesController",
+    "Method": "UpdateCalificaciones",
+    "RelativePath": "Calificaciones/UpdateCalificaciones",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Calificaciones",
+        "Type": "PegasusV1.Entities.Calificaciones",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Calificaciones",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ComunicadoAlumnosController",
+    "Method": "CreateAllComunicadoAlumnos",
+    "RelativePath": "ComunicadoAlumnos/CreateAllComunicadoAlumnos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "comunicadoAlumnos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ComunicadoAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ComunicadoAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ComunicadoAlumnosController",
+    "Method": "CreateComunicadoAlumnos",
+    "RelativePath": "ComunicadoAlumnos/CreateComunicadoAlumnos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "comunicadoAlumnos",
+        "Type": "PegasusV1.Entities.ComunicadoAlumnos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.ComunicadoAlumnos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ComunicadoAlumnosController",
+    "Method": "DeleteAllComunicadoAlumnos",
+    "RelativePath": "ComunicadoAlumnos/DeleteAllComunicadoAlumnos",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "comunicadoAlumnos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ComunicadoAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ComunicadoAlumnosController",
+    "Method": "DeleteComunicadoAlumnos",
+    "RelativePath": "ComunicadoAlumnos/DeleteComunicadoAlumnos/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ComunicadoAlumnosController",
+    "Method": "GetById",
+    "RelativePath": "ComunicadoAlumnos/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.ComunicadoAlumnos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ComunicadoAlumnosController",
+    "Method": "GetComunicadoAlumnosForCombo",
+    "RelativePath": "ComunicadoAlumnos/GetComunicadoAlumnossForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ComunicadoAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ComunicadoAlumnosController",
+    "Method": "UpdateAllComunicadoAlumnos",
+    "RelativePath": "ComunicadoAlumnos/UpdateAllComunicadoAlumnos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "comunicadoAlumnos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ComunicadoAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ComunicadoAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ComunicadoAlumnosController",
+    "Method": "UpdateComunicadoAlumnos",
+    "RelativePath": "ComunicadoAlumnos/UpdateComunicadoAlumnos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "comunicadoAlumnos",
+        "Type": "PegasusV1.Entities.ComunicadoAlumnos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.ComunicadoAlumnos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContactosController",
+    "Method": "CreateAllContacto",
+    "RelativePath": "Contactos/CreateAllContacto",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contactos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Contactos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Contactos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContactosController",
+    "Method": "CreateContacto",
+    "RelativePath": "Contactos/CreateContacto",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contacto",
+        "Type": "PegasusV1.Entities.Contactos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Contactos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContactosController",
+    "Method": "DeleteAllContacto",
+    "RelativePath": "Contactos/DeleteAllContacto",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contactos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Contactos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContactosController",
+    "Method": "DeleteContacto",
+    "RelativePath": "Contactos/DeleteContacto/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContactosController",
+    "Method": "GetById",
+    "RelativePath": "Contactos/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Contactos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContactosController",
+    "Method": "GetContactosForCombo",
+    "RelativePath": "Contactos/GetContactosForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Contactos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContactosController",
+    "Method": "UpdateAllContacto",
+    "RelativePath": "Contactos/UpdateAllContacto",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contactos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Contactos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Contactos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContactosController",
+    "Method": "UpdateContacto",
+    "RelativePath": "Contactos/UpdateContacto",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contacto",
+        "Type": "PegasusV1.Entities.Contactos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Contactos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContenidoMateriasController",
+    "Method": "CreateAllContenidoMaterias",
+    "RelativePath": "ContenidoMaterias/CreateAllContenidoMaterias",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contenidoMaterias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ContenidoMaterias, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ContenidoMaterias, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContenidoMateriasController",
+    "Method": "CreateContenidoMaterias",
+    "RelativePath": "ContenidoMaterias/CreateContenidoMaterias",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contenidoMaterias",
+        "Type": "PegasusV1.Entities.ContenidoMaterias",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.ContenidoMaterias",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContenidoMateriasController",
+    "Method": "DeleteAllContenidoMaterias",
+    "RelativePath": "ContenidoMaterias/DeleteAllContenidoMaterias",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contenidoMaterias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ContenidoMaterias, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContenidoMateriasController",
+    "Method": "DeleteContenidoMaterias",
+    "RelativePath": "ContenidoMaterias/DeleteContenidoMaterias/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContenidoMateriasController",
+    "Method": "GetById",
+    "RelativePath": "ContenidoMaterias/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.ContenidoMaterias",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContenidoMateriasController",
+    "Method": "GetContenidoMateriasForCombo",
+    "RelativePath": "ContenidoMaterias/GetContenidoMateriasForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ContenidoMaterias, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContenidoMateriasController",
+    "Method": "UpdateAllContenidoMaterias",
+    "RelativePath": "ContenidoMaterias/UpdateAllContenidoMaterias",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contenidoMaterias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ContenidoMaterias, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ContenidoMaterias, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ContenidoMateriasController",
+    "Method": "UpdateContenidoMaterias",
+    "RelativePath": "ContenidoMaterias/UpdateContenidoMaterias",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contenidoMaterias",
+        "Type": "PegasusV1.Entities.ContenidoMaterias",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.ContenidoMaterias",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CuadernoComunicadosController",
+    "Method": "CreateAllCuadernoComunicados",
+    "RelativePath": "CuadernoComunicados/CreateAllCuadernoComunicados",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cuadernoComunicados",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CuadernoComunicados, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CuadernoComunicados, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CuadernoComunicadosController",
+    "Method": "CreateCuadernoComunicados",
+    "RelativePath": "CuadernoComunicados/CreateCuadernoComunicados",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cuadernoComunicados",
+        "Type": "PegasusV1.Entities.CuadernoComunicados",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.CuadernoComunicados",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CuadernoComunicadosController",
+    "Method": "DeleteAllCuadernoComunicados",
+    "RelativePath": "CuadernoComunicados/DeleteAllCuadernoComunicados",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cuadernoComunicados",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CuadernoComunicados, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CuadernoComunicadosController",
+    "Method": "DeleteCuadernoComunicados",
+    "RelativePath": "CuadernoComunicados/DeleteCuadernoComunicados/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CuadernoComunicadosController",
+    "Method": "GetById",
+    "RelativePath": "CuadernoComunicados/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.CuadernoComunicados",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CuadernoComunicadosController",
+    "Method": "GetCuadernoComunicadosForCombo",
+    "RelativePath": "CuadernoComunicados/GetCuadernoComunicadosForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CuadernoComunicados, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CuadernoComunicadosController",
+    "Method": "UpdateAllCuadernoComunicados",
+    "RelativePath": "CuadernoComunicados/UpdateAllCuadernoComunicados",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cuadernoComunicados",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CuadernoComunicados, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CuadernoComunicados, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CuadernoComunicadosController",
+    "Method": "UpdateCuadernoComunicados",
+    "RelativePath": "CuadernoComunicados/UpdateCuadernoComunicados",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cuadernoComunicados",
+        "Type": "PegasusV1.Entities.CuadernoComunicados",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.CuadernoComunicados",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoController",
+    "Method": "CreateAllCurso",
+    "RelativePath": "Curso/CreateAllCurso",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cursos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Curso, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Curso, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoController",
+    "Method": "CreateCurso",
+    "RelativePath": "Curso/CreateCurso",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "curso",
+        "Type": "PegasusV1.Entities.Curso",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Curso",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoController",
+    "Method": "DeleteAllCurso",
+    "RelativePath": "Curso/DeleteAllCurso",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cursos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Curso, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoController",
+    "Method": "DeleteCurso",
+    "RelativePath": "Curso/DeleteCurso/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoController",
+    "Method": "GetById",
+    "RelativePath": "Curso/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Curso",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoController",
+    "Method": "GetCursosForCombo",
+    "RelativePath": "Curso/GetCursosForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Curso, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoController",
+    "Method": "UpdateAllCurso",
+    "RelativePath": "Curso/UpdateAllCurso",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cursos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Curso, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Curso, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoController",
+    "Method": "UpdateCurso",
+    "RelativePath": "Curso/UpdateCurso",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "curso",
+        "Type": "PegasusV1.Entities.Curso",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Curso",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoMateriaController",
+    "Method": "CreateAllCursoMateria",
+    "RelativePath": "CursoMateria/CreateAllCursoMateria",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cursoMaterias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CursoMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CursoMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoMateriaController",
+    "Method": "CreateCursoMateria",
+    "RelativePath": "CursoMateria/CreateCursoMateria",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cursoMateria",
+        "Type": "PegasusV1.Entities.CursoMateria",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.CursoMateria",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoMateriaController",
+    "Method": "DeleteAllCursoMateria",
+    "RelativePath": "CursoMateria/DeleteAllCursoMateria",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cursoMaterias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CursoMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoMateriaController",
+    "Method": "DeleteCursoMateria",
+    "RelativePath": "CursoMateria/DeleteCursoMateria/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoMateriaController",
+    "Method": "GetById",
+    "RelativePath": "CursoMateria/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.CursoMateria",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoMateriaController",
+    "Method": "GetCursoMateriaForCombo",
+    "RelativePath": "CursoMateria/GetCursoMateriaForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CursoMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoMateriaController",
+    "Method": "UpdateAllCursoMateria",
+    "RelativePath": "CursoMateria/UpdateAllCursoMateria",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cursoMaterias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CursoMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.CursoMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.CursoMateriaController",
+    "Method": "UpdateCursoMateria",
+    "RelativePath": "CursoMateria/UpdateCursoMateria",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cursoMateria",
+        "Type": "PegasusV1.Entities.CursoMateria",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.CursoMateria",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioController",
+    "Method": "CreateAllDesempeno",
+    "RelativePath": "Desempenio/CreateAllDesempeno",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desempenos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Desempenio, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Desempenio, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioController",
+    "Method": "CreateDesempeno",
+    "RelativePath": "Desempenio/CreateDesempeno",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desempeno",
+        "Type": "PegasusV1.Entities.Desempenio",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Desempenio",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioController",
+    "Method": "DeleteAllDesempeno",
+    "RelativePath": "Desempenio/DeleteAllDesempeno",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desempenos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Desempenio, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioController",
+    "Method": "DeleteDesempeno",
+    "RelativePath": "Desempenio/DeleteDesempeno/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioController",
+    "Method": "GetById",
+    "RelativePath": "Desempenio/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Desempenio",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioController",
+    "Method": "GetDesempenosForCombo",
+    "RelativePath": "Desempenio/GetDesempenosForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Desempenio, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioController",
+    "Method": "UpdateAllDesempeno",
+    "RelativePath": "Desempenio/UpdateAllDesempeno",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desempenos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Desempenio, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Desempenio, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioController",
+    "Method": "UpdateDesempeno",
+    "RelativePath": "Desempenio/UpdateDesempeno",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desempeno",
+        "Type": "PegasusV1.Entities.Desempenio",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Desempenio",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioAlumnosController",
+    "Method": "CreateAllDesempenioAlumnos",
+    "RelativePath": "DesempenioAlumnos/CreateAllDesempenioAlumnos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desempenioAlumnos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DesempenioAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DesempenioAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioAlumnosController",
+    "Method": "CreateDesempenioAlumnos",
+    "RelativePath": "DesempenioAlumnos/CreateDesempenioAlumnos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desempenioAlumnos",
+        "Type": "PegasusV1.Entities.DesempenioAlumnos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.DesempenioAlumnos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioAlumnosController",
+    "Method": "DeleteAllDesempenioAlumnos",
+    "RelativePath": "DesempenioAlumnos/DeleteAllDesempenioAlumnos",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desempenioAlumnos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DesempenioAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioAlumnosController",
+    "Method": "DeleteDesempenioAlumnos",
+    "RelativePath": "DesempenioAlumnos/DeleteDesempenioAlumnos/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioAlumnosController",
+    "Method": "GetById",
+    "RelativePath": "DesempenioAlumnos/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.DesempenioAlumnos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioAlumnosController",
+    "Method": "GetDesempenioAlumnossForCombo",
+    "RelativePath": "DesempenioAlumnos/GetDesempenioAlumnossForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DesempenioAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioAlumnosController",
+    "Method": "UpdateAllDesempenioAlumnos",
+    "RelativePath": "DesempenioAlumnos/UpdateAllDesempenioAlumnos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desempenioAlumnos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DesempenioAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DesempenioAlumnos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DesempenioAlumnosController",
+    "Method": "UpdateDesempenioAlumnos",
+    "RelativePath": "DesempenioAlumnos/UpdateDesempenioAlumnos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desempenioAlumnos",
+        "Type": "PegasusV1.Entities.DesempenioAlumnos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.DesempenioAlumnos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DiagnosticoController",
+    "Method": "GetConfig",
+    "RelativePath": "Diagnostico/GetConfig",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DiagnosticoController",
+    "Method": "Health",
+    "RelativePath": "Diagnostico/Health",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DiagnosticoController",
+    "Method": "TestDatabase",
+    "RelativePath": "Diagnostico/TestDatabase",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DocenteMateriaController",
+    "Method": "CreateAllDocenteMateria",
+    "RelativePath": "DocenteMateria/CreateAllDocenteMateria",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "docenteMaterias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DocenteMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DocenteMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DocenteMateriaController",
+    "Method": "CreateDocenteMateria",
+    "RelativePath": "DocenteMateria/CreateDocenteMateria",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "docenteMateria",
+        "Type": "PegasusV1.Entities.DocenteMateria",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.DocenteMateria",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DocenteMateriaController",
+    "Method": "DeleteAllDocenteMateria",
+    "RelativePath": "DocenteMateria/DeleteAllDocenteMateria",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "docenteMaterias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DocenteMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DocenteMateriaController",
+    "Method": "DeleteDocenteMateria",
+    "RelativePath": "DocenteMateria/DeleteDocenteMateria/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DocenteMateriaController",
+    "Method": "GetById",
+    "RelativePath": "DocenteMateria/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.DocenteMateria",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DocenteMateriaController",
+    "Method": "GetDocenteMateriaForCombo",
+    "RelativePath": "DocenteMateria/GetDocenteMateriaForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DocenteMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DocenteMateriaController",
+    "Method": "UpdateAllDocenteMateria",
+    "RelativePath": "DocenteMateria/UpdateAllDocenteMateria",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "docenteMaterias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DocenteMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.DocenteMateria, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.DocenteMateriaController",
+    "Method": "UpdateDocenteMateria",
+    "RelativePath": "DocenteMateria/UpdateDocenteMateria",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "docenteMateria",
+        "Type": "PegasusV1.Entities.DocenteMateria",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.DocenteMateria",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.EmailController",
+    "Method": "EnviarCorreoInformativo",
+    "RelativePath": "Email/EnviarCorreoInformativo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PegasusV1.Request.EventoEmailRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.EmailController",
+    "Method": "TestEmail",
+    "RelativePath": "Email/TestEmail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "destinatario",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.EventoController",
+    "Method": "CreateAllEvento",
+    "RelativePath": "Evento/CreateAllEvento",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "eventos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Evento, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Evento, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.EventoController",
+    "Method": "CreateEvento",
+    "RelativePath": "Evento/CreateEvento",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "evento",
+        "Type": "PegasusV1.Entities.Evento",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Evento",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.EventoController",
+    "Method": "DeleteAllEvento",
+    "RelativePath": "Evento/DeleteAllEvento",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "eventos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Evento, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.EventoController",
+    "Method": "DeleteEvento",
+    "RelativePath": "Evento/DeleteEvento/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.EventoController",
+    "Method": "GetById",
+    "RelativePath": "Evento/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Evento",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.EventoController",
+    "Method": "GetEventosForCombo",
+    "RelativePath": "Evento/GetEventosForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Evento, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.EventoController",
+    "Method": "UpdateAllEvento",
+    "RelativePath": "Evento/UpdateAllEvento",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "eventos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Evento, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Evento, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.EventoController",
+    "Method": "UpdateEvento",
+    "RelativePath": "Evento/UpdateEvento",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "evento",
+        "Type": "PegasusV1.Entities.Evento",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Evento",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.HijoController",
+    "Method": "CreateAllHijo",
+    "RelativePath": "Hijo/CreateAllHijos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "hijos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Hijo, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Hijo, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.HijoController",
+    "Method": "CreateHijo",
+    "RelativePath": "Hijo/CreateHijo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "hijo",
+        "Type": "PegasusV1.Entities.Hijo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Hijo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.HijoController",
+    "Method": "DeleteAllHijo",
+    "RelativePath": "Hijo/DeleteAllHijos",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "hijos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Hijo, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.HijoController",
+    "Method": "DeleteHijo",
+    "RelativePath": "Hijo/DeleteHijo/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.HijoController",
+    "Method": "GetById",
+    "RelativePath": "Hijo/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Hijo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.HijoController",
+    "Method": "GetHijosForCombo",
+    "RelativePath": "Hijo/GetHijosForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Hijo, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.HijoController",
+    "Method": "UpdateAllHijo",
+    "RelativePath": "Hijo/UpdateAllHijos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "hijos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Hijo, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Hijo, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.HijoController",
+    "Method": "UpdateHijo",
+    "RelativePath": "Hijo/UpdateHijo",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "hijo",
+        "Type": "PegasusV1.Entities.Hijo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Hijo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesCursosController",
+    "Method": "CreateAllIntegrantesCursos",
+    "RelativePath": "IntegrantesCursos/CreateAllIntegrantesCursos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "integrantesCursos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesCursos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesCursos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesCursosController",
+    "Method": "CreateIntegrantesCursos",
+    "RelativePath": "IntegrantesCursos/CreateIntegrantesCursos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "integrantesCursos",
+        "Type": "PegasusV1.Entities.IntegrantesCursos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.IntegrantesCursos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesCursosController",
+    "Method": "DeleteAllIntegrantesCursos",
+    "RelativePath": "IntegrantesCursos/DeleteAllIntegrantesCursos",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "integrantesCursos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesCursos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesCursosController",
+    "Method": "DeleteIntegrantesCursos",
+    "RelativePath": "IntegrantesCursos/DeleteIntegrantesCursos/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesCursosController",
+    "Method": "GetById",
+    "RelativePath": "IntegrantesCursos/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.IntegrantesCursos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesCursosController",
+    "Method": "GetIntegrantesCursosForCombo",
+    "RelativePath": "IntegrantesCursos/GetIntegrantesCursosForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesCursos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesCursosController",
+    "Method": "UpdateAllIntegrantesCursos",
+    "RelativePath": "IntegrantesCursos/UpdateAllIntegrantesCursos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "integrantesCursos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesCursos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesCursos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesCursosController",
+    "Method": "UpdateIntegrantesCursos",
+    "RelativePath": "IntegrantesCursos/UpdateIntegrantesCursos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "integrantesCursos",
+        "Type": "PegasusV1.Entities.IntegrantesCursos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.IntegrantesCursos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesEventosController",
+    "Method": "CreateAllIntegrantesEventos",
+    "RelativePath": "IntegrantesEventos/CreateAllIntegrantesEventos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "integrantesEventos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesEventos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesEventos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesEventosController",
+    "Method": "CreateIntegrantesEventos",
+    "RelativePath": "IntegrantesEventos/CreateIntegrantesEventos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "integrantesEventos",
+        "Type": "PegasusV1.Entities.IntegrantesEventos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.IntegrantesEventos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesEventosController",
+    "Method": "DeleteAllIntegrantesEventos",
+    "RelativePath": "IntegrantesEventos/DeleteAllIntegrantesEventos",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "integrantesEventos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesEventos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesEventosController",
+    "Method": "DeleteIntegrantesEventos",
+    "RelativePath": "IntegrantesEventos/DeleteIntegrantesEventos/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesEventosController",
+    "Method": "GetById",
+    "RelativePath": "IntegrantesEventos/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.IntegrantesEventos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesEventosController",
+    "Method": "GetIntegrantesEventossForCombo",
+    "RelativePath": "IntegrantesEventos/GetIntegrantesEventossForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesEventos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesEventosController",
+    "Method": "UpdateAllIntegrantesEventos",
+    "RelativePath": "IntegrantesEventos/UpdateAllIntegrantesEventos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "integrantesEventos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesEventos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.IntegrantesEventos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.IntegrantesEventosController",
+    "Method": "UpdateIntegrantesEventos",
+    "RelativePath": "IntegrantesEventos/UpdateIntegrantesEventos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "integrantesEventos",
+        "Type": "PegasusV1.Entities.IntegrantesEventos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.IntegrantesEventos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.MateriaController",
+    "Method": "CreateAllMateria",
+    "RelativePath": "Materia/CreateAllMateria",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "materias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Materia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Materia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.MateriaController",
+    "Method": "CreateMateria",
+    "RelativePath": "Materia/CreateMateria",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "materia",
+        "Type": "PegasusV1.Entities.Materia",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Materia",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.MateriaController",
+    "Method": "DeleteAllMateria",
+    "RelativePath": "Materia/DeleteAllMateria",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "materias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Materia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.MateriaController",
+    "Method": "DeleteMateria",
+    "RelativePath": "Materia/DeleteMateria/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.MateriaController",
+    "Method": "GetById",
+    "RelativePath": "Materia/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Materia",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.MateriaController",
+    "Method": "GetMateriasForCombo",
+    "RelativePath": "Materia/GetMateriasForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Materia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.MateriaController",
+    "Method": "UpdateAllMateria",
+    "RelativePath": "Materia/UpdateAllMateria",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "materias",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Materia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Materia, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.MateriaController",
+    "Method": "UpdateMateria",
+    "RelativePath": "Materia/UpdateMateria",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "materia",
+        "Type": "PegasusV1.Entities.Materia",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Materia",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosController",
+    "Method": "CreateAllModulos",
+    "RelativePath": "Modulos/CreateAllModulos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Modulos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Modulos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosController",
+    "Method": "CreateModulos",
+    "RelativePath": "Modulos/CreateModulos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulos",
+        "Type": "PegasusV1.Entities.Modulos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Modulos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosController",
+    "Method": "DeleteAllModulos",
+    "RelativePath": "Modulos/DeleteAllModulos",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Modulos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosController",
+    "Method": "DeleteModulos",
+    "RelativePath": "Modulos/DeleteModulos/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosController",
+    "Method": "GetById",
+    "RelativePath": "Modulos/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Modulos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosController",
+    "Method": "GetModulossForCombo",
+    "RelativePath": "Modulos/GetModulosForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Modulos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosController",
+    "Method": "UpdateAllModulos",
+    "RelativePath": "Modulos/UpdateAllModulos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulos",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Modulos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Modulos, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosController",
+    "Method": "UpdateModulos",
+    "RelativePath": "Modulos/UpdateModulos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulos",
+        "Type": "PegasusV1.Entities.Modulos",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Modulos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosPerfilesController",
+    "Method": "CreateAllModulosPerfiles",
+    "RelativePath": "ModulosPerfiles/CreateAllModulosPerfiles",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulosPerfiles",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ModulosPerfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ModulosPerfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosPerfilesController",
+    "Method": "CreateModulos",
+    "RelativePath": "ModulosPerfiles/CreateModulosPerfiles",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulosPerfiles",
+        "Type": "PegasusV1.Entities.ModulosPerfiles",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.ModulosPerfiles",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosPerfilesController",
+    "Method": "DeleteAllModulosPerfiles",
+    "RelativePath": "ModulosPerfiles/DeleteAllModulosPerfiles",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulosPerfiles",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ModulosPerfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosPerfilesController",
+    "Method": "DeleteModulosPerfiles",
+    "RelativePath": "ModulosPerfiles/DeleteModulosPerfiles/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosPerfilesController",
+    "Method": "GetById",
+    "RelativePath": "ModulosPerfiles/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.ModulosPerfiles",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosPerfilesController",
+    "Method": "GetModulosPerfilessForCombo",
+    "RelativePath": "ModulosPerfiles/GetModulosPerfilesForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ModulosPerfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosPerfilesController",
+    "Method": "UpdateAllModulosPerfiles",
+    "RelativePath": "ModulosPerfiles/UpdateAllModulosPerfiles",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulosPerfiles",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ModulosPerfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.ModulosPerfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.ModulosPerfilesController",
+    "Method": "UpdateModulos",
+    "RelativePath": "ModulosPerfiles/UpdateModulosPerfiles",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulosPerfiles",
+        "Type": "PegasusV1.Entities.ModulosPerfiles",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.ModulosPerfiles",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.PerfilesController",
+    "Method": "CreateAllPerfiles",
+    "RelativePath": "Perfiles/CreateAllPerfiles",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "perfiles",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Perfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Perfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.PerfilesController",
+    "Method": "CreatePerfiles",
+    "RelativePath": "Perfiles/CreatePerfiles",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "perfiles",
+        "Type": "PegasusV1.Entities.Perfiles",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Perfiles",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.PerfilesController",
+    "Method": "DeleteAllPerfiles",
+    "RelativePath": "Perfiles/DeleteAllPerfiles",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "perfiles",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Perfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.PerfilesController",
+    "Method": "DeletePerfiles",
+    "RelativePath": "Perfiles/DeletePerfiles/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.PerfilesController",
+    "Method": "GetById",
+    "RelativePath": "Perfiles/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Perfiles",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.PerfilesController",
+    "Method": "GetPerfilessForCombo",
+    "RelativePath": "Perfiles/GetPerfilesForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Perfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.PerfilesController",
+    "Method": "UpdateAllPerfiles",
+    "RelativePath": "Perfiles/UpdateAllPerfiles",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "perfiles",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Perfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Perfiles, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.PerfilesController",
+    "Method": "UpdatePerfiles",
+    "RelativePath": "Perfiles/UpdatePerfiles",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "perfiles",
+        "Type": "PegasusV1.Entities.Perfiles",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Perfiles",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.UsuarioController",
+    "Method": "CreateAllUsuario",
+    "RelativePath": "Usuario/CreateAllUsuario",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuarios",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Usuario, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Usuario, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.UsuarioController",
+    "Method": "CreateUsuario",
+    "RelativePath": "Usuario/CreateUsuario",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "PegasusV1.Entities.Usuario",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Usuario",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.UsuarioController",
+    "Method": "DeleteUsuario",
+    "RelativePath": "Usuario/DeleteUsuario/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.UsuarioController",
+    "Method": "GetById",
+    "RelativePath": "Usuario/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Usuario",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.UsuarioController",
+    "Method": "GetUsuariosForCombo",
+    "RelativePath": "Usuario/GetUsuariosForCombo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Usuario, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.UsuarioController",
+    "Method": "UpdateAllUsuario",
+    "RelativePath": "Usuario/UpdateAllUsuario",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuarios",
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Usuario, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PegasusV1.Entities.Usuario, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.UsuarioController",
+    "Method": "UpdateUsuario",
+    "RelativePath": "Usuario/UpdateUsuario",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "PegasusV1.Entities.Usuario",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PegasusV1.Entities.Usuario",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PegasusV1.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[PegasusV1.WeatherForecast, PegasusV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]
