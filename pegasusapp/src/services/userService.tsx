@@ -1,10 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import type { AppModule } from "../models/appModule"
 import type { AppUserData } from "../models/appUserData"
 import type { CustomError } from "../models/customError"
 import type { LoginAppResponse } from "../models/loginResponse"
 import { CONFIG } from "./config"
-
 
 // ==================== MAPEO DE ICONOS ====================
 const getModuleIcon = (moduleName: string): string => {
@@ -60,18 +59,28 @@ const mapBackendToAppData = (backendData: LoginAppResponse): AppUserData => {
 }
 
 const loginUserWithModules = async (email: string, googleToken: string): Promise<AppUserData> => {
+  //Agregar AbortController para timeout
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), 30000) // 30 segundos para Azure
+
   try {
+    console.log("🌐 Llamando al backend (intento 1/3)...")
 
     const response = await fetch(`${CONFIG.API_BASE_URL}/account/loginApp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json", //Header Accept explícito
       },
       body: JSON.stringify({
         email: email,
         googleToken: googleToken,
       }),
+      signal: controller.signal, //Signal para timeout
     })
+
+    //Limpiar timeout
+    clearTimeout(timeoutId)
 
     if (!response.ok) {
       const errorData = await response.json()
@@ -85,16 +94,29 @@ const loginUserWithModules = async (email: string, googleToken: string): Promise
     }
 
     const backendData: LoginAppResponse = await response.json()
+    console.log("✅ Backend respondió exitosamente")
 
     if (backendData.token) {
-      await AsyncStorage.setItem('jwtToken', backendData.token);
+      await AsyncStorage.setItem("jwtToken", backendData.token)
     }
 
     // Mapear datos del backend al formato de la app
     const appData = mapBackendToAppData(backendData)
 
     return appData
-  } catch (error) {
+  } catch (error: any) {
+    //Limpiar timeout en caso de error
+    clearTimeout(timeoutId)
+
+    //Manejo específico de timeout
+    if (error.name === "AbortError") {
+      console.error("❌ Timeout: El servidor tardó demasiado en responder")
+      const timeoutError: CustomError = new Error("Tiempo de espera agotado. El servidor tardó demasiado en responder.")
+      timeoutError.name = "TIMEOUT_ERROR"
+      timeoutError.errorCode = "TIMEOUT_ERROR"
+      throw timeoutError
+    }
+
     if (
       process.env.NODE_ENV === "development" &&
       error instanceof TypeError &&
@@ -111,7 +133,7 @@ const loginUserWithModules = async (email: string, googleToken: string): Promise
 
 // Variable global para cachear los datos del usuario con timestamp
 let cachedUserData: { data: AppUserData; timestamp: number; email: string } | null = null
-const CACHE_DURATION = 5 * 60 * 1000 // 5 minutos en milisegundos
+const CACHE_DURATION = 10 * 60 * 1000 // 10 minutos en milisegundos
 
 // Función para verificar si el cache es válido
 const isCacheValid = (email: string): boolean => {
@@ -131,7 +153,6 @@ const isCacheValid = (email: string): boolean => {
 // Función principal para obtener datos del usuario
 const getUserDataReal = async (email: string, googleToken?: string): Promise<AppUserData> => {
   try {
-
     if (googleToken) {
       // Caso 1: Login inicial con token - obtener todo en una llamada
       const userData = await loginUserWithModules(email, googleToken)
@@ -143,14 +164,16 @@ const getUserDataReal = async (email: string, googleToken?: string): Promise<App
         email: email,
       }
 
+      //Pequeña pausa para asegurar que el cache se establezca
+      await new Promise((resolve) => setTimeout(resolve, 100))
+
+      console.log("✅ Proceso de login completado exitosamente")
       return userData
     } else {
       // Caso 2: Usuario ya autenticado, verificar cache
-
       if (isCacheValid(email)) {
         return cachedUserData!.data
       } else {
-
         // Crear un error específico para indicar que no hay cache
         const error = new Error("No hay datos de usuario cacheados válidos. El usuario debe hacer login nuevamente.")
         error.name = "NO_CACHED_DATA"
@@ -162,7 +185,6 @@ const getUserDataReal = async (email: string, googleToken?: string): Promise<App
   }
 }
 
-
 // limpiar el cache
 export const clearUserDataCache = () => {
   cachedUserData = null
@@ -171,9 +193,7 @@ export const clearUserDataCache = () => {
 // refresh del cache
 export const forceRefreshUserData = async (email: string): Promise<AppUserData | null> => {
   try {
-
     clearUserDataCache()
-
     // Intentar obtener datos frescos (esto requerirá un nuevo login)
     return null
   } catch (error) {

@@ -14,6 +14,13 @@ C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Google.
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Google.Apis.Auth.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Google.Apis.Core.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\MailKit.dll
+C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.ApplicationInsights.dll
+C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.ApplicationInsights.AspNetCore.dll
+C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.AI.DependencyCollector.dll
+C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.AI.EventCounterCollector.dll
+C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.AI.PerfCounterCollector.dll
+C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.AI.WindowsServer.dll
+C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.AI.ServerTelemetryChannel.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.Google.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.Bcl.AsyncInterfaces.dll
@@ -28,6 +35,7 @@ C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microso
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Logging.Abstractions.dll
+C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Logging.ApplicationInsights.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Options.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Primitives.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\Microsoft.Identity.Client.dll
@@ -51,6 +59,7 @@ C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\System.
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\System.Configuration.ConfigurationManager.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\System.Data.SqlClient.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\System.Diagnostics.DiagnosticSource.dll
+C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\System.Diagnostics.PerformanceCounter.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\System.Drawing.Common.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\System.Formats.Asn1.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\System.IdentityModel.Tokens.Jwt.dll
@@ -86,6 +95,7 @@ C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\runtime
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\runtimes\win-x86\native\sni.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Diagnostics.PerformanceCounter.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\TrabajoFinalPrueba1\PegasusV1\PegasusV1\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Management.dll

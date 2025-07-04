@@ -22,6 +22,30 @@ var builder = WebApplication.CreateBuilder(args);
 // Registrar JwtGenerator como servicio
 builder.Services.AddScoped<JwtGenerator>();
 
+// Configure Application Insights
+builder.Services.AddApplicationInsightsTelemetry(options =>
+{
+    options.ConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
+});
+
+// Configure logging properly
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+builder.Logging.AddApplicationInsights();
+
+// Set minimum log level to capture all our custom logs
+builder.Logging.SetMinimumLevel(LogLevel.Information);
+
+// Configure specific log levels
+builder.Services.Configure<LoggerFilterOptions>(options =>
+{
+    options.MinLevel = LogLevel.Information;
+    options.AddFilter("Microsoft.AspNetCore", LogLevel.Warning);
+    options.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Warning);
+    options.AddFilter("System", LogLevel.Warning);
+});
+
 // ===== CONFIGURACIÓN EXPLÍCITA DE KESTREL PARA DUAL PROTOCOL =====
 builder.WebHost.ConfigureKestrel(options =>
 {
@@ -78,11 +102,11 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Habilitar registro detallado para autenticación
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
-builder.Logging.AddFilter("Microsoft.AspNetCore.Authentication", LogLevel.Debug);
+//// Habilitar registro detallado para autenticación
+//builder.Logging.ClearProviders();
+//builder.Logging.AddConsole();
+//builder.Logging.AddDebug();
+//builder.Logging.AddFilter("Microsoft.AspNetCore.Authentication", LogLevel.Debug);
 
 // Configuración de la base de datos
 builder.Services.AddDbContext<DataContext>(options =>

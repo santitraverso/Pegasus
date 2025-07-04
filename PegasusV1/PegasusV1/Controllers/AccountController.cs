@@ -158,6 +158,13 @@ namespace PegasusV1.Controllers
         {
             try
             {
+                _logger.LogInformation("=== INICIO LOGIN APP ===");
+                _logger.LogInformation("Email: {Email}", request?.Email);
+                _logger.LogInformation("Token presente: {HasToken}", !string.IsNullOrEmpty(request?.GoogleToken));
+                _logger.LogInformation("Token length: {TokenLength}", request?.GoogleToken?.Length ?? 0);
+                _logger.LogInformation("User-Agent: {UserAgent}", Request.Headers.UserAgent.ToString());
+                _logger.LogInformation("Remote IP: {RemoteIP}", HttpContext.Connection.RemoteIpAddress?.ToString());
+
                 // Validar que el request tenga los datos necesarios
                 if (request == null || string.IsNullOrEmpty(request.GoogleToken))
                 {
@@ -172,11 +179,17 @@ namespace PegasusV1.Controllers
                     return BadRequest(new { message = "Email inválido", errorCode = "INVALID_EMAIL" });
                 }
 
+                _logger.LogInformation("Paso 1: Validando token de Google...");
                 var googleUser = await ValidateGoogleToken(request.GoogleToken);
+
                 if (googleUser == null)
                 {
+                    _logger.LogWarning("Token de Google inválido para email: {Email}", request.Email);
                     return Unauthorized(new { message = "Token de Google inválido", errorCode = "INVALID_GOOGLE_TOKEN" });
                 }
+
+                _logger.LogInformation("Paso 2: Token validado - Email: {TokenEmail}, Subject: {Subject}, EmailVerified: {EmailVerified}",
+                    googleUser.Email, googleUser.Subject, googleUser.EmailVerified);
 
                 if (!string.Equals(googleUser.Email, request.Email, StringComparison.OrdinalIgnoreCase))
                 {
@@ -185,13 +198,17 @@ namespace PegasusV1.Controllers
                     return BadRequest(new { message = "El email del token no coincide con el email solicitado", errorCode = "EMAIL_MISMATCH" });
                 }
 
-                // Usar el método seguro para obtener el usuario
+                _logger.LogInformation("Paso 3: Buscando usuario en BD para email: {Email}...", request.Email);
                 var usuario = await GetUsuarioByEmail(request.Email);
 
                 if (usuario == null)
                 {
+                    _logger.LogWarning("Usuario no encontrado en BD: {Email}", request.Email);
                     return NotFound(new { message = "Usuario no encontrado. Póngase en contacto con la institución.", errorCode = "USER_NOT_FOUND" });
                 }
+
+                _logger.LogInformation("Paso 4: Usuario encontrado - ID: {UserId}, Activo: {Activo}, Perfil: {PerfilId}",
+                    usuario.Id, usuario.Activo, usuario.Id_Perfil);
 
                 // Verificar si el usuario está activo
                 if (usuario.Activo != true)
@@ -200,19 +217,23 @@ namespace PegasusV1.Controllers
                     return Forbid(new { message = "Usuario inactivo. Contacte al administrador.", errorCode = "USER_INACTIVE" }.ToString());
                 }
 
+                _logger.LogInformation("Paso 5: Obteniendo perfil del usuario...");
                 if (usuario.Id_Perfil.HasValue)
                 {
                     usuario.Perfil = await _perfilesService.GetById(usuario.Id_Perfil.Value);
+                    _logger.LogInformation("Perfil obtenido: {Perfil}", usuario.Perfil);
                 }
 
+                _logger.LogInformation("Paso 6: Obteniendo módulos del perfil...");
                 List<ModulosPerfiles> modulosPerfiles = await _modulosPerfilesService.GetModulosPerfilesForUser(x => x.Id_Perfil == usuario.Id_Perfil.Value);
+                _logger.LogInformation("Módulos encontrados: {ModulosCount}", modulosPerfiles?.Count ?? 0);
 
                 List<Modulos> modulos = modulosPerfiles
                     .Where(mp => mp.Modulo != null)
                     .Select(mp => mp.Modulo!)
                     .ToList();
 
-                // Generar token JWT
+                _logger.LogInformation("Paso 7: Generando token JWT...");
                 string token = _jwtGenerator.GenerateToken(usuario);
 
                 var userData = new
@@ -225,11 +246,21 @@ namespace PegasusV1.Controllers
                     token = token
                 };
 
+                _logger.LogInformation("=== LOGIN EXITOSO para {Email} ===", request.Email);
                 return Ok(userData);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error en loginApp");
+                _logger.LogError(ex, "ERROR DETALLADO en loginApp - Email: {Email}, Tipo: {ExceptionType}, Mensaje: {Message}, StackTrace: {StackTrace}",
+                    request?.Email, ex.GetType().Name, ex.Message, ex.StackTrace);
+
+                // Log adicional para errores específicos de Google
+                if (ex.Message.Contains("Google") || ex.Message.Contains("token"))
+                {
+                    _logger.LogError("ERROR RELACIONADO CON GOOGLE TOKEN - Token Length: {TokenLength}, Email: {Email}",
+                        request?.GoogleToken?.Length ?? 0, request?.Email);
+                }
+
                 return StatusCode(500, new { message = "Error interno del servidor", errorCode = "INTERNAL_ERROR" });
             }
         }
