@@ -62,9 +62,20 @@ export const signInWithGoogle = async () => {
     const signInResult = await GoogleSignin.signIn()
     console.log("✅ Google Sign-In exitoso para:", signInResult.data?.user?.email)
 
-    console.log("🎫 Obteniendo tokens...")
-    const tokens = await GoogleSignin.getTokens()
-    const { idToken } = tokens
+    // Obtener idToken directamente del resultado del signIn
+    let idToken = signInResult.data?.idToken
+
+    // Si no está disponible en el resultado, intentar obtenerlo con getTokens
+    if (!idToken) {
+      console.log("🎫 ID Token no disponible en signIn result, obteniendo con getTokens...")
+      try {
+        const tokens = await GoogleSignin.getTokens()
+        idToken = tokens.idToken
+      } catch (tokenError) {
+        console.error("❌ Error obteniendo tokens:", tokenError)
+        throw new Error("No se pudo obtener el ID token de Google. Intenta nuevamente.")
+      }
+    }
 
     if (!idToken) {
       throw new Error("No se pudo obtener el ID token de Google")

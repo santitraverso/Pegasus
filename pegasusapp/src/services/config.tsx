@@ -15,7 +15,7 @@ const API_URLS = {
 };
 
 export const CONFIG = {
-  API_BASE_URL: true ? API_URLS[ENVIRONMENT] : API_URLS.PRODUCTION,
+  API_BASE_URL: false ? API_URLS[ENVIRONMENT] : API_URLS.PRODUCTION,
   
   // Configuración adicional para desarrollo con HTTPS
   ALLOW_SELF_SIGNED_CERTS: __DEV__, // Solo en desarrollo

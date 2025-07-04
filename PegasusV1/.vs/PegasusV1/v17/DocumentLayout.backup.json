@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\TrabajoFinalPrueba1\\PegasusV1\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|c:\\trabajofinalprueba1\\pegasusv1\\pegasusv1\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|solutionrelative:pegasusv1\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|c:\\trabajofinalprueba1\\pegasusv1\\pegasusv1\\controllers\\basesecurecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|solutionrelative:pegasusv1\\controllers\\basesecurecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|c:\\trabajofinalprueba1\\pegasusv1\\pegasusv1\\controllers\\calificacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|solutionrelative:pegasusv1\\controllers\\calificacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|c:\\trabajofinalprueba1\\pegasusv1\\pegasusv1\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|solutionrelative:pegasusv1\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|c:\\trabajofinalprueba1\\pegasusv1\\pegasusv1\\services\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,11 +46,11 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "BaseSecureController.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\BaseSecureController.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Controllers\\BaseSecureController.cs",
@@ -64,20 +64,21 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "AccountController.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Controllers\\AccountController.cs",
               "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\AccountController.cs",
               "RelativeToolTip": "PegasusV1\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAxwJQAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAowEoAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-31T00:51:10.151Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "PerfilesController.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\PerfilesController.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Controllers\\PerfilesController.cs",
@@ -106,7 +107,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ContactosController.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\ContactosController.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Controllers\\ContactosController.cs",
@@ -118,7 +119,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "CalificacionController.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\CalificacionController.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Controllers\\CalificacionController.cs",
@@ -130,7 +131,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "CursoController.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\CursoController.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Controllers\\CursoController.cs",
