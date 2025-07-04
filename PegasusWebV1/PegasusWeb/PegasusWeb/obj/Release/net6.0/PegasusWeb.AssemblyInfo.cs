@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PegasusWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed709a1c86982eeccb5f772b996014fbb3e90df9")]
 [assembly: System.Reflection.AssemblyProductAttribute("PegasusWeb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PegasusWeb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

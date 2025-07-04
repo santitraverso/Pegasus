@@ -3,264 +3,32 @@
   "WorkspaceRootPath": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\materia.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\materia.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\materia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\materia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\materiascurso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\materiascurso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createcalificacion.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createcalificacion.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\evento.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\evento.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createevento.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createevento.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createevento.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createevento.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createcalificacion.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createcalificacion.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\materia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\materia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\curso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\curso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\cuaderno.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\cuaderno.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createusuario.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createusuario.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createdesempenio.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createdesempenio.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createcurso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createcurso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createcomunicado.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createcomunicado.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\asistencia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\asistencia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\calificacion.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\calificacion.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\asistencia.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\asistencia.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\evento.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\evento.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\cuaderno.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\cuaderno.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\desempenio.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\desempenio.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\desempenio.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\desempenio.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\materia\\listamaterias.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\materia\\listamaterias.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\home.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\home.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\evento.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\evento.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\listacursos.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\listacursos.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\listacomunicados.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\listacomunicados.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\materia\\listamaterias.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\materia\\listamaterias.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\home.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\home.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\listacursos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\listacursos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\error.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\error.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\usuario.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\usuario.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createusuario.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createusuario.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\curso.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\curso.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createcurso.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createcurso.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\usuario.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\usuario.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\materiascurso.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\materiascurso.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\listacontenidos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\listacontenidos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\integrantescursos.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\integrantescursos.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\integrantescursos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\integrantescursos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createdesempenio.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createdesempenio.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createcomunicado.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createcomunicado.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\confirmarasistencia.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\confirmarasistencia.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\materia\\createmateria.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\materia\\createmateria.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createcontenidomaterias.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createcontenidomaterias.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\listacontenidos.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\listacontenidos.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\createcontacto.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\createcontacto.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\listacontacto.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\listacontacto.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\confirmacionesevento.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\confirmacionesevento.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\reportecalificaciones.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\reportecalificaciones.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\reporteasistencia.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\reporteasistencia.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\pages\\confirmarasistencia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\pages\\confirmarasistencia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\entities\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\entities\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\entities\\tarea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\entities\\tarea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\entities\\modulosperfiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\entities\\modulosperfiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\entities\\materia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\entities\\materia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\entities\\docentemateria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\entities\\docentemateria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\entities\\desempenioalumnos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\entities\\desempenioalumnos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\entities\\curso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\entities\\curso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\entities\\cuadernocomunicados.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\entities\\cuadernocomunicados.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\entities\\comunicadoviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|solutionrelative:pegasusweb\\entities\\comunicadoviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6AC4D072-9233-4D37-8A97-0AC479649334}|PegasusWeb\\PegasusWeb.csproj|c:\\trabajofinalprueba1\\pegasuswebv1\\pegasusweb\\pegasusweb\\entities\\comunicadoalumnos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -281,59 +49,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CreateCalificacion.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateCalificacion.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateCalificacion.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateCalificacion.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateCalificacion.cshtml",
-              "ViewState": "AQIAAHkAAAAAAAAAAAAswLwAAAA4AAAA",
+              "DocumentIndex": 0,
+              "Title": "Evento.cshtml",
+              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Evento.cshtml",
+              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Evento.cshtml",
+              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Evento.cshtml",
+              "RelativeToolTip": "PegasusWeb\\Pages\\Evento.cshtml",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAACEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-21T17:35:56.822Z"
+              "WhenOpened": "2025-07-04T13:59:32.131Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "CreateEvento.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateEvento.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateEvento.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateEvento.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateEvento.cshtml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T20:04:06.324Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "CreateEvento.cshtml",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateEvento.cshtml",
               "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateEvento.cshtml",
               "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateEvento.cshtml",
               "RelativeToolTip": "PegasusWeb\\Pages\\CreateEvento.cshtml",
-              "ViewState": "AQIAAF0AAAAAAAAAAAAswHEAAAAbAAAA",
+              "ViewState": "AgIAABUAAAAAAAAAAAAswGYAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-06T21:44:38.88Z"
+              "WhenOpened": "2025-06-06T21:44:38.88Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MateriasCurso.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\MateriasCurso.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\MateriasCurso.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\MateriasCurso.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\MateriasCurso.cshtml",
-              "ViewState": "AQIAABEAAAAAAAAAAAAlwCsAAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T00:52:17.996Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "Materia.cshtml",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Materia.cshtml",
               "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Materia.cshtml",
@@ -345,32 +99,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Materia.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Materia.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Materia.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Materia.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Materia.cshtml.cs",
-              "ViewState": "AgIAAFYBAAAAAAAAAAAYwGMBAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T17:10:01.467Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CreateCalificacion.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateCalificacion.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateCalificacion.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateCalificacion.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateCalificacion.cshtml.cs",
-              "ViewState": "AQIAACUAAAAAAAAAAADgvyoAAAAxAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T18:09:21.173Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
               "Title": "Curso.cshtml",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Curso.cshtml",
               "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Curso.cshtml",
@@ -382,43 +111,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Cuaderno.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Cuaderno.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Cuaderno.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Cuaderno.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Cuaderno.cshtml",
-              "ViewState": "AQIAAIoAAAAAAAAAAAAAACcAAAAiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-14T16:27:35.857Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "CreateUsuario.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateUsuario.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateUsuario.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateUsuario.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateUsuario.cshtml",
-              "ViewState": "AQIAAKcBAAAAAAAAAAAAAC4AAABlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-05T16:20:16.956Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "CreateDesempenio.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateDesempenio.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateDesempenio.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateDesempenio.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateDesempenio.cshtml",
-              "ViewState": "AQIAADAAAAAAAAAAAAAvwDwAAAAfAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T00:52:17.977Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 4,
               "Title": "CreateCurso.cshtml",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateCurso.cshtml",
               "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateCurso.cshtml",
@@ -430,19 +123,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "CreateComunicado.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateComunicado.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateComunicado.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateComunicado.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateComunicado.cshtml",
-              "ViewState": "AQIAABkAAAAAAAAAAAAvwCkAAABZAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T00:52:17.964Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 5,
               "Title": "Asistencia.cshtml",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Asistencia.cshtml",
               "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Asistencia.cshtml",
@@ -454,31 +135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Calificacion.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Calificacion.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Calificacion.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Calificacion.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Calificacion.cshtml",
-              "ViewState": "AQIAACEAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-21T17:35:47.413Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Asistencia.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Asistencia.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Asistencia.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Asistencia.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Asistencia.cshtml.cs",
-              "ViewState": "AQIAACEAAAAAAAAAAAAmwCIAAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T21:57:34.676Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 6,
               "Title": "Evento.cshtml.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Evento.cshtml.cs",
               "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Evento.cshtml.cs",
@@ -490,583 +147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Desempenio.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Desempenio.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Desempenio.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Desempenio.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Desempenio.cshtml",
-              "ViewState": "AQIAAEgAAAAAAAAAAAAAAFAAAAAYAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T00:52:17.977Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Desempenio.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Desempenio.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Desempenio.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Desempenio.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Desempenio.cshtml.cs",
-              "ViewState": "AQIAAJEAAAAAAAAAAAAUwJ0AAABIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.977Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "ListaComunicados.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaComunicados.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\ListaComunicados.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaComunicados.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\ListaComunicados.cshtml.cs",
-              "ViewState": "AQIAABUAAAAAAAAAAAA8wCUAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.977Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "ListaCursos.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaCursos.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\ListaCursos.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaCursos.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\ListaCursos.cshtml.cs",
-              "ViewState": "AQIAAIcAAAAAAAAAAAAiwJYAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T21:36:36.62Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Cuaderno.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Cuaderno.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Cuaderno.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Cuaderno.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Cuaderno.cshtml.cs",
-              "ViewState": "AQIAACYAAAAAAAAAAAAkwC4AAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T23:27:33.993Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "ListaMaterias.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Materia\\ListaMaterias.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Materia\\ListaMaterias.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Materia\\ListaMaterias.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Materia\\ListaMaterias.cshtml.cs",
-              "ViewState": "AQIAAJMAAAAAAAAAAAAUwLEAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T18:48:47.167Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "Home.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Home.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Home.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Home.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Home.cshtml.cs",
-              "ViewState": "AQIAAJcAAAAAAAAAAAAUwKYAAAARAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T23:04:15.607Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "Evento.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Evento.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Evento.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Evento.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Evento.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-13T18:15:17.958Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "Home.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Home.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Home.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Home.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Home.cshtml",
-              "ViewState": "AQIAAFMAAAAAAAAAAAAYwGIAAABKAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-12T20:08:51.542Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "ListaMaterias.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Materia\\ListaMaterias.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Materia\\ListaMaterias.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Materia\\ListaMaterias.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Materia\\ListaMaterias.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAnwBEAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T00:52:17.946Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "Error.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Error.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Error.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Error.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Error.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAXAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T00:52:17.964Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "CreateCurso.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateCurso.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateCurso.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateCurso.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateCurso.cshtml.cs",
-              "ViewState": "AQIAACkAAAAAAAAAAAA7wDIAAAARAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T18:59:24.246Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "Curso.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Curso.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Curso.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Curso.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Curso.cshtml.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAA3wCwAAAA2AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-14T12:28:07.607Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAEAAAAAAAAAAAAAAAEsAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-14T18:34:36.453Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "ListaCursos.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaCursos.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\ListaCursos.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaCursos.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\ListaCursos.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-17T23:02:01.474Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "Usuario.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Usuario.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Usuario.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Usuario.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Usuario.cshtml",
-              "ViewState": "AQIAAJAAAAAAAAAAAAAIwKAAAAAbAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-13T19:17:51.475Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "Error.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Error.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Error.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Error.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Error.cshtml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAxAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.964Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "CreateUsuario.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateUsuario.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateUsuario.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateUsuario.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateUsuario.cshtml.cs",
-              "ViewState": "AQIAAAICAAAAAAAAAAAAwPYBAAAuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T18:13:37.57Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "ListaContenidos.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaContenidos.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\ListaContenidos.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaContenidos.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\ListaContenidos.cshtml",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAlwBQAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T00:52:17.996Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "Usuario.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Usuario.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Usuario.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Usuario.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Usuario.cshtml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEwAAAAyAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T17:16:46.206Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 38,
-              "Title": "IntegrantesCursos.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\IntegrantesCursos.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\IntegrantesCursos.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\IntegrantesCursos.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\IntegrantesCursos.cshtml.cs",
-              "ViewState": "AQIAAF8AAAAAAAAAAAASwG8AAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.964Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "MateriasCurso.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\MateriasCurso.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\MateriasCurso.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\MateriasCurso.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\MateriasCurso.cshtml.cs",
-              "ViewState": "AQIAANIAAAAAAAAAAAAiwN0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T15:57:44.787Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 39,
-              "Title": "IntegrantesCursos.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\IntegrantesCursos.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\IntegrantesCursos.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\IntegrantesCursos.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\IntegrantesCursos.cshtml",
-              "ViewState": "AQIAABsAAAAAAAAAAAAnwCwAAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-04T19:26:21.043Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 40,
-              "Title": "CreateDesempenio.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateDesempenio.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateDesempenio.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateDesempenio.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateDesempenio.cshtml.cs",
-              "ViewState": "AQIAAJsAAAAAAAAAAAASwMYAAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.977Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 41,
-              "Title": "CreateComunicado.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateComunicado.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateComunicado.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateComunicado.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateComunicado.cshtml.cs",
-              "ViewState": "AQIAALcAAAAAAAAAAAAAAK0AAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T23:33:07.183Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 42,
-              "Title": "ConfirmarAsistencia.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ConfirmarAsistencia.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\ConfirmarAsistencia.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ConfirmarAsistencia.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\ConfirmarAsistencia.cshtml.cs",
-              "ViewState": "AQIAACcAAAAAAAAAAAD4vz0AAABXAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T20:30:49.372Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 43,
-              "Title": "CreateMateria.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Materia\\CreateMateria.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Materia\\CreateMateria.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Materia\\CreateMateria.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Materia\\CreateMateria.cshtml.cs",
-              "ViewState": "AQIAAGEAAAAAAAAAAAAUwHIAAABMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T18:03:57.439Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 44,
-              "Title": "CreateContenidoMaterias.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateContenidoMaterias.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateContenidoMaterias.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateContenidoMaterias.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateContenidoMaterias.cshtml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAJgAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T18:58:08.432Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 45,
-              "Title": "ListaContenidos.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaContenidos.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\ListaContenidos.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaContenidos.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\ListaContenidos.cshtml.cs",
-              "ViewState": "AQIAADsAAAAAAAAAAAA8wBkAAAAsAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T23:04:26.328Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 47,
-              "Title": "ListaContacto.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaContacto.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\ListaContacto.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ListaContacto.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\ListaContacto.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-12T22:35:15.263Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 48,
-              "Title": "ConfirmacionesEvento.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ConfirmacionesEvento.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\ConfirmacionesEvento.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ConfirmacionesEvento.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\ConfirmacionesEvento.cshtml.cs",
-              "ViewState": "AQIAAFwAAAAAAAAAAAAiwG8AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T20:30:37.707Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 50,
-              "Title": "ReporteAsistencia.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ReporteAsistencia.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\ReporteAsistencia.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ReporteAsistencia.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\ReporteAsistencia.cshtml.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAA4wCgAAABHAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T22:00:28.369Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 46,
-              "Title": "CreateContacto.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateContacto.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\CreateContacto.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\CreateContacto.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\CreateContacto.cshtml.cs",
-              "ViewState": "AQIAAFUAAAAAAAAAAADwv2MAAABMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T18:56:31.913Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 49,
-              "Title": "ReporteCalificaciones.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ReporteCalificaciones.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\ReporteCalificaciones.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ReporteCalificaciones.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\ReporteCalificaciones.cshtml.cs",
-              "ViewState": "AQIAAI0AAAAAAAAAAAAUwJ4AAABMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T22:03:29.997Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 51,
-              "Title": "Index.cshtml.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Index.cshtml.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Index.cshtml.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Index.cshtml.cs",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Index.cshtml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.574Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 52,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "PegasusWeb\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Properties\\launchSettings.json",
-              "RelativeToolTip": "PegasusWeb\\Properties\\launchSettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAGAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-10T20:00:47.885Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 53,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Index.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Index.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Index.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Index.cshtml",
-              "ViewState": "AQIAADMAAAAAAAAAAAAAABYAAAAOAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T00:52:17.946Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 54,
-              "Title": "Privacy.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Privacy.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\Privacy.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\Privacy.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\Privacy.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-31T00:52:17.964Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 55,
-              "Title": "ConfirmarAsistencia.cshtml",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ConfirmarAsistencia.cshtml",
-              "RelativeDocumentMoniker": "PegasusWeb\\Pages\\ConfirmarAsistencia.cshtml",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Pages\\ConfirmarAsistencia.cshtml",
-              "RelativeToolTip": "PegasusWeb\\Pages\\ConfirmarAsistencia.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADsAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-06T14:23:49.779Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 56,
-              "Title": "Usuario.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\Usuario.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Entities\\Usuario.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\Usuario.cs",
-              "RelativeToolTip": "PegasusWeb\\Entities\\Usuario.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAYAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.93Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 57,
-              "Title": "Tarea.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\Tarea.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Entities\\Tarea.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\Tarea.cs",
-              "RelativeToolTip": "PegasusWeb\\Entities\\Tarea.cs",
-              "ViewState": "AQIAAAEAAAAAAAAAAAAgwBAAAAAwAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.946Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 58,
-              "Title": "ModulosPerfiles.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\ModulosPerfiles.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Entities\\ModulosPerfiles.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\ModulosPerfiles.cs",
-              "RelativeToolTip": "PegasusWeb\\Entities\\ModulosPerfiles.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAtAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.946Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 59,
-              "Title": "Materia.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\Materia.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Entities\\Materia.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\Materia.cs",
-              "RelativeToolTip": "PegasusWeb\\Entities\\Materia.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.946Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 60,
-              "Title": "DocenteMateria.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\DocenteMateria.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Entities\\DocenteMateria.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\DocenteMateria.cs",
-              "RelativeToolTip": "PegasusWeb\\Entities\\DocenteMateria.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.946Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 61,
-              "Title": "DesempenioAlumnos.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\DesempenioAlumnos.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Entities\\DesempenioAlumnos.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\DesempenioAlumnos.cs",
-              "RelativeToolTip": "PegasusWeb\\Entities\\DesempenioAlumnos.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.946Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 62,
-              "Title": "Curso.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\Curso.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Entities\\Curso.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\Curso.cs",
-              "RelativeToolTip": "PegasusWeb\\Entities\\Curso.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAxAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.946Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 63,
-              "Title": "CuadernoComunicados.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\CuadernoComunicados.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Entities\\CuadernoComunicados.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\CuadernoComunicados.cs",
-              "RelativeToolTip": "PegasusWeb\\Entities\\CuadernoComunicados.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.946Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 64,
-              "Title": "ComunicadoViewModel.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\ComunicadoViewModel.cs",
-              "RelativeDocumentMoniker": "PegasusWeb\\Entities\\ComunicadoViewModel.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\ComunicadoViewModel.cs",
-              "RelativeToolTip": "PegasusWeb\\Entities\\ComunicadoViewModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T00:52:17.946Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 7,
               "Title": "ComunicadoAlumnos.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\Entities\\ComunicadoAlumnos.cs",
               "RelativeDocumentMoniker": "PegasusWeb\\Entities\\ComunicadoAlumnos.cs",
@@ -1078,7 +159,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 8,
               "Title": "UsuarioController.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\UsuarioController.cs",
               "RelativeDocumentMoniker": "..\\..\\PegasusV1\\PegasusV1\\Controllers\\UsuarioController.cs",
@@ -1090,7 +171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 9,
               "Title": "PegasusWeb.csproj",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusWebV1\\PegasusWeb\\PegasusWeb\\PegasusWeb.csproj",
               "RelativeDocumentMoniker": "PegasusWeb\\PegasusWeb.csproj",

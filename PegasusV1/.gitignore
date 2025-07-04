@@ -1,0 +1,16 @@
+﻿.vs/
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.db
+*.db-shm
+*.db-wal
+FileContentIndex/
+CopilotIndices/
+ProjectEvaluation/
+PubTmp/
+*.staticwebassets.*
+*.pubxml.user
+PublishOutputs*.txt
