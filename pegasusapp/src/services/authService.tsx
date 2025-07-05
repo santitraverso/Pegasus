@@ -6,7 +6,7 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
 } from "@react-native-firebase/auth"
-import { GoogleSignin } from "@react-native-google-signin/google-signin"
+import { GoogleSignin, type SignInResponse } from "@react-native-google-signin/google-signin"
 import { getUserData, clearUserDataCache } from "./userService"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
@@ -33,7 +33,6 @@ const isFirstTimeEver = async (): Promise<boolean> => {
     const hasEverLoggedIn = await AsyncStorage.getItem("hasEverLoggedIn")
     return hasEverLoggedIn === null
   } catch (error) {
-    console.log("Error checking first time ever:", error)
     return true
   }
 }
@@ -43,7 +42,7 @@ const markFirstLoginComplete = async (): Promise<void> => {
   try {
     await AsyncStorage.setItem("hasEverLoggedIn", "true")
   } catch (error) {
-    console.log("Error marking first login complete:", error)
+    // Ignorar error
   }
 }
 
@@ -66,30 +65,62 @@ const forceSignOut = async () => {
     }
 
     clearUserDataCache()
-    // NO borramos "hasEverLoggedIn" porque eso es solo para la primera instalación
   } catch (signOutError) {
-    console.error("❌ AuthService: Error cerrando sesión tras fallo:", signOutError)
+    // Ignorar errores
   }
 }
 
-// Función helper para hacer retry del backend con delay
-const callBackendWithRetry = async (userEmail: string, idToken: string, retryCount = 0): Promise<any> => {
+// Función mejorada para obtener tokens con reintentos
+const getTokenWithRetry = async (isAddingNewAccount: boolean, maxRetries = 3): Promise<string> => {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      // Delay progresivo para cuentas nuevas
+      if (isAddingNewAccount && attempt > 1) {
+        const delay = attempt * 3000 // 3s, 6s, 9s
+        await new Promise((resolve) => setTimeout(resolve, delay))
+      } else if (!isAddingNewAccount && attempt > 1) {
+        const delay = attempt * 1000 // 1s, 2s, 3s
+        await new Promise((resolve) => setTimeout(resolve, delay))
+      }
+
+      const tokens = await GoogleSignin.getTokens()
+
+      if (tokens.idToken) {
+        return tokens.idToken
+      } else {
+        throw new Error("Token vacío recibido")
+      }
+    } catch (error: any) {
+      if (attempt === maxRetries) {
+        const errorMessage = error?.message || "Error desconocido obteniendo token"
+        throw new Error(`No se pudo obtener el ID token después de ${maxRetries} intentos: ${errorMessage}`)
+      }
+
+      // Para cuentas nuevas, esperar más tiempo entre intentos
+      if (isAddingNewAccount) {
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+      }
+    }
+  }
+
+  throw new Error("Error inesperado obteniendo token")
+}
+
+// Función helper para hacer retry del backend con delay ajustado
+const callBackendWithRetry = async (
+  userEmail: string,
+  idToken: string,
+  retryCount = 0,
+  isAddingNewAccount = false,
+): Promise<any> => {
   const maxRetries = 2
-  const baseDelay = 2000 // 2 segundos base
+  const baseDelay = isAddingNewAccount ? 4000 : 2000
+  const timeout = isAddingNewAccount ? 50000 : 30000
 
   try {
-    console.log(`🌐 Llamando al backend (intento ${retryCount + 1}/${maxRetries + 1})...`)
     const userData = await getUserData(userEmail, idToken)
-    console.log("✅ Backend respondió exitosamente")
     return userData
   } catch (backendError: any) {
-    console.error(`❌ Error en backend (intento ${retryCount + 1}):`, {
-      errorCode: backendError.errorCode,
-      message: backendError.message,
-      serverMessage: backendError.serverMessage,
-      status: backendError.status,
-    })
-
     // Si es INTERNAL_ERROR y no hemos agotado los reintentos
     if (
       retryCount < maxRetries &&
@@ -98,13 +129,11 @@ const callBackendWithRetry = async (userEmail: string, idToken: string, retryCou
         backendError.message?.includes("network") ||
         backendError.message?.includes("timeout"))
     ) {
-      const delay = baseDelay * (retryCount + 1) // Incrementar delay
-      console.log(`🔄 Reintentando en ${delay}ms...`)
+      const delay = baseDelay * (retryCount + 1)
       await new Promise((resolve) => setTimeout(resolve, delay))
-      return callBackendWithRetry(userEmail, idToken, retryCount + 1)
+      return callBackendWithRetry(userEmail, idToken, retryCount + 1, isAddingNewAccount)
     }
 
-    // Si no es un error que amerite retry, o ya agotamos los intentos
     throw backendError
   }
 }
@@ -116,76 +145,70 @@ export const signInWithGoogle = async () => {
 
     // Detectar si es la primera vez EVER (después de instalar la app)
     const isFirstEver = await isFirstTimeEver()
-    console.log(`🔍 Tipo de login: ${isFirstEver ? "PRIMERA VEZ DESPUÉS DE INSTALAR" : "LOGIN NORMAL"}`)
 
-    console.log("🔍 Verificando Google Play Services...")
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true })
 
-    console.log("🔑 Iniciando sesión con Google...")
-    const signInResult = await GoogleSignin.signIn()
+    // Configuración para detectar acción del usuario
+    const USER_ACTION_THRESHOLD = 6000 // 6 segundos
+    const signInTimeout = 60000 // 60 segundos timeout general
 
-    console.log("✅ Google Sign-In exitoso:", {
-      email: signInResult.data?.user?.email,
-      name: signInResult.data?.user?.name,
-      hasIdToken: !!signInResult.data?.idToken,
-      hasUser: !!signInResult.data?.user,
-    })
+    const signInStartTime = Date.now()
+    let signInResult: SignInResponse
+    let isAddingNewAccount = false
 
-    // DELAY SOLO PARA LA PRIMERA VEZ DESPUÉS DE INSTALAR
-    if (isFirstEver) {
-      console.log("⏳ PRIMERA VEZ DESPUÉS DE INSTALAR - Esperando 5 segundos para Google Play Services...")
-      await new Promise((resolve) => setTimeout(resolve, 5000))
-    } else {
-      console.log("⚡ LOGIN NORMAL - Sin delay adicional")
+    try {
+      // Hacer el signIn con timeout
+      const signInPromise = GoogleSignin.signIn()
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error("SIGNIN_TIMEOUT")), signInTimeout),
+      )
+
+      signInResult = await Promise.race([signInPromise, timeoutPromise])
+
+      const signInTime = Date.now() - signInStartTime
+
+      // Detectar acción del usuario por tiempo de respuesta
+      if (signInTime <= USER_ACTION_THRESHOLD) {
+        // Selección rápida = Usuario tocó una cuenta del listado
+        isAddingNewAccount = false
+      } else {
+        // Selección lenta = Usuario tocó "Agregar otra cuenta"
+        isAddingNewAccount = true
+      }
+    } catch (error: any) {
+      if (error.message === "SIGNIN_TIMEOUT") {
+        throw new Error("SIGNIN_TIMEOUT_EXTENDED")
+      }
+      throw error
     }
 
-    // Obtener idToken directamente del resultado del signIn
+    // DELAYS AJUSTADOS SEGÚN LA ACCIÓN DEL USUARIO
+    if (isAddingNewAccount) {
+      // Agregar otra cuenta - tiempo extendido
+      await new Promise((resolve) => setTimeout(resolve, 8000)) // 8 segundos
+    } else {
+      // Cuenta del listado - delay mínimo
+      await new Promise((resolve) => setTimeout(resolve, 800)) // 0.8 segundos
+    }
+
+    // Obtener idToken con manejo mejorado
     let idToken = signInResult.data?.idToken
 
-    // Si no está disponible en el resultado, intentar obtenerlo con getTokens
     if (!idToken) {
-      console.log("🎫 ID Token no disponible en signIn result, obteniendo con getTokens...")
       try {
-        // Pausa solo para primera vez después de instalar
-        if (isFirstEver) {
-          console.log("⏳ Primera vez - Esperando 3 segundos antes de obtener tokens...")
-          await new Promise((resolve) => setTimeout(resolve, 3000))
-        } else {
-          console.log("⏳ Esperando 500ms antes de obtener tokens...")
-          await new Promise((resolve) => setTimeout(resolve, 500))
-        }
-
-        const tokens = await GoogleSignin.getTokens()
-        idToken = tokens.idToken
-        console.log("✅ Token obtenido via getTokens")
-      } catch (tokenError) {
-        console.error("❌ Error obteniendo tokens:", tokenError)
-
-        // Para primera vez después de instalar, intentar una vez más con más delay
-        if (isFirstEver) {
-          console.log("🔄 Primera vez - Reintentando obtener tokens con delay adicional...")
-          await new Promise((resolve) => setTimeout(resolve, 3000))
-          try {
-            const tokens = await GoogleSignin.getTokens()
-            idToken = tokens.idToken
-            console.log("✅ Token obtenido en segundo intento")
-          } catch (secondTokenError) {
-            console.error("❌ Error en segundo intento de tokens:", secondTokenError)
-            throw new Error(
-              "No se pudo obtener el ID token de Google después de múltiples intentos. Intenta nuevamente.",
-            )
-          }
-        } else {
-          throw new Error("No se pudo obtener el ID token de Google. Intenta nuevamente.")
-        }
+        // Usar la función mejorada con reintentos
+        idToken = await getTokenWithRetry(isAddingNewAccount)
+      } catch (tokenError: any) {
+        const errorMessage = tokenError?.message || "Error desconocido obteniendo token"
+        throw new Error(`Error obteniendo token de Google: ${errorMessage}`)
       }
     }
 
     if (!idToken) {
-      throw new Error("No se pudo obtener el ID token de Google")
+      throw new Error("No se pudo obtener el ID token de Google después de múltiples intentos")
     }
 
-    console.log("🔥 Autenticando con Firebase...")
+    // Autenticar con Firebase
     const app = getApp()
     const auth = getAuth(app)
     const googleCredential = GoogleAuthProvider.credential(idToken)
@@ -197,30 +220,27 @@ export const signInWithGoogle = async () => {
       throw new Error("No se pudo obtener el email del usuario de Firebase")
     }
 
-    console.log("✅ Firebase autenticación exitosa para:", userEmail)
-
     try {
-      console.log("🌐 Validando usuario con el backend...")
-
-      // Delay antes de llamar al backend solo para primera vez después de instalar
-      if (isFirstEver) {
-        console.log("⏳ Primera vez - Esperando 3 segundos antes de validar con backend...")
-        await new Promise((resolve) => setTimeout(resolve, 3000))
+      // Delay antes de llamar al backend
+      if (isAddingNewAccount) {
+        await new Promise((resolve) => setTimeout(resolve, 4000)) // 4 segundos para cuentas nuevas
+      } else {
+        await new Promise((resolve) => setTimeout(resolve, 300)) // 0.3 segundos para cuentas existentes
       }
 
-      // Usar la función con retry
-      const userData = await callBackendWithRetry(userEmail, idToken)
+      // Llamar al backend con retry
+      const userData = await callBackendWithRetry(userEmail, idToken, 0, isAddingNewAccount)
 
-      console.log("✅ Proceso de login completado exitosamente")
-
-      // Pausa final solo para primera vez después de instalar
-      if (isFirstEver) {
-        console.log("⏳ Primera vez - Esperando 2 segundos para establecer cache...")
+      // Pausa final
+      if (isAddingNewAccount) {
         await new Promise((resolve) => setTimeout(resolve, 2000))
-        await markFirstLoginComplete()
-        console.log("✅ Primera vez después de instalar completada")
       } else {
         await new Promise((resolve) => setTimeout(resolve, 200))
+      }
+
+      // Marcar primera vez solo si aplica
+      if (isFirstEver) {
+        await markFirstLoginComplete()
       }
 
       return {
@@ -228,8 +248,6 @@ export const signInWithGoogle = async () => {
         userData: userData,
       }
     } catch (backendError: any) {
-      console.error("❌ Error final del backend después de reintentos:", backendError)
-
       let errorMessage = "Error desconocido al validar usuario"
 
       if (backendError.errorCode === "USER_NOT_FOUND") {
@@ -250,12 +268,6 @@ export const signInWithGoogle = async () => {
       throw backendError
     }
   } catch (error: any) {
-    console.error("❌ Error en signInWithGoogle:", {
-      code: error.code,
-      message: error.message,
-      errorCode: error.errorCode,
-    })
-
     if (!lastAuthError) {
       let errorMessage = "Error desconocido al iniciar sesión"
 
@@ -267,6 +279,9 @@ export const signInWithGoogle = async () => {
         errorMessage = "Ya hay un proceso de login en curso. Espera un momento."
       } else if (error.code === "PLAY_SERVICES_NOT_AVAILABLE") {
         errorMessage = "Google Play Services no disponible."
+      } else if (error.message === "SIGNIN_TIMEOUT_EXTENDED") {
+        errorMessage =
+          "El proceso de login tardó demasiado tiempo. Si estás agregando una cuenta nueva, esto es normal. Intenta nuevamente."
       } else if (error.message?.includes("getTokens requires a user to be signed in")) {
         errorMessage = "Error de autenticación con Google. Intenta cerrar la app y volver a abrirla."
       } else if (error.message) {

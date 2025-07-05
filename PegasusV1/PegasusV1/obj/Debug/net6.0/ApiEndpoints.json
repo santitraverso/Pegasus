@@ -64,26 +64,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "TestController",
-    "Method": "TestLogs",
-    "RelativePath": "api/Test/logs",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "TestController",
-    "Method": "Ping",
-    "RelativePath": "api/Test/ping",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "PegasusV1.Controllers.AsistenciaController",
     "Method": "CreateAllAsistencia",
     "RelativePath": "Asistencia/CreateAllAsistencia",

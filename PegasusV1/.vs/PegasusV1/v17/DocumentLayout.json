@@ -7,10 +7,6 @@
       "RelativeMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|solutionrelative:pegasusv1\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|c:\\trabajofinalprueba1\\pegasusv1\\pegasusv1\\controllers\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|solutionrelative:pegasusv1\\controllers\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|c:\\trabajofinalprueba1\\pegasusv1\\pegasusv1\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{4697A273-6BBA-483E-B8AE-232B132E1881}|PegasusV1\\PegasusV1.csproj|solutionrelative:pegasusv1\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
@@ -64,7 +60,7 @@
               "RelativeDocumentMoniker": "PegasusV1\\Controllers\\AccountController.cs",
               "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\AccountController.cs",
               "RelativeToolTip": "PegasusV1\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAAK4AAAAAAAAAAAAwwC0AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAQBAAAAAAAAAAAtwBwBAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-31T00:51:10.151Z",
               "IsPinned": true,
@@ -72,7 +68,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "PerfilesController.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\PerfilesController.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Controllers\\PerfilesController.cs",
@@ -81,8 +77,7 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-09T21:36:20.664Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -90,20 +85,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TestController.cs",
-              "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\TestController.cs",
-              "RelativeDocumentMoniker": "PegasusV1\\Controllers\\TestController.cs",
-              "ToolTip": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\TestController.cs",
-              "RelativeToolTip": "PegasusV1\\Controllers\\TestController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-04T19:06:31.412Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Program.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Program.cs",
@@ -111,12 +93,11 @@
               "RelativeToolTip": "PegasusV1\\Program.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAIwC8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-04T17:58:25.3Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-04T17:58:25.3Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\appsettings.json",
               "RelativeDocumentMoniker": "PegasusV1\\appsettings.json",
@@ -124,12 +105,11 @@
               "RelativeToolTip": "PegasusV1\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-04T17:55:17.746Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-04T17:55:17.746Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "Service.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Services\\Service.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Services\\Service.cs",
@@ -137,12 +117,11 @@
               "RelativeToolTip": "PegasusV1\\Services\\Service.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-26T12:16:33.304Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-26T12:16:33.304Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "ContactosController.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\ContactosController.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Controllers\\ContactosController.cs",
@@ -150,12 +129,11 @@
               "RelativeToolTip": "PegasusV1\\Controllers\\ContactosController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T21:35:17.282Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-09T21:35:17.282Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "CalificacionController.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\CalificacionController.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Controllers\\CalificacionController.cs",
@@ -163,12 +141,11 @@
               "RelativeToolTip": "PegasusV1\\Controllers\\CalificacionController.cs",
               "ViewState": "AgIAADkAAAAAAAAAAAAAwH8AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T11:51:19.614Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-13T11:51:19.614Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "CursoController.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Controllers\\CursoController.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Controllers\\CursoController.cs",
@@ -176,12 +153,11 @@
               "RelativeToolTip": "PegasusV1\\Controllers\\CursoController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T21:35:29.803Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-09T21:35:29.803Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
               "Title": "TipoDestinatario.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Entities\\TipoDestinatario.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Entities\\TipoDestinatario.cs",
@@ -189,12 +165,11 @@
               "RelativeToolTip": "PegasusV1\\Entities\\TipoDestinatario.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-07T12:09:41.632Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-07T12:09:41.632Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "UsuarioService.cs",
               "DocumentMoniker": "C:\\TrabajoFinalPrueba1\\PegasusV1\\PegasusV1\\Services\\UsuarioService.cs",
               "RelativeDocumentMoniker": "PegasusV1\\Services\\UsuarioService.cs",
@@ -202,8 +177,7 @@
               "RelativeToolTip": "PegasusV1\\Services\\UsuarioService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T19:51:59.825Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-06T19:51:59.825Z"
             }
           ]
         }

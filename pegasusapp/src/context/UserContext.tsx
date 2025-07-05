@@ -1,10 +1,11 @@
+"use client"
+
 import type React from "react"
 import { createContext, useState, useContext, useEffect, type ReactNode } from "react"
 import { getCurrentUser, getLastAuthError } from "../services/authService"
 import { getUserData, type AppUserData } from "../services/userService"
 import type { Hijo } from "../models/hijo"
 import { CONFIG } from "../services/config"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 
 // Tipos
 interface UserContextType {
@@ -30,16 +31,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [hijos, setHijos] = useState<Hijo[] | null>(null)
   const [hijoSeleccionado, setHijoSeleccionado] = useState<Hijo | null>(null)
 
-  // Función para detectar si es la primera vez que se instala la app
-  const isFirstTimeEver = async (): Promise<boolean> => {
-    try {
-      const hasEverLoggedIn = await AsyncStorage.getItem("hasEverLoggedIn")
-      return hasEverLoggedIn === null
-    } catch (error) {
-      return true
-    }
-  }
-
   const fetchUserData = async () => {
     try {
       setLoading(true)
@@ -61,47 +52,45 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return
       }
 
-      // Detectar si es primera vez después de instalar para ajustar delays
-      const isFirstEver = await isFirstTimeEver()
-      console.log(`⏳ UserContext: ${isFirstEver ? "Primera vez después de instalar" : "Login normal"} detectado`)
+      console.log("⏳ UserContext: Esperando para establecimiento del cache...")
 
-      // Delay inicial basado en si es primera vez después de instalar
-      if (isFirstEver) {
-        console.log("⏳ UserContext: Esperando 8 segundos para establecimiento del cache (primera vez)...")
-        await new Promise((resolve) => setTimeout(resolve, 8000))
-      } else {
-        console.log("⏳ UserContext: Esperando 1 segundo para cache (login normal)...")
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-      }
+      // Delay inicial más generoso para permitir que el cache se establezca
+      // Esto cubre tanto cuentas nuevas como existentes
+      await new Promise((resolve) => setTimeout(resolve, 3000))
 
-      // Configurar reintentos basado en si es primera vez después de instalar
-      const maxRetries = isFirstEver ? 6 : 3
-      const retryDelay = isFirstEver ? 4000 : 2000
+      // Configurar reintentos más generosos para cubrir casos de cache lento
+      const maxRetries = 5
+      const retryDelay = 3000
 
       let retryCount = 0
 
       while (retryCount < maxRetries) {
         try {
+          console.log(`🔄 UserContext: Intento ${retryCount + 1} de ${maxRetries} para cargar datos del cache`)
+
           // Llamar getUserData sin googleToken para usar cache
           const data = await getUserData(currentUser.email)
+          console.log("✅ UserContext: Datos cargados exitosamente desde cache")
           setUserData(data)
           return // Salir si fue exitoso
         } catch (cacheError: any) {
-          console.log(`❌ Error obteniendo datos (intento ${retryCount + 1}):`, cacheError.message)
+          console.log(`❌ UserContext: Error en intento ${retryCount + 1}:`, cacheError.message)
 
           retryCount++
 
           if (retryCount < maxRetries) {
-            console.log(`⏳ Esperando ${retryDelay}ms antes del siguiente intento...`)
+            console.log(`⏳ UserContext: Esperando ${retryDelay}ms antes del siguiente intento...`)
             await new Promise((resolve) => setTimeout(resolve, retryDelay))
           } else {
             // Si es el último intento, lanzar el error
+            console.log("❌ UserContext: Todos los intentos fallaron")
             throw cacheError
           }
         }
       }
     } catch (error: any) {
-      console.error("❌ Error final en fetchUserData:", error)
+      console.error("❌ UserContext: Error final en fetchUserData:", error)
+
       // Manejar diferentes tipos de errores
       let errorMessage = "Error al cargar datos del usuario"
 
@@ -134,21 +123,16 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }
 
-  // Cargar datos del usuario al montar el componente con delay ajustado
+  // Cargar datos del usuario al montar el componente
   useEffect(() => {
-    const loadUserData = async () => {
-      const isFirstEver = await isFirstTimeEver()
-      // Delay inicial basado en si es primera vez después de instalar
-      const initialDelay = isFirstEver ? 3000 : 500
+    console.log("🚀 UserContext: Iniciando carga de datos del usuario")
 
-      const timer = setTimeout(() => {
-        fetchUserData()
-      }, initialDelay)
+    // Delay inicial antes de empezar a cargar
+    const timer = setTimeout(() => {
+      fetchUserData()
+    }, 1000)
 
-      return () => clearTimeout(timer)
-    }
-
-    loadUserData()
+    return () => clearTimeout(timer)
   }, [])
 
   const refreshUserData = async () => {
