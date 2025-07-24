@@ -133,7 +133,8 @@ const loginUserWithModules = async (email: string, googleToken: string): Promise
 
 // Variable global para cachear los datos del usuario con timestamp
 let cachedUserData: { data: AppUserData; timestamp: number; email: string } | null = null
-const CACHE_DURATION = 10 * 60 * 1000 // 10 minutos en milisegundos
+const CACHE_DURATION = 3 * 60 * 60 * 1000 // 3 horas en milisegundos
+
 
 // Función para verificar si el cache es válido
 const isCacheValid = (email: string): boolean => {

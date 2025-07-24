@@ -149,7 +149,7 @@ export const signInWithGoogle = async () => {
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true })
 
     // Configuración para detectar acción del usuario
-    const USER_ACTION_THRESHOLD = 6000 // 6 segundos
+    const USER_ACTION_THRESHOLD = 8000 // 6 segundos
     const signInTimeout = 60000 // 60 segundos timeout general
 
     const signInStartTime = Date.now()
@@ -185,7 +185,7 @@ export const signInWithGoogle = async () => {
     // DELAYS AJUSTADOS SEGÚN LA ACCIÓN DEL USUARIO
     if (isAddingNewAccount) {
       // Agregar otra cuenta - tiempo extendido
-      await new Promise((resolve) => setTimeout(resolve, 8000)) // 8 segundos
+      await new Promise((resolve) => setTimeout(resolve, 10000)) // 10 segundos
     } else {
       // Cuenta del listado - delay mínimo
       await new Promise((resolve) => setTimeout(resolve, 800)) // 0.8 segundos

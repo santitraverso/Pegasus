@@ -388,6 +388,7 @@ const CreateUsuarioScreen: React.FC = () => {
         }
       }
     } catch (error) {
+      console.error("Error saving padre hijos:", error)
       throw error
     }
   }
@@ -567,10 +568,24 @@ const CreateUsuarioScreen: React.FC = () => {
                       }
                     }}
                     style={styles.picker}
+                    mode="dropdown"
+                    dropdownIconColor="#333"
+                    itemStyle={styles.pickerItem}
                   >
-                    <Picker.Item label="-- Seleccionar perfil --" value={null} />
+                    <Picker.Item
+                      label="-- Seleccionar perfil --"
+                      value={null}
+                      color="#666"
+                      style={styles.pickerItemStyle}
+                    />
                     {perfiles.map((perfil) => (
-                      <Picker.Item key={perfil.id} label={perfil.nombre} value={perfil.id} />
+                      <Picker.Item
+                        key={perfil.id}
+                        label={perfil.nombre}
+                        value={perfil.id}
+                        color="#333"
+                        style={styles.pickerItemStyle}
+                      />
                     ))}
                   </Picker>
                 </View>
@@ -606,10 +621,24 @@ const CreateUsuarioScreen: React.FC = () => {
                               selectedValue={pair.cursoId}
                               onValueChange={(value) => updateCursoMateriaPair(index, "cursoId", value)}
                               style={styles.picker}
+                              mode="dropdown"
+                              dropdownIconColor="#333"
+                              itemStyle={styles.pickerItem}
                             >
-                              <Picker.Item label="-- Seleccionar curso --" value={null} />
+                              <Picker.Item
+                                label="-- Seleccionar curso --"
+                                value={null}
+                                color="#666"
+                                style={styles.pickerItemStyle}
+                              />
                               {cursos.map((curso) => (
-                                <Picker.Item key={curso.id} label={curso.nombre_Curso || ""} value={curso.id} />
+                                <Picker.Item
+                                  key={curso.id}
+                                  label={curso.nombre_Curso || ""}
+                                  value={curso.id}
+                                  color="#333"
+                                  style={styles.pickerItemStyle}
+                                />
                               ))}
                             </Picker>
                           </View>
@@ -622,10 +651,24 @@ const CreateUsuarioScreen: React.FC = () => {
                               selectedValue={pair.materiaId}
                               onValueChange={(value) => updateCursoMateriaPair(index, "materiaId", value)}
                               style={styles.picker}
+                              mode="dropdown"
+                              dropdownIconColor="#333"
+                              itemStyle={styles.pickerItem}
                             >
-                              <Picker.Item label="-- Seleccionar materia --" value={null} />
+                              <Picker.Item
+                                label="-- Seleccionar materia --"
+                                value={null}
+                                color="#666"
+                                style={styles.pickerItemStyle}
+                              />
                               {materias.map((materia) => (
-                                <Picker.Item key={materia.id} label={materia.nombre || ""} value={materia.id} />
+                                <Picker.Item
+                                  key={materia.id}
+                                  label={materia.nombre || ""}
+                                  value={materia.id}
+                                  color="#333"
+                                  style={styles.pickerItemStyle}
+                                />
                               ))}
                             </Picker>
                           </View>
@@ -767,15 +810,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 12,
     fontSize: 16,
+    color: "#333",
   },
   pickerContainer: {
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E0E0E0",
     borderRadius: 8,
+    minHeight: 50,
+    overflow: "hidden",
   },
   picker: {
     height: 50,
+    color: "#333",
+    fontSize: 16,
+    backgroundColor: "#FFFFFF",
+  },
+  pickerItem: {
+    backgroundColor: "#FFFFFF",
+    color: "#333",
+    fontSize: 16,
+    height: 50,
+  },
+  pickerItemStyle: {
+    backgroundColor: "#FFFFFF",
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   switchGroup: {
     flexDirection: "row",

@@ -1,3 +1,5 @@
+"use client"
+
 import type React from "react"
 import { useState, useEffect } from "react"
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, ScrollView, ActivityIndicator } from "react-native"
@@ -10,7 +12,6 @@ import AppLayout from "../components/AppLayout"
 import { CONFIG } from "../services/config"
 import type { Contactos } from "../models/contactos"
 import Icon from "react-native-vector-icons/MaterialIcons"
-
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, "CreateContacto">
 type RouteProps = RouteProp<RootStackParamList, "CreateContacto">
@@ -171,100 +172,108 @@ const CreateContactoScreen: React.FC = () => {
 
   return (
     <AppLayout title={title}>
-        <View style={styles.mainContainer}>
-                <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
-                  <View style={styles.header}>
-                    <Text style={styles.headerTitle}>{title}</Text>
-                  </View>
-        
-                  <View style={styles.formContainer}>
-                    <View style={styles.formCard}>
-                      <View style={styles.inputGroup}>
-                        <Text style={styles.label}>Nombre *</Text>
-                        <TextInput
-                          style={styles.input}
-                          value={formData.nombre}
-                          onChangeText={(text) => setFormData({ ...formData, nombre: text })}
-                          placeholder="Ingresa el nombre"
-                          autoCapitalize="words"
-                        />
-                      </View>
+      <View style={styles.mainContainer}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+          <View style={styles.header}>
+            <Text style={styles.headerTitle}>{title}</Text>
+          </View>
 
-                      {showApellido && (
-                        <View style={styles.inputGroup}>
-                        <Text style={styles.label}>Apellido *</Text>
-                        <TextInput
-                          style={styles.input}
-                          value={formData.apellido}
-                          onChangeText={(text) => setFormData({ ...formData, apellido: text })}
-                          placeholder="Ingresa el apellido"
-                          autoCapitalize="words"
-                        />
-                      </View>
-                        )}
+          <View style={styles.formContainer}>
+            <View style={styles.formCard}>
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Nombre *</Text>
+                <TextInput
+                  style={styles.input}
+                  value={formData.nombre}
+                  onChangeText={(text) => setFormData({ ...formData, nombre: text })}
+                  placeholder="Ingresa el nombre"
+                  autoCapitalize="words"
+                />
+              </View>
 
-                      <View style={styles.inputGroup}>
-                        <Text style={styles.label}>Email *</Text>
-                        <TextInput
-                          style={styles.input}
-                          value={formData.mail}
-                          onChangeText={(text) => setFormData({ ...formData, mail: text })}
-                          placeholder="Ingresa el email"
-                          keyboardType="email-address"
-                          autoCapitalize="none"
-                        />
-                      </View>
+              {showApellido && (
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>Apellido *</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={formData.apellido}
+                    onChangeText={(text) => setFormData({ ...formData, apellido: text })}
+                    placeholder="Ingresa el apellido"
+                    autoCapitalize="words"
+                  />
+                </View>
+              )}
 
-                      <View style={styles.inputGroup}>
-                        <Text style={styles.label}>Teléfono *</Text>
-                        <TextInput
-                          style={styles.input}
-                          value={formData.telefono}
-                          onChangeText={(text) => setFormData({ ...formData, telefono: text })}
-                          placeholder="Ingresa el teléfono"
-                          keyboardType="phone-pad"
-                        />
-                      </View>
-        
-                      <View style={styles.inputGroup}>
-                        <Text style={styles.label}>Tipo de Contacto *</Text>
-                        <View style={styles.pickerContainer}>
-                          <Picker
-                            selectedValue={formData.tipoContactoSeleccionado}
-                            onValueChange={(value) => setFormData({ ...formData, tipoContactoSeleccionado: value })}
-                            style={styles.picker}
-                          >
-                            <Picker.Item label="-- Seleccionar un Tipo de Contacto --" value={0} />
-                            <Picker.Item label="Institucional" value={1} />
-                            <Picker.Item label="Docente" value={2} />
-                          </Picker>
-                        </View>
-                       </View>
-                    </View>
-                  </View>
-                </ScrollView>
-        
-                <View style={styles.floatingFooter}>
-                  <TouchableOpacity
-                    style={[styles.saveButton, saving && styles.disabledButton]}
-                    onPress={handleSave}
-                    disabled={saving}
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Email *</Text>
+                <TextInput
+                  style={styles.input}
+                  value={formData.mail}
+                  onChangeText={(text) => setFormData({ ...formData, mail: text })}
+                  placeholder="Ingresa el email"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Teléfono *</Text>
+                <TextInput
+                  style={styles.input}
+                  value={formData.telefono}
+                  onChangeText={(text) => setFormData({ ...formData, telefono: text })}
+                  placeholder="Ingresa el teléfono"
+                  keyboardType="phone-pad"
+                />
+              </View>
+
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Tipo de Contacto *</Text>
+                <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={formData.tipoContactoSeleccionado}
+                    onValueChange={(value) => setFormData({ ...formData, tipoContactoSeleccionado: value })}
+                    style={styles.picker}
+                    mode="dropdown"
+                    dropdownIconColor="#333"
+                    itemStyle={styles.pickerItem}
                   >
-                    {saving ? (
-                      <ActivityIndicator size="small" color="#FFFFFF" />
-                    ) : (
-                      <>
-                        <Icon name="save" size={20} color="#FFFFFF" />
-                        <Text style={styles.saveButtonText}>Guardar</Text>
-                      </>
-                    )}
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                    <Icon name="arrow-back" size={20} color="#FFFFFF" />
-                    <Text style={styles.backButtonText}>Atrás</Text>
-                  </TouchableOpacity>
+                    <Picker.Item
+                      label="-- Seleccionar un Tipo de Contacto --"
+                      value={0}
+                      color="#666"
+                      style={styles.pickerItemStyle}
+                    />
+                    <Picker.Item label="Institucional" value={1} color="#333" style={styles.pickerItemStyle} />
+                    <Picker.Item label="Docente" value={2} color="#333" style={styles.pickerItemStyle} />
+                  </Picker>
                 </View>
               </View>
+            </View>
+          </View>
+        </ScrollView>
+
+        <View style={styles.floatingFooter}>
+          <TouchableOpacity
+            style={[styles.saveButton, saving && styles.disabledButton]}
+            onPress={handleSave}
+            disabled={saving}
+          >
+            {saving ? (
+              <ActivityIndicator size="small" color="#FFFFFF" />
+            ) : (
+              <>
+                <Icon name="save" size={20} color="#FFFFFF" />
+                <Text style={styles.saveButtonText}>Guardar</Text>
+              </>
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" size={20} color="#FFFFFF" />
+            <Text style={styles.backButtonText}>Atrás</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </AppLayout>
   )
 }
@@ -302,15 +311,35 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 10,
     fontSize: 16,
+    color: "#333",
   },
   pickerContainer: {
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF",
     borderWidth: 1,
-    borderColor: "#ced4da",
-    borderRadius: 4,
+    borderColor: "#E0E0E0",
+    borderRadius: 8,
+    minHeight: 50,
+    overflow: "hidden",
   },
   picker: {
+    minHeight: 50,
+    backgroundColor: "#FFFFFF",
+    color: "#333",
+    fontSize: 16,
+  },
+  pickerItem: {
+    backgroundColor: "#FFFFFF",
+    fontSize: 16,
     height: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  pickerItemStyle: {
+    backgroundColor: "#FFFFFF",
+    fontSize: 16,
+    height: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   actionButtonsContainer: {
     flexDirection: "row",
