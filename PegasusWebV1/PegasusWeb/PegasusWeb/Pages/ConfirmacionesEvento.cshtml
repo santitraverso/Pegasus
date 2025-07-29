@@ -15,7 +15,7 @@
     <hr />
     <br />
     <h5>Evento: @Model.Evento?.Nombre</h5>
-    <p><strong>Fecha:</strong> @Model.Evento?.Fecha.ToShortDateString()</p>
+    <p><strong>Fecha:</strong> @Model.Evento?.Fecha.ToString("dd/MM/yyyy")</p>
     @if (Model.Integrantes.Count > 0)
     {
         <div class="row">

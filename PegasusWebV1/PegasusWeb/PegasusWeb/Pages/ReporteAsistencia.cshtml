@@ -19,7 +19,7 @@
 
     @if (Model.Alumnos != null && Model.Alumnos.Count > 0)
     {
-        <h5>Asistencia para @Model.Fecha.ToShortDateString()</h5>
+        <h5>Asistencia para @Model.Fecha.ToString("dd/MM/yyyy")</h5>
             <table class="table">
                 <thead>
                     <tr>
@@ -56,7 +56,7 @@
     <script>
         const Model = {
             Alumnos: @Html.Raw(JsonConvert.SerializeObject(Model.Alumnos)),
-            Fecha: @Html.Raw(JsonConvert.SerializeObject(Model.Fecha.ToShortDateString()))
+            Fecha: @Html.Raw(JsonConvert.SerializeObject(Model.Fecha.ToString("dd/MM/yyyy")))
             };
     </script>
 </body>
