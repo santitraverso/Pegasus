@@ -14,3 +14,11 @@ PubTmp/
 *.staticwebassets.*
 *.pubxml.user
 PublishOutputs*.txt
+*.vscode/
+*.vsidx
+DesignTimeBuild/
+*.log
+.dbcache.v2
+*.pubxml.user
+*.Publish.xml.user
+*.tmp
