@@ -1,12 +1,8 @@
-"use client"
-
 import type React from "react"
 import { useEffect, useState } from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import type { FirebaseAuthTypes } from "@react-native-firebase/auth"
-
-// Pantallas
 import LoginScreen from "../screens/LoginScreen"
 import HomeScreen from "../screens/HomeScreen"
 import SplashScreen from "../screens/SplashScreen"
@@ -42,7 +38,8 @@ import ConfirmacionesEventoScreen from "../screens/ConfirmacionesEventoScreen"
 
 import { AuthProvider } from "../context/AuthContext"
 import { UserProvider } from "../context/UserContext"
-import { subscribeToAuthChanges, getLastAuthError } from "../services/authService"
+import { subscribeToAuthChanges, getLastAuthError, refreshUserToken, getLoginInProgress } from "../services/authService"
+import { hasValidCachedData, getUserData } from "../services/userService"
 
 // Tipos para las rutas con parámetros
 export type RootStackParamList = {
@@ -157,55 +154,124 @@ const AuthenticatedRoutes = () => {
 const AppNavigator: React.FC = () => {
   const [initializing, setInitializing] = useState(true)
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null)
-  const [isLoginProcessing, setIsLoginProcessing] = useState(false)
+  const [isValidatingUser, setIsValidatingUser] = useState(false)
 
   useEffect(() => {
     // Manejar cambios de estado de autenticación
-    const handleAuthStateChanged = (authUser: FirebaseAuthTypes.User | null) => {
+    const handleAuthStateChanged = async (authUser: FirebaseAuthTypes.User | null) => {
+      console.log("🔐 Estado de autenticación cambió:", authUser ? "Usuario autenticado" : "Sin usuario")
 
-
-      if (authUser) {
+      if (authUser && authUser.email) {
         // Usuario autenticado en Firebase
+        console.log("👤 Usuario Firebase detectado:", authUser.email)
+
         // Verificar inmediatamente si hay errores
         const immediateError = getLastAuthError()
         if (immediateError) {
+          console.log("❌ Error inmediato detectado:", immediateError)
           setUser(null)
-          setIsLoginProcessing(false)
+          setIsValidatingUser(false)
           if (initializing) setInitializing(false)
           return
         }
 
-        setIsLoginProcessing(true)
+        // Si hay un login en progreso, esperar a que termine
+        if (getLoginInProgress()) {
+          console.log("⏳ Login en progreso detectado, esperando...")
+          setIsValidatingUser(true)
+          
+          // Esperar hasta que el login termine
+          const checkLoginComplete = setInterval(async () => {
+            if (!getLoginInProgress()) {
+              clearInterval(checkLoginComplete)
+              console.log("✅ Login completado, verificando cache...")
+              
+              // Ahora verificar cache - verificar que email no sea null
+              if (authUser.email) {
+                const hasCachedData = await hasValidCachedData(authUser.email)
+                if (hasCachedData) {
+                  console.log("✅ Datos cacheados encontrados después del login")
+                  setUser(authUser)
+                } else {
+                  console.log("❌ No hay datos cacheados después del login")
+                  setUser(null)
+                }
+              } else {
+                console.log("❌ Email del usuario es null")
+                setUser(null)
+              }
+              setIsValidatingUser(false)
+            }
+          }, 500)
+          
+          // Timeout de seguridad
+          setTimeout(() => {
+            clearInterval(checkLoginComplete)
+            if (getLoginInProgress()) {
+              console.log("⚠️ Timeout esperando login, procediendo...")
+              setIsValidatingUser(false)
+              setUser(null)
+            }
+          }, 15000) // 15 segundos timeout
+          
+          if (initializing) setInitializing(false)
+          return
+        }
 
-        // Dar tiempo para que el proceso de login complete, pero verificar errores
-        const checkInterval = setInterval(() => {
-          const currentError = getLastAuthError()
-          if (currentError) {
-            clearInterval(checkInterval)
+        setIsValidatingUser(true)
+
+        try {
+          // Verificar si hay datos cacheados válidos - verificar que email no sea null
+          const userEmail = authUser.email
+          if (!userEmail) {
+            console.log("❌ Email del usuario es null")
             setUser(null)
-            setIsLoginProcessing(false)
+            setIsValidatingUser(false)
+            if (initializing) setInitializing(false)
             return
           }
-        }, 500)
-        
-        // Timeout final después de 3 segundos
-        setTimeout(() => {
-          clearInterval(checkInterval)
 
-          // Verificación final de errores
-          const finalError = getLastAuthError()
-          if (finalError) {
-            setUser(null)
-            setIsLoginProcessing(false)
-          } else {
+          const hasCachedData = await hasValidCachedData(userEmail)
+
+          if (hasCachedData) {
+            console.log("✅ Datos cacheados válidos encontrados")
             setUser(authUser)
-            setIsLoginProcessing(false)
+            setIsValidatingUser(false)
+          } else {
+            console.log("📱 No hay datos cacheados válidos, intentando refrescar token...")
+
+            // Intentar obtener nuevo token automáticamente
+            const newToken = await refreshUserToken()
+
+            if (newToken) {
+              console.log("🔄 Token refrescado, validando con backend...")
+
+              try {
+                // Intentar obtener datos del usuario con el nuevo token
+                await getUserData(userEmail, newToken)
+                console.log("✅ Datos del usuario actualizados exitosamente")
+                setUser(authUser)
+              } catch (backendError: any) {
+                console.error("❌ Error validando con backend:", backendError.message)
+                setUser(null)
+              }
+            } else {
+              console.log("❌ No se pudo refrescar el token, requiere login manual")
+              setUser(null)
+            }
+
+            setIsValidatingUser(false)
           }
-        }, 3000)
+        } catch (error: any) {
+          console.error("❌ Error en validación de usuario:", error.message)
+          setUser(null)
+          setIsValidatingUser(false)
+        }
       } else {
-        // Usuario no autenticado
+        // Usuario no autenticado o sin email
+        console.log("🚪 Usuario no autenticado o sin email")
         setUser(null)
-        setIsLoginProcessing(false)
+        setIsValidatingUser(false)
       }
 
       if (initializing) setInitializing(false)
@@ -218,8 +284,9 @@ const AppNavigator: React.FC = () => {
     return unsubscribe
   }, [initializing])
 
-  if (initializing || isLoginProcessing) {
-    return <SplashScreen message={isLoginProcessing ? "Validando usuario..." : "Cargando..."} />
+  if (initializing || isValidatingUser) {
+    const message = isValidatingUser ? "Validando usuario..." : "Cargando..."
+    return <SplashScreen message={message} />
   }
 
   return (

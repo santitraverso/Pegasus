@@ -38,6 +38,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       const currentUser = getCurrentUser()
       if (!currentUser || !currentUser.email) {
+        console.log("❌ UserContext: No hay usuario autenticado")
         setUserData(null)
         setLoading(false)
         return
@@ -46,77 +47,54 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // Verificar si hay un error de autenticación pendiente
       const pendingError = getLastAuthError()
       if (pendingError) {
+        console.log("❌ UserContext: Error de autenticación pendiente:", pendingError)
         setError(pendingError)
         setUserData(null)
         setLoading(false)
         return
       }
 
-      console.log("⏳ UserContext: Esperando para establecimiento del cache...")
+      console.log("📱 UserContext: Cargando datos desde cache...")
 
-      // Delay inicial más generoso para permitir que el cache se establezca
-      // Esto cubre tanto cuentas nuevas como existentes
-      await new Promise((resolve) => setTimeout(resolve, 3000))
+      try {
+        // Intentar cargar datos desde AsyncStorage (ya validados por AppNavigator)
+        const data = await getUserData(currentUser.email)
+        console.log("✅ UserContext: Datos cargados exitosamente")
+        setUserData(data)
+      } catch (cacheError: any) {
+        console.error("❌ UserContext: Error cargando datos:", cacheError.message)
 
-      // Configurar reintentos más generosos para cubrir casos de cache lento
-      const maxRetries = 5
-      const retryDelay = 3000
+        // Manejar diferentes tipos de errores
+        let errorMessage = "Error al cargar datos del usuario"
 
-      let retryCount = 0
-
-      while (retryCount < maxRetries) {
-        try {
-          console.log(`🔄 UserContext: Intento ${retryCount + 1} de ${maxRetries} para cargar datos del cache`)
-
-          // Llamar getUserData sin googleToken para usar cache
-          const data = await getUserData(currentUser.email)
-          console.log("✅ UserContext: Datos cargados exitosamente desde cache")
-          setUserData(data)
-          return // Salir si fue exitoso
-        } catch (cacheError: any) {
-          console.log(`❌ UserContext: Error en intento ${retryCount + 1}:`, cacheError.message)
-
-          retryCount++
-
-          if (retryCount < maxRetries) {
-            console.log(`⏳ UserContext: Esperando ${retryDelay}ms antes del siguiente intento...`)
-            await new Promise((resolve) => setTimeout(resolve, retryDelay))
-          } else {
-            // Si es el último intento, lanzar el error
-            console.log("❌ UserContext: Todos los intentos fallaron")
-            throw cacheError
-          }
+        if (cacheError.errorCode === "USER_NOT_FOUND") {
+          errorMessage = "Usuario no encontrado. Póngase en contacto con la institución."
+        } else if (cacheError.errorCode === "USER_INACTIVE") {
+          errorMessage = "Usuario inactivo. Contacte al administrador."
+        } else if (cacheError.errorCode === "NO_PROFILE_ASSIGNED") {
+          errorMessage = "Usuario sin perfil asignado. Contacte al administrador."
+        } else if (cacheError.errorCode === "INVALID_GOOGLE_TOKEN") {
+          errorMessage = "Error de autenticación con Google. Intenta nuevamente."
+        } else if (cacheError.errorCode === "EMAIL_MISMATCH") {
+          errorMessage = "El email de Google no coincide. Verifica tu cuenta."
+        } else if (cacheError.errorCode === "INVALID_EMAIL") {
+          errorMessage = "El formato del email no es válido."
+        } else if (cacheError.errorCode === "MISSING_TOKEN") {
+          errorMessage = "Error de autenticación. Intenta nuevamente."
+        } else if (cacheError.errorCode === "INTERNAL_ERROR") {
+          errorMessage = "Error interno del servidor. Intenta más tarde."
+        } else if (cacheError.name === "NO_CACHED_DATA") {
+          errorMessage = "No hay datos de usuario cacheados válidos. El usuario debe hacer login nuevamente."
+        } else if (cacheError.message) {
+          errorMessage = cacheError.message
         }
+
+        setError(errorMessage)
+        setUserData(null)
       }
     } catch (error: any) {
-      console.error("❌ UserContext: Error final en fetchUserData:", error)
-
-      // Manejar diferentes tipos de errores
-      let errorMessage = "Error al cargar datos del usuario"
-
-      if (error.errorCode === "USER_NOT_FOUND") {
-        errorMessage = "Usuario no encontrado. Póngase en contacto con la institución."
-      } else if (error.errorCode === "USER_INACTIVE") {
-        errorMessage = "Usuario inactivo. Contacte al administrador."
-      } else if (error.errorCode === "NO_PROFILE_ASSIGNED") {
-        errorMessage = "Usuario sin perfil asignado. Contacte al administrador."
-      } else if (error.errorCode === "INVALID_GOOGLE_TOKEN") {
-        errorMessage = "Error de autenticación con Google. Intenta nuevamente."
-      } else if (error.errorCode === "EMAIL_MISMATCH") {
-        errorMessage = "El email de Google no coincide. Verifica tu cuenta."
-      } else if (error.errorCode === "INVALID_EMAIL") {
-        errorMessage = "El formato del email no es válido."
-      } else if (error.errorCode === "MISSING_TOKEN") {
-        errorMessage = "Error de autenticación. Intenta nuevamente."
-      } else if (error.errorCode === "INTERNAL_ERROR") {
-        errorMessage = "Error interno del servidor. Intenta más tarde."
-      } else if (error.name === "NO_CACHED_DATA") {
-        errorMessage = "No hay datos de usuario cacheados válidos. El usuario debe hacer login nuevamente."
-      } else if (error.message) {
-        errorMessage = error.message
-      }
-
-      setError(errorMessage)
+      console.error("❌ UserContext: Error inesperado:", error)
+      setError("Error inesperado al cargar datos del usuario")
       setUserData(null)
     } finally {
       setLoading(false)
@@ -126,13 +104,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Cargar datos del usuario al montar el componente
   useEffect(() => {
     console.log("🚀 UserContext: Iniciando carga de datos del usuario")
-
-    // Delay inicial antes de empezar a cargar
-    const timer = setTimeout(() => {
-      fetchUserData()
-    }, 1000)
-
-    return () => clearTimeout(timer)
+    fetchUserData()
   }, [])
 
   const refreshUserData = async () => {
