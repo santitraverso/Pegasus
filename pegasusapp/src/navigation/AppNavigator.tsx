@@ -175,68 +175,37 @@ const AppNavigator: React.FC = () => {
           return
         }
 
-        // Si hay un login en progreso, esperar a que termine
-        if (getLoginInProgress()) {
-          console.log("⏳ Login en progreso detectado, esperando...")
-          setIsValidatingUser(true)
-          
-          // Esperar hasta que el login termine
-          const checkLoginComplete = setInterval(async () => {
-            if (!getLoginInProgress()) {
-              clearInterval(checkLoginComplete)
-              console.log("✅ Login completado, verificando cache...")
-              
-              // Ahora verificar cache - verificar que email no sea null
-              if (authUser.email) {
-                const hasCachedData = await hasValidCachedData(authUser.email)
-                if (hasCachedData) {
-                  console.log("✅ Datos cacheados encontrados después del login")
-                  setUser(authUser)
-                } else {
-                  console.log("❌ No hay datos cacheados después del login")
-                  setUser(null)
-                }
-              } else {
-                console.log("❌ Email del usuario es null")
-                setUser(null)
-              }
-              setIsValidatingUser(false)
-            }
-          }, 500)
-          
-          // Timeout de seguridad
-          setTimeout(() => {
-            clearInterval(checkLoginComplete)
-            if (getLoginInProgress()) {
-              console.log("⚠️ Timeout esperando login, procediendo...")
-              setIsValidatingUser(false)
-              setUser(null)
-            }
-          }, 15000) // 15 segundos timeout
-          
-          if (initializing) setInitializing(false)
-          return
-        }
-
         setIsValidatingUser(true)
 
         try {
-          // Verificar si hay datos cacheados válidos - verificar que email no sea null
           const userEmail = authUser.email
-          if (!userEmail) {
-            console.log("❌ Email del usuario es null")
-            setUser(null)
-            setIsValidatingUser(false)
-            if (initializing) setInitializing(false)
-            return
+          
+          // Si hay un login en progreso, esperar con timeout más corto
+          if (getLoginInProgress()) {
+            console.log("⏳ Login en progreso detectado, esperando...")
+            
+            // Esperar hasta que el login termine con timeout
+            let attempts = 0
+            const maxAttempts = 30 // 15 segundos máximo
+            
+            while (getLoginInProgress() && attempts < maxAttempts) {
+              await new Promise(resolve => setTimeout(resolve, 500))
+              attempts++
+            }
+            
+            if (getLoginInProgress()) {
+              console.log("⚠️ Timeout esperando login, procediendo de todas formas...")
+            } else {
+              console.log("✅ Login completado")
+            }
           }
 
+          // Verificar si hay datos cacheados válidos
           const hasCachedData = await hasValidCachedData(userEmail)
 
           if (hasCachedData) {
             console.log("✅ Datos cacheados válidos encontrados")
             setUser(authUser)
-            setIsValidatingUser(false)
           } else {
             console.log("📱 No hay datos cacheados válidos, intentando refrescar token...")
 
@@ -259,12 +228,11 @@ const AppNavigator: React.FC = () => {
               console.log("❌ No se pudo refrescar el token, requiere login manual")
               setUser(null)
             }
-
-            setIsValidatingUser(false)
           }
         } catch (error: any) {
           console.error("❌ Error en validación de usuario:", error.message)
           setUser(null)
+        } finally {
           setIsValidatingUser(false)
         }
       } else {

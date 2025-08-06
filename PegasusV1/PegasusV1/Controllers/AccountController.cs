@@ -214,7 +214,7 @@ namespace PegasusV1.Controllers
                 if (usuario.Activo != true)
                 {
                     _logger.LogWarning("Usuario inactivo intentó hacer login: {Email}", request.Email);
-                    return Forbid(new { message = "Usuario inactivo. Contacte al administrador.", errorCode = "USER_INACTIVE" }.ToString());
+                    return NotFound(new { message = "Usuario inactivo. Contacte al administrador.", errorCode = "USER_INACTIVE" });
                 }
 
                 _logger.LogInformation("Paso 5: Obteniendo perfil del usuario...");

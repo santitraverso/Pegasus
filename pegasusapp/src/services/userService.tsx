@@ -136,10 +136,18 @@ const saveUserDataToStorage = async (userData: AppUserData, email: string): Prom
     }
 
     await AsyncStorage.setItem(USER_DATA_KEY, JSON.stringify(cacheData))
+    
+    // Verificar que realmente se guardó
+    const verification = await AsyncStorage.getItem(USER_DATA_KEY)
+    if (!verification) {
+      throw new Error("Los datos no se guardaron correctamente")
+    }
+    
     cachedUserData = cacheData
-    console.log("✅ Datos del usuario guardados en AsyncStorage")
+    console.log("✅ Datos del usuario guardados y verificados en AsyncStorage")
   } catch (error) {
     console.error("❌ Error guardando datos en AsyncStorage:", error)
+    throw error // Re-lanzar el error para que se maneje arriba
   }
 }
 
@@ -190,7 +198,28 @@ const getUserDataReal = async (email: string, googleToken?: string): Promise<App
     if (googleToken) {
       console.log("🔐 Login inicial con token de Google")
       const userData = await loginUserWithModules(email, googleToken)
-      await saveUserDataToStorage(userData, email)
+      
+      // Intentar guardar con reintentos
+      let saveAttempts = 0
+      const maxSaveAttempts = 3
+      
+      while (saveAttempts < maxSaveAttempts) {
+        try {
+          await saveUserDataToStorage(userData, email)
+          break // Éxito, salir del loop
+        } catch (saveError) {
+          saveAttempts++
+          console.error(`❌ Error guardando datos (intento ${saveAttempts}):`, saveError)
+          
+          if (saveAttempts < maxSaveAttempts) {
+            console.log("⏳ Reintentando guardar datos...")
+            await new Promise(resolve => setTimeout(resolve, 1000))
+          } else {
+            console.error("❌ No se pudieron guardar los datos después de múltiples intentos")
+          }
+        }
+      }
+      
       console.log("✅ Proceso de login completado exitosamente")
       return userData
     } else {

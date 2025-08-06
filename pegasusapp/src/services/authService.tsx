@@ -54,7 +54,6 @@ const markFirstLoginComplete = async (): Promise<void> => {
   try {
     await AsyncStorage.setItem("hasEverLoggedIn", "true")
   } catch (error) {
-    // Ignorar error
   }
 }
 
@@ -144,7 +143,7 @@ const callBackendWithRetry = async (
   retryCount = 0,
   isAddingNewAccount = false,
 ): Promise<any> => {
-  const maxRetries = 3 // Aumentado a 3 reintentos
+  const maxRetries = 3 
   const baseDelay = isAddingNewAccount ? 5000 : 2000 // Aumentado el delay base para cuentas nuevas
 
   try {
@@ -156,14 +155,14 @@ const callBackendWithRetry = async (
     console.log(`❌ Error en backend (intento ${retryCount + 1}):`, backendError.message)
     console.log(`❌ Código de error:`, backendError.errorCode)
     
-    // Si es INTERNAL_ERROR y no hemos agotado los reintentos
+    // Si es INTERNAL_ERROR y no agotamos los reintentos
     if (
       retryCount < maxRetries &&
       (backendError.errorCode === "INTERNAL_ERROR" ||
         backendError.status >= 500 ||
         backendError.message?.includes("network") ||
         backendError.message?.includes("timeout") ||
-        backendError.message?.includes("USER_NOT_FOUND")) // Agregar USER_NOT_FOUND para cuentas nuevas
+        backendError.message?.includes("USER_NOT_FOUND"))
     ) {
       const delay = baseDelay * (retryCount + 1)
       console.log(`⏳ Esperando ${delay}ms antes del siguiente intento (${isAddingNewAccount ? 'cuenta nueva' : 'cuenta existente'})...`)
@@ -216,7 +215,7 @@ export const signInWithGoogle = async () => {
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true })
 
     // Configuración para detectar acción del usuario
-    const USER_ACTION_THRESHOLD = 6000 // 6 segundos
+    const USER_ACTION_THRESHOLD = 9000 // 9 segundos
     const signInTimeout = 60000 // 60 segundos timeout general
 
     const signInStartTime = Date.now()
@@ -310,13 +309,44 @@ export const signInWithGoogle = async () => {
       // Llamar al backend con retry
       const userData = await callBackendWithRetry(userEmail, idToken, 0, isAddingNewAccount)
 
-      // Pausa final - MÁS TIEMPO PARA CUENTAS NUEVAS
+      // Asegurar que los datos se guarden antes de marcar como completado
+      console.log("💾 Asegurando que los datos estén guardados...")
+      
+      // Verificar que los datos realmente se guardaron
+      let dataVerified = false
+      let verificationAttempts = 0
+      const maxVerificationAttempts = 5
+      
+      while (!dataVerified && verificationAttempts < maxVerificationAttempts) {
+        try {
+          const { hasValidCachedData } = await import('./userService')
+          const hasData = await hasValidCachedData(userEmail)
+          if (hasData) {
+            dataVerified = true
+            console.log("✅ Datos verificados en AsyncStorage")
+          } else {
+            verificationAttempts++
+            console.log(`⏳ Intento ${verificationAttempts}: Datos aún no disponibles, esperando...`)
+            await new Promise((resolve) => setTimeout(resolve, 500))
+          }
+        } catch (error) {
+          verificationAttempts++
+          console.log(`❌ Error verificando datos (intento ${verificationAttempts}):`, error)
+          await new Promise((resolve) => setTimeout(resolve, 500))
+        }
+      }
+      
+      if (!dataVerified) {
+        console.log("⚠️ No se pudo verificar que los datos se guardaron, pero continuando...")
+      }
+
+      // Pausa final
       if (isAddingNewAccount) {
-        console.log("⏳ Pausa final de 3 segundos (cuenta nueva)...")
-        await new Promise((resolve) => setTimeout(resolve, 3000)) // Aumentado a 3 segundos
+        console.log("⏳ Pausa final de 2 segundos (cuenta nueva)...")
+        await new Promise((resolve) => setTimeout(resolve, 2000))
       } else {
-        console.log("⏳ Pausa final de 300ms (cuenta existente)...")
-        await new Promise((resolve) => setTimeout(resolve, 300)) // Aumentado ligeramente
+        console.log("⏳ Pausa final de 500ms (cuenta existente)...")
+        await new Promise((resolve) => setTimeout(resolve, 500))
       }
 
       // Marcar primera vez solo si aplica
@@ -328,7 +358,7 @@ export const signInWithGoogle = async () => {
       
       // MARCAR LOGIN COMPLETADO
       setLoginInProgress(false)
-      
+
       return {
         firebaseUser: userCredential.user,
         userData: userData,
