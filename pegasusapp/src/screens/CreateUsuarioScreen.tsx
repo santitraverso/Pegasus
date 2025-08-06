@@ -64,7 +64,7 @@ const CreateUsuarioScreen: React.FC = () => {
 
   const isEditing = !!usuarioId
   const isDocente = usuario.id_Perfil === 3
-  const isPadre = usuario.id_Perfil === 4 // Asumiendo que 4 es el ID del perfil Padre
+  const isPadre = usuario.id_Perfil === 4
 
   // Cargar datos iniciales
   useEffect(() => {
@@ -147,7 +147,7 @@ const CreateUsuarioScreen: React.FC = () => {
   // Cargar hijos disponibles (usuarios con perfil Alumno)
   const loadHijosDisponibles = async () => {
     try {
-      const queryParam = encodeURIComponent(`x=>x.id_perfil==2`) // Asumiendo que 2 es el ID del perfil Alumno
+      const queryParam = encodeURIComponent(`x=>x.id_perfil==2`)
       const response = await fetch(`${CONFIG.API_BASE_URL}/Usuario/GetUsuariosForCombo?query=${queryParam}`)
       if (response.ok) {
         const data = await response.json()
@@ -477,7 +477,7 @@ const CreateUsuarioScreen: React.FC = () => {
     setCursoMateriaPairs(newPairs)
   }
 
-  // Renderizar item de hijo - CAMBIADO: Ya no es para FlatList
+  // Renderizar item de hijo
   const renderHijoItem = (item: Usuario, index: number) => (
     <TouchableOpacity
       key={item.id?.toString() || index.toString()}
@@ -683,7 +683,7 @@ const CreateUsuarioScreen: React.FC = () => {
                 </View>
               )}
 
-              {/* Sección para padres - ARREGLADA: Sin FlatList */}
+              {/* Sección para padres*/}
               {isPadre && (
                 <View style={styles.padreSection}>
                   <View style={styles.sectionHeader}>
@@ -892,12 +892,12 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   hijosListContainer: {
-    height: 250, // Fixed height instead of maxHeight
+    height: 250, 
     borderWidth: 1,
     borderColor: "#E0E0E0",
     borderRadius: 8,
     backgroundColor: "#FFFFFF",
-    overflow: "hidden", // Ensure content doesn't overflow
+    overflow: "hidden", 
   },
   hijoItem: {
     flexDirection: "row",

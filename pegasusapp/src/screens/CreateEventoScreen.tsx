@@ -123,12 +123,6 @@ const CreateEventoScreen: React.FC = () => {
     })
   }
 
-  const tipoDestinatarioOptions = [
-    { label: "Solo Alumnos", value: 1 },
-    { label: "Solo Padres", value: 2 },
-    { label: "Alumnos y Padres", value: 3 },
-  ]
-
   if (loadingData) {
     return (
       <AppLayout title={isEditing ? "Editar Evento" : "Crear Evento"} showLoadingOverlay={true}>
@@ -143,8 +137,6 @@ const CreateEventoScreen: React.FC = () => {
   return (
     <AppLayout title={isEditing ? "Editar Evento" : "Crear Evento"}>
       <View style={styles.container}>
-        {/* Buscador */}
-
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
               <Text style={styles.headerTitle}>{isEditing ? "Editar Evento" : "Crear Evento"}</Text>
@@ -190,12 +182,15 @@ const CreateEventoScreen: React.FC = () => {
               <View style={styles.pickerContainer}>
                 <Picker
                   selectedValue={tipoDestinatario}
-                  onValueChange={(itemValue) => setTipoDestinatario(itemValue)}
+                  onValueChange={(value) => setTipoDestinatario(value)}
                   style={styles.picker}
+                  mode="dropdown"
+                  dropdownIconColor="#333"
+                  itemStyle={styles.pickerItem}
                 >
-                  {tipoDestinatarioOptions.map((option) => (
-                    <Picker.Item key={option.value} label={option.label} value={option.value} />
-                  ))}
+                  <Picker.Item label="Solo Alumnos" value={1} color="#333" style={styles.pickerItemStyle} />
+                  <Picker.Item label="Solo Padres" value={2} color="#333" style={styles.pickerItemStyle} />
+                  <Picker.Item label="Alumnos y Padres" value={3} color="#333" style={styles.pickerItemStyle} />
                 </Picker>
               </View>
             </View>
@@ -272,28 +267,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
   },
-  searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    margin: 16,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-  },
-  searchIcon: {
-    marginRight: 8,
-  },
-  searchInput: {
-    flex: 1,
-    paddingVertical: 12,
-    fontSize: 16,
-    color: "#333",
-  },
   content: {
     flex: 1,
   },
@@ -354,10 +327,28 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E0E0E0",
     borderRadius: 8,
+    minHeight: 50,
     overflow: "hidden",
   },
   picker: {
+    minHeight: 50,
+    backgroundColor: "#FFFFFF",
+    color: "#333",
+    fontSize: 16,
+  },
+  pickerItem: {
+    backgroundColor: "#FFFFFF",
+    fontSize: 16,
     height: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  pickerItemStyle: {
+    backgroundColor: "#FFFFFF",
+    fontSize: 16,
+    height: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   footerContainer: {
     backgroundColor: "#FFFFFF",

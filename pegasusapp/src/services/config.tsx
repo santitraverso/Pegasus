@@ -4,8 +4,8 @@ const API_URLS = {
   // Para emulador Android con HTTPS
   ANDROID_EMULATOR: 'http://10.0.2.2:5130',
   
-  // Para dispositivo físico (reemplaza con tu IP real)
-  PHYSICAL_DEVICE: 'https://192.168.1.100:5130', // Tu IP local
+  // Para dispositivo físico
+  PHYSICAL_DEVICE: 'https://192.168.1.100:5130', // IP local
   
   // Para iOS simulator
   IOS_SIMULATOR: 'https://localhost:7130/api',

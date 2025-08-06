@@ -43,6 +43,8 @@ namespace PegasusWeb.Pages
             IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
             IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
 
+            IdComunicado = 0;
+
             if (IdPerfil == (int)TipoPerfil.Alumno)
             {
                 IntegrantesCurso = await GetIntegrantesCursosAsync(0, IdUsuario);
