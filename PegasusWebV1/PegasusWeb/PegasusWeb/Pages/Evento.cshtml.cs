@@ -30,12 +30,26 @@ namespace PegasusWeb.Pages
         public int IdUsuario { get; set; }
 
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
-            IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            // Verificar sesión válida
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            int idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
+            if (string.IsNullOrEmpty(token) || idUsuario <= 0 || idPerfil <= 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
+            IdPerfil = idPerfil; 
+            IdUsuario = idUsuario;
+
             var eventos = await GetEventosAsync(IdPerfil);
-            Eventos = eventos.Where(e => e.Fecha >= DateTime.Today).OrderByDescending(e=> e.Fecha).ToList();
+            Eventos = eventos.Where(e => e.Fecha >= DateTime.Today).OrderByDescending(e => e.Fecha).ToList();
+
+            return Page();
         }
 
         public async Task<List<Evento>> GetEventosAsync(long idPerfil)

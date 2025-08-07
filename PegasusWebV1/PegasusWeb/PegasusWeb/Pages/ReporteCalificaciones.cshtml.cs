@@ -31,11 +31,20 @@ namespace PegasusWeb.Pages
         [TempData]
         public string? Modulo { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            // Verificar sesión válida
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            int idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
+            if (string.IsNullOrEmpty(token) || idUsuario <= 0 || idPerfil <= 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
             var alumnos = new List<IntegrantesCursos>();
-            var idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
-            var idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
 
             if (idPerfil == (int)TipoPerfil.Alumno)
             {
@@ -71,6 +80,8 @@ namespace PegasusWeb.Pages
 
             var materia = await GetNombreMateriaAsync(Materia);
             Nombre = materia.Nombre;
+
+            return Page();
         }
 
 

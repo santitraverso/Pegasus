@@ -24,9 +24,22 @@ namespace PegasusWeb.Pages
         public int IdMateria { get; set; }
         [TempData]
         public int IdContenido { get; set; }
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            // Verificar sesión válida
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            int idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
+            if (string.IsNullOrEmpty(token) || idUsuario <= 0 || idPerfil <= 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
             Contenidos = await GetContenidosAsync(IdMateria);
+
+            return Page();
         }
 
         async Task<List<ContenidoMaterias>> GetContenidosAsync(int materia)

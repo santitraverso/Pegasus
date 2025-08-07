@@ -38,15 +38,28 @@ namespace PegasusWeb.Pages
         public string? Modulo { get; set; }
 
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            if(IdIntegrante == 0 || Materia == 0)
-                RedirectToPage("ListaMaterias");
+            // Verificar sesión válida
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            int idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
+            if (string.IsNullOrEmpty(token) || idUsuario <= 0 || idPerfil <= 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
+            if (IdIntegrante == 0 || Materia == 0)
+                return RedirectToPage("ListaMaterias");
 
             Alumno = await GenerarAlumno(IdCurso, IdIntegrante, Materia);
 
             if (Nuevo)
                 Alumno.Usuario.Calificaciones = new List<Calificaciones> { };
+
+            return Page();
         }
 
         private async Task<IntegrantesMaterias> GenerarAlumno(int idCurso, int idIntegrante, int materia)

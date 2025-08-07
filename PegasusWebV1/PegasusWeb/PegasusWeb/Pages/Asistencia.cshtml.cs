@@ -41,13 +41,24 @@ namespace PegasusWeb.Pages
         [TempData]
         public int IdUsuario { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            // Verificar sesión válida
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            int idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
+            if (string.IsNullOrEmpty(token) || idUsuario <= 0 || idPerfil <= 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
             if (Fecha != DateTime.MinValue)
                 FechaAsistencia = Fecha;
 
-            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
-            IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            IdPerfil = idPerfil; 
+            IdUsuario = idUsuario;
 
             // Verificar si hay asistencia para el día actual
             if (!await ExisteAsistenciaParaFecha(Materia, FechaAsistencia, IdCurso))
@@ -67,6 +78,8 @@ namespace PegasusWeb.Pages
                 else
                     Alumnos = alumnos;
             }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPost(DateTime fecha, int materia, int curso, string modulo, int perfil, int usuario)

@@ -29,18 +29,28 @@ namespace PegasusWeb.Pages
         public List<int> SelectedAlumnosIds { get; set; } = new List<int>(); // IDs de los alumnos seleccionados en el formulario
 
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            // Verificar sesión válida
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            int idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
+            if (string.IsNullOrEmpty(token) || idUsuario <= 0 || idPerfil <= 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
             //Traigo todos los usuarios que son alumnos
             var todos = await GetUsuariosAlumnosAsync();
 
-            
             foreach (var alumn in todos)
             {
                 IntegrantesCursos alumno = new IntegrantesCursos();
                 alumno.Usuario = alumn;
                 alumno.Id_Usuario = alumn.Id;
-                
+
                 Alumnos.Add(alumno);
             }
 
@@ -54,6 +64,8 @@ namespace PegasusWeb.Pages
                     SelectedAlumnosIds.Add((int)alumn.Id_Usuario);
                 }
             }
+
+            return Page();
         }
 
         public async Task<List<Usuario>> GetUsuariosAlumnosAsync()

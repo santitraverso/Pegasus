@@ -34,9 +34,21 @@ namespace PegasusWeb.Pages
         [TempData]
         public int IdPerfil { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+            // Verificar sesión válida
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            int idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
+            if (string.IsNullOrEmpty(token) || idUsuario <= 0 || idPerfil <= 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
+            IdPerfil = idPerfil; 
+            IdUsuario = idUsuario;
 
             // Deserializar el JSON de los IDs de los alumnos
             List<int> idsAlumnos = new List<int>();
@@ -104,6 +116,8 @@ namespace PegasusWeb.Pages
                 })
                 .OrderByDescending(c => c.Fecha)
                 .ToList();
+
+            return Page();
         }
 
         private async Task<List<ComunicadoAlumnos>> GetAlumnosComunicadoAsync(int idComunicado)

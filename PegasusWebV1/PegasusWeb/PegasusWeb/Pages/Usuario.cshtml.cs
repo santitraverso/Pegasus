@@ -31,25 +31,38 @@ namespace PegasusWeb.Pages
         public int IdPerfil { get; set; }
 
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            if(IdPerfil == 0)
+            // Verificar sesión válida
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            int idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
+            if (string.IsNullOrEmpty(token) || idUsuario <= 0 || idPerfil <= 0)
             {
-                IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
+            if (IdPerfil == 0)
+            {
+                IdPerfil = idPerfil;
             }
 
             if (IdPerfil == (int)TipoPerfil.Padre)
             {
                 IdHijo = HttpContext.Session.GetInt32("IdHijo") ?? 0;
-                var hijos = await GetHijosAsync(HttpContext.Session.GetInt32("IdUsuario") ?? 0);
+                var hijos = await GetHijosAsync(idUsuario); // Usar la variable de la verificación
                 Usuarios = hijos.Select(h => h.HijoUsuario).ToList();
             }
-            else if(IdPerfil == (int)TipoPerfil.Preceptor)
+            else if (IdPerfil == (int)TipoPerfil.Preceptor)
             {
                 Usuarios = await GetUsuariosAsync("x=>x.id_perfil!=1");
             }
             else
                 Usuarios = await GetUsuariosAsync();
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPost(int usuario, bool editar)

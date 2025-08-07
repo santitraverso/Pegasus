@@ -195,11 +195,34 @@
             const logoutButton = document.getElementById('logoutBtn');
             if (logoutButton) {
                 logoutButton.addEventListener('click', function () {
+                    // Limpiar sessionStorage inmediatamente
                     sessionStorage.clear();
-                    const returnUrl = window.appConfig.currentUrl;
-                    const loginUrl = `${window.appConfig.apiBaseUrl}/Account/Logout?returnUrl=${encodeURIComponent(returnUrl)}`;
-                    window.location.href = loginUrl;
-                    window.location.href = returnUrl;
+
+                    // Actualizar UI 
+                    document.getElementById('userDisplay').textContent = '';
+                    document.getElementById('loginGoogleBtn').style.display = 'inline-flex';
+                    document.getElementById('logoutBtn').style.display = 'none';
+
+                    //Limpiar sesión del servidor con AJAX
+                    fetch('/Index?handler=ClearSession', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+                    }
+                    }).then(() => {
+                        //Después hacer logout en la API
+                        const returnUrl = window.appConfig.currentUrl;
+                        const loginUrl = `${window.appConfig.apiBaseUrl}/Account/Logout?returnUrl=${encodeURIComponent(returnUrl)}`;
+                        window.location.href = loginUrl;
+                        window.location.href = returnUrl;
+                    }).catch(() => {
+                        // Si falla el AJAX, hacer logout directo
+                        const returnUrl = window.appConfig.currentUrl;
+                        const loginUrl = `${window.appConfig.apiBaseUrl}/Account/Logout?returnUrl=${encodeURIComponent(returnUrl)}`;
+                        window.location.href = loginUrl;
+                        window.location.href = returnUrl;
+                    });
                 });
             }
 

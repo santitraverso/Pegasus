@@ -28,67 +28,145 @@ namespace PegasusWeb.Pages
         [TempData]
         public string? Modulo { get; set; }
 
-        public async Task OnGetAsync(string? usuario)
+        public async Task<IActionResult> OnGetAsync(string? usuario)
         {
+
+            // Verificar primero si hay un token válido
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+
             if (!string.IsNullOrEmpty(usuario))
             {
-                usuario = Uri.UnescapeDataString(usuario);
-                UsuarioData = JsonConvert.DeserializeObject<Dictionary<string, object>>(usuario);
-
-                //Guarda el token en la sesión
-                if (UsuarioData != null && UsuarioData.ContainsKey("token"))
+                //Usuario viene del login con parámetros
+                try
                 {
-                    string token = UsuarioData["token"].ToString();
-                    HttpContext.Session.SetString("JwtToken", token);
-                }
+                    usuario = Uri.UnescapeDataString(usuario);
+                    UsuarioData = JsonConvert.DeserializeObject<Dictionary<string, object>>(usuario);
 
-                // Guardar IdPerfil en la sesión
-                if (UsuarioData != null && UsuarioData.ContainsKey("id_perfil"))
-                {
-                    if (int.TryParse(UsuarioData["id_perfil"].ToString(), out int idPerfilValue) && idPerfilValue > 0)
+                    if (UsuarioData != null && UsuarioData.ContainsKey("token"))
                     {
-                        IdPerfil = idPerfilValue;
-                        HttpContext.Session.SetInt32("IdPerfil", IdPerfil);
-                        Modulos = await GetModulosPerfilAsync(IdPerfil);
-                    }
-                }
+                        token = UsuarioData["token"].ToString() ?? "";
 
-                // Guardar Perfil en la sesión
-                if (UsuarioData != null && UsuarioData.ContainsKey("perfil"))
-                {
-                    if (!string.IsNullOrEmpty(UsuarioData["perfil"]?.ToString()))
-                    {
-                        string perfil = UsuarioData["perfil"].ToString();
-                        HttpContext.Session.SetString("Perfil", perfil);
-                    }
-                }
-
-                // Guardar IdUsuario en la sesión
-                if (UsuarioData != null && UsuarioData.ContainsKey("id"))
-                {
-                    if (int.TryParse(UsuarioData["id"].ToString(), out int idValue) && idValue > 0)
-                    {
-                        IdUsuario = idValue;
-                        HttpContext.Session.SetInt32("IdUsuario", IdUsuario);
-
-                        if (IdPerfil == (int)TipoPerfil.Padre)
+                        // Verificar que el token sea válido antes de guardarlo
+                        if (!string.IsNullOrEmpty(token) && await ValidateTokenAsync(token))
                         {
-                            var hijo = await GetHijosAsync(IdUsuario);
-                            HttpContext.Session.SetInt32("IdHijo", hijo != null ? (int)hijo.Id_Hijo: 0);
+                            HttpContext.Session.SetString("JwtToken", token);
+                            await SaveUserDataToSession(UsuarioData);
+                        }
+                        else
+                        {
+                            // Token inválido, limpiar y redirigir
+                            HttpContext.Session.Clear();
+                            return RedirectToPage("/Index");
                         }
                     }
+                    else
+                    {
+                        // No hay token en los datos del usuario
+                        HttpContext.Session.Clear();
+                        return RedirectToPage("/Index");
+                    }
+                }
+                catch
+                {
+                    // Error al procesar datos del usuario
+                    HttpContext.Session.Clear();
+                    return RedirectToPage("/Index");
                 }
             }
             else
             {
-
-                IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
-                if (IdPerfil > 0)
+                //Acceso directo a /Home
+                if (string.IsNullOrEmpty(token))
                 {
-                    Modulos = await GetModulosPerfilAsync(IdPerfil);
+                    return RedirectToPage("/Index");
                 }
 
-                IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+                // Verificar que el token siga siendo válido
+                bool isTokenValid = await ValidateTokenAsync(token);
+                if (!isTokenValid)
+                {
+                    HttpContext.Session.Clear();
+                    return RedirectToPage("/Index");
+                }
+            }
+
+            // Si llegamos aquí, tenemos una sesión válida
+            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+            IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+
+            if (IdPerfil <= 0 || IdUsuario <= 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
+            // Cargar módulos
+            Modulos = await GetModulosPerfilAsync(IdPerfil);
+
+            return Page();
+        }
+
+        private async Task SaveUserDataToSession(Dictionary<string, object> userData)
+        {
+            if (userData == null) return;
+
+            // Guardar IdPerfil
+            if (userData.ContainsKey("id_perfil") &&
+                int.TryParse(userData["id_perfil"].ToString(), out int idPerfilValue) &&
+                idPerfilValue > 0)
+            {
+                IdPerfil = idPerfilValue;
+                HttpContext.Session.SetInt32("IdPerfil", IdPerfil);
+            }
+
+            // Guardar Perfil
+            if (userData.ContainsKey("perfil") &&
+                !string.IsNullOrEmpty(userData["perfil"]?.ToString()))
+            {
+                HttpContext.Session.SetString("Perfil", userData["perfil"].ToString());
+            }
+
+            // Guardar IdUsuario
+            if (userData.ContainsKey("id") &&
+                int.TryParse(userData["id"].ToString(), out int idValue) &&
+                idValue > 0)
+            {
+                IdUsuario = idValue;
+                HttpContext.Session.SetInt32("IdUsuario", IdUsuario);
+
+                // Si es padre, obtener hijo
+                if (IdPerfil == (int)TipoPerfil.Padre)
+                {
+                    var hijo = await GetHijosAsync(IdUsuario);
+                    HttpContext.Session.SetInt32("IdHijo", hijo?.Id_Hijo ?? 0);
+                }
+            }
+
+            // Guardar datos para JavaScript
+            if (userData.ContainsKey("apellido"))
+                HttpContext.Session.SetString("UserApellido", userData["apellido"].ToString() ?? "");
+
+            if (userData.ContainsKey("nombre"))
+                HttpContext.Session.SetString("UserNombre", userData["nombre"].ToString() ?? "");
+
+            if (userData.ContainsKey("email"))
+                HttpContext.Session.SetString("UserEmail", userData["email"].ToString() ?? "");
+        }
+
+        private async Task<bool> ValidateTokenAsync(string token)
+        {
+            try
+            {
+                // Hacer una llamada simple a la API para verificar si el token es válido
+                var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiBaseUrl}/ModulosPerfiles/GetModulosPerfilesForCombo?query=x%3D%3Ex.id_perfil%3D%3D1");
+                request.Headers.Add("Authorization", $"Bearer {token}");
+
+                HttpResponseMessage response = await _client.SendAsync(request);
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
             }
         }
 
@@ -152,6 +230,20 @@ namespace PegasusWeb.Pages
 
         public async Task<IActionResult> OnPostAsync(int perfil, int usuario, string page, string parametro)
         {
+            // Verificar sesión antes de procesar el POST
+            string token = HttpContext.Session.GetString("JwtToken");
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToPage("/Index");
+            }
+
+            bool isTokenValid = await ValidateTokenAsync(token);
+            if (!isTokenValid)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
             IdPerfil = perfil;
             IdUsuario = usuario;
 

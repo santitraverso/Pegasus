@@ -16,5 +16,11 @@ namespace PegasusWeb.Pages
         {
 
         }
+
+        public IActionResult OnPostClearSession()
+        {
+            HttpContext.Session.Clear();
+            return new JsonResult(new { success = true });
+        }
     }
 }

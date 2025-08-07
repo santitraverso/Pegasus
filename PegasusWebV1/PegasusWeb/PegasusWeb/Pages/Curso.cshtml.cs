@@ -30,10 +30,21 @@ namespace PegasusWeb.Pages
         [TempData]
         public int IdUsuario { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            IdPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
-            IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            // Verificar sesión válida
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            int idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
+            if (string.IsNullOrEmpty(token) || idUsuario <= 0 || idPerfil <= 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
+            IdPerfil = idPerfil; 
+            IdUsuario = idUsuario;
 
             if (IdPerfil == (int)TipoPerfil.Docente)
             {
@@ -61,6 +72,8 @@ namespace PegasusWeb.Pages
             }
             else
                 Cursos = await GetCursosAsync();
+
+            return Page();
         }
 
         private async Task<bool> TieneIntegrantesCurso(int curso)

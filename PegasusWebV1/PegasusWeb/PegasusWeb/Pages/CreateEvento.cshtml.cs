@@ -29,13 +29,23 @@ namespace PegasusWeb.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
+            // Verificar sesión válida
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            int idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
+            if (string.IsNullOrEmpty(token) || idUsuario <= 0 || idPerfil <= 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
             if (IdEvento > 0)
             {
                 // Es una edición, se carga el evento existente
                 var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiBaseUrl}/Evento/GetById?id={IdEvento}");
 
                 // Añadir el token JWT al encabezado
-                string token = HttpContext.Session.GetString("JwtToken");
                 if (!string.IsNullOrEmpty(token))
                 {
                     request.Headers.Add("Authorization", $"Bearer {token}");

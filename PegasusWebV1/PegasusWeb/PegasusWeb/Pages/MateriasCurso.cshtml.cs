@@ -29,8 +29,19 @@ namespace PegasusWeb.Pages
         public List<int> SelectedMateriasIds { get; set; } = new List<int>();
 
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            // Verificar sesión válida
+            string token = HttpContext.Session.GetString("JwtToken") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            int idPerfil = HttpContext.Session.GetInt32("IdPerfil") ?? 0;
+
+            if (string.IsNullOrEmpty(token) || idUsuario <= 0 || idPerfil <= 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/Index");
+            }
+
             Materias = await GetMateriasAsync();
 
             //Traigo las materias actuales del curso para marcar en la lista de materias
@@ -43,6 +54,8 @@ namespace PegasusWeb.Pages
                     SelectedMateriasIds.Add((int)mat.Id);
                 }
             }
+
+            return Page();
         }
 
         async Task<List<Entities.Materia>> GetMateriasAsync()
